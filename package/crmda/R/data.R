@@ -9,3 +9,4 @@
 ##' @author CRMDA, KU!
 ##' @references \url{https://crmda.ku.edu}
 ##' @format 200 observations on 7 variables
+NULL
