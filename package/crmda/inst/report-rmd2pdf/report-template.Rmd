@@ -4,7 +4,7 @@ output:
     keep_tex: true
     fig_caption: true
     latex_engine: pdflatex
-    template: crmda-boilerplate.tex
+    template: theme/crmda-boilerplate.tex
     pandoc_args: [
       "--listings"
     ]
@@ -179,4 +179,4 @@ Lets get a team vote.
 By the way, in case you wanted to see a giant copy of the logo, lets
 test the ability to insert a PDF graphic:
 
-\includegraphics[width=4in]{"CRMDA_logo"}
+\includegraphics[width=4in]{"theme/CRMDA_logo"}

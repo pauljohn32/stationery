@@ -40,7 +40,7 @@ done
 ## echo $fmt
 if [ "$fmt" == "pdf" ]
 then
-   output_format="pdf_document(highlight=\"haddock\", template=\"crmda-memo.tex\", pandoc_args=\"--listings\" )"
+   output_format="pdf_document(highlight=\"haddock\", template=\"theme/crmda-boilerplate.tex\", pandoc_args=\"--listings\" )"
 else
    output_format='html_document(css = system.file("rmarkdown", "kutils.css", package = "kutils"))'
 fi
