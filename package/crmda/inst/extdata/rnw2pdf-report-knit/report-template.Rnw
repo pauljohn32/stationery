@@ -175,17 +175,18 @@ if(!dir.exists("tmpout"))dir.create("tmpout", recursive = TRUE)
 
 % In document Latex options:
 \fvset{listparameters={\setlength{\topsep}{0em}}}
-\SweaveOpts{prefix.string=tmpout/t,split=TRUE,ae=FALSE,height=5,width=6}
+
+<<knitr10,include=FALSE,echo=FALSE>>=
+library(knitr)
+opts_chunk$set(fig.path='tmpout/t',split=T,ae=F,
+               fig.height=5,fig.width=6)
+@
 
 <<Roptions, echo=F>>=
 options(device = pdf)
 options(width=160, prompt=" ", continue="  ")
 options(useFancyQuotes = FALSE) 
-#set.seed(12345)
-op <- par() 
-pjmar <- c(5.1, 5.1, 1.5, 2.1) 
-#pjmar <- par("mar")
-options(SweaveHooks=list(fig=function() par(mar=pjmar, ps=10)))
+set.seed(12345)
 pdf.options(onefile=F,family="Times",pointsize=10)
 @
 
@@ -208,11 +209,11 @@ summary(m1)
 
 And in case you like Lovely LaTeX output
 
-<<outreg1, results=tex>>=
-library(rockchalk)
-vl <- c("x" = "Excellent Predictor")
-o1 <- outreg(list("First Model" = m1), varLabels = vl, tight = FALSE)
-@
+%<<outreg1, results='tex'>>=
+%library(rockchalk)
+%vl <- c("x" = "Excellent Predictor")
+%outreg(list("First Model" = m1), varLabels = vl, tight = FALSE)
+%@
 
 Some words to test margin sanity. Some words to test margin sanity.
 Some words to test margin sanity. Some words to test margin sanity.
