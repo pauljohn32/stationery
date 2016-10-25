@@ -1,6 +1,6 @@
 Package: crmda
 Type: Package
-Title: The KU CRMDA private package
+Title: The KU CRMDA Private Package
 Version: 0.20
 Date: 2016-10-24
 Author: Paul Johnson <pauljohn@ku.edu>
@@ -9,7 +9,7 @@ Description: Functions and internal information that
     we prefer not to share with the rest of the world. Available
     only from our KRAN server, not CRAN.
 License: Proprietary.
-Depends:
+Imports:
     kutils
 Suggests:
     rockchalk
