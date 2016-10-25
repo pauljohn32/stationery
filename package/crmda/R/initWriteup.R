@@ -2,10 +2,13 @@
 ##' Create skeleton for a report. 
 ##'
 ##' The examples demonstrate all three of these scenarios.
-##' @param input "Rnw" or "Rmd"
+##' @param input Default is "Rmd", others are "Rnw", and "tex" (tex
+##'     includes "lyx" and "tex")
 ##' @param output "pdf" or "html"
-##' @param render "Sweave" or "knit". If input = "Rmd", this argument is always set as "knit".
-##' @param type Default = "report". Also, "guide" is allowed 
+##' @param render "Sweave" or "knit". The choice between "Sweave" and
+##'     "knit" only exists for documents with input = "Rnw".  If input =
+##'     "Rmd", this argument is always set as "knit".
+##' @param type Default = "report". Also, "guide" is allowed
 ##' @param dirname Working data directory, default as "writeup"
 ##' @importFrom kutils initProject
 ##' @export
@@ -20,7 +23,7 @@
 ##' initWriteup(input = "Rmd", output = "pdf", render = "knit",
 ##'               dirname = "rmd2pdf-knit")
 ##' 
-initWriteup <- function(input = "Rnw",
+initWriteup <- function(input = "Rmd",
                         output = "pdf",
                         render = "Sweave",
                         type = "report",
@@ -36,6 +39,11 @@ initWriteup <- function(input = "Rnw",
     extdir <- tolower(paste0("extdata/", input, 2, output))
     extdir <- paste0(extdir, "-", type)
 
+    ## Only need -sweave or -knit if document is rnw
+    if((tolower(input) == "rnw")){
+        extdir <- paste0(extdir, "-", type, "-", tolower(render))
+
+        
     dir.path <- system.file(extdir, ".",   package = "crmda")
     
     if (dir.path == "") {
