@@ -103,7 +103,7 @@ footskip=1.5\baselineskip,
 \usepackage{Sweavel}
 \usepackage{graphicx}
 \usepackage{listings}
-\lstset{tabsize=2, breaklines=true,style=Rstyle}
+\lstset{tabsize=2, breaklines=true, style=Rstyle}
 
 \fvset{listparameters={\setlength{\topsep}{0em}}}
 \def\Sweavesize{\scriptsize} 
@@ -483,9 +483,23 @@ pdf.options(onefile=F,family="Times",pointsize=10)
 \end_layout
 
 \begin_layout Standard
-Today, 2016-10-18, I fix the header once and for all! Until the next time.
+Today, 2016-10-18, I fix the header once and for all! (Until the next time....)
  The header is now in a minibox.
  
+\end_layout
+
+\begin_layout Standard
+This uses Frank Harrell's Sweavel LaTeX style file, which is included with
+ this file, but that file can also be relocated into the LaTeX package install
+ folder (See the CRMDA guide on package management).
+ Sweavel uses the R listings class for better quality output, background
+ shading, etc.
+ This version has a line numbers, they can be removed.
+ If you do not want the lines, edit the preamble and comment the line settings
+ in the lstset block.
+ Those lstset values are document-wide settings, they are adjusted by the
+ Sweavel package below and we don't mind some fiddling around with them.
+ For example, the last part of the preamble adjusts the background shades.
 \end_layout
 
 \begin_layout Standard
@@ -498,7 +512,23 @@ CAUTION
 \end_layout
 
 \begin_layout Standard
-This is the version that includes Sweave support.
+This is the version that includes R Sweave support.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+NOTE
+\series default
+: We decided to use the directory 
+\begin_inset Quotes eld
+\end_inset
+
+tmpout
+\begin_inset Quotes erd
+\end_inset
+
+ for the R ouptut from the chunks, including graphs.
 \end_layout
 
 \begin_layout Standard
