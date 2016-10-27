@@ -1,0 +1,487 @@
+#LyX 2.2 created this file. For more info see http://www.lyx.org/
+\lyxformat 508
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass scrartcl
+\begin_preamble
+\usepackage[includehead,includefoot]{geometry}
+\geometry{
+lmargin=1in,
+rmargin=1in,
+tmargin=0.75in,
+bmargin=1.0in,
+headheight=0pt,
+headsep=0pt,
+marginparwidth=0pt,
+footskip=1.5\baselineskip,
+}
+
+\usepackage{multicol}
+\usepackage{listings}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage[yyyymmdd,hhmmss]{datetime}
+\lstset{tabsize=2, breaklines=true, 
+  breakatwhitespace=true,
+  %language=R,
+  captionpos=b,
+  frame=single,
+  framerule=0.2pt,
+  framesep=1pt,
+  numbers=left,
+  numberstyle=\tiny,
+  numbersep=5pt,
+  showstringspaces=false,
+  basicstyle=\footnotesize,
+  identifierstyle=,
+  keywordstyle=\bfseries,
+  commentstyle=\color{darkgreen},
+  stringstyle=,
+  backgroundcolor=\color[gray]{0.935}
+}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{babel}
+% Now fancy header/footer settings
+\lhead{}
+\chead{}
+\rhead{}
+\renewcommand{\headrulewidth}{0pt}
+\lfoot{}
+\cfoot{{Page} \thepage { of} \pageref{LastPage}}
+\rfoot{}
+
+\fancypagestyle{firststyle}
+{
+\lfoot{}
+%\cfoot{{Page} \thepage { of} \pageref{LastPage}}
+\cfoot{}
+\rfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\fancyfoot[L]{1425 Jayhawk Blvd.\\470 Watson Library\\ Lawrence, KS 66045-7555}
+\fancyfoot[R]{Phone: 785-864-3353\\ Website: crmda.ku.edu\\ Email: crmda@ku.edu}
+\renewcommand{\footrulewidth}{.1pt}
+}
+
+\pagestyle{fancy}
+
+
+%graphics and such inside floats are centered by default
+\renewenvironment{figure}[1][]{%
+ \ifthenelse{\equal{#1}{}}{%
+   \@float{figure}
+ }{%
+   \@float{figure}[#1]%
+ }%
+ \centering
+}{%
+ \end@float
+}
+\renewenvironment{table}[1][]{%
+ \ifthenelse{\equal{#1}{}}{%
+   \@float{table}
+ }{%
+   \@float{table}[#1]%
+ }%
+
+ \centering
+%  \setlength{\@tempdima}{\abovecaptionskip}%
+%  \setlength{\abovecaptionskip}{\belowcaptionskip}%
+% \setlength{\belowcaptionskip}{\@tempdima}%
+}{%
+ \end@float
+}
+
+\thispagestyle{firststyle}
+\usepackage{lipsum}
+\end_preamble
+\use_default_options false
+\begin_modules
+logicalmkup
+\end_modules
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding iso8859-15
+\fontencoding global
+\font_roman "lmodern" "default"
+\font_sans "lmss" "default"
+\font_typewriter "lmtt" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 11
+\spacing single
+\use_hyperref false
+\papersize letterpaper
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 0
+\use_package esint 1
+\use_package mathdots 0
+\use_package mathtools 0
+\use_package mhchem 0
+\use_package stackrel 0
+\use_package stmaryrd 0
+\use_package undertilde 0
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date true
+\justification true
+\use_refstyle 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 1in
+\topmargin 1in
+\rightmargin 1in
+\bottommargin 1in
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation skip
+\defskip medskip
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="2" columns="2">
+<features tabularvalignment="top">
+<column alignment="left" valignment="top" width="4in">
+<column alignment="center" valignment="top" width="2.25in">
+<row>
+<cell alignment="left" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\shape smallcaps
+\size larger
+Title of this Document: A Subtitle that may Flow onto Additional Space if
+ Necessary
+\end_layout
+
+\begin_layout Plain Layout
+\noindent
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset VSpace medskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename theme/CRMDA_logo.pdf
+	width 2in
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multicolumn="1" alignment="left" valignment="top" topline="true" bottomline="true" usebox="none" width="5in">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset VSpace defskip
+\end_inset
+
+Your Name Here, Your Title, CRMDA
+\end_layout
+
+\begin_layout Plain Layout
+<your_email@ku.edu>
+\end_layout
+
+\begin_layout Plain Layout
+Other author names here, Title, CRMDA
+\end_layout
+
+\begin_layout Plain Layout
+<their_email@ku.edu>
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Will insert correct date.
+ Replace following if you want fixed date.
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\paragraph_spacing single
+\noindent
+\align left
+
+\series bold
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+today
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset VSpace medskip
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Today, 2016-10-18, I fix the header once and for all! Until the next time.
+ The header is now in a minibox.
+ 
+\end_layout
+
+\begin_layout Standard
+Question: Do we want the title and author information to be contained the
+ left half of the header box?
+\end_layout
+
+\begin_layout Standard
+There is a lot of margin fiddling in this version.
+ We assure that the footer shows with elaborate detail only on page 1.
+ On page 1, I do not show the page number anymore.
+ That's negotiable.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+CAUTION
+\series default
+: the page margins can be adjusted in the geometry section of the preamble,
+ but do not use the LyX Menu to change either margins or pagestyle.
+\end_layout
+
+\begin_layout Standard
+Here's the question: Is this report stationary better than what we had?
+ 
+\end_layout
+
+\begin_layout Standard
+I could not understand how to adjust the bottom margin only on first page,
+ so it gets too close to bottom for my comfort.
+ However, if I make bottom margin larger page one, then it is way too huge
+ on following pages.
+ 
+\end_layout
+
+\begin_layout Standard
+Lets get a team vote.
+\end_layout
+
+\begin_layout Standard
+I noticed that our report stationary was drawing a line across the top of
+ page 2+ and also cutting the top margin down too far.
+ I dug into the \SpecialChar LaTeX
+, decided to cut out features until I understood what was
+ going on.
+ 
+\series bold
+Unfortunately for me, I believed this document was under Git version control
+ and started editing away and saved before I realized.
+
+\series default
+ It is possible to get old one, but I have to read a book to remember how.
+\end_layout
+
+\begin_layout Standard
+In the process of working on this, I recovered a lot of traumatic memories
+ of the problem that minipages do not float vertically as I expect them
+ to and I ended up removing the minipages entirely from the header.
+ 
+\end_layout
+
+\begin_layout Standard
+Then, after all that, I realized that the object that the authors called
+ a header is not actually a \SpecialChar LaTeX
+ fancy header at all, it is just an object 
+\begin_inset Quotes eld
+\end_inset
+
+in
+\begin_inset Quotes erd
+\end_inset
+
+ the document on page 1.
+ I felt ambiguously relieved & aggravated by this.
+\end_layout
+
+\begin_layout Standard
+There is, however, a fancy footer, it has the page-out-of-page thingie.
+ Otherwise, we would have nothing encouraging to say about this document's
+ fancy usage.
+\end_layout
+
+\begin_layout Standard
+Now I'm going to fill up the rest of this with some Latin to see if margins
+ come out correctly.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lipsum
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lipsum
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lipsum
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document
