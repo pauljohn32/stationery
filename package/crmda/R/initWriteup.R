@@ -15,8 +15,8 @@
 ##' @return The normalized path of the directory that is created
 ##' @author Paul Johnson <pauljohn@@ku.edu>
 ##' @examples
-##'
 ##' tdir <- tempdir()
+##' wd.orig <- getwd()
 ##' setwd(tdir)
 ##' cat("The Temporary Directory is:\n ", tdir, "\n")
 ##' cat("We launch project there in which writeup folder exists\n")
@@ -24,19 +24,30 @@
 ##' kutils::initProject()
 ##' list.files()
 ##' setwd("writeup")
-##' 
-##' initWriteup(input = "Rmd", output = "pdf", render = "knit",
+##'
+##' ## Notice: some will fail because we don't have templates
+##' ## for them yet
+##' initWriteup(input = "Rmd", output = "pdf", type = "report",
 ##'               dirname = "rmd2pdf-report-knit")
 ##'
 ##' initWriteup(input = "Rmd", output = "html", type = "guide",
-##'              render = "knit", dirname = "rmd2pdf-guide-knit")
+##'             dirname = "rmd2html-guide-knit")
+##' ## No need specify render for "Rmd" docs, only knit is possible
+##' 
+##' initWriteup(input = "Rnw", output = "pdf", type = "guide",
+##'              render = "Sweave", dirname = "rnw2pdf-guide-sweave")
 ##'
 ##' initWriteup(input = "Rnw", output = "pdf", type = "guide",
-##'             
+##'              render = "Sweave", dirname = "rnw2pdf-guide-sweave")
+##'
+##' initWriteup(input = "Rnw", output = "pdf", type = "report",
+##'              render = "knit", dirname = "rnw2pdf-report-knit")
 ##' 
-##' ## Should fail, because there is no html report
+##' ## Should fail, because there is no html report (never will be)
 ##' initWriteup(input = "Rmd", output = "html", dirname = "rmd2html")
-
+##'
+##' list.files()
+##' setwd(wd.orig)
 initWriteup <- function(input = "Rmd",
                         output = "pdf",
                         render = "Sweave",
