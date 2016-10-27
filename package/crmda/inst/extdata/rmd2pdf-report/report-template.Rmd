@@ -13,16 +13,16 @@ tables: true
 preamble:
 - \usepackage{xcolor}
 
-title: "My Fancy Rmd to PDF Document"
-subtitle: "Made by yours truly!"
+title: "Title of this Document"
+subtitle: "A Subtitle that may Flow onto Additional Space if Necessary"
 author:
 - name: Paul Johnson 
-  affiliation: Center for Research Methods and Data Analysis
-  description: Ze Director
+  affiliation: CRMDA
+  description: Director
   email: crmda@ku.edu
 - name:  Brent Kaplan 
-  affiliation: Center for Research Methods and Data Analysis
-  description: Ze Director
+  affiliation: CRMDA
+  description: GRA
   email: crmda@ku.edu
 ---
 
