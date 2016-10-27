@@ -8,12 +8,13 @@ author:
  - name: Firstname2 Lastname2
    affiliation: Center for Research Methods and Data Analysis, University of Kansas
    email: email2@email.com
+ - name: "CRMDA Guide #40. Please visit [http://crmda.ku.edu/guides](http://crmda.ku.edu/guides) for updates." 
  - name: "Tags: guides, tag1, tag2, please_leave_guides"
- - name: "Please visit [http://crmda.ku.edu/guides](http://crmda.ku.edu/guides) for the
- latest and greatest versions of this guide, and many others" 
+
 abstract: 
-    <span style="color:red">REMEMBER TO INCLUDE AN ABSTRACT BEFORE FINALIZING THIS DOCUMENT!</span>
+    Author, please REMEMBER TO INCLUDE AN ABSTRACT BEFORE FINALIZING THIS DOCUMENT!
 checked_by: "First Last"
+Note to Authors: please_dont_change_the_next 4 lines!			
 date: "`r format(Sys.time(), '%Y %B %d')`"
 output:
   html_document:
@@ -28,6 +29,15 @@ knitr::opts_chunk$set(echo=TRUE, comment=NA, fig.path=paste0(outdir, "/p-"))
 options(width = 70)
 ```
 
+## In our KU css file, we have special highlighted elements for
+   callouts.  Callout usage is demonstrated in the following. These
+   are always preceeded by four # signs. Yes, ####. We stole this idea
+   from other styles and put them into ours. See usage of {.bs-callout
+   .bs-callout-whatever_you_put here}, where whatever_you_put_here is
+   either "danger", "warning" or "info". We might be able to negotiate
+   you you on the choice of colors.  Run the render script with this
+   document, you'll see what we mean.
+	
 
 #### Danger: Elements to fix {.bs-callout .bs-callout-danger}
 1) topical tags, first of which is "guide"
@@ -59,7 +69,7 @@ editor cannot do that, quit using it.
 e.g., `rmarkdown::render("template-guide.Rmd", html_document(css = system.file("rmarkdown/",`  
 `"kutils.css",package = "kutils")))`
 
-## We often use equations
+## Equations can be written in LaTeX, either "inline" or "display" mode.
 
 Equations can be introduced in the style of LaTeX.  If the document
 is processed into a pdf file, the LaTeX programs will be used, but
@@ -168,8 +178,11 @@ print(x[1:20])
 hist(rnorm(20))
 ```
 
-
-
+#### R code inside a callout {.bs-callout .bs-callout-danger}
+```{r xsummary}
+summary(x)
+```
+## 	 
 
 [//]: (All guides must have this as the final stanza)
 
