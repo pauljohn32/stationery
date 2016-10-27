@@ -1,0 +1,183 @@
+---
+title: "Template for Guide Documents"
+subtitle: "Subtitle following the colon"
+author:
+ - name: Firstname1 Lastname1
+   affiliation: Center for Research Methods and Data Analysis, University of Kansas
+   email: email1@email.com
+ - name: Firstname2 Lastname2
+   affiliation: Center for Research Methods and Data Analysis, University of Kansas
+   email: email2@email.com
+ - name: "Tags: guides, tag1, tag2, please_leave_guides"
+ - name: "Please visit [http://crmda.ku.edu/guides](http://crmda.ku.edu/guides) for the
+ latest and greatest versions of this guide, and many others" 
+abstract: 
+    <span style="color:red">REMEMBER TO INCLUDE AN ABSTRACT BEFORE FINALIZING THIS DOCUMENT!</span>
+checked_by: "First Last"
+date: "`r format(Sys.time(), '%Y %B %d')`"
+output:
+  html_document:
+    highlight: haddock
+---
+
+```{r setup, include=FALSE}
+##This Invisible Chunk is required in all CRMDA documents
+outdir <- paste0("tmpout")
+if (!file.exists(outdir)) dir.create(outdir, recursive = TRUE)
+knitr::opts_chunk$set(echo=TRUE, comment=NA, fig.path=paste0(outdir, "/p-"))
+options(width = 70)
+```
+
+
+#### Danger: Elements to fix {.bs-callout .bs-callout-danger}
+1) topical tags, first of which is "guide"
+
+      a) we need a list of legal tags
+
+      b) way to enforce the tags
+
+      c) way to make them available better than making them a co-author
+
+2) Wish header had comment like ("this document was retrieved from
+CRMDA") without making it a coauthor
+
+#### Note: Policies about writing in these documents. {.bs-callout .bs-callout-warning}
+
+1. Blank rows separate paragraphs.
+
+2. The character width of rows should be 80 or less.  I have
+no idea how anybody thinks they have a right to impose an
+infinitely long row, but its bad.  Edit the document
+with Emacs, run M-q to get repositioned text.  If your
+editor cannot do that, quit using it.
+
+#### Info: Use these callouts to attract attention {.bs-callout .bs-callout-info}
+
+1. You can use danger (red), warning (orange), or info (blue)
+
+2. Must make sure compiling using the kutils.css located in the kutils package
+e.g., `rmarkdown::render("template-guide.Rmd", html_document(css = system.file("rmarkdown/",`  
+`"kutils.css",package = "kutils")))`
+
+## We often use equations
+
+Equations can be introduced in the style of LaTeX.  If the document
+is processed into a pdf file, the LaTeX programs will be used, but
+if the document is rendered to HTML, then symbolic questions are positioned
+into the output and then the MathJax javascript framework is used to
+display the math in the browser.
+
+Typing the markup is like writing in LaTeX.  Two dollar signs ($\$$)
+surround an inline mathematical expression while a display equation
+(centered and separated) is bracketed by two dollar signs ($\$\$$).
+The two dollar signs are often written on a line by themseves
+for visual separation. We note that other methods that are used to
+initiate display equations in latex also work, including $\[$ or
+$\begin{equation}$.
+
+
+\textbackslash{}begin\{equation\} and \textbackslash{}end\{equation\}
+and \textbackslash{}[ and \textbackslash{}] generate the same. We need
+to know if there is a recommended style.
+
+Fractions (\\frac{}{}): $\frac{2}{3}$.
+
+Hats (\\hat{}): $\hat{\lambda}=1.02$.
+
+Square Root (\\sqrt{}), $\sqrt{4}=2$.
+
+$$\alpha, \beta,  \gamma, \Gamma$$
+
+Some popular binary operators are
+$$ + - = \ne \ge \lt \pm $$
+$$x \ge 15$$
+$$a_i \ge 0~~~\forall i$$
+
+## Matrix
+
+$$
+A_{m,n} =
+ \begin{pmatrix}
+  a_{1,1} & a_{1,2} & \cdots & a_{1,n} \\
+  a_{2,1} & a_{2,2} & \cdots & a_{2,n} \\
+  \vdots  & \vdots  & \ddots & \vdots  \\
+  a_{m,1} & a_{m,2} & \cdots & a_{m,n}
+ \end{pmatrix}
+$$
+
+This example uses the alternative display math $\[$, and
+a different type of matrix.
+
+\begin{equation}
+A_{m,n} = \left(\begin{array}{ccc}
+a & b & c\\
+d & e & f\\
+g & h & i
+\end{array}\right)
+\label{eq:another1}
+\end{equation}
+
+After some testing, it appears also that many
+LaTeX symbols that we would expect to use have no benefit in Rmd
+documents.
+
+
+
+We don't know if there is a comprehensive list of which LaTeX math
+symbols are allowed, but we wish somebody would find one.
+
+
+
+## Statistics
+
+The binomial probability:
+
+$$
+f(y|N,p) = \frac{N!}{y!(N-y)!}\cdot p^y \cdot (1-p)^{N-y} = {{N}\choose{y}} \cdot p^y \cdot (1-p)^{N-y}
+$$
+
+To calculate the **mean** of \textit{n} observations of variable \textit{x}, you can use: $$\bar{x} = \frac{1}{n} \sum_{i=1}^{n}x_{i}$$ 
+
+Note that this equation looks quite nice above where it's in display math mode. It is more compact but not quite as nice looking if we present it using inline mode, e.g., $\bar{x} = \frac{1}{n} \sum_{i=1}^{n}x_{i}$.
+
+Let's do the same with the equation for **variance**. First the inline version, which is 
+$\sigma^{2} = \frac{\sum\limits_{i=1}^{n} \left(x_{i} - \bar{x}\right)^{2}} {n-1}$. And then the display mode version: 
+$$\sigma^{2} = \frac{\sum_{i=1}^{n} 
+  \left(x_{i} - \bar{x}\right)^{2}}
+  {n-1}$$
+  
+And, finally, we'll end with the **standard deviation**. Here's the inline version, $\sigma = \sqrt{\frac{\sum\limits_{i=1}^{n} \left(x_{i} - \bar{x}\right)^{2}} {n-1}}$. And here's the display version.
+$$\sigma = \sqrt{\frac{\sum\limits_{i=1}^{n} \left(x_{i} - \bar{x}\right)^{2}} {n-1}}$$
+
+There are helpful online editors - [like this one](http://mathstat.uohyd.ernet.in/equationeditor/equationeditor.php)
+
+## Let's look at some plots
+
+
+```{r myFirstPlot, dev=c('png','pdf'), fig.keep='all'}
+hist(rnorm(500))
+
+```
+
+```{r}
+x <- rnorm(1000)
+print(x[1:20])
+```
+
+```{r mySecondPlot, dev=c('png','pdf'), fig.keep='all'}
+hist(rnorm(20))
+```
+
+
+
+
+[//]: (All guides must have this as the final stanza)
+
+```{r sessionInfo, echo = FALSE}
+sessionInfo()
+```
+
+Available under
+[Created Commons license 3.0 <img src="http://crmda.dept.ku.edu/images/cc-3.0.png" alt="CC BY"
+style="width: 75px;height: 20px;"/>](http://creativecommons.org/licenses/by/3.0/)
+
