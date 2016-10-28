@@ -97,12 +97,13 @@ footskip=1.5\baselineskip,
 \thispagestyle{firststyle}
 \usepackage{lipsum}
 
-\usepackage{Sweavel}
+
+% \usepackage{Sweavel}
 \end_preamble
 \use_default_options false
 \begin_modules
 logicalmkup
-sweave
+knitr
 \end_modules
 \maintain_unincluded_children false
 \language english
@@ -486,7 +487,12 @@ status open
 
 \begin_layout Plain Layout
 
+% THE FOLLOWING LINE CAUSES AN ERROR AND DOCUMENT DOES NOT COMPILE
+\end_layout
 
+\begin_layout Plain Layout
+
+% 
 \backslash
 fvset{listparameters={
 \backslash
@@ -497,9 +503,39 @@ topsep}{0em}}}
 
 \begin_layout Plain Layout
 
-
+% 
 \backslash
 SweaveOpts{prefix.string=tmpout/t,split=T,ae=F,height=3,width=5}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<include=F>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+library(knitr)
+\end_layout
+
+\begin_layout Plain Layout
+
+opts_chunk$set(fig.path="tmpout/t", split=T, ae=F, fig.height=3, fig.width=5,
+ comment=NA)
+\end_layout
+
+\begin_layout Plain Layout
+
+@
 \end_layout
 
 \end_inset
@@ -529,11 +565,6 @@ options(useFancyQuotes = FALSE)
 \begin_layout Plain Layout
 
 set.seed(12345)
-\end_layout
-
-\begin_layout Plain Layout
-
-options(SweaveHooks=list(fig=function() par(ps=10)))
 \end_layout
 
 \begin_layout Plain Layout
@@ -609,7 +640,7 @@ status open
 
 \begin_layout Plain Layout
 
-<<pois10, results=tex, eval=F>>=
+<<pois10, results='asis', eval=F>>=
 \end_layout
 
 \begin_layout Plain Layout
@@ -639,7 +670,7 @@ status open
 
 \begin_layout Plain Layout
 
-<<pois15, results=tex, echo=F>>=
+<<pois15, results='asis', echo=F>>=
 \end_layout
 
 \begin_layout Plain Layout
