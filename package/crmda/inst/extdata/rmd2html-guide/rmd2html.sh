@@ -43,7 +43,7 @@ if [[ $filename = "" ]]
 then
     echo -e "These are the Rmd files in the current directory." 
     echo -e "\n" $(ls  *.Rmd)
-    read -p "Please indicate which you want, or type all: " filename
+    read -p "Please indicate which you want, or type \"all\": " filename
 fi
 
 

@@ -27,23 +27,13 @@ do
 	 echo "Used to render from Rmd to pdf or html"
 	    exit
 	    ;;
-	-f|--fmt)
-	    case "$2" in
-		"") fmt="html" shift 2 ;;
-		*) fmt=$2; shift 2 ;;
-	    esac ;;
 	--) shift ; break ;;
 	*) echo "Error"; exit 1 ;;
     esac
 done
 
 ## echo $fmt
-if [ "$fmt" == "pdf" ]
-then
    output_format="pdf_document(highlight=\"haddock\", template=\"theme/crmda-boilerplate.tex\", pandoc_args=\"--listings\" )"
-else
-   output_format='html_document(css = system.file("rmarkdown", "kutils.css", package = "kutils"))'
-fi
 ## echo "The fmt is $output_format"
 
 
@@ -54,7 +44,7 @@ if [[ $filename = "" ]]
 then
     echo -e "These are the Rmd files in the current directory." 
     echo -e "\n" $(ls  *.Rmd)
-    read -p "Please indicate which you want, or type all: " filename
+    read -p "Please indicate which you want, or type \"all\": " filename
 fi
 
 

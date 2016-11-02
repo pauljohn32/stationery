@@ -24,8 +24,6 @@
 ##' browseURL(of[1])
 ##' setwd(wd.orig)
 rmd2html <- function(fn = NULL, wd = NULL, verbose = FALSE) {
-    library(rmarkdown)
-    library(knitr)
     if (!is.null(wd)){
         wd.orig <- getwd()
         setwd(wd)
@@ -38,7 +36,7 @@ rmd2html <- function(fn = NULL, wd = NULL, verbose = FALSE) {
     }    
     ## render(fn, html_document(css = system.file("extdata/theme", "kutils.css", package = "crmda")), quiet = !verbose)
 
-    res <- sapply(fn, render, html_document(css = system.file("extdata/theme", "kutils.css", package = "crmda")), quiet = !verbose)
+    res <- sapply(fn, rmarkdown::render, rmarkdown::html_document(css = system.file("extdata/theme", "kutils.css", package = "crmda")), quiet = !verbose)
 
     if (!is.null(wd)){
         setwd(wd.orig)
