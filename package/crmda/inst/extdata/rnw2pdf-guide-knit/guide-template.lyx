@@ -95,10 +95,6 @@ footskip=1.5\baselineskip,
 }
 
 \thispagestyle{firststyle}
-\usepackage{lipsum}
-
-
-% \usepackage{Sweavel}
 \end_preamble
 \use_default_options false
 \begin_modules
@@ -529,8 +525,8 @@ library(knitr)
 
 \begin_layout Plain Layout
 
-opts_chunk$set(fig.path="tmpout/t", split=T, ae=F, fig.height=3, fig.width=5,
- comment=NA)
+opts_chunk$set(fig.path="tmpout/t-", split=TRUE, ae=FALSE, fig.height=3, fig.width=
+5, comment=NA)
 \end_layout
 
 \begin_layout Plain Layout
@@ -589,8 +585,7 @@ Today, 2016-10-18, I fix the header once and for all! Until the next time.
 \end_layout
 
 \begin_layout Standard
-Question: Do we want the title and author information to be contained the
- left half of the header box?
+Here is an example of a data frame being created:
 \end_layout
 
 \begin_layout Standard
@@ -628,10 +623,28 @@ summary(m1)
 \end_layout
 
 \begin_layout Standard
-There is a lot of margin fiddling in this version.
- We assure that the footer shows with elaborate detail only on page 1.
- On page 1, I do not show the page number anymore.
+This document edits margins in the preamble, don't use the LyX pull down
+ menu to revise them.
+ 
+\end_layout
+
+\begin_layout Standard
+On page 1, I do not show the page number anymore.
  That's negotiable.
+\end_layout
+
+\begin_layout Standard
+Some code that might be used to create a regression table using outreg from
+ the rockchalk package is the following.
+ As you see, the output 
+\begin_inset Quotes eld
+\end_inset
+
+splats
+\begin_inset Quotes erd
+\end_inset
+
+ into the document, it is not in a floating figure or table.
 \end_layout
 
 \begin_layout Standard
@@ -698,43 +711,19 @@ CAUTION
 \end_layout
 
 \begin_layout Standard
-Here's the question: Is this report stationary better than what we had?
- 
-\end_layout
+Lets see in Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:A-Poisson-Regression"
 
-\begin_layout Standard
-I could not understand how to adjust the bottom margin only on first page,
- so it gets too close to bottom for my comfort.
- However, if I make bottom margin larger page one, then it is way too huge
- on following pages.
- 
-\end_layout
+\end_inset
 
-\begin_layout Standard
-Lets get a team vote.
-\end_layout
-
-\begin_layout Standard
-I noticed that our report stationary was drawing a line across the top of
- page 2+ and also cutting the top margin down too far.
- I dug into the \SpecialChar LaTeX
-, decided to cut out features until I understood what was
- going on.
- 
-\series bold
-Unfortunately for me, I believed this document was under Git version control
- and started editing away and saved before I realized.
-
-\series default
- It is possible to get old one, but I have to read a book to remember how.
-\end_layout
-
-\begin_layout Standard
-Lets put the regression table in a float
+, the regression table looks awesome.
 \end_layout
 
 \begin_layout Standard
 \begin_inset Float table
+placement h
 wide false
 sideways false
 status open
@@ -744,6 +733,13 @@ status open
 
 \begin_layout Plain Layout
 A Poisson Regression
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:A-Poisson-Regression"
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -803,54 +799,6 @@ There is, however, a fancy footer, it has the page-out-of-page thingie.
 \begin_layout Standard
 Now I'm going to fill up the rest of this with some Latin to see if margins
  come out correctly.
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-lipsum
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-lipsum
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-lipsum
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \end_body
