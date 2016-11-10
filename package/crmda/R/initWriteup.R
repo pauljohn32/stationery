@@ -16,17 +16,18 @@
 ##' that can compile guide documents.  Compilers for the other ones
 ##' exist, but are not atomated yet.
 ##'
-##' @section As one can see, documents can be prepared in markdown "rmd", R
-##' noweb (either with Sweave or knitr style), or simply as a LaTeX
-##' document that does not interact with R at all.  The allowed
-##' components in a report or guide depend on whether the eventual
-##' output is HTML or PDF. That's why we need to have so many mix-and
-##' match combinations of document types and report types.
-##'
-##' @section We believe writeups will fall into two types, either "guide" or
-##' "report". The difference between these two features is summarized
-##' in a slide show that is included with the package in the vignettes
-##' folder.
+##' @section Report or Guide?: As one can see, documents can be prepared in markdown
+##'     "rmd", R noweb (either with Sweave or knitr style), or simply
+##'     as a LaTeX document that does not interact with R at all.  The
+##'     allowed components in a report or guide depend on whether the
+##'     eventual output is HTML or PDF. That's why we need to have so
+##'     many mix-and match combinations of document types and report
+##'     types.
+##' \cr\cr
+##' We believe writeups will fall into two types, either
+##'     "guide" or "report". The difference between these two features
+##'     is summarized in a slide show that is included with the
+##'     package in the vignettes folder.
 ##'
 ##' The examples demonstrate all three of these scenarios.
 ##' @param folderin Specify either \code{folderin} or the 4-tuple of
@@ -74,7 +75,10 @@
 ##'
 ##' initWriteup(input = "Rnw", output = "pdf", type = "report",
 ##'              render = "knit", newdir = "rnw2pdf-report-knit")
-##' 
+##'
+##' initWriteup(folderin = "rnw2pdf-guide-knit", newdir = "/tmp/trash1")
+##' initWriteup(folderin = "rmd2pdf-report", newdir = "/tmp/trash2")
+##' initWriteup(folderin = "rmd2html-guide", newdir = "/tmp/trash3")
 ##' ## Should fail, because there is no html report (never will be)
 ##' initWriteup(input = "Rmd", output = "html", newdir = "rmd2html")
 ##'

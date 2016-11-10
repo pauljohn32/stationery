@@ -99,21 +99,48 @@ footskip=1.5\baselineskip,
 \usepackage{dcolumn}
 \usepackage{booktabs}
 \usepackage{multicol}
-
-\usepackage{Sweavel}
 \usepackage{graphicx}
-\usepackage{listings}
-\lstset{tabsize=2, breaklines=true,style=Rstyle}
 
+%% PJ 20161110
+%% I want to use listings in the document and I want nice/same as knitr.
+%% Does knitr provide all of these settings for other listing uses outside
+%% weaved part?
+\usepackage{fancyvrb}
 \fvset{listparameters={\setlength{\topsep}{0em}}}
-\def\Sweavesize{\scriptsize} 
+\usepackage{listings}
+\def\Sweavesize{\normalsize} 
 \def\Rcolor{\color{black}} 
 \def\Rbackground{\color[gray]{0.95}}
+\providecommand{\Rcolor}{\color[rgb]{0, 0.5, 0.5}}
+\providecommand{\Routcolor}{\color[rgb]{0.461, 0.039, 0.102}}
+\providecommand{\Rcommentcolor}{\color[rgb]{0.101, 0.043, 0.432}}
+
+\providecommand{\Rbackground}{\color[gray]{0.95}}
+\providecommand{\Routbackground}{\color[gray]{0.80}}
+% Can specify \color[gray]{1} for white background or just \color{white}
+
+
+\lstdefinestyle{Rstyle}{fancyvrb=false,
+                        frame=none,
+                        escapechar=`,
+                        language=R,%
+                        basicstyle={\Rcolor\Sweavesize},%
+                        backgroundcolor=\Rbackground,%
+                        showstringspaces=false,%
+                        keywordstyle=\Rcolor,%
+                        commentstyle={\Rcommentcolor\ttfamily\itshape},%
+                        literate={<-}{{$\leftarrow$}}2{<<-}{{$\twoheadleftarrow$}}2{~}{{$\sim$}}1{<=}{{$\leq$}}2{>=}{{$\geq$}}2{^}{{$^{\scriptstyle\wedge}$}}1,%
+                        alsoother={$},%
+                        alsoletter={.<-},%
+                        otherkeywords={!,!=,~,$,*,\&,\%/\%,\%*\%,\%\%,<-,<<-,/},%
+                        escapeinside={(*}{*)}}%
+
+\lstset{tabsize=2, breaklines=true,style=Rstyle}
 \end_preamble
 \use_default_options false
 \begin_modules
 logicalmkup
-sweave
+knitr
 \end_modules
 \maintain_unincluded_children false
 \language english
@@ -392,31 +419,6 @@ status open
 
 \begin_layout Plain Layout
 
-% In document Latex options:
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-fvset{listparameters={
-\backslash
-setlength{
-\backslash
-topsep}{0em}}}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
 <<knitr10,include=FALSE,echo=FALSE>>=
 \end_layout
 
@@ -427,7 +429,7 @@ library(knitr)
 
 \begin_layout Plain Layout
 
-opts_chunk$set(fig.path='tmpout/t',split=T,ae=F,
+opts_chunk$set(fig.path='tmpout/t-',split=T,ae=F,
 \end_layout
 
 \begin_layout Plain Layout
@@ -518,7 +520,7 @@ status open
 
 \begin_layout Plain Layout
 
-<<m1>>=
+<<m1, include=F>>=
 \end_layout
 
 \begin_layout Plain Layout
@@ -547,7 +549,7 @@ summary(m1)
 \end_layout
 
 \begin_layout Standard
-And in case you like Lovely LaTeX output
+In reports we do not usually have R output in the raw form
 \end_layout
 
 \begin_layout Standard
@@ -556,27 +558,116 @@ status open
 
 \begin_layout Plain Layout
 
-%<<outreg1, results='tex'>>=
+
+\backslash
+input{tmpout/t-m1.tex}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We would rather have a professional-looking table.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<outreg1, echo=F, results='asis'>>=
 \end_layout
 
 \begin_layout Plain Layout
 
-%library(rockchalk)
+library(rockchalk)
 \end_layout
 
 \begin_layout Plain Layout
 
-%vl <- c("x" = "Excellent Predictor")
+vl <- c("x" = "Excellent Predictor")
 \end_layout
 
 \begin_layout Plain Layout
 
-%outreg(list("First Model" = m1), varLabels = vl, tight = FALSE)
+outreg(list("First Model" = m1), varLabels = vl, tight = FALSE)
 \end_layout
 
 \begin_layout Plain Layout
 
-%@
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+I wish that listings objects that are not produced from knitted chunks would
+ look same.
+ Lets see:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+x <- rnorm(100)
+\end_layout
+
+\begin_layout Plain Layout
+
+y <- rpois(100, lambda = 2)
+\end_layout
+
+\begin_layout Plain Layout
+
+plot(y ~ x)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Ah, I see it is not the same because I did not get my listing settings in
+ my preamble exactly the same as what knitr uses.
+ How to fix?
+\end_layout
+
+\begin_layout Standard
+Maybe get a GRA to fix.
+\end_layout
+
+\begin_layout Standard
+If I put in another chunk, maybe I will see a pattern in the LaTeX code.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+summary(dat)
+\end_layout
+
+\begin_layout Plain Layout
+
+@
 \end_layout
 
 \end_inset

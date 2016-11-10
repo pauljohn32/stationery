@@ -37,17 +37,29 @@ done
 output_format='html_document(css = system.file("extdata/theme", "kutils.css", package = "crmda"))'
 
 filename=$1
-## echo "Rendering: $filename into output_format $output_format"
+fn=$(basename "$filename")
+exten="${fn##*.}"
 
-if [[ $filename = "" ]]
+echo "$fn"
+echo "$exten"
+
+
+if [[ $filename == "" ||  "$exten" != "Rmd" ]]
 then
     echo -e "These are the Rmd files in the current directory." 
     echo -e "\n" $(ls  *.Rmd)
-    read -p "Please indicate which you want, or type \"all\": " filename
+    read -p "Please indicate which you want, or hit Enter for all: " filename
 fi
+
 
 
 if [[ -e $filename ]]
-   then
+then
        render "$filename" "$output_format"
+else
+for fn in *.Rmd
+do
+        render "$fn" "$output_format"
+done
 fi
+ 

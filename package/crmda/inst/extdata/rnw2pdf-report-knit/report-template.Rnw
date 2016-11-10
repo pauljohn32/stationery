@@ -20,11 +20,6 @@
 %% Because html converters don't know tabularnewline
 \providecommand{\tabularnewline}{\\}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
-<<echo=F>>=
-  if(exists(".orig.enc")) options(encoding = .orig.enc)
-@
-
 \@ifundefined{date}{}{\date{}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
 \usepackage[includehead,includefoot]{geometry}
@@ -120,20 +115,50 @@ footskip=1.5\baselineskip,
 \usepackage{dcolumn}
 \usepackage{booktabs}
 \usepackage{multicol}
-
-\usepackage{Sweavel}
 \usepackage{graphicx}
-\usepackage{listings}
-\lstset{tabsize=2, breaklines=true,style=Rstyle}
 
+%% PJ 20161110
+%% I want to use listings in the document and I want nice/same as knitr.
+%% Does knitr provide all of these settings for other listing uses outside
+%% weaved part?
+\usepackage{fancyvrb}
 \fvset{listparameters={\setlength{\topsep}{0em}}}
-\def\Sweavesize{\scriptsize} 
+\usepackage{listings}
+\def\Sweavesize{\normalsize} 
 \def\Rcolor{\color{black}} 
 \def\Rbackground{\color[gray]{0.95}}
+\providecommand{\Rcolor}{\color[rgb]{0, 0.5, 0.5}}
+\providecommand{\Routcolor}{\color[rgb]{0.461, 0.039, 0.102}}
+\providecommand{\Rcommentcolor}{\color[rgb]{0.101, 0.043, 0.432}}
+
+\providecommand{\Rbackground}{\color[gray]{0.95}}
+\providecommand{\Routbackground}{\color[gray]{0.80}}
+% Can specify \color[gray]{1} for white background or just \color{white}
+
+
+\lstdefinestyle{Rstyle}{fancyvrb=false,
+                        frame=none,
+                        escapechar=`,
+                        language=R,%
+                        basicstyle={\Rcolor\Sweavesize},%
+                        backgroundcolor=\Rbackground,%
+                        showstringspaces=false,%
+                        keywordstyle=\Rcolor,%
+                        commentstyle={\Rcommentcolor\ttfamily\itshape},%
+                        literate={<-}{{$\leftarrow$}}2{<<-}{{$\twoheadleftarrow$}}2{~}{{$\sim$}}1{<=}{{$\leq$}}2{>=}{{$\geq$}}2{^}{{$^{\scriptstyle\wedge}$}}1,%
+                        alsoother={$},%
+                        alsoletter={.<-},%
+                        otherkeywords={!,!=,~,$,*,\&,\%/\%,\%*\%,\%\%,<-,<<-,/},%
+                        escapeinside={(*}{*)}}%
+
+\lstset{tabsize=2, breaklines=true,style=Rstyle}
 
 \makeatother
 
 \usepackage{babel}
+\usepackage{listings}
+\renewcommand{\lstlistingname}{Listing}
+
 \begin{document}
 \begin{minipage}[t]{1\columnwidth}%
 \begin{center}
@@ -173,12 +198,9 @@ Other author names here, Title, CRMDA
 if(!dir.exists("tmpout"))dir.create("tmpout", recursive = TRUE)
 @
 
-% In document Latex options:
-\fvset{listparameters={\setlength{\topsep}{0em}}}
-
 <<knitr10,include=FALSE,echo=FALSE>>=
 library(knitr)
-opts_chunk$set(fig.path='tmpout/t',split=T,ae=F,
+opts_chunk$set(fig.path='tmpout/t-',split=T,ae=F,
                fig.height=5,fig.width=6)
 @
 
@@ -201,19 +223,44 @@ This is the version that includes Sweave support.
 
 An example of an Sweaved R usage
 
-<<m1>>=
+<<m1, include=F>>=
 dat <- data.frame(x = rnorm(100), y = rnorm(100))
 m1 <- lm(y ~ x, data = dat)
 summary(m1)
 @
 
-And in case you like Lovely LaTeX output
+In reports we do not usually have R output in the raw form
 
-%<<outreg1, results='tex'>>=
-%library(rockchalk)
-%vl <- c("x" = "Excellent Predictor")
-%outreg(list("First Model" = m1), varLabels = vl, tight = FALSE)
-%@
+\input{tmpout/t-m1.tex}
+
+We would rather have a professional-looking table.
+
+<<outreg1, echo=F, results='asis'>>=
+library(rockchalk)
+vl <- c("x" = "Excellent Predictor")
+outreg(list("First Model" = m1), varLabels = vl, tight = FALSE)
+@
+
+I wish that listings objects that are not produced from knitted chunks
+would look same. Lets see:
+
+\begin{lstlisting}
+x <- rnorm(100)
+y <- rpois(100, lambda = 2)
+plot(y ~ x)
+\end{lstlisting}
+
+Ah, I see it is not the same because I did not get my listing settings
+in my preamble exactly the same as what knitr uses. How to fix?
+
+Maybe get a GRA to fix.
+
+If I put in another chunk, maybe I will see a pattern in the LaTeX
+code.
+
+<<>>=
+summary(dat)
+@
 
 Some words to test margin sanity. Some words to test margin sanity.
 Some words to test margin sanity. Some words to test margin sanity.

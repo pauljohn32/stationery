@@ -24,7 +24,7 @@ while true
 do
     case "$1" in
 	-h|--help)
-	 echo "Used to render from Rmd to pdf or html"
+	 echo "Used to render from Rmd to pdf"
 	    exit
 	    ;;
 	--) shift ; break ;;
@@ -32,23 +32,34 @@ do
     esac
 done
 
-## echo $fmt
-   output_format="pdf_document(highlight=\"haddock\", template=\"theme/crmda-boilerplate.tex\", pandoc_args=\"--listings\" )"
-## echo "The fmt is $output_format"
+output_format="pdf_document(highlight=\"haddock\", template=\"theme/crmda-boilerplate.tex\", pandoc_args=\"--listings\" )"
+
 
 
 filename=$1
-## echo "Rendering: $filename into output_format $output_format"
+fn=$(basename "$filename")
+exten="${fn##*.}"
 
-if [[ $filename = "" ]]
+echo "$fn"
+echo "$exten"
+
+
+if [[ $filename == "" ||  "$exten" != "Rmd" ]]
 then
     echo -e "These are the Rmd files in the current directory." 
     echo -e "\n" $(ls  *.Rmd)
-    read -p "Please indicate which you want, or type \"all\": " filename
+    read -p "Please indicate which you want, or hit Enter for all: " filename
 fi
+
 
 
 if [[ -e $filename ]]
-   then
+then
        render "$filename" "$output_format"
+else
+for fn in *.Rmd
+do
+        render "$fn" "$output_format"
+done
 fi
+ 
