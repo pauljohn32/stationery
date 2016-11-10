@@ -56,17 +56,25 @@
 ##' 
 ##' kutils::initProject()
 ##' list.files()
-##' setwd("writeup")
-##'
+##' initWriteup(folderin = "rnw2pdf-guide-knit", newdir = "writeup/trash1")
+##' list.files("writeup/trash1")
+##' initWriteup(folderin = "rmd2pdf-report", newdir = "writeup/trash2")
+##' list.files("writeup/trash2")
+##' initWriteup(folderin = "rmd2html-guide", newdir = "writeup/trash3")
+##' list.files("writeup/trash3")
+##' 
 ##' ## Notice: some will fail because we don't have templates
 ##' ## for them yet
+##'
+##' ## cd into writeup folder to make this more convenient
+##' setwd("writeup")
 ##' initWriteup(input = "Rmd", output = "pdf", type = "report",
-##'               newdir = "rmd2pdf-report-knit")
+##'               newdir = "rmd2pdf-report-knit2")
 ##'
 ##' initWriteup(input = "Rmd", output = "html", type = "guide",
 ##'             newdir = "rmd2html-guide-knit")
 ##' ## No need specify render for "Rmd" docs, only knit is possible
-##' 
+##'
 ##' initWriteup(input = "Rnw", output = "pdf", type = "guide",
 ##'              render = "Sweave", newdir = "rnw2pdf-guide-sweave")
 ##'
@@ -75,10 +83,8 @@
 ##'
 ##' initWriteup(input = "Rnw", output = "pdf", type = "report",
 ##'              render = "knit", newdir = "rnw2pdf-report-knit")
-##'
-##' initWriteup(folderin = "rnw2pdf-guide-knit", newdir = "/tmp/trash1")
-##' initWriteup(folderin = "rmd2pdf-report", newdir = "/tmp/trash2")
-##' initWriteup(folderin = "rmd2html-guide", newdir = "/tmp/trash3")
+##' list.files("rnw2pdf-report-knit")
+
 ##' ## Should fail, because there is no html report (never will be)
 ##' initWriteup(input = "Rmd", output = "html", newdir = "rmd2html")
 ##'
@@ -101,12 +107,11 @@ initWriteup <- function(folderin = NULL,
     }
 
     if (is.null(folderin)){
-        folderin <- tolower(paste0("extdata/", input, "2", output))
-        folderin <- paste0(folderin, "-", type)
+        folderin <- tolower(paste0(input, "2", output, "-", type))
         
         ## Only need -sweave or -knit if document is rnw
         if((tolower(input) == "rnw")){
-            folderin <- paste0(folderin, "-", type, "-", tolower(render))
+            folderin <- paste0(folderin, "-", tolower(render))
         }
     }
     folderin <- paste0("extdata/", folderin)
