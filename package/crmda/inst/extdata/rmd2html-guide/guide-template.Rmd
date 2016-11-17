@@ -8,13 +8,13 @@ author:
  - name: Firstname2 Lastname2
    affiliation: Center for Research Methods and Data Analysis, University of Kansas
    email: email2@email.com
- - name: "CRMDA Guide #40. Please visit [http://crmda.ku.edu/guides](http://crmda.ku.edu/guides) for updates." 
+ - name: "CRMDA Guide #40. Please visit [http://crmda.ku.edu/guides](http://crmda.ku.edu/guides) for updates."
  - name: "Tags: guides, tag1, tag2, please_leave_guides"
 
-abstract: 
+abstract:
     Author, please REMEMBER TO INCLUDE AN ABSTRACT BEFORE FINALIZING THIS DOCUMENT!
 checked_by: "First Last"
-Note to Authors: please_dont_change_the_next 4 lines!			
+Note to Authors: please_dont_change_the_next 4 lines!
 date: "`r format(Sys.time(), '%Y %B %d')`"
 output:
   html_document:
@@ -29,46 +29,53 @@ knitr::opts_chunk$set(echo=TRUE, comment=NA, fig.path=paste0(outdir, "/p-"))
 options(width = 70)
 ```
 
-## In our KU css file, we have special highlighted elements for callouts.  
+## In our KU css file, we have special highlighted elements for callouts.
 
 Callout usage is demonstrated in the following. These
    are always preceeded by four # signs. Yes, ####. We stole this idea
    from other styles and put them into ours. See usage of {.bs-callout
    .bs-callout-whatever_you_put here}, where whatever_you_put_here is
-   either "danger", "warning" or "info". We might be able to negotiate
+   either "gray", "red", "orange", "blue", or "green". We might be able to negotiate
    you you on the choice of colors.  Run the render script with this
    document, you'll see what we mean.
-	
 
-#### Danger: Elements to fix {.bs-callout .bs-callout-danger}
-1) topical tags, first of which is "guide"
+```{r, eval=FALSE, include=FALSE}
+bscols <- data.frame(old = c("info", "warning", "danger"),
+                     new = c("blue", "orange", "red"))
+```
 
-      a) we need a list of legal tags
+## Demonstrating Callouts
 
-      b) way to enforce the tags
+#### Gray Callout {.bs-callout .bs-callout-gray}
+Content here
 
-      c) way to make them available better than making them a co-author
+#### Red Callout {.bs-callout .bs-callout-red}
+Content here
 
-2) Wish header had comment like ("this document was retrieved from
-CRMDA") without making it a coauthor
+#### Orange Callout {.bs-callout .bs-callout-orange}
+Content here
 
-#### Note: Policies about writing in these documents. {.bs-callout .bs-callout-warning}
+#### Blue Callout {.bs-callout .bs-callout-blue}
+Content here
 
-1. Blank rows separate paragraphs.
+#### Green Callout {.bs-callout .bs-callout-green}
+Content here
 
-2. The character width of rows should be 80 or less.  I have
+
+#### Policies about writing in these documents. {.bs-callout .bs-callout-red}
+
+1. Use these callouts to attract attention
+
+2. Blank rows separate paragraphs.
+
+3. The character width of rows should be 80 or less.  I have
 no idea how anybody thinks they have a right to impose an
 infinitely long row, but its bad.  Edit the document
 with Emacs, run M-q to get repositioned text.  If your
 editor cannot do that, quit using it.
 
-#### Info: Use these callouts to attract attention {.bs-callout .bs-callout-info}
-
-1. You can use danger (red), warning (orange), or info (blue)
-
-2. Must make sure compiling using the kutils.css located in the kutils package
-e.g., `rmarkdown::render("template-guide.Rmd", html_document(css = system.file("rmarkdown/",`  
-`"kutils.css",package = "kutils")))`
+4. Must make sure compiling using the kutils.css located in the crmda package
+e.g., `crmda::render2html("filename.Rmd")`
 
 ## You have the ability to include tabs {.tabset .tabset-fade}
 
@@ -76,7 +83,7 @@ If you'd like, you can include different tabs. Maybe you want to show two simila
 
 The only way (that we know of) to get colors is to wrap the tab headers in a `<span style>` as shown below. This might be useful to draw attention to the tabs. Blue is the default color.
 
-#### Info: What it looks like {.bs-callout .bs-callout-info}
+#### What it looks like {.bs-callout .bs-callout-blue}
 
 ```
 ## You have the ability to include tabs {.tabset .tabset-fade}
@@ -93,7 +100,13 @@ Some information you'd like to show.
 
 Some more information you'd like to show.
 
+Some more information you'd like to show.
+
 ### Third Tab Here
+
+Some final information you'd like to show.
+
+Some final information you'd like to show.
 
 Some final information you'd like to show.
 
@@ -102,7 +115,7 @@ Some final information you'd like to show.
 
 ## {.tabset .tabset-fade}
 
-### <span style="color:red" "background-color:blue">First Tab Here</span>
+### <span style="color:red">First Tab Here</span>
 
 Some information you'd like to show.
 
@@ -110,9 +123,16 @@ Some information you'd like to show.
 
 Some more information you'd like to show.
 
+Some more information you'd like to show.
+
 ### Third Tab Here
 
 Some final information you'd like to show.
+
+Some final information you'd like to show.
+
+Some final information you'd like to show.
+
 
 ## Equations can be written in LaTeX, either "inline" or "display" mode.
 
@@ -190,16 +210,16 @@ $$
 f(y|N,p) = \frac{N!}{y!(N-y)!}\cdot p^y \cdot (1-p)^{N-y} = {{N}\choose{y}} \cdot p^y \cdot (1-p)^{N-y}
 $$
 
-To calculate the **mean** of \textit{n} observations of variable \textit{x}, you can use: $$\bar{x} = \frac{1}{n} \sum_{i=1}^{n}x_{i}$$ 
+To calculate the **mean** of \textit{n} observations of variable \textit{x}, you can use: $$\bar{x} = \frac{1}{n} \sum_{i=1}^{n}x_{i}$$
 
 Note that this equation looks quite nice above where it's in display math mode. It is more compact but not quite as nice looking if we present it using inline mode, e.g., $\bar{x} = \frac{1}{n} \sum_{i=1}^{n}x_{i}$.
 
-Let's do the same with the equation for **variance**. First the inline version, which is 
-$\sigma^{2} = \frac{\sum\limits_{i=1}^{n} \left(x_{i} - \bar{x}\right)^{2}} {n-1}$. And then the display mode version: 
-$$\sigma^{2} = \frac{\sum_{i=1}^{n} 
+Let's do the same with the equation for **variance**. First the inline version, which is
+$\sigma^{2} = \frac{\sum\limits_{i=1}^{n} \left(x_{i} - \bar{x}\right)^{2}} {n-1}$. And then the display mode version:
+$$\sigma^{2} = \frac{\sum_{i=1}^{n}
   \left(x_{i} - \bar{x}\right)^{2}}
   {n-1}$$
-  
+
 And, finally, we'll end with the **standard deviation**. Here's the inline version, $\sigma = \sqrt{\frac{\sum\limits_{i=1}^{n} \left(x_{i} - \bar{x}\right)^{2}} {n-1}}$. And here's the display version.
 $$\sigma = \sqrt{\frac{\sum\limits_{i=1}^{n} \left(x_{i} - \bar{x}\right)^{2}} {n-1}}$$
 
@@ -222,11 +242,11 @@ print(x[1:20])
 hist(rnorm(20))
 ```
 
-#### R code inside a callout {.bs-callout .bs-callout-danger}
+#### R code inside a callout {.bs-callout .bs-callout-red}
 ```{r xsummary}
 summary(x)
 ```
-## 	 
+##
 
 [//]: (All guides must have this as the final stanza)
 
