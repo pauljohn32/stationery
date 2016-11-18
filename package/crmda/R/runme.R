@@ -4,11 +4,14 @@
 ##' This is a very simple wrapper around the rmarkdown::render function.
 ##' It makes sure that the style sheet we want to use is applied to the data.
 ##'
-##' Running this will be the same as running the rmd2html.sh script within
-##' the directory.
-##' @param fn A file name. If not specified, then all Rmd documents within directory are rendered.
-##' @param wd A working directory name. If not specified, then the current working directory from R will be used.
-##' @param verbose The opposite of render(quiet = TRUE). Shows compile commentary and pandoc command. Can be informative!
+##' Running this will be the same as running the rmd2html.sh script
+##' within the directory.
+##' @param fn A file name. If not specified, then all Rmd documents
+##'     within directory are rendered.
+##' @param wd A working directory name. If not specified, then the
+##'     current working directory from R will be used.
+##' @param verbose The opposite of render(quiet = TRUE). Shows compile
+##'     commentary and pandoc command. Can be informative!
 ##' @importFrom rmarkdown render
 ##' @return A vector of output file names
 ##' @author Paul Johnson <pauljohn@@ku.edu>
@@ -44,4 +47,76 @@ rmd2html <- function(fn = NULL, wd = NULL, verbose = FALSE) {
     res
 }
 
+
+##' Convert an Rnw or lyx file to pdf
+##'
+##' Documents saved with suffic ".lyx" or ".Rnw" will be
+##' converted.  Note it is very important to specify the
+##' engine correctly, this can be either "Sweave" or "knitr".
+##' 
+##' @param fn should end in either ".Rnw" or ".lyx"
+##' @param wd Directory in which the file to be converted
+##'     exists. Leave NULL default if is in current working directory.
+##' @param engine knitr or Sweave
+##' @param verbose if FALSE, the knitr quiet is set as TRUE
+##' @return NULL
+##' @export
+##' @author Paul Johnson <pauljohn@@ku.edu>
+##' @importFrom knitr knit2pdf
+##' @importFrom knitr knit
+##' @importFrom utils Sweave
+##' @examples 
+##' tmpdir <- tempdir()
+##' fdir <- system.file("extdata/rnw2pdf-guide-sweave", "", package = "crmda")
+##' wdir <- file.path(tmpdir, basename(fdir))
+##' dir.create(wdir)
+##' file.copy(from = fdir, to = tmpdir, recursive = TRUE)
+##' rnw2pdf("guide-template.lyx", wd = wdir, engine = "sweave")
+rnw2pdf <- function(fn = NULL, wd = NULL, engine = "knitr", verbose = FALSE) {
+    if (!is.null(wd)) {
+        wd.orig <- getwd()
+        setwd(wd)
+    }
+    
+    if (is.null(fn)) {
+        cat("Will render all *.Rnw files in current working directory\n")
+        fn <- list.files(pattern="Rnw")
+    }    
+   
+    compileme <- function(x, verbose) {
+        if (length(grep("\\.lyx$", x))){
+            if (tolower(engine) == "knitr"){
+                system(paste("lyx -e knitr ", x))
+            } else {
+                system(paste("lyx -e sweave ", x))
+            }
+            x <- gsub("\\.lyx", ".Rnw", x) 
+        }
+        
+        if (file.exists(x)){
+            if (tolower(engine) == "knitr"){
+                knit2pdf(x, quiet = !verbose)
+                knit(x, quiet = !verbose, tangle = TRUE)
+            } else {
+                Sweave(x)
+                tools::texi2pdf(x)
+                ## Stangle not useful if split = TRUE
+            }
+        }
+
+        fnpdf <- gsub("\\.Rnw", ".pdf", x)
+        if (file.exists(fnpdf)){
+            return(fnpdf)
+        } else {
+            return("Failed")
+        }
+    }
+    
+    res <- sapply(fn, compileme, verbose)
+
+    if (!is.null(wd)){
+        setwd(wd.orig)
+    }
+    res
+}
 

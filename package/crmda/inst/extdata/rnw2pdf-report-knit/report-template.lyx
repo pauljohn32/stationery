@@ -458,6 +458,11 @@ status open
 
 \begin_layout Plain Layout
 
+opts.orig <- options()
+\end_layout
+
+\begin_layout Plain Layout
+
 options(device = pdf)
 \end_layout
 
@@ -663,6 +668,47 @@ status open
 \begin_layout Plain Layout
 
 summary(dat)
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<opts20, include=F>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+## Don't delete this.
+ It puts the interactive session options
+\end_layout
+
+\begin_layout Plain Layout
+
+## back the way they were.
+ If this is compiled within a session
+\end_layout
+
+\begin_layout Plain Layout
+
+## it is vital to do this.
+\end_layout
+
+\begin_layout Plain Layout
+
+options(opts.orig)
 \end_layout
 
 \begin_layout Plain Layout

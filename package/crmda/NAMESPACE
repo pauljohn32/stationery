@@ -2,5 +2,9 @@
 
 export(initWriteup)
 export(rmd2html)
+export(rnw2pdf)
+importFrom(knitr,knit)
+importFrom(knitr,knit2pdf)
 importFrom(kutils,initProject)
 importFrom(rmarkdown,render)
+importFrom(utils,Sweave)
