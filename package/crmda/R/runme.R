@@ -98,8 +98,10 @@ rnw2pdf <- function(fn = NULL, wd = NULL, engine = "knitr", verbose = FALSE) {
                 knit2pdf(x, quiet = !verbose)
                 knit(x, quiet = !verbose, tangle = TRUE)
             } else {
-                Sweave(x)
-                tools::texi2pdf(x)
+                system(paste("lyx -e pdf2", x))
+                ##Sweave(x)
+                ##x <- gsub("\\.lyx", ".tex", x) 
+                ##system(paste("texi2pdf", x))
                 ## Stangle not useful if split = TRUE
             }
         }
