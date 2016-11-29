@@ -124,7 +124,7 @@ footskip=1.5\baselineskip,
 \usepackage{Sweavel}
 \usepackage{graphicx}
 \usepackage{listings}
-\lstset{tabsize=2, breaklines=true,style=Rstyle}
+\lstset{tabsize=2, breaklines=true, style=Rstyle}
 
 \fvset{listparameters={\setlength{\topsep}{0em}}}
 \def\Sweavesize{\scriptsize} 
@@ -178,6 +178,7 @@ if(!dir.exists("tmpout"))dir.create("tmpout", recursive = TRUE)
 \SweaveOpts{prefix.string=tmpout/t,split=TRUE,ae=FALSE,height=5,width=6}
 
 <<Roptions, echo=F>>=
+opts.orig <- options()
 options(device = pdf)
 options(width=160, prompt=" ", continue="  ")
 options(useFancyQuotes = FALSE) 
@@ -189,14 +190,28 @@ options(SweaveHooks=list(fig=function() par(mar=pjmar, ps=10)))
 pdf.options(onefile=F,family="Times",pointsize=10)
 @
 
-Today, 2016-10-18, I fix the header once and for all! Until the next
-time. The header is now in a minibox. 
+Today, 2016-10-18, I fix the header once and for all! (Until the next
+time....) The header is now in a minibox. 
+
+This uses Frank Harrell's Sweavel LaTeX style file, which is included
+with this file, but that file can also be relocated into the LaTeX
+package install folder (See the CRMDA guide on package management).
+Sweavel uses the R listings class for better quality output, background
+shading, etc. This version has a line numbers, they can be removed.
+If you do not want the lines, edit the preamble and comment the line
+settings in the lstset block. Those lstset values are document-wide
+settings, they are adjusted by the Sweavel package below and we don't
+mind some fiddling around with them. For example, the last part of
+the preamble adjusts the background shades.
 
 \textbf{CAUTION}: the page margins can be adjusted in the geometry
 section of the preamble, but do not use the LyX Menu to change either
 margins or pagestyle.
 
-This is the version that includes Sweave support.
+This is the version that includes R Sweave support.
+
+\textbf{NOTE}: We decided to use the directory ``tmpout'' for the
+R ouptut from the chunks, including graphs.
 
 An example of an Sweaved R usage
 
@@ -212,6 +227,13 @@ And in case you like Lovely LaTeX output
 library(rockchalk)
 vl <- c("x" = "Excellent Predictor")
 o1 <- outreg(list("First Model" = m1), varLabels = vl, tight = FALSE)
+@
+
+<<opts20, include=F>>=
+## Don't delete this. It puts the interactive session options
+## back the way they were. If this is compiled within a session
+## it is vital to do this.
+options(opts.orig)
 @
 
 Some words to test margin sanity. Some words to test margin sanity.
