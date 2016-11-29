@@ -69,9 +69,15 @@ rmd2html <- function(fn = NULL, wd = NULL, verbose = FALSE) {
 ##' tmpdir <- tempdir()
 ##' fdir <- system.file("extdata/rnw2pdf-guide-sweave", "", package = "crmda")
 ##' wdir <- file.path(tmpdir, basename(fdir))
-##' dir.create(wdir)
+##' dir.create(wdir, recursive = TRUE)
 ##' file.copy(from = fdir, to = tmpdir, recursive = TRUE)
-##' rnw2pdf("guide-template.lyx", wd = wdir, engine = "sweave")
+##' rnw2pdf("guide-template.lyx", wd = wdir, engine = "Sweave")
+##' tmpdir <- paste0(tmpdir, "-2")
+##' wdir <- file.path(tmpdir, basename(fdir))
+##' dir.create(wdir, recursive = TRUE)
+##' file.copy(from = fdir, to = tmpdir, recursive = TRUE)
+##' rnw2pdf("guide-template.Rnw", wd = wdir, engine = "Sweave")
+##' 
 rnw2pdf <- function(fn = NULL, wd = NULL, engine = "knitr", verbose = FALSE) {
     if (!is.null(wd)) {
         wd.orig <- getwd()
@@ -90,7 +96,9 @@ rnw2pdf <- function(fn = NULL, wd = NULL, engine = "knitr", verbose = FALSE) {
             } else {
                 system(paste("lyx -e sweave ", x))
             }
-            x <- gsub("\\.lyx", ".Rnw", x) 
+            system(paste("lyx -e pdf2 ", x))
+            x <- gsub("\\.lyx$", ".Rnw", x)
+            return(x)
         }
         
         if (file.exists(x)){
@@ -98,15 +106,11 @@ rnw2pdf <- function(fn = NULL, wd = NULL, engine = "knitr", verbose = FALSE) {
                 knit2pdf(x, quiet = !verbose)
                 knit(x, quiet = !verbose, tangle = TRUE)
             } else {
-                system(paste("lyx -e pdf2", x))
-                ##Sweave(x)
-                ##x <- gsub("\\.lyx", ".tex", x) 
-                ##system(paste("texi2pdf", x))
-                ## Stangle not useful if split = TRUE
+                Sweave(x)
             }
         }
-
-        fnpdf <- gsub("\\.Rnw", ".pdf", x)
+        
+        fnpdf <- gsub("\\.Rnw$", ".pdf", x)
         if (file.exists(fnpdf)){
             return(fnpdf)
         } else {
