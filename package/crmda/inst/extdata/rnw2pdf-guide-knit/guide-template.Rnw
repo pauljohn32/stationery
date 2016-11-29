@@ -178,7 +178,7 @@ opts_chunk$set(fig.path="tmpout/t-", split=TRUE, ae=FALSE, fig.height=3, fig.wid
 options(width=100, prompt=" ", continue="  ")
 options(useFancyQuotes = FALSE) 
 set.seed(12345)
-pdf.options(onefile=F,family="Times",pointsize=10)
+pdf.options(onefile=FALSE,family="Times",pointsize=10)
 @
 
 Today, 2016-10-18, I fix the header once and for all! Until the next

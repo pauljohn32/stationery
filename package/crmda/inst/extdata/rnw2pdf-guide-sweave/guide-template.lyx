@@ -543,7 +543,7 @@ options(SweaveHooks=list(fig=function() par(ps=10)))
 
 \begin_layout Plain Layout
 
-pdf.options(onefile=F,family="Times",pointsize=10)
+pdf.options(onefile=FALSE,family="Times",pointsize=10)
 \end_layout
 
 \begin_layout Plain Layout
