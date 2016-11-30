@@ -157,7 +157,7 @@ library(rockchalk)
      gm1 <- glm(y1 ~ x1, family = Gamma, data = dat)
      outreg(list("Whichever" = m1, "Whatever" = m2),
          title = "Still have showAIC argument, as in previous versions",
-         showAIC = TRUE, float = FALSE)   
+         showAIC = TRUE, float = TRUE)   
 
 ```     
 
