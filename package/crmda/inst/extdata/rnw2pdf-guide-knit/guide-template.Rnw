@@ -175,6 +175,7 @@ opts_chunk$set(fig.path="tmpout/t-", split=TRUE, ae=FALSE, fig.height=3, fig.wid
 @
 
 <<Roptions, echo=F>>=
+opts.orig <- options()
 options(width=100, prompt=" ", continue="  ")
 options(useFancyQuotes = FALSE) 
 set.seed(12345)
@@ -223,6 +224,13 @@ table looks awesome.
 
 \input{tmpout/t-pois15.tex}
 \end{table}
+
+<<opts20, include=F>>=
+## Don't delete this. It puts the interactive session options
+## back the way they were. If this is compiled within a session
+## it is vital to do this.
+options(opts.orig)
+@
 
 In the process of working on this, I recovered a lot of traumatic
 memories of the problem that minipages do not float vertically as

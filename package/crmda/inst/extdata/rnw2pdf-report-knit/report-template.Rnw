@@ -5,7 +5,7 @@
 \renewcommand{\sfdefault}{lmss}
 \renewcommand{\ttdefault}{lmtt}
 \usepackage[T1]{fontenc}
-\usepackage[latin9]{inputenc}
+\usepackage[utf8]{inputenc}
 \setlength{\parskip}{\medskipamount}
 \setlength{\parindent}{0pt}
 \usepackage{array}
@@ -59,8 +59,8 @@ footskip=1.5\baselineskip,
   frame=single,
   framerule=0.2pt,
   framesep=1pt,
-  numbers=left,
-  numberstyle=\tiny,
+  % numbers=left,% not in reports
+  % numberstyle=\tiny,%not in reports
   numbersep=5pt,
   showstringspaces=false,
   basicstyle=\footnotesize,
@@ -271,7 +271,22 @@ Over the years, I have benefitted a great deal from the ``automatic
 document with integrated results'' from Sweave. I have found this
 most beneficial in the preparation of course notes and slides. 
 
-I do not find it quite so beneficial in the preparation of reports
+I do not find it quite so beneficial in the preparation of reports.
+Here is the main issue. The ``automatic'' ``self-documenting''
+report is almost never exactly correct. It requires some ``finger
+painting''. Perhaps that would not be true in the perfect world,
+if we were perfect programmers, but I don't live in a perfect world.
+In that case, I am willing to settle for a very good second best alternative.
+I have learned to export result files from R which can be included
+in documents easily, so the documents are easily updated and revised.
+They may not be completely automatic because I leave open the possibility
+that I might need to adjust a figure's size or a part of a table's
+markup.
+
+The magic bullet in that is the ``split'' option for Sweave, which
+knitr for LaTeX also supports. If split=T, then the individual code
+chunks and their results are saved in separate files. Here we save
+them in a directory called ``tmpout''.
 
 What is the difference between a guide and a report? Simply put, a
 report document does not reveal source code and it should not distract
@@ -331,6 +346,35 @@ code.
 <<>>=
 summary(dat)
 @
+
+In the kutils package, we made a function cfaTable that is intended
+to help with nice looking. Usually, we want a bigger table in a floating
+element. Please see Table \ref{tab:A-Confirmatory-Factor}. In the
+preamble of this document, I have some boilerplate code that causes
+content in floating tables and figures to be centered automatically.
+This looks nice!
+
+<<include=F>>=
+library(kutils)
+require(lavaan)
+@
+
+<<cfa1, echo=F, include=F,results='asis'>>=
+HS.model <- 'visual  =~ x1 + x2 + x3
+textual =~ x4 + x5 + x6
+speed   =~ x7 + x8 + x9'
+output1 <- cfa(HS.model, data = HolzingerSwineford1939, std.lv = TRUE)
+cfa1 <- cfaTable(output1, fit = "rmsea", standardized = TRUE, params = c("loadings", "latentvariances"), type = "latex")
+cat(cfa1)
+@
+
+\begin{table}
+
+\caption{A Confirmatory Factor Analysis Table\label{tab:A-Confirmatory-Factor}}
+
+\input{tmpout/t-cfa1.tex}
+
+\end{table}
 
 Some words to test margin sanity. Some words to test margin sanity.
 Some words to test margin sanity. Some words to test margin sanity.
