@@ -1,0 +1,2246 @@
+#LyX 2.2 created this file. For more info see http://www.lyx.org/
+\lyxformat 508
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass scrartcl
+\begin_preamble
+\usepackage{Sweavel}
+\usepackage[includehead,includefoot]{geometry}
+\geometry{
+lmargin=1in,
+rmargin=1in,
+tmargin=0.75in,
+bmargin=1.0in,
+headheight=0pt,
+headsep=0pt,
+marginparwidth=0pt,
+footskip=1.5\baselineskip,
+}
+
+\usepackage{multicol}
+\usepackage{listings}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage[yyyymmdd,hhmmss]{datetime}
+\lstset{tabsize=2, breaklines=true, 
+  breakatwhitespace=true,
+  %language=R,
+  captionpos=b,
+  frame=single,
+  framerule=0.2pt,
+  framesep=1pt,
+  numbersep=5pt,
+  showstringspaces=false,
+  basicstyle=\footnotesize,
+  identifierstyle=,
+  keywordstyle=\bfseries,
+  commentstyle=\color{darkgreen},
+  stringstyle=,
+  backgroundcolor=\color[gray]{0.935}
+}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{babel}
+% Now fancy header/footer settings
+\lhead{}
+\chead{}
+\rhead{}
+\renewcommand{\headrulewidth}{0pt}
+\lfoot{}
+\cfoot{{Page} \thepage { of} \pageref{LastPage}}
+\rfoot{}
+
+\fancypagestyle{firststyle}
+{
+\lfoot{}
+%\cfoot{{Page} \thepage { of} \pageref{LastPage}}
+\cfoot{}
+\rfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\fancyfoot[L]{1425 Jayhawk Blvd.\\470 Watson Library\\ Lawrence, KS 66045-7555}
+\fancyfoot[R]{Phone: 785-864-3353\\ Website: crmda.ku.edu\\ Email: crmda@ku.edu}
+\renewcommand{\footrulewidth}{.1pt}
+}
+
+\pagestyle{fancy}
+
+
+%graphics and such inside floats are centered by default
+\renewenvironment{figure}[1][]{%
+ \ifthenelse{\equal{#1}{}}{%
+   \@float{figure}
+ }{%
+   \@float{figure}[#1]%
+ }%
+ \centering
+}{%
+ \end@float
+}
+\renewenvironment{table}[1][]{%
+ \ifthenelse{\equal{#1}{}}{%
+   \@float{table}
+ }{%
+   \@float{table}[#1]%
+ }%
+
+ \centering
+%  \setlength{\@tempdima}{\abovecaptionskip}%
+%  \setlength{\abovecaptionskip}{\belowcaptionskip}%
+% \setlength{\belowcaptionskip}{\@tempdima}%
+}{%
+ \end@float
+}
+
+\thispagestyle{firststyle}
+
+\usepackage{dcolumn}
+\usepackage{booktabs}
+\usepackage{multicol}
+\usepackage{graphicx}
+
+%% PJ 20161110
+%% I want to use listings in the document and I want nice/same as knitr.
+%% Does knitr provide all of these settings for other listing uses outside
+%% weaved part?
+\usepackage{fancyvrb}
+\fvset{listparameters={\setlength{\topsep}{0em}}}
+\usepackage{listings}
+\def\Sweavesize{\normalsize} 
+\def\Rcolor{\color{black}} 
+\def\Rbackground{\color[gray]{0.95}}
+\providecommand{\Rcolor}{\color[rgb]{0, 0.5, 0.5}}
+%%\providecommand{\Routcolor}{\color[rgb]{0.461, 0.039, 0.102}}
+\providecommand{\Routcolor}{\color[rgb]{1.0, 0.0, 0.0}}
+\providecommand{\Rcommentcolor}{\color[rgb]{0.101, 0.043, 0.432}}
+
+\providecommand{\Rbackground}{\color[gray]{0.95}}
+\providecommand{\Routbackground}{\color[gray]{0.80}}
+% Can specify \color[gray]{1} for white background or just \color{white}
+
+
+\lstdefinestyle{Rstyle}{fancyvrb=false,
+                        frame=none,
+                        escapechar=`,
+                        language=R,%
+                        basicstyle={\Rcolor\Sweavesize},%
+                        backgroundcolor=\Rbackground,%
+                        showstringspaces=false,%
+                        keywordstyle=\Rcolor,%
+                        commentstyle={\Rcommentcolor\ttfamily\itshape},%
+                        literate={<-}{{$\leftarrow$}}2{<<-}{{$\twoheadleftarrow$}}2{~}{{$\sim$}}1{<=}{{$\leq$}}2{>=}{{$\geq$}}2{^}{{$^{\scriptstyle\wedge}$}}1,%
+                        alsoother={$},%
+                        alsoletter={.<-},%
+                        otherkeywords={!,!=,~,$,*,\&,\%/\%,\%*\%,\%\%,<-,<<-,/},%
+                        escapeinside={(*}{*)}}%
+
+\lstset{tabsize=2, breaklines=true, style=Rstyle}
+\end_preamble
+\use_default_options false
+\begin_modules
+logicalmkup
+sweave
+\end_modules
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding iso8859-15
+\fontencoding global
+\font_roman "lmodern" "default"
+\font_sans "lmss" "default"
+\font_typewriter "lmtt" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 11
+\spacing single
+\use_hyperref false
+\papersize letterpaper
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 0
+\use_package esint 1
+\use_package mathdots 0
+\use_package mathtools 0
+\use_package mhchem 0
+\use_package stackrel 0
+\use_package stmaryrd 0
+\use_package undertilde 0
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date true
+\justification true
+\use_refstyle 0
+\branch R
+\selected 0
+\filename_suffix 0
+\color #faf0e6
+\end_branch
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 1in
+\topmargin 1in
+\rightmargin 1in
+\bottommargin 1in
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation skip
+\defskip medskip
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="2" columns="2">
+<features tabularvalignment="top">
+<column alignment="left" valignment="top" width="4in">
+<column alignment="center" valignment="top" width="2.25in">
+<row>
+<cell alignment="left" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\shape smallcaps
+\size larger
+Title of this Document: A Subtitle that may Flow onto Additional Space if
+ Necessary
+\end_layout
+
+\begin_layout Plain Layout
+\noindent
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset VSpace medskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename theme/CRMDA_logo.pdf
+	width 2in
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multicolumn="1" alignment="left" valignment="top" topline="true" bottomline="true" usebox="none" width="5in">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset VSpace defskip
+\end_inset
+
+Your Name Here, Your Title, CRMDA
+\end_layout
+
+\begin_layout Plain Layout
+<your_email@ku.edu>
+\end_layout
+
+\begin_layout Plain Layout
+Other author names here, Title, CRMDA
+\end_layout
+
+\begin_layout Plain Layout
+<their_email@ku.edu>
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Will insert correct date.
+ Replace following if you want fixed date.
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\paragraph_spacing single
+\noindent
+\align left
+
+\series bold
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+today
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset VSpace medskip
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+% Please leave this chunk
+\end_layout
+
+\begin_layout Plain Layout
+
+<<echo=F>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+if(!dir.exists("tmpout"))dir.create("tmpout", recursive = TRUE)
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+% Please leave this code: In document Latex options:
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+fvset{listparameters={
+\backslash
+setlength{
+\backslash
+topsep}{0em}}}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+SweaveOpts{prefix.string=tmpout/t, split=TRUE, ae=FALSE, height=5, width=6}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+% Please leave this chunk
+\end_layout
+
+\begin_layout Plain Layout
+
+<<Roptions, echo=F, include=F>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+opts.orig <- options()
+\end_layout
+
+\begin_layout Plain Layout
+
+options(device = pdf)
+\end_layout
+
+\begin_layout Plain Layout
+
+options(width=160, prompt=" ", continue="  ")
+\end_layout
+
+\begin_layout Plain Layout
+
+options(useFancyQuotes = FALSE) 
+\end_layout
+
+\begin_layout Plain Layout
+
+set.seed(12345)
+\end_layout
+
+\begin_layout Plain Layout
+
+par.orig <- par(no.readonly=TRUE) 
+\end_layout
+
+\begin_layout Plain Layout
+
+pjmar <- c(5.1, 5.1, 1.5, 2.1) 
+\end_layout
+
+\begin_layout Plain Layout
+
+options(SweaveHooks=list(fig=function() par(mar=pjmar, ps=10)))
+\end_layout
+
+\begin_layout Plain Layout
+
+pdf.options(onefile=FALSE, family="Times", pointsize=10)
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This is a LaTeX 
+\begin_inset Quotes eld
+\end_inset
+
+noweb
+\begin_inset Quotes erd
+\end_inset
+
+ report generated with the Sweave engine.
+ We compare it to the very similar document produced with 
+\begin_inset Quotes eld
+\end_inset
+
+knitr
+\begin_inset Quotes erd
+\end_inset
+
+ (in the companion folder rnw2pdf-report-knitr).
+\end_layout
+
+\begin_layout Section*
+This Document will Compile
+\end_layout
+
+\begin_layout Standard
+Use it as a 
+\begin_inset Quotes eld
+\end_inset
+
+crash test dummy
+\begin_inset Quotes erd
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+CAUTION
+\series default
+: This template document has some special features in the preamble.
+ Most importantly, it has margins that are set.
+ The LyX graphical menu (Document -> Settings -> margins) will break these
+ defaults.
+ So don't change the page margins or the pagestyle.
+ Other than that, I don't know of any settings that are fatal.
+\end_layout
+
+\begin_layout Section*
+Knitting and Sweaving Terminology
+\end_layout
+
+\begin_layout Standard
+Some elements are still not well integrated.
+ Going between 
+\begin_inset Quotes eld
+\end_inset
+
+raw
+\begin_inset Quotes erd
+\end_inset
+
+ LaTeX, knitr, and Sweave is sometimes confusing.
+\end_layout
+
+\begin_layout Subsection*
+Code Chunks
+\end_layout
+
+\begin_layout Standard
+The syntax for 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+knitr
+\end_layout
+
+\end_inset
+
+ code chunks is only slightly different than the syntax for 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+Sweave
+\end_layout
+
+\end_inset
+
+ chunks.
+ Sometimes the syntax can be identical.
+ Many of the options are identical.
+ 
+\end_layout
+
+\begin_layout Standard
+The LaTeX syntax for a code chunk in both cases is like so
+\end_layout
+
+\begin_layout LyX-Code
+<<chunkname, eval=TorF, include=TorF, echo=TorF>>=
+\end_layout
+
+\begin_layout LyX-Code
+
+\end_layout
+
+\begin_layout LyX-Code
+# R code here
+\end_layout
+
+\begin_layout LyX-Code
+\begin_inset Phantom HPhantom
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+@
+\end_layout
+
+\begin_layout LyX-Code
+
+\end_layout
+
+\begin_layout Standard
+where by 
+\begin_inset Quotes eld
+\end_inset
+
+
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+TorF
+\end_layout
+
+\end_inset
+
+
+\begin_inset Quotes erd
+\end_inset
+
+ I mean you can choose either T or F.
+ In the original documentation for Sweave, which was written more than one
+ decade ago, the letters T and F are used, not the full words TRUE and FALSE.
+ 
+\end_layout
+
+\begin_layout Standard
+These chunk arguments are allowed in either 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+knitr
+\end_layout
+
+\end_inset
+
+ or 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+Sweave
+\end_layout
+
+\end_inset
+
+, they are the ones I use most often.
+ Briefly:
+\end_layout
+
+\begin_layout Description
+1.
+\begin_inset space ~
+\end_inset
+
+echo: when the chunk is processed, the R code will be displayed along with
+ the output
+\end_layout
+
+\begin_layout Description
+2.
+\begin_inset space ~
+\end_inset
+
+include: the chunk is evaluated, but neither the echo nor the results are
+ displayed
+\end_layout
+
+\begin_layout Description
+3.
+\begin_inset space ~
+\end_inset
+
+eval: if F, the chunk is not sent to the R session, but it is checked for
+ correctness of code at compile time.
+\end_layout
+
+\begin_layout Subsection*
+Where knitr differs from Sweave
+\end_layout
+
+\begin_layout Standard
+If a chunk produces non-text output, such as a figure, a LaTeX table, or
+ other output (such as HTML), then the chunk will require some other arguments.
+ This is a case where 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+knitr
+\end_layout
+
+\end_inset
+
+ chunks will differ from 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+Sweave
+\end_layout
+
+\end_inset
+
+ chunks.
+\end_layout
+
+\begin_layout Standard
+There is a knitr version of this document, it points out more of the details.
+ knitr markup differs in several ways.
+ 
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+knitr
+\end_layout
+
+\end_inset
+
+ chunks offer a larger set of legal flags.
+\end_layout
+
+\begin_layout Enumerate
+knitr has different code for document-wide options.
+ It also has a richer set of options to control functions to handle the
+ document processing.
+ One benefit of knitr is that it can be used to write about other kinds
+ of programs.
+ I've used it to write about the BASH shell, for example.
+ 
+\end_layout
+
+\begin_layout Subsubsection*
+One document-weaving tip: save something for later.
+\end_layout
+
+\begin_layout Standard
+In the usual 
+\begin_inset Quotes eld
+\end_inset
+
+weave
+\begin_inset Quotes erd
+\end_inset
+
+ documentation, a user is told to type in a chunk and then the output plops
+ into the document 
+\begin_inset Quotes eld
+\end_inset
+
+right there
+\begin_inset Quotes erd
+\end_inset
+
+.
+ I don't use that so often anymore, instead what I do very often is a trick
+ I learned from Duncan Murdoch in the r-help email list.
+ 
+\end_layout
+
+\begin_layout Standard
+Make sure that the document options are set with 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+split=T
+\end_layout
+
+\end_inset
+
+.
+ This works in Sweave or knitr documents.
+ This causes each chunk's input and output to be saved to a separate file.
+ This includes graphs and tables.
+ So when I run a function that generates a graph, I get a pdf output file
+ in the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+tmpout
+\end_layout
+
+\end_inset
+
+ folder.
+ 
+\end_layout
+
+\begin_layout Standard
+If I make a figure, the chunk will look like this
+\end_layout
+
+\begin_layout LyX-Code
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+$<<$chunkfig, include=F, echo=F, fig=T$>>=$
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+# R code for figure here
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+ @
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+A file named 
+\begin_inset Quotes eld
+\end_inset
+
+
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+tmpout/t-chunkfig.pdf
+\end_layout
+
+\end_inset
+
+
+\begin_inset Quotes erd
+\end_inset
+
+ will be created in the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+tmpout
+\end_layout
+
+\end_inset
+
+ directory.
+ The 
+\begin_inset Quotes eld
+\end_inset
+
+
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+t-
+\end_layout
+
+\end_inset
+
+
+\begin_inset Quotes erd
+\end_inset
+
+ at the front of the file name is inserted because in the document setup,
+ I chose the global prefix for output files as 
+\begin_inset Quotes eld
+\end_inset
+
+t-
+\begin_inset Quotes erd
+\end_inset
+
+.
+ (Because documents can have different prefixes, it is possible then to
+ have several R programs that output files into the same output folder.
+ But I rarely do that because I don't want to get too confused about what
+ file came from which program.) To insert that graphic in the document, I
+ will write a LaTeX statement
+\end_layout
+
+\begin_layout LyX-Code
+
+\backslash
+includegraphics[width=5in]{tmpout/t-chunkfig}
+\end_layout
+
+\begin_layout Standard
+Note I don't put 
+\begin_inset Quotes eld
+\end_inset
+
+.pdf
+\begin_inset Quotes erd
+\end_inset
+
+ on the end of the file name, LaTeX finds the file named 
+\begin_inset Quotes eld
+\end_inset
+
+t-chunkfig.pdf
+\begin_inset Quotes erd
+\end_inset
+
+.
+ I could use the LyX pull down Insert -> Graphics as well.
+\end_layout
+
+\begin_layout Standard
+If the code makes a LaTeX table, I'll have this instead
+\end_layout
+
+\begin_layout LyX-Code
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+$<<$chunktable, include=F, results=tex$>>=$
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+# R code here
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+That creates a file named 
+\begin_inset Quotes eld
+\end_inset
+
+tmpout/t-chunktable.tex
+\begin_inset Quotes erd
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout LyX-Code
+
+\backslash
+input{tmpout/t-chunktable.tex}
+\end_layout
+
+\begin_layout LyX-Code
+
+\end_layout
+
+\begin_layout Standard
+Why do this? Why separate chunk output creation from inclusion in a document?
+ The simple answer is that I might want to use that chunk in a different
+ document.
+ If I save a copy in the separate folder, then it is very convenient to
+ come along later and make a separate slide show document displaying the
+ same tables and/or figures.
+\end_layout
+
+\begin_layout Standard
+The automatic 
+\begin_inset Quotes eld
+\end_inset
+
+stick this output in where the chunk is placed
+\begin_inset Quotes erd
+\end_inset
+
+ approach works great with lecture notes and guides because these things
+ are easy to update and re-run.
+\end_layout
+
+\begin_layout Standard
+I do not find the automatic insertion quite so helpful in the preparation
+ of reports.
+ Here is the main issue.
+ The 
+\begin_inset Quotes eld
+\end_inset
+
+automatic
+\begin_inset Quotes erd
+\end_inset
+
+ 
+\begin_inset Quotes eld
+\end_inset
+
+self-documenting
+\begin_inset Quotes erd
+\end_inset
+
+ report is almost never exactly correct.
+ It requires some 
+\begin_inset Quotes eld
+\end_inset
+
+finger painting
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Perhaps that would not be true in the perfect world, if we were perfect
+ programmers, but I don't live in a perfect world.
+ In that case, I am willing to settle for a very good second best alternative.
+ I have learned to export result files from R which can be included in documents
+ easily, so the documents are easily updated and revised.
+ They may not be completely automatic because I leave open the possibility
+ that I might need to adjust a figure's size or a part of a table's markup.
+\end_layout
+
+\begin_layout Section*
+Guides versus Reports
+\end_layout
+
+\begin_layout Standard
+What is the difference between a guide and a report? Simply put, a report
+ document does not reveal source code and it should not distract the reader
+ with code or 
+\begin_inset Quotes eld
+\end_inset
+
+raw
+\begin_inset Quotes erd
+\end_inset
+
+ program output.
+ A report document might just as well be typed by hand, if we could be sure
+ all the numbers would be typed correctly and they could easily revised.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<m1, include=F>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+dat <- data.frame(x = rnorm(100), y = rnorm(100))
+\end_layout
+
+\begin_layout Plain Layout
+
+m1 <- lm(y ~ x, data = dat)
+\end_layout
+
+\begin_layout Plain Layout
+
+summary(m1)
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In a report, we do not usually have R output in the raw form, or even in
+ the beautified form from Sweavel or some other 
+\begin_inset Quotes eld
+\end_inset
+
+fancy
+\begin_inset Quotes erd
+\end_inset
+
+ table formatting framework:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+input{tmpout/t-m1.tex}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The knitr settings we prefer also use the LaTeX listings class to beautify
+ these chunk outputs, but we hav found that controlling the style can be
+ more difficult.
+ The preambles of our LaTeX documents have fairly elaborate configurations
+ for the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+listings
+\end_layout
+
+\end_inset
+
+ displays.
+\end_layout
+
+\begin_layout Standard
+In a report, we do not want R code or output, we want a professional-looking
+ table.
+ 
+\end_layout
+
+\begin_layout Subsection*
+Listings, not Verbatim
+\end_layout
+
+\begin_layout Standard
+The Sweave default system uses the LaTeX Verbatim class to offer input and
+ output chunks in the document.
+ A better approach, pioneered by Frank Harrell (Vanderbilt) uses the LaTeX
+ class listings.
+ Harrell prepared a replacement for R's Sweave.sty and called it Sweavel.sty.
+\end_layout
+
+\begin_layout Standard
+We are using the listings class to display input and output chunks in this
+ document.
+ In the preamble, we have some special settings that control the color of
+ text, the background, and so forth.
+ The listings class has an elaborate settings framework.
+ 
+\end_layout
+
+\begin_layout Standard
+At one time, I had difficulty in generating visually appealing listings
+ output that would match the color & style of R chunk output from Sweavel.
+ The problem is solved, as we see now.
+ The following is a listings display.
+ It is not Sweaved, it is simply a LaTeX listings environment colored by
+ the settings in the preamble
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+x <- rnorm(100)
+\end_layout
+
+\begin_layout Plain Layout
+
+y <- rpois(100, lambda = 2)
+\end_layout
+
+\begin_layout Plain Layout
+
+plot(y ~ x)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The following code chunk in R appears to be the same.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<listingcompare, eval=F,echo=T>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+x <- rnorm(100)
+\end_layout
+
+\begin_layout Plain Layout
+
+y <- rpois(100, lambda = 2)
+\end_layout
+
+\begin_layout Plain Layout
+
+plot(y ~ x)
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Those match very closely.
+ At the moment, the same is not true in knitr documents, we are trying to
+ work that out.
+\end_layout
+
+\begin_layout Section*
+Make Nice Looking Tables
+\end_layout
+
+\begin_layout Standard
+In the preparation of a report, we then need to do some work to find a high
+ quality table-manufacturing function.
+ We don't want to see an R summary (ugly as it is):
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<Rsummary, echo=F>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+summary(dat)
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In R, there are many (many!) packages and functions that can be used to
+ generate acceptable LaTeX output.
+ The bewildering diversity of these things is a problem.
+ I became interested in this in 2002 or 2003, and later developed an R function
+ called 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+outreg
+\end_layout
+
+\end_inset
+
+ that is now in the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+rockchalk
+\end_layout
+
+\end_inset
+
+ R package.
+ There are a host of other packages that are intended to either 1) manufacture
+ a specific kind of table (regression tables) or 2) manufacture a reasonable
+ LaTeX table from a rectangular data object that is generated with R functions
+ like table.
+\end_layout
+
+\begin_layout Subsection*
+Summary statistics tables
+\end_layout
+
+\begin_layout Standard
+We don't have a great summary stats table maker now, but if I were doing
+ one, I'd probably start with the rockchalk::summarize function and beautify
+ that.
+ 
+\end_layout
+
+\begin_layout Subsubsection*
+xtable
+\end_layout
+
+\begin_layout Standard
+It is easy enough to use the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+xtable
+\end_layout
+
+\end_inset
+
+ package to get this done.
+ Here's an xtable that displays most of the rows in the output from 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+rockchalk::summarizeNumerics
+\end_layout
+
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<tab1, echo=F, results=tex>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+tab1 <- rockchalk::summarizeNumerics(dat)
+\end_layout
+
+\begin_layout Plain Layout
+
+tab1.x <- xtable::xtable(tab1[c(1:7,9,10,12) , ])
+\end_layout
+
+\begin_layout Plain Layout
+
+print(tab1.x, floating = FALSE)
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The first five rows–the quantiles–may not be necessary, so we can omit them:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<tab2, echo=F,results=tex>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+tab2.x <- xtable::xtable(tab1[c(6:7,9,10,12) , ])
+\end_layout
+
+\begin_layout Plain Layout
+
+print(tab2.x, floating = FALSE)
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+It may be that people want the output rotated, so that the variable names
+ are on the rows and the summary stats are in the columns.
+ That's possible:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<tab3, echo=F,results=tex>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+tab3.x <- xtable::xtable(t(tab1[c(6:7,9,10,12) , ]))
+\end_layout
+
+\begin_layout Plain Layout
+
+print(tab3.x, floating = FALSE)
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Row names and column names need to be beautified, that's for sure.
+ I suppose the point here is not that I can throw together an adequate table
+ in 10 minutes.
+ But rather that if we are making a report, we need some kind of good looking
+ table.
+ 
+\end_layout
+
+\begin_layout Standard
+One quirk in the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+xtable
+\end_layout
+
+\end_inset
+
+ package is that the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+xtable
+\end_layout
+
+\end_inset
+
+ function itself creates a object to hold material for a table, but the
+ hard work is done by the method 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+print.xtable
+\end_layout
+
+\end_inset
+
+, which has a ton of arguments and details to consider.
+ The hyper-elaborate nature of the arguments is off-putting, even for a
+ patient person.
+ I expect that if we made automatic table generation a full time job for
+ a few of the GRAs, we'd get to the bottom of all of those arguments.
+\end_layout
+
+\begin_layout Subsubsection*
+knitr::kable
+\end_layout
+
+\begin_layout Standard
+I used 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+xtable
+\end_layout
+
+\end_inset
+
+ for the first example.
+ xtable is, so far as I know, the oldest package for that purpose.
+ 
+\end_layout
+
+\begin_layout Standard
+Today, there are plenty of other functions available.
+ The following is a result from 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+kable
+\end_layout
+
+\end_inset
+
+ in the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+knitr
+\end_layout
+
+\end_inset
+
+ package:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<tab4, echo=F,results=tex>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+tab4.x <- knitr::kable(t(tab1[c(6:7,9,10,12) , ]), format = "latex")
+\end_layout
+
+\begin_layout Plain Layout
+
+cat(tab4.x)
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Like 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+xtable
+\end_layout
+
+\end_inset
+
+, the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+kable
+\end_layout
+
+\end_inset
+
+ function can be used to generate tables that are headed for LaTeX or HTML
+ documents.
+\end_layout
+
+\begin_layout Standard
+One of the interesting design decisions in creating a table-making function
+ is whether we ought to enclose the tabular object within a 
+\begin_inset Quotes eld
+\end_inset
+
+floating
+\begin_inset Quotes erd
+\end_inset
+
+ automatically numbered table.
+ A floating table would be expected in a LaTeX document.
+\end_layout
+
+\begin_layout Standard
+The 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+kable
+\end_layout
+
+\end_inset
+
+ function makes the same decision that I made in 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+outreg
+\end_layout
+
+\end_inset
+
+, which is that if the user specifies a title for the table, then it must
+ mean that the user wants to have the table set as a floating object.
+ The same code that made the previous table is changed just slightly to
+ produce a floating object (Look around in this document for a table named
+ 
+\begin_inset Quotes eld
+\end_inset
+
+In 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+kable
+\end_layout
+
+\end_inset
+
+, I added the caption argument and got this unexpected float
+\begin_inset Quotes erd
+\end_inset
+
+.
+ I found this frustrating because the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+kable
+\end_layout
+
+\end_inset
+
+ function does not include documentation for insertion of a label that can
+ be used for cross referencing.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<tab5, echo=F,results=tex>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+tab5.x <- knitr::kable(t(tab1[c(6:7,9,10,12) , ]), format = "latex", caption
+ = "In kable, I added the caption argument and got this unexpected float")
+\end_layout
+
+\begin_layout Plain Layout
+
+cat(tab5.x)
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+I'd rather not have kable insert the table float for me, I'd rather do it
+ manually, as we can see in Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:kable-output"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+kable output in a float I created manually
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:kable-output"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+input{tmpout/t-tab4.tex}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection*
+Regression output
+\end_layout
+
+\begin_layout Standard
+I'll illustrate output from the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+outreg
+\end_layout
+
+\end_inset
+
+ function in the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+rockchalk
+\end_layout
+
+\end_inset
+
+ package.
+\end_layout
+
+\begin_layout Standard
+This table may not be perfect by APA standards, but it is certainly good
+ enough for our reports.
+ If we drop this output into the text, without inserting it into a float,
+ we obtain the following
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<outreg1, echo=F, results=tex>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+library(rockchalk)
+\end_layout
+
+\begin_layout Plain Layout
+
+vl <- c("x" = "Excellent Predictor")
+\end_layout
+
+\begin_layout Plain Layout
+
+outreg(list("First Model" = m1), varLabels = vl, tight = FALSE)
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+One of the truly important differences between Sweave chunks and knitr chunks
+ is the 
+\begin_inset Quotes eld
+\end_inset
+
+results
+\begin_inset Quotes erd
+\end_inset
+
+ argument.
+ For Sweave, we need 
+\begin_inset Quotes eld
+\end_inset
+
+results='tex'
+\begin_inset Quotes erd
+\end_inset
+
+ but for knitr they changed this to 
+\begin_inset Quotes eld
+\end_inset
+
+results='asis'
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+It is possible to specify a table title and generate a floating object from
+ outreg, but I don't usually do that.
+ I usually have the argument float = FALSE because I want to create the
+ floating object myself and place it where I like.
+ That is illustrated in Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:A-Regression"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+A Regression from 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+outreg
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:A-Regression"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+input{tmpout/t-outreg1.tex}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+There are many other regression-table-making functions available today.
+ I made some lecture notes about it for the R summer workshops that we offer
+ at KU (
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+http://pj.freefaculty.org/guides/Rcourse/regression-tables-1
+\end_layout
+
+\end_inset
+
+).
+ 
+\end_layout
+
+\begin_layout Subsubsection*
+Structural equation models
+\end_layout
+
+\begin_layout Standard
+In the good looking table department, we also need to display structural
+ equation models.
+ This is a partly solved problem.
+ This has been a long term objective in CRMDA.
+ 
+\end_layout
+
+\begin_layout Standard
+In the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+kutils
+\end_layout
+
+\end_inset
+
+ package, we made a function 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+cfaTable
+\end_layout
+
+\end_inset
+
+ that is intended to help.
+ Please see Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:A-Confirmatory-Factor"
+
+\end_inset
+
+.
+ In the preamble of this document, I have some boilerplate code that causes
+ content in floating tables and figures to be centered automatically.
+ This looks nice!
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<include=F>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+library(kutils)
+\end_layout
+
+\begin_layout Plain Layout
+
+require(lavaan)
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<cfa1, echo=F, include=F,results=tex>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+HS.model <- 'visual  =~ x1 + x2 + x3
+\end_layout
+
+\begin_layout Plain Layout
+
+textual =~ x4 + x5 + x6
+\end_layout
+
+\begin_layout Plain Layout
+
+speed   =~ x7 + x8 + x9'
+\end_layout
+
+\begin_layout Plain Layout
+
+output1 <- cfa(HS.model, data = HolzingerSwineford1939, std.lv = TRUE)
+\end_layout
+
+\begin_layout Plain Layout
+
+cfa1 <- cfaTable(output1, fit = "rmsea", standardized = TRUE, params = c("loadin
+gs", "latentvariances"), type = "latex")
+\end_layout
+
+\begin_layout Plain Layout
+
+cat(cfa1)
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+A Confirmatory Factor Analysis Table
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:A-Confirmatory-Factor"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+input{tmpout/t-cfa1.tex}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<RoptionsRestore, echo=F, include=F>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+## Don't delete this.
+ It puts the interactive session options
+\end_layout
+
+\begin_layout Plain Layout
+
+## back the way they were.
+ If this is compiled within a session
+\end_layout
+
+\begin_layout Plain Layout
+
+## it is vital to do this.
+\end_layout
+
+\begin_layout Plain Layout
+
+options(opts.orig)
+\end_layout
+
+\begin_layout Plain Layout
+
+par(par.orig)
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document
