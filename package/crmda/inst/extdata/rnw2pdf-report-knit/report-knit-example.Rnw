@@ -359,20 +359,35 @@ library(kutils)
 require(lavaan)
 @
 
-<<cfa1, echo=F, include=F,results='asis'>>=
-HS.model <- 'visual  =~ x1 + x2 + x3
-textual =~ x4 + x5 + x6
-speed   =~ x7 + x8 + x9'
-output1 <- cfa(HS.model, data = HolzingerSwineford1939, std.lv = TRUE)
-cfa1 <- cfaTable(output1, fit = "rmsea", standardized = TRUE, params = c("loadings", "latentvariances"), type = "latex")
+<<cfa1, echo=T, include=T>>=
+HSmodel <- paste0("visual  =~ x1 + x2 + x3\n",  
+"textual =~ x4 + x5 + x6\n",
+"speed   =~ x7 + x8 + x9\n")
+cat(HSmodel)
+output1 <- cfa(HSmodel, data = HolzingerSwineford1939, std.lv = TRUE)
+summary(output1)
+@
+
+<<echo=T, include=T>>=
+##hipaul
+output1 <- cfa(HSmodel, data = HolzingerSwineford1939, std.lv = TRUE)
+
+summary(output1)
+@
+
+<<cfa2, echo=T, include=T, results='asis'>>=
+summary(output1)
+cfa1 <- cfaTable(output1, fit = "rmsea", standardized = TRUE, 
+                  params = c("loadings", "latentvariances"), type = "latex")
 cat(cfa1)
 @
+
 
 \begin{table}
 
 \caption{A Confirmatory Factor Analysis Table\label{tab:A-Confirmatory-Factor}}
 
-\input{tmpout/t-cfa1.tex}
+\input{tmpout/t-cfa2.tex}
 
 \end{table}
 

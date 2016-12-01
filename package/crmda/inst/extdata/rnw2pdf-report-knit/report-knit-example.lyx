@@ -947,7 +947,7 @@ status open
 
 \begin_layout Plain Layout
 
-<<cfa1, echo=F, include=F,results='asis'>>=
+<<cfa1, echo=F, include=F>>=
 \end_layout
 
 \begin_layout Plain Layout
@@ -968,6 +968,25 @@ speed   =~ x7 + x8 + x9'
 \begin_layout Plain Layout
 
 output1 <- cfa(HS.model, data = HolzingerSwineford1939, std.lv = TRUE)
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<cfa3, echo=F, include=F,results='asis'>>=
 \end_layout
 
 \begin_layout Plain Layout
@@ -1028,7 +1047,7 @@ status open
 
 
 \backslash
-input{tmpout/t-cfa1.tex}
+input{tmpout/t-cfa3.tex}
 \end_layout
 
 \end_inset
@@ -1036,129 +1055,9 @@ input{tmpout/t-cfa1.tex}
 
 \end_layout
 
-\begin_layout Plain Layout
-
-\end_layout
-
 \end_inset
 
 
-\end_layout
-
-\begin_layout Standard
-Some words to test margin sanity.
- Some words to test margin sanity.
- Some words to test margin sanity.
- Some words to test margin sanity.
- Some words to test margin sanity.
- Some words to test margin sanity.
- Some words to test margin sanity.
- Some words to test margin sanity.
- Some words to test margin sanity.
- Some words to test margin sanity.
- Some words to test margin sanity.
- Some words to test margin sanity.
- Some words to test margin sanity.
- Some words to test margin sanity.
- Some words to test margin sanity.
- Some words to test margin sanity.
- Some words to test margin sanity.
- Some words to test margin sanity.
- Some words to test margin sanity.
- Some words to test margin sanity.
- 
-\end_layout
-
-\begin_layout Standard
-Some words to test margin sanity.
- Some words to test margin sanity.
- Some words to test margin sanity.
- Some words to test margin sanity.
- Some words to test margin sanity.
- Some words to test margin sanity.
- Some words to test margin sanity.
- Some words to test margin sanity.
- Some words to test margin sanity.
- Some words to test margin sanity.
- Some words to test margin sanity.
- Some words to test margin sanity.
- Some words to test margin sanity.
- 
-\end_layout
-
-\begin_layout Standard
-Some words to test margin sanity.
- Some words to test margin sanity.
- Some words to test margin sanity.
- Some words to test margin sanity.
- Some words to test margin sanity.
- Some words to test margin sanity.
- Some words to test margin sanity.
- Some words to test margin sanity.
- Some words to test margin sanity.
- Some words to test margin sanity.
- Some words to test margin sanity.
- Some words to test margin sanity.
- Some words to test margin sanity.
- Some words to test margin sanity.
- Some words to test margin sanity.
- Some words to test margin sanity.
- Some words to test margin sanity.
- 
-\end_layout
-
-\begin_layout Standard
-Some words to test margin sanity.
- Some words to test margin sanity.
- Some words to test margin sanity.
- Some words to test margin sanity.
- Some words to test margin sanity.
- Some words to test margin sanity.
- Some words to test margin sanity.
- Some words to test margin sanity.
- Some words to test margin sanity.
- Some words to test margin sanity.
- Some words to test margin sanity.
- Some words to test margin sanity.
- Some words to test margin sanity.
- Some words to test margin sanity.
- Some words to test margin sanity.
- Some words to test margin sanity.
- Some words to test margin sanity.
- 
-\end_layout
-
-\begin_layout Standard
-Some words to test margin sanity.
- Some words to test margin sanity.
- Some words to test margin sanity.
- Some words to test margin sanity.
- Some words to test margin sanity.
- Some words to test margin sanity.
- Some words to test margin sanity.
- Some words to test margin sanity.
- Some words to test margin sanity.
- Some words to test margin sanity.
- Some words to test margin sanity.
- Some words to test margin sanity.
- Some words to test margin sanity.
- Some words to test margin sanity.
- 
-\end_layout
-
-\begin_layout Standard
-Some words to test margin sanity.
- Some words to test margin sanity.
- Some words to test margin sanity.
- Some words to test margin sanity.
- Some words to test margin sanity.
- Some words to test margin sanity.
- Some words to test margin sanity.
- Some words to test margin sanity.
- Some words to test margin sanity.
- Some words to test margin sanity.
- Some words to test margin sanity.
- 
 \end_layout
 
 \begin_layout Standard

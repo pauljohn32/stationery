@@ -90,7 +90,7 @@ rnw2pdf <- function(fn = NULL, wd = NULL, engine = "knitr", verbose = FALSE) {
     }    
    
     compileme <- function(x, verbose) {
-        if (length(grep("\\.lyx$", x))){
+        if (length(grep("\\.lyx$", tolower(x)))){
             if (tolower(engine) == "knitr"){
                 system(paste("lyx -e knitr ", x))
             } else {
@@ -98,19 +98,17 @@ rnw2pdf <- function(fn = NULL, wd = NULL, engine = "knitr", verbose = FALSE) {
             }
             system(paste("lyx -e pdf2 ", x))
             x <- gsub("\\.lyx$", ".Rnw", x)
-            return(x)
-        }
-        
-        if (file.exists(x)){
+            fnpdf <- gsub("\\.lyx$", ".pdf", x, ignore.case = TRUE)
+        } else if (length(grep("\\.rnw$", tolower(x)))) {
             if (tolower(engine) == "knitr"){
-                knit2pdf(x, quiet = !verbose)
-                knit(x, quiet = !verbose, tangle = TRUE)
+                knitr::knit(x, quiet = !verbose, tangle = TRUE)
+                knitr::knit2pdf(x, quiet = !verbose)
             } else {
                 Sweave(x)
             }
+            fnpdf <- gsub("\\.Rnw$", ".pdf", x, ignore.case = TRUE)
         }
-        
-        fnpdf <- gsub("\\.Rnw$", ".pdf", x)
+
         if (file.exists(fnpdf)){
             return(fnpdf)
         } else {
