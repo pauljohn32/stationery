@@ -102,25 +102,45 @@ rnw2pdf <- function(fn = NULL, wd = NULL, engine = "knitr", verbose = FALSE) {
         } else if (length(grep("\\.rnw$", tolower(x)))) {
             if (tolower(engine) == "knitr"){
                 knitr::knit(x, quiet = !verbose, tangle = TRUE)
-                knitr::knit2pdf(x, quiet = !verbose)
+                fnpdf <- knitr::knit2pdf(x, quiet = !verbose)
             } else {
                 Sweave(x)
+                tools::texi2pdf(gsub("\\.Rnw$", ".tex", x, ignore.case = TRUE), texi2dvi = "texi2pdf")
+                fnpdf <- gsub("\\.Rnw$", ".pdf", x, ignore.case = TRUE)
             }
-            fnpdf <- gsub("\\.Rnw$", ".pdf", x, ignore.case = TRUE)
         }
-
+        
         if (file.exists(fnpdf)){
             return(fnpdf)
         } else {
             return("Failed")
         }
     }
-    
-    res <- sapply(fn, compileme, verbose)
 
+    res <- list()
+    for(i in fn){
+        res[[i]] <- compileme(i, verbose = verbose)
+    }
+    
     if (!is.null(wd)){
         setwd(wd.orig)
     }
     res
 }
 
+
+##' Can be named as an output theme, which knitr will understand
+##'
+##' Insert output: crmda::crmda_guide.
+##'
+##' For additional embellishments, see \url{http://rmarkdown.rstudio.com/developer_custom_formats.html}
+##' @param toc Table of Contents flag
+##' @param verbose Verbose output
+##' @return rmarkdown function
+##' ##' @export
+##' @author Paul Johnson <pauljohn@@ku.edu>
+##' @importFrom rmarkdown html_document
+crmda_guide <- function(toc = FALSE, verbose = FALSE){
+    css <- system.file("extdata/theme/kutils.css", package = "crmda") 
+    rmarkdown::html_document(toc = toc, css = css, quiet = !verbose)
+}
