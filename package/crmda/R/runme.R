@@ -12,6 +12,23 @@
 ##'     current working directory from R will be used.
 ##' @param verbose The opposite of render(quiet = TRUE). Shows compile
 ##'     commentary and pandoc command. Can be informative!
+##' @param ... Arguments that will be passed to render and
+##'     html_document. The defaults set within the
+##'     \code{rmarkdown::render} and \code{rmarkdown::html_documents}
+##'     will be followed unless the user changes them with this
+##'     argument, except that we assume for \code{html_document()}
+##'     that css = "kutils.css" and toc = TRUE.  These arguments
+##'     intended for \code{render()} are allowed: c("output_file", "output_dir",
+##'     "output_options", "intermediates_dir", "knit_root_dir",
+##'     "runtime", "clean", "params", "knit_meta", "envir",
+##'     "run_pandoc", "quiet", "encoding") .  These arguments intended
+##'     for html_document are allowed: \code{c("toc", "toc_depth",
+##'     "toc_float", "number_sections", "section_divs", "fig_width",
+##'     "fig_height", "fig_retina", "fig_caption", "dev", "df_print",
+##'     "code_folding", "code_download", "smart", "self_contained",
+##'     "theme", "highlight", "mathjax", "template",
+##'     "extra_dependencies", "css", "includes", "keep_md", "lib_dir",
+##'     "md_extensions", "pandoc_args")}.
 ##' @importFrom rmarkdown render
 ##' @return A vector of output file names
 ##' @author Paul Johnson <pauljohn@@ku.edu>
@@ -23,23 +40,51 @@
 ##' file.copy(fp, to = tdir, copy.mode = TRUE, copy.date = TRUE)
 ##' wd.orig <- getwd()
 ##' setwd(tdir)
-##' of <- rmd2html(fp)
-##' browseURL(of[1])
+##' of1 <- rmd2html(fp)
+##' if(interactive()) browseURL(of1[1])
+##' of2 <- rmd2html(fp, toc = FALSE)
+##' if(interactive()) browseURL(of2[1])
 ##' setwd(wd.orig)
-rmd2html <- function(fn = NULL, wd = NULL, verbose = FALSE) {
+rmd2html <- function(fn = NULL, wd = NULL, verbose = FALSE, ...) {
     if (!is.null(wd)){
         wd.orig <- getwd()
         setwd(wd)
     }
-    
-    
+        
     if (is.null(fn)) {
         cat("Will render all *.Rmd files in current working directory\n")
         fn <- list.files(pattern="Rmd")
     }    
-    ## render(fn, html_document(css = system.file("extdata/theme", "kutils.css", package = "crmda")), quiet = !verbose)
 
-    res <- sapply(fn, rmarkdown::render, rmarkdown::html_document(css = system.file("extdata/theme", "kutils.css", package = "crmda")), quiet = !verbose)
+    dots <- list(...)
+    formals_html_document <- c("toc", "toc_depth", "toc_float",
+                               "number_sections", "section_divs",
+                               "fig_width", "fig_height",
+                               "fig_retina", "fig_caption", "dev",
+                               "df_print", "code_folding",
+                               "code_download", "smart",
+                               "self_contained", "theme", "highlight",
+                               "mathjax", "template",
+                               "extra_dependencies", "css",
+                               "includes", "keep_md", "lib_dir",
+                               "md_extensions", "pandoc_args")
+    dots_for_html_document <- dots[formals_html_document[formals_html_document %in% names(dots)]]
+    dots[names(dots_for_html_document)] <- NULL
+
+    formals_render <- c("output_file", "output_dir", "output_options",
+                        "intermediates_dir", "knit_root_dir",
+                        "runtime", "clean", "params", "knit_meta",
+                        "envir", "run_pandoc", "quiet", "encoding")
+    
+    dots_for_render <- dots[formals_render[formals_render %in% names(dots)]]
+    ## dots[names(dots_for_html_document)] <- NULL
+       
+    html_args <- list(css = system.file("extdata/theme", "kutils.css", package = "crmda"),
+                      toc = TRUE)
+    
+    html_argz <- modifyList(html_args, dots_for_html_document)
+    
+    res <- sapply(fn, rmarkdown::render, do.call(rmarkdown::html_document, html_argz), quiet = !verbose)
 
     if (!is.null(wd)){
         setwd(wd.orig)
@@ -57,15 +102,19 @@ rmd2html <- function(fn = NULL, wd = NULL, verbose = FALSE) {
 ##' @param fn should end in either ".Rnw" or ".lyx"
 ##' @param wd Directory in which the file to be converted
 ##'     exists. Leave NULL default if is in current working directory.
-##' @param engine knitr or Sweave
+##' @param engine "knitr" or "Sweave"
 ##' @param verbose if FALSE, the knitr quiet is set as TRUE
+##' @param envir environment for evaluation, see \code{knitr}
+##'     documents, defaults to parent.frame().
+##' @param encoding character encoding, defaults from user options
 ##' @return NULL
 ##' @export
 ##' @author Paul Johnson <pauljohn@@ku.edu>
 ##' @importFrom knitr knit2pdf
 ##' @importFrom knitr knit
 ##' @importFrom utils Sweave
-##' @examples 
+##' @examples
+##' wd.orig <- getwd()
 ##' tmpdir <- tempdir()
 ##' fdir <- system.file("extdata/rnw2pdf-guide-sweave", "", package = "crmda")
 ##' wdir <- file.path(tmpdir, basename(fdir))
@@ -77,8 +126,9 @@ rmd2html <- function(fn = NULL, wd = NULL, verbose = FALSE) {
 ##' dir.create(wdir, recursive = TRUE)
 ##' file.copy(from = fdir, to = tmpdir, recursive = TRUE)
 ##' rnw2pdf("guide-template.Rnw", wd = wdir, engine = "Sweave")
-##' 
-rnw2pdf <- function(fn = NULL, wd = NULL, engine = "knitr", verbose = FALSE) {
+##' setwd(wd.orig)
+rnw2pdf <- function(fn = NULL, wd = NULL, engine = "knitr", verbose = FALSE,
+                    envir = parent.frame(), encoding = getOption("encoding")) {
     if (!is.null(wd)) {
         wd.orig <- getwd()
         setwd(wd)
@@ -101,11 +151,15 @@ rnw2pdf <- function(fn = NULL, wd = NULL, engine = "knitr", verbose = FALSE) {
             fnpdf <- gsub("\\.lyx$", ".pdf", x, ignore.case = TRUE)
         } else if (length(grep("\\.rnw$", tolower(x)))) {
             if (tolower(engine) == "knitr"){
-                knitr::knit(x, quiet = !verbose, tangle = TRUE)
-                fnpdf <- knitr::knit2pdf(x, quiet = !verbose)
+                knitr::knit(x, quiet = !verbose, tangle = TRUE, envir = envir,
+                            encoding = encoding)
+                fnpdf <- knitr::knit2pdf(x, quiet = !verbose, envir = envir,
+                            encoding = encoding)
             } else {
                 Sweave(x)
-                tools::texi2pdf(gsub("\\.Rnw$", ".tex", x, ignore.case = TRUE), texi2dvi = "texi2pdf")
+                Stangle(x)
+                tools::texi2pdf(gsub("\\.Rnw$", ".tex", x, ignore.case = TRUE),
+                                texi2dvi = "texi2pdf")
                 fnpdf <- gsub("\\.Rnw$", ".pdf", x, ignore.case = TRUE)
             }
         }
