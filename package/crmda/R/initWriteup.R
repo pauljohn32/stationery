@@ -28,9 +28,9 @@
 ##'
 ##' The examples demonstrate all three of these scenarios.
 ##' @param type One of these: \code{c("rmd2html-guide",
-##'     "rmd2pdf-report", rnw2pdf-guide-knit", rnw2pdf-guide-sweave",
-##'     rnw2pdf-report-knit", rnw2pdf-report-sweave",
-##'     tex2pdf-report")}
+##'     "rmd2pdf-report", "rnw2pdf-guide-knit", "rnw2pdf-guide-sweave",
+##'     "rnw2pdf-report-knit", "rnw2pdf-report-sweave",
+##'     "tex2pdf-report")}
 ##' @param dir Type "." for current working directory.
 ##' Default is a new directory named "writeup"
 ##' @importFrom kutils initProject
@@ -44,7 +44,7 @@
 ##' cat("The Temporary Directory is:\n ", tdir, "\n")
 ##' cat("We launch a new writeup there\n")
 ##' 
-##' kutils::initProject(type = "rmd2html-guide", dir = "writeup/rmd1)
+##' kutils::initProject(type = "rmd2html-guide", dir = "writeup/rmd1")
 ##' list.files()
 ##' initWriteup(type = "rnw2pdf-guide-knit", dir = "writeup/rnw")
 ##' list.files("writeup/rnw")
