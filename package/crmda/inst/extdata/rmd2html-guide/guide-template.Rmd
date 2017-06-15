@@ -1,0 +1,98 @@
+---
+title: "Template for Guide Documents"
+subtitle: "Subtitle"
+author:
+ - name: Firstname1 Lastname1
+   affiliation: Center for Research Methods and Data Analysis, University of Kansas
+   email: email1@ku.edu
+ - name: Firstname2 Lastname2
+   affiliation: Center for Research Methods and Data Analysis, University of Kansas
+   email: email2@ku.edu
+ - name: "CRMDA Guide #40. Please visit [http://crmda.ku.edu/guides](http://crmda.ku.edu/guides) for updates."
+ - name: "Tags: guides, tag1, tag2, please_leave_guides"
+
+abstract:
+    Author, please REMEMBER TO INCLUDE AN ABSTRACT BEFORE FINALIZING THIS DOCUMENT!
+checked_by: "First Last"
+Note to Authors: please_dont_change_the_next 4 lines!
+date: "`r format(Sys.time(), '%Y %B %d')`"
+output:
+  html_document:
+    toc: true
+    toc_depth: 3
+    highlight: haddock
+---
+
+```{r setup, include=FALSE}
+##This Invisible Chunk is required in all CRMDA documents
+outdir <- paste0("tmpout")
+if (!file.exists(outdir)) dir.create(outdir, recursive = TRUE)
+knitr::opts_chunk$set(echo=TRUE, comment=NA, fig.path=paste0(outdir, "/p-"))
+options(width = 70)
+```
+
+For compiling, we have a shell script and an R function
+
+```
+crmda::render2html("filename.Rmd")
+```
+
+# Top Level Heading
+
+## Second Level Heading
+
+
+#### Gray Callout {.bs-callout .bs-callout-gray}
+Fourth Level gray callout. Could be "red", "orange"
+"blue", "green" instead of gray.
+
+#### Policies about writing in these documents. {.bs-callout .bs-callout-red}
+
+## For "tabbed" sections {.tabset .tabset-fade}
+
+### <span style="color:red">First Tab Here</span>
+
+Info within first tab
+
+### <span style="color:orange">Second Tab Here</span>
+
+Info in second tab
+
+### Third Tab Here
+
+## Equations can be written in LaTeX, either "inline" or "display" mode.
+
+
+## Integrate R input and output
+
+```{r myFirstPlot, dev=c('png','pdf'), fig.keep='all'}
+hist(rnorm(500))
+
+```
+
+```{r}
+x <- rnorm(1000)
+print(x[1:20])
+```
+
+```{r mySecondPlot, dev=c('png','pdf'), fig.keep='all'}
+hist(rnorm(20))
+```
+
+#### R code inside a callout {.bs-callout .bs-callout-red}
+```{r xsummary}
+summary(x)
+```
+
+
+
+[//]: (All guides must have this as the final stanza)
+
+```{r sessionInfo, echo = FALSE}
+sessionInfo()
+```
+
+Available under
+[Created Commons license 3.0 <img src="http://crmda.dept.ku.edu/images/cc-3.0.png" alt="CC BY"
+style="width: 75px;height: 20px;"/>](http://creativecommons.org/licenses/by/3.0/)
+
