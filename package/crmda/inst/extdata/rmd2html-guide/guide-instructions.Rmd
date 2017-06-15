@@ -88,9 +88,16 @@ The only way (that we know of) to get colors is to wrap the tab headers in a `<s
 ```
 ## You have the ability to include tabs {.tabset .tabset-fade}
 
-If you'd like, you can include different tabs. Maybe you want to show two similar versions of the same analysis. Or maybe something else. Whatever it may be, be sure to include `{.tabset .tabset-fade}` along with a level 2 header (##). For each tab, put the information under the level 3 header (###). Use another level 2 header to get out of the tabs mode.
+If you'd like, you can include different tabs. Maybe you want to show
+two similar versions of the same analysis. Or maybe something
+else. Whatever it may be, be sure to include `{.tabset .tabset-fade}`
+along with a level 2 header (##). For each tab, put the information
+under the level 3 header (###). Use another level 2 header to get out
+of the tabs mode.
 
-The only way (that we know of) to get colors is to wrap the tab headers in a `<span style>` as shown below. This might be useful to draw attention to the tabs. Blue is the default color.
+The only way (that we know of) to get colors is to wrap the tab
+headers in a `<span style>` as shown below. This might be useful to
+draw attention to the tabs. Blue is the default color.
 
 ### <span style="color:red">First Tab Here</span>
 
