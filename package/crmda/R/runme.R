@@ -30,6 +30,7 @@
 ##'     "extra_dependencies", "css", "includes", "keep_md", "lib_dir",
 ##'     "md_extensions", "pandoc_args")}.
 ##' @importFrom rmarkdown render
+##' @importFrom utils modifyList
 ##' @return A vector of output file names
 ##' @author Paul Johnson <pauljohn@@ku.edu>
 ##' @export
@@ -113,6 +114,7 @@ rmd2html <- function(fn = NULL, wd = NULL, verbose = FALSE, ...) {
 ##' @importFrom knitr knit2pdf
 ##' @importFrom knitr knit
 ##' @importFrom utils Sweave
+##' @importFrom utils Stangle
 ##' @examples
 ##' wd.orig <- getwd()
 ##' tmpdir <- tempdir()
