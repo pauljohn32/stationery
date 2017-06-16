@@ -84,8 +84,17 @@ rmd2html <- function(fn = NULL, wd = NULL, verbose = FALSE, ...) {
                       toc = TRUE)
     
     html_argz <- modifyList(html_args, dots_for_html_document)
-    
-    res <- sapply(fn, rmarkdown::render, do.call(rmarkdown::html_document, html_argz), quiet = !verbose)
+
+    res <- sapply(fn, function(x) {
+        rmarkdown::render(x, do.call(rmarkdown::html_document, html_argz), quiet = !verbose)
+    })
+    ## but this does not: laavan summary not found
+    ##res <- sapply(fn, rmarkdown::render, rmarkdown::html_document(css = html_argz$css, toc = html_argz$toc), quiet = !verbose)
+    ## but this works:
+    ## res <- vector()
+    ## for(i in fn){
+    ##     res[i] <- rmarkdown::render(i, do.call(rmarkdown::html_document, html_argz), quiet = !verbose)
+    ## }
 
     if (!is.null(wd)){
         setwd(wd.orig)
