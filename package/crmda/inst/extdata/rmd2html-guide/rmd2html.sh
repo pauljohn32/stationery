@@ -7,10 +7,9 @@
 ## don't understand that yet. just all works
 
 
-
 function render {
 	echo "In render:"
-	cmd="library(rmarkdown); library(knitr); render(\"$1\", "$2", quiet = TRUE)"
+	cmd="library(crmda); file.copy(system.file(\"extdata/theme\", \"kutils.css\", package = \"crmda\"), \"kutils.css\"); library(rmarkdown); library(knitr); render(\"$1\", "$2", quiet = TRUE); purl(\"$1\");"
 	echo $cmd
     R -q --slave --vanilla -e "$cmd"
 }
