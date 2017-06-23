@@ -1,0 +1,9 @@
+2017-06-23  Paul Johnson  <pauljohn@delllap-16>
+
+	* extdata/rmd2html-guide/rmd2html.sh (render): insert purl call in rmd2html
+
+2016-10-25  Paul Johnson  <pauljohn@delllap-16>
+
+	* ../R/initWriteup.R (initWriteup): customizing to combinations of
+	input, output, and render.
+

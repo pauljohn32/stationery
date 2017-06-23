@@ -30,6 +30,7 @@
 ##'     "extra_dependencies", "css", "includes", "keep_md", "lib_dir",
 ##'     "md_extensions", "pandoc_args")}.
 ##' @importFrom rmarkdown render
+##' @importFrom rmarkdown html_document
 ##' @importFrom utils modifyList
 ##' @return A vector of output file names
 ##' @author Paul Johnson <pauljohn@@ku.edu>
@@ -54,7 +55,7 @@ rmd2html <- function(fn = NULL, wd = NULL, verbose = FALSE, ...) {
         
     if (is.null(fn)) {
         cat("Will render all *.Rmd files in current working directory\n")
-        fn <- list.files(pattern="Rmd")
+        fn <- list.files(pattern="Rmd$")
     }    
 
     dots <- list(...)
@@ -70,32 +71,30 @@ rmd2html <- function(fn = NULL, wd = NULL, verbose = FALSE, ...) {
                                "includes", "keep_md", "lib_dir",
                                "md_extensions", "pandoc_args")
     dots_for_html_document <- dots[formals_html_document[formals_html_document %in% names(dots)]]
-    dots[names(dots_for_html_document)] <- NULL
-
+  
     formals_render <- c("output_file", "output_dir", "output_options",
                         "intermediates_dir", "knit_root_dir",
                         "runtime", "clean", "params", "knit_meta",
                         "envir", "run_pandoc", "quiet", "encoding")
-    
+
+   
     dots_for_render <- dots[formals_render[formals_render %in% names(dots)]]
-    ## dots[names(dots_for_html_document)] <- NULL
        
     html_args <- list(css = system.file("extdata/theme", "kutils.css", package = "crmda"),
                       toc = TRUE)
-    
     html_argz <- modifyList(html_args, dots_for_html_document)
-
+    if(verbose) {print(paste("dots_for_html")); lapply(html_argz, print)}
+    
+    htmldoc <- do.call(rmarkdown::html_document, html_argz)
+    
     res <- sapply(fn, function(x) {
-        rmarkdown::render(x, do.call(rmarkdown::html_document, html_argz), quiet = !verbose)
+        render_args <- list(input = x, output_format = htmldoc, quiet = !verbose,
+                            envir = globalenv())
+        render_argz <- modifyList(render_args, dots_for_render)
+        if(verbose) {print(paste("dots_for_render"));  lapply(dots_for_render, print)}
+        do.call(rmarkdown::render, render_argz)
+        knitr::purl(fn)
     })
-    ## but this does not: laavan summary not found
-    ##res <- sapply(fn, rmarkdown::render, rmarkdown::html_document(css = html_argz$css, toc = html_argz$toc), quiet = !verbose)
-    ## but this works:
-    ## res <- vector()
-    ## for(i in fn){
-    ##     res[i] <- rmarkdown::render(i, do.call(rmarkdown::html_document, html_argz), quiet = !verbose)
-    ## }
-
     if (!is.null(wd)){
         setwd(wd.orig)
     }
