@@ -1,4 +1,4 @@
-%% LyX 2.2.0 created this file.  For more info, see http://www.lyx.org/.
+%% LyX 2.2.2 created this file.  For more info, see http://www.lyx.org/.
 %% Do not edit unless you really know what you are doing.
 \documentclass[11pt,letterpaper,english]{scrartcl}
 \usepackage{lmodern}
@@ -182,48 +182,9 @@ set.seed(12345)
 pdf.options(onefile=FALSE,family="Times",pointsize=10)
 @
 
-Today, 2016-10-18, I fix the header once and for all! Until the next
-time. The header is now in a minibox. 
+Leave the chunks before this
 
-Here is an example of a data frame being created:
-
-<<>>=
-dat <- data.frame(x = rnorm(100), y = rpois(100, lambda = 7))
-m1 <- glm(y ~ x, data = dat, family = "poisson")
-summary(m1)
-@
-
-This document edits margins in the preamble, don't use the LyX pull
-down menu to revise them. 
-
-On page 1, I do not show the page number anymore. That's negotiable.
-
-Some code that might be used to create a regression table using outreg
-from the rockchalk package is the following. As you see, the output
-``splats'' into the document, it is not in a floating figure or
-table.
-
-<<pois10, results='asis', eval=F>>=
-library(rockchalk)
-outreg(list("My Poisson"= m1), varLabels = c("x" = "A Normal Predictor"), tight = FALSE)
-@
-
-<<pois15, results='asis', echo=F>>=
-<<pois10>>
-@
-
-\textbf{CAUTION}: the page margins can be adjusted in the geometry
-section of the preamble, but do not use the LyX Menu to change either
-margins or pagestyle.
-
-Lets see in Table \ref{tab:A-Poisson-Regression}, the regression
-table looks awesome.
-
-\begin{table}[h]
-\caption{A Poisson Regression\label{tab:A-Poisson-Regression}}
-
-\input{tmpout/t-pois15.tex}
-\end{table}
+Leave the chunk after this
 
 <<opts20, include=F>>=
 ## Don't delete this. It puts the interactive session options
@@ -231,21 +192,4 @@ table looks awesome.
 ## it is vital to do this.
 options(opts.orig)
 @
-
-In the process of working on this, I recovered a lot of traumatic
-memories of the problem that minipages do not float vertically as
-I expect them to and I ended up removing the minipages entirely from
-the header. 
-
-Then, after all that, I realized that the object that the authors
-called a header is not actually a \LaTeX{} fancy header at all, it
-is just an object ``in'' the document on page 1. I felt ambiguously
-relieved \& aggravated by this.
-
-There is, however, a fancy footer, it has the page-out-of-page thingie.
-Otherwise, we would have nothing encouraging to say about this document's
-fancy usage.
-
-Now I'm going to fill up the rest of this with some Latin to see if
-margins come out correctly.
 \end{document}
