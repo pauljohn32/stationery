@@ -9,7 +9,7 @@
 
 function render {
 	echo "In render:"
-	cmd="library(crmda); file.copy(system.file(\"extdata/theme\", \"kutils.css\", package = \"crmda\"), \"kutils.css\"); library(rmarkdown); library(knitr); render(\"$1\", "$2", quiet = TRUE); purl(\"$1\");"
+	cmd="library(crmda); file.copy(system.file(\"extdata/theme\", \"kutils.css\", package = \"crmda\"), \"kutils.css\"); library(rmarkdown); library(knitr); render(\"$1\", "$2", quiet = TRUE); purl(\"$1\");unlink(\"kutils.css\")"
 	echo $cmd
     R -q --slave --vanilla -e "$cmd"
 }

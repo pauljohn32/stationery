@@ -31,6 +31,8 @@ footskip=1.5\baselineskip,
   frame=single,
   framerule=0.2pt,
   framesep=1pt,
+  numbers=left,
+  numberstyle=\tiny,
   numbersep=5pt,
   showstringspaces=false,
   basicstyle=\footnotesize,
@@ -94,48 +96,7 @@ footskip=1.5\baselineskip,
 }
 
 \thispagestyle{firststyle}
-
-\usepackage{dcolumn}
-\usepackage{booktabs}
-\usepackage{multicol}
-\usepackage{graphicx}
-
-%% PJ 20161110
-%% I want to use listings in the document and I want nice/same as knitr.
-%% Does knitr provide all of these settings for other listing uses outside
-%% weaved part?
-\usepackage{fancyvrb}
-\fvset{listparameters={\setlength{\topsep}{0em}}}
-\usepackage{listings}
-\def\Sweavesize{\normalsize} 
-\def\Rcolor{\color{black}} 
-\def\Rbackground{\color[gray]{0.95}}
-\providecommand{\Rcolor}{\color[rgb]{0, 0.5, 0.5}}
-%%\providecommand{\Routcolor}{\color[rgb]{0.461, 0.039, 0.102}}
-\providecommand{\Routcolor}{\color[rgb]{1.0, 0.0, 0.0}}
-\providecommand{\Rcommentcolor}{\color[rgb]{0.101, 0.043, 0.432}}
-
-\providecommand{\Rbackground}{\color[gray]{0.95}}
-\providecommand{\Routbackground}{\color[gray]{0.80}}
-% Can specify \color[gray]{1} for white background or just \color{white}
-
-
-\lstdefinestyle{Rstyle}{fancyvrb=false,
-                        frame=none,
-                        escapechar=`,
-                        language=R,%
-                        basicstyle={\Rcolor\Sweavesize},%
-                        backgroundcolor=\Rbackground,%
-                        showstringspaces=false,%
-                        keywordstyle=\Rcolor,%
-                        commentstyle={\Rcommentcolor\ttfamily\itshape},%
-                        literate={<-}{{$\leftarrow$}}2{<<-}{{$\twoheadleftarrow$}}2{~}{{$\sim$}}1{<=}{{$\leq$}}2{>=}{{$\geq$}}2{^}{{$^{\scriptstyle\wedge}$}}1,%
-                        alsoother={$},%
-                        alsoletter={.<-},%
-                        otherkeywords={!,!=,~,$,*,\&,\%/\%,\%*\%,\%\%,<-,<<-,/},%
-                        escapeinside={(*}{*)}}%
-
-\lstset{tabsize=2, breaklines=true, style=Rstyle}
+\usepackage{lipsum}
 \end_preamble
 \use_default_options false
 \begin_modules
@@ -186,11 +147,6 @@ sweave
 \suppress_date true
 \justification true
 \use_refstyle 0
-\branch R
-\selected 0
-\filename_suffix 0
-\color #faf0e6
-\end_branch
 \index Index
 \shortcut idx
 \color #008000
@@ -217,6 +173,87 @@ sweave
 \begin_body
 
 \begin_layout Standard
+\noindent
+\begin_inset Tabular
+<lyxtabular version="3" rows="1" columns="3">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top" width="1.6in">
+<column alignment="left" valignment="top" width="3in">
+<column alignment="right" valignment="top" width="2in">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "1in"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+
+\shape smallcaps
+\size giant
+\begin_inset Graphics
+	filename theme/jayhawk.pdf
+	lyxscale 40
+	width 1in
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "3in"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+
+\shape smallcaps
+\size giant
 \begin_inset Box Frameless
 position "t"
 hor_pos "c"
@@ -238,99 +275,105 @@ status open
 \begin_layout Plain Layout
 \noindent
 \align center
-\begin_inset Tabular
-<lyxtabular version="3" rows="2" columns="2">
-<features tabularvalignment="top">
-<column alignment="left" valignment="top" width="4in">
-<column alignment="center" valignment="top" width="2.25in">
-<row>
-<cell alignment="left" valignment="top" topline="true" usebox="none">
-\begin_inset Text
+
+\size large
+Title
+\end_layout
 
 \begin_layout Plain Layout
-\begin_inset VSpace defskip
+\noindent
+\begin_inset CommandInset line
+LatexCommand rule
+offset "0.5ex"
+width "100line%"
+height "1pt"
+
+\end_inset
+
+
+\end_layout
+
 \end_inset
 
 
 \end_layout
 
 \begin_layout Plain Layout
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+Author(s)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" bottomline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "2in"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
 
 \shape smallcaps
-\size larger
-Title of this Document: A Subtitle that may Flow onto Additional Space if
- Necessary
-\end_layout
-
-\begin_layout Plain Layout
-\noindent
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset VSpace defskip
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset VSpace medskip
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
+\size giant
 \begin_inset Graphics
 	filename theme/CRMDA_logo.pdf
-	width 2in
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell multicolumn="1" alignment="left" valignment="top" topline="true" bottomline="true" usebox="none" width="5in">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset VSpace defskip
-\end_inset
-
-Your Name Here, Your Title, CRMDA
-\end_layout
-
-\begin_layout Plain Layout
-<your_email@ku.edu>
-\end_layout
-
-\begin_layout Plain Layout
-Other author names here, Title, CRMDA
-\end_layout
-
-\begin_layout Plain Layout
-<their_email@ku.edu>
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Will insert correct date.
- Replace following if you want fixed date.
- 
-\end_layout
+	lyxscale 40
+	width 1.75in
 
 \end_inset
 
@@ -338,19 +381,14 @@ Will insert correct date.
 \end_layout
 
 \begin_layout Plain Layout
-\paragraph_spacing single
 \noindent
-\align left
-
-\series bold
-\begin_inset ERT
+\align center
+\begin_inset Flex URL
 status open
 
 \begin_layout Plain Layout
 
-
-\backslash
-today
+http://crmda.ku.edu
 \end_layout
 
 \end_inset
@@ -359,11 +397,41 @@ today
 \end_layout
 
 \end_inset
-</cell>
-<cell multicolumn="2" alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
-\begin_inset Text
+
+
+\end_layout
 
 \begin_layout Plain Layout
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "2in"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+
+\shape smallcaps
+Guide No:
+\shape default
+ XXX
+\end_layout
+
+\end_inset
+
 
 \end_layout
 
@@ -377,26 +445,9 @@ today
 
 \end_layout
 
-\begin_layout Plain Layout
-\begin_inset VSpace medskip
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
 \begin_layout Standard
 \begin_inset ERT
 status open
-
-\begin_layout Plain Layout
-
-% Please leave this chunk
-\end_layout
 
 \begin_layout Plain Layout
 
@@ -405,7 +456,12 @@ status open
 
 \begin_layout Plain Layout
 
-if(!dir.exists("tmpout"))dir.create("tmpout", recursive = TRUE)
+##unlink("tmpout", recursive=T)
+\end_layout
+
+\begin_layout Plain Layout
+
+if(!dir.exists("tmpout")) dir.create("tmpout", showWarnings=FALSE)
 \end_layout
 
 \begin_layout Plain Layout
@@ -424,7 +480,7 @@ status open
 
 \begin_layout Plain Layout
 
-% Please leave this code: In document Latex options:
+% In document Latex options:
 \end_layout
 
 \begin_layout Plain Layout
@@ -442,7 +498,7 @@ topsep}{0em}}}
 
 
 \backslash
-SweaveOpts{prefix.string=tmpout/t, split=TRUE, ae=FALSE, height=5, width=6}
+SweaveOpts{prefix.string=tmpout/t,split=T,ae=F,height=3,width=5}
 \end_layout
 
 \end_inset
@@ -456,12 +512,7 @@ status open
 
 \begin_layout Plain Layout
 
-% Please leave this chunk
-\end_layout
-
-\begin_layout Plain Layout
-
-<<Roptions, echo=F, include=F>>=
+<<Roptions, echo=F>>=
 \end_layout
 
 \begin_layout Plain Layout
@@ -471,12 +522,7 @@ opts.orig <- options()
 
 \begin_layout Plain Layout
 
-options(device = pdf)
-\end_layout
-
-\begin_layout Plain Layout
-
-options(width=160, prompt=" ", continue="  ")
+options(width=100, prompt=" ", continue="  ")
 \end_layout
 
 \begin_layout Plain Layout
@@ -491,22 +537,12 @@ set.seed(12345)
 
 \begin_layout Plain Layout
 
-par.orig <- par(no.readonly=TRUE) 
+options(SweaveHooks=list(fig=function() par(ps=10)))
 \end_layout
 
 \begin_layout Plain Layout
 
-pjmar <- c(5.1, 5.1, 1.5, 2.1) 
-\end_layout
-
-\begin_layout Plain Layout
-
-options(SweaveHooks=list(fig=function() par(mar=pjmar, ps=10)))
-\end_layout
-
-\begin_layout Plain Layout
-
-pdf.options(onefile=FALSE, family="Times", pointsize=10)
+pdf.options(onefile=FALSE,family="Times",pointsize=10)
 \end_layout
 
 \begin_layout Plain Layout
@@ -520,32 +556,21 @@ pdf.options(onefile=FALSE, family="Times", pointsize=10)
 \end_layout
 
 \begin_layout Standard
-Do put your title & name in the top block.
+Leave the code chunks before this point.
 \end_layout
 
 \begin_layout Standard
-Don't change the 3 code chunks above or the last chunk below.
+This uses Sweavel.
+ If you don't have Sweavel in your package path, it will fail
 \end_layout
 
 \begin_layout Standard
-Write your content in here.
+Don't change margins with Lyx pull down menus.
+ Edit preamble for that.
 \end_layout
 
 \begin_layout Standard
-Don't change document margins with LyX menus.
- You need to edit the preamble for that.
-\end_layout
-
-\begin_layout Standard
-Please see the 
-\begin_inset Quotes eld
-\end_inset
-
-report-sweave-instructions
-\begin_inset Quotes erd
-\end_inset
-
- document if you want more detailed information about what to do.
+Leave the code chunks after this point.
 \end_layout
 
 \begin_layout Standard
@@ -554,7 +579,7 @@ status open
 
 \begin_layout Plain Layout
 
-<<RoptionsRestore, echo=F, include=F>>=
+<<opts20, include=F>>=
 \end_layout
 
 \begin_layout Plain Layout
@@ -577,11 +602,6 @@ status open
 \begin_layout Plain Layout
 
 options(opts.orig)
-\end_layout
-
-\begin_layout Plain Layout
-
-par(par.orig)
 \end_layout
 
 \begin_layout Plain Layout
