@@ -183,20 +183,21 @@ Hats (\\hat{}): $\hat{\lambda}=1.02$.
 
 Square Root (\\sqrt{}): $\sqrt{4}=2$.
 
+Some Greek letters
 $$\alpha, \beta, \gamma, \Gamma$$
 
 Some popular binary operators are
 $$ + - = \approx \ne \ge \lt \pm $$
-$$ x \ge 15 $$
-$$ \pi \approx 3.1415927 $$ 
-$$ a_i \ge 0~~~\forall i$$
+$$ \pi \approx 3.1415927 $$
+$$ a_i \ge 0~~~\forall i $$
+$$ x \lt 15 $$
 
-Accented letters (often in non-English names)
+Accented letters, often in non-English names, like
+
+Karl Gustav Jöreskog and Dag Sörbom
 
 Linda Muthén and Bengt Muthén
 
-Karl Gustav Jöreskog and Dag Sörbom
-   
 ## Matrix
 
 $$
@@ -230,6 +231,11 @@ symbols are allowed, but we wish somebody would find one.
 
 		
 ## Statistics
+
+The lovely Bayes' theorem
+$$
+P(A|B) = \frac{P(B|A)P(A)}{P(B)}
+$$
 
 The binomial probability:
 
