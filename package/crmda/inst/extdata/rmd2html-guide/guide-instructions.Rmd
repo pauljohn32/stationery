@@ -1,5 +1,5 @@
 ---
-title: "Template for Guide Documents"
+title: "Instructions on Using rmd2html to Produce Guide Documents"
 subtitle: "Subtitle following the colon"
 author:
  - name: Firstname1 Lastname1
@@ -8,16 +8,26 @@ author:
  - name: Firstname2 Lastname2
    affiliation: Center for Research Methods and Data Analysis, University of Kansas
    email: email2@email.com
- - name: "CRMDA Guide #40. Please visit [http://crmda.ku.edu/guides](http://crmda.ku.edu/guides) for updates."
+ - name: "CRMDA Guide #XXX. Please visit [http://crmda.ku.edu/guides](http://crmda.ku.edu/guides) for updates."
  - name: "Tags: guides, tag1, tag2, please_leave_guides"
 
-abstract:
-    Author, please REMEMBER TO INCLUDE AN ABSTRACT BEFORE FINALIZING THIS DOCUMENT!
+abstract: Author, please REMEMBER TO INCLUDE AN ABSTRACT BEFORE
+    FINALIZING THIS DOCUMENT! For example - This instruction describes
+    several key features/functionalities of R Markdown for producing
+    colorful and vivid HTML format Guide documents. The demonstrations
+    include embedding R code into an .Rmd file, inserting
+    mathematical expressions (equations and matrices), and displaying
+    R output and graphs/images. A careful study of this document will
+    help learners to gain a basic understanding of the rmd2html
+    workflow, especially when using it to create CRMDA Guide
+    documents.
 checked_by: "First Last"
 Note to Authors: please_dont_change_the_next 4 lines!
 date: "`r format(Sys.time(), '%Y %B %d')`"
 output:
   html_document:
+    toc: true
+    toc_depth: 3
     highlight: haddock
 ---
 
@@ -29,152 +39,29 @@ knitr::opts_chunk$set(echo=TRUE, comment=NA, fig.path=paste0(outdir, "/p-"))
 options(width = 70)
 ```
 
-## In our KU css file, we have special highlighted elements for callouts.
-
-Callout usage is demonstrated in the following. These
-   are always preceeded by four # signs. Yes, ####. We stole this idea
-   from other styles and put them into ours. See usage of {.bs-callout
-   .bs-callout-whatever_you_put here}, where whatever_you_put_here is
-   either "gray", "red", "orange", "blue", or "green". We might be able to negotiate
-   you you on the choice of colors.  Run the render script with this
-   document, you'll see what we mean.
-
-```{r, eval=FALSE, include=FALSE}
-bscols <- data.frame(old = c("info", "warning", "danger"),
-                     new = c("blue", "orange", "red"))
-```
-
-## Demonstrating Callouts
-
-#### Gray Callout {.bs-callout .bs-callout-gray}
-Content here
-
-#### Red Callout {.bs-callout .bs-callout-red}
-Content here
-
-#### Orange Callout {.bs-callout .bs-callout-orange}
-Content here
-
-#### Blue Callout {.bs-callout .bs-callout-blue}
-Content here
-
-#### Green Callout {.bs-callout .bs-callout-green}
-Content here
 
 
-#### Policies about writing in these documents. {.bs-callout .bs-callout-red}
+## How to compile
 
-1. Use these callouts to attract attention
-
-2. Blank rows separate paragraphs.
-
-3. The character width of rows should be 80 or less.  I have
-no idea how anybody thinks they have a right to impose an
-infinitely long row, but its bad.  Edit the document
-with Emacs, run M-q to get repositioned text.  If your
-editor cannot do that, quit using it.
-
-4. Must make sure compiling using the kutils.css located in the crmda package
-e.g., `crmda::render2html("filename.Rmd")`
-
-## You have the ability to include tabs {.tabset .tabset-fade}
-
-If you'd like, you can include different tabs. Maybe you want to show two similar versions of the same analysis. Or maybe something else. Whatever it may be, be sure to include `{.tabset .tabset-fade}` along with a level 2 header (##). For each tab, put the information under the level 3 header (###). Use another level 2 header to get out of the tabs mode.
-
-The only way (that we know of) to get colors is to wrap the tab headers in a `<span style>` as shown below. This might be useful to draw attention to the tabs. Blue is the default color.
-
-#### What it looks like {.bs-callout .bs-callout-blue}
+Run the render script with this document, you'll see what we mean -
+   please open a terminal and run
 
 ```
-## You have the ability to include tabs {.tabset .tabset-fade}
-
-If you'd like, you can include different tabs. Maybe you want to show
-two similar versions of the same analysis. Or maybe something
-else. Whatever it may be, be sure to include `{.tabset .tabset-fade}`
-along with a level 2 header (##). For each tab, put the information
-under the level 3 header (###). Use another level 2 header to get out
-of the tabs mode.
-
-The only way (that we know of) to get colors is to wrap the tab
-headers in a `<span style>` as shown below. This might be useful to
-draw attention to the tabs. Blue is the default color.
-
-### <span style="color:red">First Tab Here</span>
-
-Some information you'd like to show.
-
-### <span style="color:orange">Second Tab Here</span>
-
-Some more information you'd like to show.
-
-Some more information you'd like to show.
-
-### Third Tab Here
-
-Some final information you'd like to show.
-
-Some final information you'd like to show.
-
-Some final information you'd like to show.
-
-## Equations can be written in LaTeX, either "inline" or "display" mode.
+./rmd2html.sh guide-instructions.Rmd
 ```
 
-## {.tabset .tabset-fade}
+The rendered output (an HTML) file can be opened using Firefox.
 
-### <span style="color:red">First Tab Here</span>
+```
+firefox guide-instructions.html
+```
 
-Some information you'd like to show.
-
-### <span style="color:orange">Second Tab Here</span>
-
-Some more information you'd like to show.
-
-Some more information you'd like to show.
-
-### Third Tab Here
-
-Some final information you'd like to show.
-
-Some final information you'd like to show.
-
-Some final information you'd like to show.
+## Sections and subsections
 
 
-## Equations can be written in LaTeX, either "inline" or "display" mode.
+## Math via LaTeX markup
 
-Equations can be introduced in the style of LaTeX.  If the document
-is processed into a pdf file, the LaTeX programs will be used, but
-if the document is rendered to HTML, then symbolic questions are positioned
-into the output and then the MathJax javascript framework is used to
-display the math in the browser.
-
-Typing the markup is like writing in LaTeX.  Two dollar signs ($\$$)
-surround an inline mathematical expression while a display equation
-(centered and separated) is bracketed by two dollar signs ($\$\$$).
-The two dollar signs are often written on a line by themseves
-for visual separation. We note that other methods that are used to
-initiate display equations in latex also work, including $\[$ or
-$\begin{equation}$.
-
-\textbackslash{}begin\{equation\} and \textbackslash{}end\{equation\}
-and \textbackslash{}[ and \textbackslash{}] generate the same. We need
-to know if there is a recommended style.
-
-Fractions (\\frac{}{}): $\frac{2}{3}$.
-
-Hats (\\hat{}): $\hat{\lambda}=1.02$.
-
-Square Root (\\sqrt{}), $\sqrt{4}=2$.
-
-$$\alpha, \beta,  \gamma, \Gamma$$
-
-Some popular binary operators are
-$$ + - = \ne \ge \lt \pm $$
-$$x \ge 15$$
-$$a_i \ge 0~~~\forall i$$
-
-## Matrix
+One way to create matrix
 
 $$
 A_{m,n} =
@@ -186,8 +73,8 @@ A_{m,n} =
  \end{pmatrix}
 $$
 
-This example uses the alternative display math $\[$, and
-a different type of matrix.
+This example uses the alternative display math $\[$, and a different
+type of matrix. The double dollar-sign is same as begin equation.
 
 \begin{equation}
 A_{m,n} = \left(\begin{array}{ccc}
@@ -198,18 +85,17 @@ g & h & i
 \label{eq:another1}
 \end{equation}
 
-After some testing, it appears also that many
-LaTeX symbols that we would expect to use have no benefit in Rmd
-documents.
-
-
+After some testing, it appears also that many LaTeX symbols that we
+would expect to use have no benefit in Rmd documents.
 
 We don't know if there is a comprehensive list of which LaTeX math
 symbols are allowed, but we wish somebody would find one.
 
+The Bayes' theorem
 
-
-## Statistics
+$$
+P(A|B) = \frac{P(B|A)P(A)}{P(B)}
+$$
 
 The binomial probability:
 
@@ -232,12 +118,49 @@ $$\sigma = \sqrt{\frac{\sum\limits_{i=1}^{n} \left(x_{i} - \bar{x}\right)^{2}} {
 
 There are helpful online editors - [like this one](http://mathstat.uohyd.ernet.in/equationeditor/equationeditor.php)
 
-## Let's look at some plots
+	 
+## Equations can be written in LaTeX, either "inline" or "display" mode.
 
+Equations can be introduced in the style of LaTeX. If the document
+is processed into a PDF file, the LaTeX programs will be used, but
+if the document is rendered to HTML, then symbolic questions are positioned
+into the output and then the MathJax javascript framework is used to
+display the math in the browser.
+
+Typing the markup is like writing in LaTeX. Two dollar signs ($\$$)
+surround an inline mathematical expression while a display equation
+(centered and separated) is bracketed by two dollar signs ($\$\$$).
+The two dollar signs are often written on a line by themselves
+for visual separation. We note that other methods that are used to
+initiate display equations in latex also work, including $\[$ or
+$\begin{equation}$.
+
+\textbackslash{}begin\{equation\} and \textbackslash{}end\{equation\}
+and \textbackslash{}[ and \textbackslash{}] generate the same. We need
+to know if there is a recommended style.
+
+Fractions (\\frac{}{}): $\frac{2}{3}$.
+
+Hats (\\hat{}): $\hat{\lambda}=1.02$.
+
+Square Root (\\sqrt{}): $\sqrt{4}=2$.
+
+Some Greek letters
+$$\alpha, \beta, \gamma, \Gamma$$
+
+Some popular binary operators are
+$$ + - = \approx \ne \ge \lt \pm $$
+$$ \pi \approx 3.1415927 $$
+$$ a_i \ge 0~~~\forall i $$
+$$ x \lt 15 $$
+
+
+## Sweave or Knit (incorporate R chunks, and output)
+
+Explain about code chunks
 
 ```{r myFirstPlot, dev=c('png','pdf'), fig.keep='all'}
 hist(rnorm(500))
-
 ```
 
 ```{r}
@@ -247,11 +170,6 @@ print(x[1:20])
 
 ```{r mySecondPlot, dev=c('png','pdf'), fig.keep='all'}
 hist(rnorm(20))
-```
-
-#### R code inside a callout {.bs-callout .bs-callout-red}
-```{r xsummary}
-summary(x)
 ```
 
 ## Tables
@@ -290,6 +208,140 @@ cat(or1)
     print(or2, type="html")
 ```
 
+
+
+
+# Special Features for Rmd into HTML documents.
+
+## In our KU css file, we have special highlighted elements for callouts.
+
+Callout usage is demonstrated in the following. These are always
+   preceded by four # signs. Yes, ####. We stole this idea from other
+   styles and put them into ours. See usage of {.bs-callout
+   .bs-callout-whatever_you_put here}, where whatever_you_put_here is
+   either "gray", "red", "orange", "blue", or "green". We might be
+   able to negotiate on your choice of colors. 
+   
+   
+   
+```{r, eval=FALSE, include=FALSE}
+bscols <- data.frame(old = c("info", "warning", "danger"),
+                     new = c("blue", "orange", "red"))
+```
+
+### Demonstrating Callouts
+
+#### Gray Callout {.bs-callout .bs-callout-gray}
+Content here: Gray for wisdom
+
+#### Red Callout {.bs-callout .bs-callout-red}
+Red for velvet cake
+
+#### Orange Callout {.bs-callout .bs-callout-orange}
+Orange for popsicle
+
+#### Blue Callout {.bs-callout .bs-callout-blue}
+Blue for the sky
+
+#### Green Callout {.bs-callout .bs-callout-green}
+Green for the land
+
+
+#### R code inside a callout {.bs-callout .bs-callout-red}
+```{r xsummary}
+summary(x)
+```
+	  
+
+
+## Subsections "hidden" behind tabs {.tabset .tabset-fade}
+
+If you'd like, you can include different tabs. Maybe you want to show two similar versions of the same analysis. Or maybe something else. Whatever it may be, be sure to include `{.tabset .tabset-fade}` along with a level 2 header (##). For each tab, put the information under the level 3 header (###). Use another level 2 header to get out of the tabs mode.
+
+The only way (that we know of) to get colors is to wrap the tab headers in a `<span style>` as shown below. This might be useful to draw attention to the tabs. Blue is the default color, because it's the color of the sky.
+
+#### What tabs look like {.bs-callout .bs-callout-blue}
+
+```
+## You have the ability to include tabs {.tabset .tabset-fade}
+
+If you'd like, you can include different tabs. Maybe you want to show
+two similar versions of the same analysis. Or maybe something
+else. Whatever it may be, be sure to include `{.tabset .tabset-fade}`
+along with a level 2 header (##). For each tab, put the information
+under the level 3 header (###). Use another level 2 header to get out
+of the tabs mode.
+
+The only way (that we know of) to get colors is to wrap the tab
+headers in a `<span style>` as shown below. This might be useful to
+draw attention to the tabs. Blue is the default color.
+
+### <span style="color:red">First Tab Here</span>
+
+Some information you'd like to show.
+
+### <span style="color:orange">Second Tab Here</span>
+
+Some more information you'd like to show.
+
+Some more information you'd like to show.
+
+### Third Tab Here
+
+Some final information you'd like to show.
+
+Some final information you'd like to show.
+
+Some final information you'd like to show.
+```
+
+## {.tabset .tabset-fade}
+
+### <span style="color:red">First Tab Here</span>
+
+Some information you'd like to show.
+
+### <span style="color:orange">Second Tab Here</span>
+
+Some more information you'd like to show.
+
+Some more information you'd like to show.
+
+### Third Tab Here
+
+Some final information you'd like to show.
+
+Some final information you'd like to show.
+
+Some final information you'd like to show.
+
+
+
+## International characters
+
+Accented letters, often in non-English names, like
+
+Karl Gustav Jöreskog and Dag Sörbom
+
+Linda Muthén and Bengt Muthén
+
+
+
+
+
+# Policies about writing in these documents. {.bs-callout .bs-callout-red}
+
+1. Use these callouts to attract attention.
+
+2. Blank rows separate paragraphs.
+
+3. The character width of rows should be 80 or less. I have no idea
+how anybody thinks they have a right to impose an infinitely long row,
+but it's bad. Edit the document with Emacs, run M-q to get
+re-positioned text. If your editor cannot do that, quit using it.
+
+4. Must make sure compiling using the kutils.css located in the crmda
+package. For example, `crmda::render2html("filename.Rmd")`
 
 
 [//]: (All guides must have this as the final stanza)
