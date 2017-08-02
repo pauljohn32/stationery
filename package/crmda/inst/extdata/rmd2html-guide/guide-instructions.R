@@ -5,13 +5,8 @@ if (!file.exists(outdir)) dir.create(outdir, recursive = TRUE)
 knitr::opts_chunk$set(echo=TRUE, comment=NA, fig.path=paste0(outdir, "/p-"))
 options(width = 70)
 
-## ---- eval=FALSE, include=FALSE------------------------------------------
-## bscols <- data.frame(old = c("info", "warning", "danger"),
-##                      new = c("blue", "orange", "red"))
-
 ## ----myFirstPlot, dev=c('png','pdf'), fig.keep='all'---------------------
 hist(rnorm(500))
-
 
 ## ------------------------------------------------------------------------
 x <- rnorm(1000)
@@ -19,9 +14,6 @@ print(x[1:20])
 
 ## ----mySecondPlot, dev=c('png','pdf'), fig.keep='all'--------------------
 hist(rnorm(20))
-
-## ----xsummary------------------------------------------------------------
-summary(x)
 
 ## ---- results="html"-----------------------------------------------------
   xx <- "<table><tr><td>hipaul</td><td>zach</td></tr></table>\n"
@@ -52,6 +44,13 @@ cat(or1)
     library(xtable)
     or2 <- xtable(summary(m1))
     print(or2, type="html")
+
+## ---- eval=FALSE, include=FALSE------------------------------------------
+## bscols <- data.frame(old = c("info", "warning", "danger"),
+##                      new = c("blue", "orange", "red"))
+
+## ----xsummary------------------------------------------------------------
+summary(x)
 
 ## ----sessionInfo, echo = FALSE-------------------------------------------
 sessionInfo()

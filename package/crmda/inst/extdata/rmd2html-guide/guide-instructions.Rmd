@@ -26,6 +26,8 @@ Note to Authors: please_dont_change_the_next 4 lines!
 date: "`r format(Sys.time(), '%Y %B %d')`"
 output:
   html_document:
+    toc: true
+    toc_depth: 3
     highlight: haddock
 ---
 
@@ -37,16 +39,12 @@ knitr::opts_chunk$set(echo=TRUE, comment=NA, fig.path=paste0(outdir, "/p-"))
 options(width = 70)
 ```
 
-## In our KU css file, we have special highlighted elements for callouts.
 
-Callout usage is demonstrated in the following. These are always
-   preceded by four # signs. Yes, ####. We stole this idea from other
-   styles and put them into ours. See usage of {.bs-callout
-   .bs-callout-whatever_you_put here}, where whatever_you_put_here is
-   either "gray", "red", "orange", "blue", or "green". We might be
-   able to negotiate on your choice of colors. Run the render script
-   with this document, you'll see what we mean - please open a
-   terminal and run
+
+## How to compile
+
+Run the render script with this document, you'll see what we mean -
+   please open a terminal and run
 
 ```
 ./rmd2html.sh guide-instructions.Rmd
@@ -58,12 +56,180 @@ The rendered output (an HTML) file can be opened using Firefox.
 firefox guide-instructions.html
 ```
 
+## Sections and subsections
+
+
+## Math via LaTeX markup
+
+One way to create matrix
+
+$$
+A_{m,n} =
+ \begin{pmatrix}
+  a_{1,1} & a_{1,2} & \cdots & a_{1,n} \\
+  a_{2,1} & a_{2,2} & \cdots & a_{2,n} \\
+  \vdots  & \vdots  & \ddots & \vdots  \\
+  a_{m,1} & a_{m,2} & \cdots & a_{m,n}
+ \end{pmatrix}
+$$
+
+This example uses the alternative display math $\[$, and a different
+type of matrix. The double dollar-sign is same as begin equation.
+
+\begin{equation}
+A_{m,n} = \left(\begin{array}{ccc}
+a & b & c\\
+d & e & f\\
+g & h & i
+\end{array}\right)
+\label{eq:another1}
+\end{equation}
+
+After some testing, it appears also that many LaTeX symbols that we
+would expect to use have no benefit in Rmd documents.
+
+We don't know if there is a comprehensive list of which LaTeX math
+symbols are allowed, but we wish somebody would find one.
+
+The Bayes' theorem
+
+$$
+P(A|B) = \frac{P(B|A)P(A)}{P(B)}
+$$
+
+The binomial probability:
+
+$$
+f(y|N,p) = \frac{N!}{y!(N-y)!}\cdot p^y \cdot (1-p)^{N-y} = {{N}\choose{y}} \cdot p^y \cdot (1-p)^{N-y}
+$$
+
+To calculate the **mean** of \textit{n} observations of variable \textit{x}, you can use: $$\bar{x} = \frac{1}{n} \sum_{i=1}^{n}x_{i}$$
+
+Note that this equation looks quite nice above where it's in display math mode. It is more compact but not quite as nice looking if we present it using inline mode, e.g., $\bar{x} = \frac{1}{n} \sum_{i=1}^{n}x_{i}$.
+
+Let's do the same with the equation for **variance**. First the inline version, which is
+$\sigma^{2} = \frac{\sum\limits_{i=1}^{n} \left(x_{i} - \bar{x}\right)^{2}} {n-1}$. And then the display mode version:
+$$\sigma^{2} = \frac{\sum_{i=1}^{n}
+  \left(x_{i} - \bar{x}\right)^{2}}
+  {n-1}$$
+
+And, finally, we'll end with the **standard deviation**. Here's the inline version, $\sigma = \sqrt{\frac{\sum\limits_{i=1}^{n} \left(x_{i} - \bar{x}\right)^{2}} {n-1}}$. And here's the display version.
+$$\sigma = \sqrt{\frac{\sum\limits_{i=1}^{n} \left(x_{i} - \bar{x}\right)^{2}} {n-1}}$$
+
+There are helpful online editors - [like this one](http://mathstat.uohyd.ernet.in/equationeditor/equationeditor.php)
+
+	 
+## Equations can be written in LaTeX, either "inline" or "display" mode.
+
+Equations can be introduced in the style of LaTeX. If the document
+is processed into a PDF file, the LaTeX programs will be used, but
+if the document is rendered to HTML, then symbolic questions are positioned
+into the output and then the MathJax javascript framework is used to
+display the math in the browser.
+
+Typing the markup is like writing in LaTeX. Two dollar signs ($\$$)
+surround an inline mathematical expression while a display equation
+(centered and separated) is bracketed by two dollar signs ($\$\$$).
+The two dollar signs are often written on a line by themselves
+for visual separation. We note that other methods that are used to
+initiate display equations in latex also work, including $\[$ or
+$\begin{equation}$.
+
+\textbackslash{}begin\{equation\} and \textbackslash{}end\{equation\}
+and \textbackslash{}[ and \textbackslash{}] generate the same. We need
+to know if there is a recommended style.
+
+Fractions (\\frac{}{}): $\frac{2}{3}$.
+
+Hats (\\hat{}): $\hat{\lambda}=1.02$.
+
+Square Root (\\sqrt{}): $\sqrt{4}=2$.
+
+Some Greek letters
+$$\alpha, \beta, \gamma, \Gamma$$
+
+Some popular binary operators are
+$$ + - = \approx \ne \ge \lt \pm $$
+$$ \pi \approx 3.1415927 $$
+$$ a_i \ge 0~~~\forall i $$
+$$ x \lt 15 $$
+
+
+## Sweave or Knit (incorporate R chunks, and output)
+
+Explain about code chunks
+
+```{r myFirstPlot, dev=c('png','pdf'), fig.keep='all'}
+hist(rnorm(500))
+```
+
+```{r}
+x <- rnorm(1000)
+print(x[1:20])
+```
+
+```{r mySecondPlot, dev=c('png','pdf'), fig.keep='all'}
+hist(rnorm(20))
+```
+
+## Tables
+
+```{r, results="html"}
+  xx <- "<table><tr><td>hipaul</td><td>zach</td></tr></table>\n"
+  xx
+```
+
+
+```{r, results="asis"}
+library(rockchalk)
+   set.seed(2134234)
+   dat <- data.frame(x1 = rnorm(100), x2 = rnorm(100))
+   dat$y1 <- 30 + 5 * rnorm(100) + 3 * dat$x1 + 4 * dat$x2
+   dat$y2 <- rnorm(100) + 5 * dat$x2
+   m1 <- lm(y1 ~ x1, data = dat)
+   m2 <- lm(y1 ~ x2, data = dat)
+   m3 <- lm(y1 ~ x1 + x2, data = dat)
+   gm1 <- glm(y1 ~ x1, family = Gamma, data = dat)
+
+or1 <- outreg(list("Amod" = m1, "Bmod" = m2, "Gmod" = m3),
+title = "My Three Linear Regressions", float = FALSE, type = "html",
+browse = FALSE)
+or1 <- gsub("&nbsp;"," ", or1)
+or1 <- gsub("^\\ *", "", or1)
+or1 <- paste(or1, collapse = "")
+or1 <- gsub("\\ \\ \\ \\ \\ \\ ", " ", or1)
+or1 <- gsub("\\ \\ \\ ", " ", or1)
+cat(or1)
+```
+
+```{r, results="asis"}
+    library(xtable)
+    or2 <- xtable(summary(m1))
+    print(or2, type="html")
+```
+
+
+
+
+# Special Features for Rmd into HTML documents.
+
+## In our KU css file, we have special highlighted elements for callouts.
+
+Callout usage is demonstrated in the following. These are always
+   preceded by four # signs. Yes, ####. We stole this idea from other
+   styles and put them into ours. See usage of {.bs-callout
+   .bs-callout-whatever_you_put here}, where whatever_you_put_here is
+   either "gray", "red", "orange", "blue", or "green". We might be
+   able to negotiate on your choice of colors. 
+   
+   
+   
 ```{r, eval=FALSE, include=FALSE}
 bscols <- data.frame(old = c("info", "warning", "danger"),
                      new = c("blue", "orange", "red"))
 ```
 
-## Demonstrating Callouts
+### Demonstrating Callouts
 
 #### Gray Callout {.bs-callout .bs-callout-gray}
 Content here: Gray for wisdom
@@ -80,28 +246,21 @@ Blue for the sky
 #### Green Callout {.bs-callout .bs-callout-green}
 Green for the land
 
+
+#### R code inside a callout {.bs-callout .bs-callout-red}
+```{r xsummary}
+summary(x)
+```
 	  
-#### Policies about writing in these documents. {.bs-callout .bs-callout-red}
 
-1. Use these callouts to attract attention.
 
-2. Blank rows separate paragraphs.
-
-3. The character width of rows should be 80 or less. I have no idea
-how anybody thinks they have a right to impose an infinitely long row,
-but it's bad. Edit the document with Emacs, run M-q to get
-re-positioned text. If your editor cannot do that, quit using it.
-
-4. Must make sure compiling using the kutils.css located in the crmda
-package. For example, `crmda::render2html("filename.Rmd")`
-
-## You have the ability to include tabs {.tabset .tabset-fade}
+## Subsections "hidden" behind tabs {.tabset .tabset-fade}
 
 If you'd like, you can include different tabs. Maybe you want to show two similar versions of the same analysis. Or maybe something else. Whatever it may be, be sure to include `{.tabset .tabset-fade}` along with a level 2 header (##). For each tab, put the information under the level 3 header (###). Use another level 2 header to get out of the tabs mode.
 
 The only way (that we know of) to get colors is to wrap the tab headers in a `<span style>` as shown below. This might be useful to draw attention to the tabs. Blue is the default color, because it's the color of the sky.
 
-#### What it looks like {.bs-callout .bs-callout-blue}
+#### What tabs look like {.bs-callout .bs-callout-blue}
 
 ```
 ## You have the ability to include tabs {.tabset .tabset-fade}
@@ -156,41 +315,9 @@ Some final information you'd like to show.
 
 Some final information you'd like to show.
 
-	 
-## Equations can be written in LaTeX, either "inline" or "display" mode.
 
-Equations can be introduced in the style of LaTeX. If the document
-is processed into a PDF file, the LaTeX programs will be used, but
-if the document is rendered to HTML, then symbolic questions are positioned
-into the output and then the MathJax javascript framework is used to
-display the math in the browser.
 
-Typing the markup is like writing in LaTeX. Two dollar signs ($\$$)
-surround an inline mathematical expression while a display equation
-(centered and separated) is bracketed by two dollar signs ($\$\$$).
-The two dollar signs are often written on a line by themselves
-for visual separation. We note that other methods that are used to
-initiate display equations in latex also work, including $\[$ or
-$\begin{equation}$.
-
-\textbackslash{}begin\{equation\} and \textbackslash{}end\{equation\}
-and \textbackslash{}[ and \textbackslash{}] generate the same. We need
-to know if there is a recommended style.
-
-Fractions (\\frac{}{}): $\frac{2}{3}$.
-
-Hats (\\hat{}): $\hat{\lambda}=1.02$.
-
-Square Root (\\sqrt{}): $\sqrt{4}=2$.
-
-Some Greek letters
-$$\alpha, \beta, \gamma, \Gamma$$
-
-Some popular binary operators are
-$$ + - = \approx \ne \ge \lt \pm $$
-$$ \pi \approx 3.1415927 $$
-$$ a_i \ge 0~~~\forall i $$
-$$ x \lt 15 $$
+## International characters
 
 Accented letters, often in non-English names, like
 
@@ -198,124 +325,23 @@ Karl Gustav Jöreskog and Dag Sörbom
 
 Linda Muthén and Bengt Muthén
 
-## Matrix
-
-$$
-A_{m,n} =
- \begin{pmatrix}
-  a_{1,1} & a_{1,2} & \cdots & a_{1,n} \\
-  a_{2,1} & a_{2,2} & \cdots & a_{2,n} \\
-  \vdots  & \vdots  & \ddots & \vdots  \\
-  a_{m,1} & a_{m,2} & \cdots & a_{m,n}
- \end{pmatrix}
-$$
-
-This example uses the alternative display math $\[$, and
-a different type of matrix.
-
-\begin{equation}
-A_{m,n} = \left(\begin{array}{ccc}
-a & b & c\\
-d & e & f\\
-g & h & i
-\end{array}\right)
-\label{eq:another1}
-\end{equation}
-
-After some testing, it appears also that many
-LaTeX symbols that we would expect to use have no benefit in Rmd
-documents.
-
-We don't know if there is a comprehensive list of which LaTeX math
-symbols are allowed, but we wish somebody would find one.
-
-		
-## Statistics
-
-The lovely Bayes' theorem
-$$
-P(A|B) = \frac{P(B|A)P(A)}{P(B)}
-$$
-
-The binomial probability:
-
-$$
-f(y|N,p) = \frac{N!}{y!(N-y)!}\cdot p^y \cdot (1-p)^{N-y} = {{N}\choose{y}} \cdot p^y \cdot (1-p)^{N-y}
-$$
-
-To calculate the **mean** of \textit{n} observations of variable \textit{x}, you can use: $$\bar{x} = \frac{1}{n} \sum_{i=1}^{n}x_{i}$$
-
-Note that this equation looks quite nice above where it's in display math mode. It is more compact but not quite as nice looking if we present it using inline mode, e.g., $\bar{x} = \frac{1}{n} \sum_{i=1}^{n}x_{i}$.
-
-Let's do the same with the equation for **variance**. First the inline version, which is
-$\sigma^{2} = \frac{\sum\limits_{i=1}^{n} \left(x_{i} - \bar{x}\right)^{2}} {n-1}$. And then the display mode version:
-$$\sigma^{2} = \frac{\sum_{i=1}^{n}
-  \left(x_{i} - \bar{x}\right)^{2}}
-  {n-1}$$
-
-And, finally, we'll end with the **standard deviation**. Here's the inline version, $\sigma = \sqrt{\frac{\sum\limits_{i=1}^{n} \left(x_{i} - \bar{x}\right)^{2}} {n-1}}$. And here's the display version.
-$$\sigma = \sqrt{\frac{\sum\limits_{i=1}^{n} \left(x_{i} - \bar{x}\right)^{2}} {n-1}}$$
-
-There are helpful online editors - [like this one](http://mathstat.uohyd.ernet.in/equationeditor/equationeditor.php)
-
-## Let's look at some plots
 
 
-```{r myFirstPlot, dev=c('png','pdf'), fig.keep='all'}
-hist(rnorm(500))
-
-```
-
-```{r}
-x <- rnorm(1000)
-print(x[1:20])
-```
-
-```{r mySecondPlot, dev=c('png','pdf'), fig.keep='all'}
-hist(rnorm(20))
-```
-
-#### R code inside a callout {.bs-callout .bs-callout-red}
-```{r xsummary}
-summary(x)
-```
-
-## Tables
-
-```{r, results="html"}
-  xx <- "<table><tr><td>hipaul</td><td>zach</td></tr></table>\n"
-  xx
-```
 
 
-```{r, results="asis"}
-library(rockchalk)
-   set.seed(2134234)
-   dat <- data.frame(x1 = rnorm(100), x2 = rnorm(100))
-   dat$y1 <- 30 + 5 * rnorm(100) + 3 * dat$x1 + 4 * dat$x2
-   dat$y2 <- rnorm(100) + 5 * dat$x2
-   m1 <- lm(y1 ~ x1, data = dat)
-   m2 <- lm(y1 ~ x2, data = dat)
-   m3 <- lm(y1 ~ x1 + x2, data = dat)
-   gm1 <- glm(y1 ~ x1, family = Gamma, data = dat)
+# Policies about writing in these documents. {.bs-callout .bs-callout-red}
 
-or1 <- outreg(list("Amod" = m1, "Bmod" = m2, "Gmod" = m3),
-title = "My Three Linear Regressions", float = FALSE, type = "html",
-browse = FALSE)
-or1 <- gsub("&nbsp;"," ", or1)
-or1 <- gsub("^\\ *", "", or1)
-or1 <- paste(or1, collapse = "")
-or1 <- gsub("\\ \\ \\ \\ \\ \\ ", " ", or1)
-or1 <- gsub("\\ \\ \\ ", " ", or1)
-cat(or1)
-```
+1. Use these callouts to attract attention.
 
-```{r, results="asis"}
-    library(xtable)
-    or2 <- xtable(summary(m1))
-    print(or2, type="html")
-```
+2. Blank rows separate paragraphs.
 
+3. The character width of rows should be 80 or less. I have no idea
+how anybody thinks they have a right to impose an infinitely long row,
+but it's bad. Edit the document with Emacs, run M-q to get
+re-positioned text. If your editor cannot do that, quit using it.
+
+4. Must make sure compiling using the kutils.css located in the crmda
+package. For example, `crmda::render2html("filename.Rmd")`
 
 
 [//]: (All guides must have this as the final stanza)
