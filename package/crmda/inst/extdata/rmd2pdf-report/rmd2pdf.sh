@@ -1,19 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 
-## Paul Johnson 20161025
-## TODO 1) check input is Rmd
-## 2) If no file is provided, get list of all Rmd in
-## directory and run same for them, or offer user a prompt to choose one, or all.
-## Test, Run like this
-
-
-function render {
-	echo "In render:"
-	cmd="library(rmarkdown); library(knitr); render(\"$1\", "$2", quiet = TRUE)"
-	echo $cmd
-    R -q --slave --vanilla -e "$cmd"
-}
-
+## Paul Johnson
+## 2017-08-04
 
 fmt="pdf"
 
@@ -32,8 +20,37 @@ do
     esac
 done
 
-output_format="pdf_document(highlight=\"haddock\", template=\"theme/crmda-boilerplate.tex\", pandoc_args=\"--listings\" )"
 
+## This calls the R function rmd2html in crmda. It should
+## do the exact same thing.
+## This replaces the more intricate shell script we were
+## using, please notify me of errors.
+
+## On command line, run 
+
+## 1 "./rmd2html.sh your_file.Rnw" to process "your_file.Rnw".
+## 2 "./rmd2html.sh *.Rnw" to process all Rnw files (or *.lyx for
+## all lyx files.
+
+## The rmd2html function is fully documented in the crmda R
+## package. It can accept many arguments, which can be
+## inserted below in "defaults".  If it becomes popular to
+## do this, we will create a command line handler.
+
+flz=$@
+
+## TODO: insert check on file type. Should be Rmd
+pwd=`pwd`
+defaults="toc=TRUE, output_dir=\"$pwd\""
+
+for fn in $flz
+  do 
+      echo $fn
+	  echo $defaults
+     Rscript -e "library(crmda); rmd2html(\"$fn\", $defaults)"
+  done
+
+exit 0
 
 
 filename=$1
@@ -51,15 +68,16 @@ then
     read -p "Please indicate which you want, or hit Enter for all: " filename
 fi
 
-
+pwd=`pwd`
+defaults="toc=TRUE, output_dir=\"$pwd\""
 
 if [[ -e $filename ]]
 then
-       render "$filename" "$output_format"
+      Rscript -e "library(crmda); rmd2pdf(\"$filename\", $defaults)"
 else
 for fn in *.Rmd
 do
-        render "$fn" "$output_format"
+      Rscript -e "library(crmda); rmd2pdf(\"$filename\", $defaults)"
 done
 fi
  
