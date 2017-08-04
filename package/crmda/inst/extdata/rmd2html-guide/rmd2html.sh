@@ -1,64 +1,36 @@
-#!/bin/bash
+#!/bin/sh
 
-## ./rmd2html.sh whatever.Rmd
+## Paul Johnson
+## 2017-08-04
 
-## puzzles arise if the file name that user interactive
-## types has quotes around it,
-## don't understand that yet. just all works
+## This calls the R function rmd2html in crmda. It should
+## do the exact same thing.
+## This replaces the more intricate shell script we were
+## using, please notify me of errors.
 
+## On command line, run 
 
-function render {
-	echo "In render:"
-	cmd="library(crmda); file.copy(system.file(\"extdata/theme\", \"kutils.css\", package = \"crmda\"), \"kutils.css\"); library(rmarkdown); library(knitr); render(\"$1\", "$2", quiet = TRUE); purl(\"$1\");unlink(\"kutils.css\")"
-	echo $cmd
-    R -q --slave --vanilla -e "$cmd"
-}
+## 1 "./rmd2html.sh your_file.Rnw" to process "your_file.Rnw".
+## 2 "./rmd2html.sh *.Rnw" to process all Rnw files (or *.lyx for
+## all lyx files.
 
+## The rmd2html function is fully documented in the crmda R
+## package. It can accept many arguments, which can be
+## inserted below in "defaults".  If it becomes popular to
+## do this, we will create a command line handler.
 
-## Default is html
-fmt="html"
+flz=$@
 
-TEMP=`getopt -o fh: --long fmt:,help -n 'test.sh' -- "$@"`
-eval set -- "$TEMP"
+## TODO: insert check on file type. Should be Rmd
+pwd=`pwd`
+defaults="toc=TRUE, output_dir=\"$pwd\""
 
-while true
-do
-    case "$1" in
-	-h|--help)
-	 echo "Used to render from Rmd to html"
-	    exit
-	    ;;
-	--) shift ; break ;;
-	*) echo "Error"; exit 1 ;;
-    esac
-done
+for fn in $flz
+  do 
+      echo $fn
+	  echo $defaults
+     Rscript -e "library(crmda); rmd2html(\"$fn\", $defaults)"
+  done
 
-output_format='html_document(css = system.file("extdata/theme", "kutils.css", package = "crmda"))'
+exit 0
 
-filename=$1
-fn=$(basename "$filename")
-exten="${fn##*.}"
-
-echo "$fn"
-echo "$exten"
-
-
-if [[ $filename == "" ||  "$exten" != "Rmd" ]]
-then
-    echo -e "These are the Rmd files in the current directory." 
-    echo -e "\n" $(ls  *.Rmd)
-    read -p "Please indicate which you want, or hit Enter for all: " filename
-fi
-
-
-
-if [[ -e $filename ]]
-then
-       render "$filename" "$output_format"
-else
-for fn in *.Rmd
-do
-        render "$fn" "$output_format"
-done
-fi
- 
