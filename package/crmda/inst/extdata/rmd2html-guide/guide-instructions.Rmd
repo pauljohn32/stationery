@@ -26,7 +26,7 @@ Note to Authors: please_dont_change_the_next 4 lines!
 date: "`r format(Sys.time(), '%Y %B %d')`"
 output:
   html_document:
-    toc: true
+    toc: TRUE
     toc_depth: 3
     highlight: haddock
 ---
@@ -39,29 +39,36 @@ knitr::opts_chunk$set(echo=TRUE, comment=NA, fig.path=paste0(outdir, "/p-"))
 options(width = 70)
 ```
 
+# RMarkdown Basics
+
+Rstudio has great resources for R markdown basics. If you are a begginer to R markdown, we recommend covering some of RStudios R markdown basics.
+
+HTTP://markdown.rstudio.com/authoring_quick_tour.html
 
 
-## How to compile
+# How to Compile the Document
 
 Run the render script with this document, you'll see what we mean -
-   please open a terminal and run
+   please open a terminal, navigate to the working directory of the .Rmd file, and run:
 
 ```
 ./rmd2html.sh guide-instructions.Rmd
 ```
 
-The rendered output (an HTML) file can be opened using Firefox.
+The rendered output (an HTML) file can be opened using Firefox or Chrome/Chromium.
 
 ```
 firefox guide-instructions.html
 ```
 
-## Sections and subsections
+# General Features
 
 
-## Math via LaTeX markup
+## Math via $\LaTeX$ markup
 
-One way to create matrix
+$\LaTeX$ markup can be used to typset beautiful equations with great flexability. Some examples follow. 
+
+We can create a matrix formula like so:
 
 $$
 A_{m,n} =
@@ -76,19 +83,21 @@ $$
 This example uses the alternative display math $\[$, and a different
 type of matrix. The double dollar-sign is same as begin equation.
 
+
 \begin{equation}
 A_{m,n} = \left(\begin{array}{ccc}
 a & b & c\\
 d & e & f\\
-g & h & i
+g & h & i\\
 \end{array}\right)
 \label{eq:another1}
 \end{equation}
 
-After some testing, it appears also that many LaTeX symbols that we
+
+After some testing, it appears also that many $\LaTeX$ symbols that we
 would expect to use have no benefit in Rmd documents.
 
-We don't know if there is a comprehensive list of which LaTeX math
+We don't know if there is a comprehensive list of which $\LaTeX$ math
 symbols are allowed, but we wish somebody would find one.
 
 The Bayes' theorem
@@ -103,7 +112,11 @@ $$
 f(y|N,p) = \frac{N!}{y!(N-y)!}\cdot p^y \cdot (1-p)^{N-y} = {{N}\choose{y}} \cdot p^y \cdot (1-p)^{N-y}
 $$
 
-To calculate the **mean** of \textit{n} observations of variable \textit{x}, you can use: $$\bar{x} = \frac{1}{n} \sum_{i=1}^{n}x_{i}$$
+To calculate the **mean** of \textit{n} observations of variable \textit{x}, you can use:
+
+$$
+\bar{x} = \frac{1}{n} \sum_{i=1}^{n}x_{i}
+$$
 
 Note that this equation looks quite nice above where it's in display math mode. It is more compact but not quite as nice looking if we present it using inline mode, e.g., $\bar{x} = \frac{1}{n} \sum_{i=1}^{n}x_{i}$.
 
@@ -119,7 +132,7 @@ $$\sigma = \sqrt{\frac{\sum\limits_{i=1}^{n} \left(x_{i} - \bar{x}\right)^{2}} {
 There are helpful online editors - [like this one](http://mathstat.uohyd.ernet.in/equationeditor/equationeditor.php)
 
 	 
-## Equations can be written in LaTeX, either "inline" or "display" mode.
+### Equations can be written in LaTeX, either "inline" or "display" mode.
 
 Equations can be introduced in the style of LaTeX. If the document
 is processed into a PDF file, the LaTeX programs will be used, but
@@ -148,16 +161,34 @@ Square Root (\\sqrt{}): $\sqrt{4}=2$.
 Some Greek letters
 $$\alpha, \beta, \gamma, \Gamma$$
 
+
 Some popular binary operators are
+
 $$ + - = \approx \ne \ge \lt \pm $$
 $$ \pi \approx 3.1415927 $$
 $$ a_i \ge 0~~~\forall i $$
 $$ x \lt 15 $$
 
+###Equation Numbering
 
-## Sweave or Knit (incorporate R chunks, and output)
+Sometimes you may want to designate numbered equations. Unfortunately, markdown to HTML does not support auto-numbering equations by default. However, you can designate static equation numbers by adding```\tag{}``` to the end of your equations, like so:
 
-Explain about code chunks
+
+$$ + - = \approx \ne \ge \lt \pm\tag{1} $$
+$$ \pi \approx 3.1415927\tag{2} $$
+$$ a_i \ge 0~~~\forall i\tag{3} $$
+$$ x \lt 15\tag{4} $$
+
+
+##Knit (incorporate R chunks, and output)
+
+R code chunks can be incorperated into documents, this allows for the full functionality of the R programming environment to be "knitted" into a markdown report. Code chunks have many options which can be aplied to change the functionality of a specific chunk. The following link presents a well organized list of some potential chunk options.
+
+https://yihui.name/knitr/options/
+
+###Plots
+
+Plots or figures can be added to any Markdown document through the use of R code chunks. 
 
 ```{r myFirstPlot, dev=c('png','pdf'), fig.keep='all'}
 hist(rnorm(500))
@@ -172,15 +203,67 @@ print(x[1:20])
 hist(rnorm(20))
 ```
 
-## Tables
+###Graphics & Figures
 
-```{r, results="html"}
-  xx <- "<table><tr><td>hipaul</td><td>zach</td></tr></table>\n"
-  xx
+We can use mapping for geographically oriented information.
+
+```{r, echo = FALSE, warning = FALSE}
+library(maps)
+par(mar=rep(0, 4))
+map("nz", fill=TRUE, col="grey80")
+points(174.75, -36.87, pch=16, cex=2)
+arrows(172, -36.87, 174, -36.87, lwd=3)
+text(172, -36.87, "Auckland  ", adj=1, cex=.9)
+
+maplocs <- map(projection="sp_mercator", wrap=TRUE, lwd=0.1, 
+               col="dodgerblue", ylim=c(-60, 75),
+               interior=FALSE, orientation=c(90, 180, 0), add=TRUE,
+               plot=FALSE)
+xrange <- range(maplocs$x, na.rm=TRUE)
+yrange <- range(maplocs$y, na.rm=TRUE)
+aspect <- abs(diff(yrange))/abs(diff(xrange))
+# customised to 6.5 by 4.5 figure size
+par(fig=c(0.99 - 0.5, 0.99, 0.01, 0.01 + 0.5*aspect*4.5/6.5), 
+    mar=rep(0, 4), new=TRUE)
+plot.new()
+plot.window(xlim=xrange,
+            ylim=yrange)
+map(projection="sp_mercator", wrap=TRUE, lwd=0.1, ylim=c(-60, 75),
+    interior=FALSE, orientation=c(90, 180, 0), add=TRUE)
+symbols(-.13, -0.8, circles=1, inches=0.1, add=TRUE)
+```
+
+Sometimes a figure expresses more than words. Figures can also be included in R markdown documents.
+
+```{r, echo = FALSE, warning =FALSE}
+par(xaxs="i", yaxs="i", xpd=FALSE)
+    plot(c(0, 1), c(0, 1), type="n", ann=FALSE, axes=FALSE)
+    box("figure")
+    rect(0, 0, 1, 1, col="light grey", border="grey")
+    axis(1, at=c(0, 1), c("", ""))
+    mtext("Min x", side=1, adj=0, line=1)
+    mtext("Max x", side=1, adj=1, line=1)
+    axis(2, at=c(0, 1), c("", ""))
+    mtext("Min y", side=2, adj=0, line=1)
+    mtext("Max y", side=2, adj=1, line=1)
+    lines(c(.6, .6, 0), c(0, .6, .6), lty="dashed")
+    text(.6, .6, expression(paste("The location ", 
+            group("(",list(x[i], y[i]),")"))), pos=3)
+    points(.6, .6, pch=16)
+    axis(1, at=.6, "")
+    mtext(expression(x[i]), side=1, at=.6, line=.7)
+    axis(2, at=.6, "")
+    mtext(expression(y[i]), side=2, at=.6, line=.7)
+        
 ```
 
 
-```{r, results="asis"}
+
+### Tables
+
+Here is an example of the rockchalk packages model comparison table
+
+```{r, warning = FALSE, error = FALSE, message= FALSE,include=FALSE}
 library(rockchalk)
    set.seed(2134234)
    dat <- data.frame(x1 = rnorm(100), x2 = rnorm(100))
@@ -199,8 +282,13 @@ or1 <- gsub("^\\ *", "", or1)
 or1 <- paste(or1, collapse = "")
 or1 <- gsub("\\ \\ \\ \\ \\ \\ ", " ", or1)
 or1 <- gsub("\\ \\ \\ ", " ", or1)
+```
+
+```{r,results="asis"}
 cat(or1)
 ```
+
+We have settled on Xtable as a great table producing package which offers flexability and functionality.
 
 ```{r, results="asis"}
     library(xtable)
@@ -208,21 +296,21 @@ cat(or1)
     print(or2, type="html")
 ```
 
-
-
+```{r, results="asis"}
+    library(psych)
+print(xtable(describe(dat)),type = "html")
+    
+```
 
 # Special Features for Rmd into HTML documents.
 
-## In our KU css file, we have special highlighted elements for callouts.
+HTML documents allow for interactivity as compared to other forms of markdown output. Below are some unique features we take advantage of in HTML output.
 
-Callout usage is demonstrated in the following. These are always
-   preceded by four # signs. Yes, ####. We stole this idea from other
-   styles and put them into ours. See usage of {.bs-callout
-   .bs-callout-whatever_you_put here}, where whatever_you_put_here is
-   either "gray", "red", "orange", "blue", or "green". We might be
-   able to negotiate on your choice of colors. 
-   
-   
+
+## Collored Callouts
+
+Callouts allow the user to specify code chunks, tables, plots, or paragraphs to be collored. This is a great way to get your readers attention. These are always preceded by four # signs. Yes, ####. We stole this idea from other
+styles and put them into ours. See usage of {.bs-callout.bs-callout-whatever_you_put here}, where whatever_you_put_here iseither "gray", "red", "orange", "blue", or "green".
    
 ```{r, eval=FALSE, include=FALSE}
 bscols <- data.frame(old = c("info", "warning", "danger"),
@@ -235,16 +323,16 @@ bscols <- data.frame(old = c("info", "warning", "danger"),
 Content here: Gray for wisdom
 
 #### Red Callout {.bs-callout .bs-callout-red}
-Red for velvet cake
+Red for warnings
 
 #### Orange Callout {.bs-callout .bs-callout-orange}
-Orange for popsicle
+Orange for examples
 
 #### Blue Callout {.bs-callout .bs-callout-blue}
-Blue for the sky
+Blue for right answers
 
 #### Green Callout {.bs-callout .bs-callout-green}
-Green for the land
+Green for future directions
 
 
 #### R code inside a callout {.bs-callout .bs-callout-red}
@@ -254,12 +342,11 @@ summary(x)
 	  
 
 
-## Subsections "hidden" behind tabs {.tabset .tabset-fade}
+## Interactive Tabs
 
-If you'd like, you can include different tabs. Maybe you want to show two similar versions of the same analysis. Or maybe something else. Whatever it may be, be sure to include `{.tabset .tabset-fade}` along with a level 2 header (##). For each tab, put the information under the level 3 header (###). Use another level 2 header to get out of the tabs mode.
+If you'd like, you can include interactive tabs to HTML reports. Maybe you want to show two similar versions of the same analysis. Or maybe something else. Whatever it may be, be sure to include `{.tabset .tabset-fade}` along with a level 2 header (##). For each tab, put the information under the level 3 header (###). Use another level 2 header to get out of the tabs mode.
 
-The only way (that we know of) to get colors is to wrap the tab headers in a `<span style>` as shown below. This might be useful to draw attention to the tabs. Blue is the default color, because it's the color of the sky.
-
+The only way (that we know of) to get colors is to wrap the tab headers in a `<span style>` as shown below. This might be useful to draw attention to the tabs. Blue is the default color.
 #### What tabs look like {.bs-callout .bs-callout-blue}
 
 ```
@@ -316,7 +403,6 @@ Some final information you'd like to show.
 Some final information you'd like to show.
 
 
-
 ## International characters
 
 Accented letters, often in non-English names, like
@@ -324,9 +410,6 @@ Accented letters, often in non-English names, like
 Karl Gustav Jöreskog and Dag Sörbom
 
 Linda Muthén and Bengt Muthén
-
-
-
 
 
 # Policies about writing in these documents. {.bs-callout .bs-callout-red}
@@ -341,7 +424,7 @@ but it's bad. Edit the document with Emacs, run M-q to get
 re-positioned text. If your editor cannot do that, quit using it.
 
 4. Must make sure compiling using the kutils.css located in the crmda
-package. For example, `crmda::render2html("filename.Rmd")`
+package. For example, `crmda::rmd2html("filename.Rmd")`
 
 
 [//]: (All guides must have this as the final stanza)
