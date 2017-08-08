@@ -1,36 +1,66 @@
-#!/bin/sh
+#!/bin/bash
 
 ## Paul Johnson
-## 2017-08-04
+## 2017-08-08
 
-## This calls the R function rmd2html in crmda. It should
-## do the exact same thing.
-## This replaces the more intricate shell script we were
-## using, please notify me of errors.
 
-## On command line, run 
+## all Rmd files in working directory are compiled
+compileall() {
+	for fn in *.Rmd
+	do
+		Rscript -e "library(crmda); rmd2html(\"$fn\", $defaults)"
+	done
+}
 
-## 1 "./rmd2html.sh your_file.Rnw" to process "your_file.Rnw".
-## 2 "./rmd2html.sh *.Rnw" to process all Rnw files (or *.lyx for
-## all lyx files.
+## Usage instruction, will compile all if user hits enter.
+usage() {
+  echo -e "\nUsage: $0 [filename.Rmd]"
+  echo "No name is specified, so these Rmd files will be compiled:"
+  echo -e "\n" $(ls -1 *.Rmd) "\n"
+  echo -e "Hit Enter to process all Rmd files, or \"q\" to quit"
+  read -p "> " input
+  if [[ $input == "q" ]]; then
+   	  exit 1
+  else
+  echo "Compiling them all"
+  compileall
+  fi
+}
 
-## The rmd2html function is fully documented in the crmda R
-## package. It can accept many arguments, which can be
-## inserted below in "defaults".  If it becomes popular to
-## do this, we will create a command line handler.
-
-flz=$@
-
-## TODO: insert check on file type. Should be Rmd
 pwd=`pwd`
+## The defaults string is R expression, inserted after
+## the file name argument in rmd2html
 defaults="toc=TRUE, output_dir=\"$pwd\""
 
-for fn in $flz
-  do 
-      echo $fn
-	  echo $defaults
-     Rscript -e "library(crmda); rmd2html(\"$fn\", $defaults)"
-  done
+## Retrieve the number of arguments
+nargs=$#
 
+## If no arguments, or if argument is "--help"
+if [[ $nargs -lt 1 ]]; then
+	usage
+elif [ "$1" == "--help" ]; then
+	usage
+fi
+
+## Process command line file names. Error on files that are not
+## suffixed with Rmd (ignoring case)
+for filename in "$@"; do
+	if [[ -e "$filename" ]]; then
+		fn=$(basename "$filename")
+		exten="${fn##*.}"
+		## check extension, ignore case, allows "rmd" or "RMD"
+		shopt -s nocasematch
+		if [[ "$exten" == "Rmd" ]]; then
+			echo -e "compile $filename"
+			Rscript -e "library(crmda); rmd2html(\"$filename\", $defaults)"
+		else
+			echo -e "Error: $filename. Extension should be \"Rmd\""
+		fi
+	else
+ 		echo -e "$filename not found"
+	fi
+done
 exit 0
+
+
 
