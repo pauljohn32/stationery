@@ -2,11 +2,13 @@
 
 export(initWriteup)
 export(rmd2html)
+export(rmd2pdf)
 export(rnw2pdf)
 importFrom(knitr,knit)
 importFrom(knitr,knit2pdf)
 importFrom(kutils,initProject)
 importFrom(rmarkdown,html_document)
+importFrom(rmarkdown,pdf_document)
 importFrom(rmarkdown,render)
 importFrom(utils,Stangle)
 importFrom(utils,Sweave)

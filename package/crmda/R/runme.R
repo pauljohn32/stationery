@@ -8,8 +8,9 @@
 ##' within the directory.
 ##' @param fn A file name. If not specified, then all Rmd documents
 ##'     within directory are rendered.
-##' @param wd A working directory name. If not specified, then the
-##'     current working directory from R will be used.
+##' @param wd A working directory name of the Rmd file. If not
+##'     specified, then the current working directory from R will be
+##'     used.
 ##' @param verbose The opposite of render(quiet = TRUE). Shows compile
 ##'     commentary and pandoc command. Can be informative!
 ##' @param ... Arguments that will be passed to render and
@@ -18,15 +19,15 @@
 ##'     will be followed unless the user changes them with this
 ##'     argument, except that we assume for \code{html_document()}
 ##'     that css = "kutils.css" and toc = TRUE.  These arguments
-##'     intended for \code{render()} are allowed: c("output_file", "output_dir",
-##'     "output_options", "intermediates_dir", "knit_root_dir",
-##'     "runtime", "clean", "params", "knit_meta", "envir",
-##'     "run_pandoc", "quiet", "encoding") .  These arguments intended
-##'     for html_document are allowed: \code{c("toc", "toc_depth",
-##'     "toc_float", "number_sections", "section_divs", "fig_width",
-##'     "fig_height", "fig_retina", "fig_caption", "dev", "df_print",
-##'     "code_folding", "code_download", "smart", "self_contained",
-##'     "theme", "highlight", "mathjax", "template",
+##'     intended for \code{render()} are allowed: c("output_file",
+##'     "output_dir", "output_options", "intermediates_dir",
+##'     "knit_root_dir", "runtime", "clean", "params", "knit_meta",
+##'     "envir", "run_pandoc", "quiet", "encoding") .  These arguments
+##'     intended for html_document are allowed: \code{c("toc",
+##'     "toc_depth", "toc_float", "number_sections", "section_divs",
+##'     "fig_width", "fig_height", "fig_retina", "fig_caption", "dev",
+##'     "df_print", "code_folding", "code_download", "smart",
+##'     "self_contained", "theme", "highlight", "mathjax", "template",
 ##'     "extra_dependencies", "css", "includes", "keep_md", "lib_dir",
 ##'     "md_extensions", "pandoc_args")}.
 ##' @importFrom rmarkdown render
@@ -42,9 +43,9 @@
 ##' file.copy(fp, to = tdir, copy.mode = TRUE, copy.date = TRUE)
 ##' wd.orig <- getwd()
 ##' setwd(tdir)
-##' of1 <- rmd2html(fp)
+##' of1 <- rmd2html(fp, output_dir = getwd())
 ##' if(interactive()) browseURL(of1[1])
-##' of2 <- rmd2html(fp, toc = FALSE)
+##' of2 <- rmd2html(fp, toc = FALSE, output_dir = getwd())
 ##' if(interactive()) browseURL(of2[1])
 ##' setwd(wd.orig)
 rmd2html <- function(fn = NULL, wd = NULL, verbose = FALSE, ...) {
@@ -91,15 +92,120 @@ rmd2html <- function(fn = NULL, wd = NULL, verbose = FALSE, ...) {
         render_args <- list(input = x, output_format = htmldoc, quiet = !verbose,
                             envir = globalenv())
         render_argz <- modifyList(render_args, dots_for_render)
+        browser()
+        knitr::purl(fn)
         if(verbose) {print(paste("dots_for_render"));  lapply(dots_for_render, print)}
         do.call(rmarkdown::render, render_argz)
-        knitr::purl(fn)
     })
     if (!is.null(wd)){
         setwd(wd.orig)
     }
     res
 }
+
+
+
+
+##' Rmd to PDF
+##'
+##' It makes sure that the style sheet we want to use is applied to the data.
+##'
+##' Running this will be the same as running the rmd2pdf.sh script
+##' within the directory.
+##' @param fn A file name. If not specified, then all Rmd documents
+##'     within directory are rendered.
+##' @param wd A working directory name of the Rmd file. If not
+##'     specified, then the current working directory from R will be
+##'     used.
+##' @param verbose The opposite of render(quiet = TRUE). Shows compile
+##'     commentary and pandoc command. Can be informative!
+##' @param ... Arguments that will be passed to \code{render} and
+##'     \code{pdf_document}. Our defaults set a LaTeX template, toc =
+##'     TRUE, and the pandoc_args includes use of the listings class.
+##'     Users may override by specifying named arguments for
+##'     \code{render()}: \code{c("output_file", "output_dir",
+##'     "output_options", "intermediates_dir", "knit_root_dir",
+##'     "runtime", "clean", "params", "knit_meta", "envir",
+##'     "run_pandoc", "quiet", "encoding")}. Users may also specify
+##'     named arguments for \code{pdf_document:} \code{("toc",
+##'     "toc_depth", "number_sections", "fig_width", "fig_height",
+##'     "fig_crop", "fig_caption", "dev", "df_print", "highlight",
+##'     "template", "keep_tex", "latex_engine", "citation_package",
+##'     "includes", "md_extensions", "pandoc_args",
+##'     "extra_dependencies")}.
+##' @importFrom rmarkdown render
+##' @importFrom rmarkdown pdf_document
+##' @importFrom utils modifyList
+##' @return A vector of output file names
+##' @author Paul Johnson <pauljohn@@ku.edu>
+##' @export
+##' @examples
+##' ## put some file name in
+##' fp <- system.file("extdata/rmd2pdf-guide", "guide-template.Rmd", package = "crmda")
+##' tdir <- tempdir()
+##' file.copy(fp, to = tdir, copy.mode = TRUE, copy.date = TRUE)
+##' wd.orig <- getwd()
+##' setwd(tdir)
+##' of1 <- rmd2pdf(fp, output_dir = getwd())
+##' ## if(interactive()) browseURL(of1[1])
+##' of2 <- rmd2pdf(fp, toc = FALSE, output_dir = getwd())
+##' ## if(interactive()) browseURL(of2[1])
+##' setwd(wd.orig)
+rmd2pdf <- function(fn = NULL, wd = NULL, verbose = FALSE, ...) {
+    if (!is.null(wd)){
+        wd.orig <- getwd()
+        setwd(wd)
+    }
+        
+    if (is.null(fn)) {
+        cat("Will render all *.Rmd files in current working directory\n")
+        fn <- list.files(pattern="Rmd$")
+    }    
+
+    dots <- list(...)
+
+    formals_pdf_document <- c("toc", "toc_depth",
+                              "number_sections", "fig_width", "fig_height", "fig_crop",
+                              "fig_caption", "dev", "df_print", "highlight", "template",
+                              "keep_tex", "latex_engine", "citation_package", "includes",
+                              "md_extensions", "pandoc_args", "extra_dependencies")
+
+    dots_for_pdf_document <- dots[formals_pdf_document[formals_pdf_document %in%
+    names(dots)]]
+  
+    formals_render <- c("output_format", "output_file", "output_dir", "output_options",
+                        "intermediates_dir", "knit_root_dir",
+                        "runtime", "clean", "params", "knit_meta",
+                        "envir", "run_pandoc", "quiet", "encoding")
+
+   
+    dots_for_render <- dots[formals_render[formals_render %in% names(dots)]]
+       
+    pdf_args <- list(highlight="haddock",
+                     template = system.file("extdata/rmd2pdf-report/theme", "crmda-boilerplate.tex", package = "crmda"),
+                     pandoc_args="--listings")
+    pdf_argz <- modifyList(pdf_args, dots_for_pdf_document)
+    if(verbose) {print(paste("dots_for_pdf")); lapply(pdf_argz, print)}
+    
+    pdfdoc <- do.call(rmarkdown::pdf_document, pdf_argz)
+    
+    res <- sapply(fn, function(x) {
+        render_args <- list(input = x, output_format = pdfdoc, quiet = !verbose,
+                            envir = globalenv())
+        render_argz <- modifyList(render_args, dots_for_render)
+        knitr::purl(fn)
+        if(verbose) {print(paste("dots_for_render"));  lapply(dots_for_render, print)}
+        do.call(rmarkdown::render, render_argz)
+    })
+    if (!is.null(wd)){
+        setwd(wd.orig)
+    }
+    res
+}
+
+
+
+
 
 
 ##' Convert an Rnw or lyx file to pdf

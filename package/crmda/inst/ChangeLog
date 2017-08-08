@@ -1,3 +1,17 @@
+2017-08-08  Paul Johnson  <pauljohn@delllap-16>
+
+	* extdata/rmd2html-guide/rmd2html.sh: copy argument-handling
+	scheme from rmd2pdf-report 
+
+	* extdata/rmd2pdf-report/rmd2pdf.sh: overhaul function argument handling.
+
+2017-08-04  Paul Johnson  <pauljohn@delllap-16>
+
+	* extdata/rmd2pdf-report/rmd2pdf.sh: revised to call rmd2pdf
+	function in the package
+	* R/runme.R: new function rmd2pdf
+
+
 2017-06-23  Paul Johnson  <pauljohn@delllap-16>
 
 	* extdata/rmd2html-guide/rmd2html.sh (render): insert purl call in rmd2html
