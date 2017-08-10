@@ -109,7 +109,7 @@ footskip=1.5\baselineskip,
 \usepackage{multicol}
 
 %% \usepackage{Sweavel}
-\usepackage[noae]{Sweave}
+%% \usepackage[noae]{Sweave}
 \usepackage{graphicx}
 
 \usepackage{listings}
@@ -121,6 +121,8 @@ footskip=1.5\baselineskip,
 \definecolor{steelblue}{RGB}{70,130,180}
 \definecolor{antwhite}{RGB}{139,119,101}
 \definecolor{lightgray}{RGB}{240,240,240}
+
+
 \def\Sweavesize{\scriptsize} 
 \def\Rcolor{\color{black}} 
 \def\Rbackground{\color[gray]{0.95}}
@@ -143,7 +145,7 @@ footskip=1.5\baselineskip,
   keywords=\bfseries,%
   keywordstyle=\color[rgb]{0, 0.5, 0.5},
   escapeinside={(*}{*)},
-  literate={a}{{$$\sim$$}}1 {==}{{=\,=}}2,
+  literate={~}{{$$\sim$$}}1 {==}{{=\,=}}2,
   alsoother={$$},
   alsoletter={.<-},%
   otherkeywords={!,!=,~,$$,*,\&,\%/\%,\%*\%,\%\%,<-,<<-,/},
@@ -169,16 +171,12 @@ $if(title)$
 \textsc{\Large{}$title$$if(subtitle)$: $subtitle$$endif$}{\Large \par}
 $endif$
 
-\medskip{}
-  & \medskip{}
-
-
-\includegraphics[width=2in]{theme/CRMDA_logo}\tabularnewline
+\medskip{}  & \medskip{} \includegraphics[width=2in]{theme/CRMDA_logo}\tabularnewline
 \hline
 
 \multicolumn{2}{>{\raggedright}p{6in}}{\medskip{}
-$for(author)$$author.name$,
-  $author.description$, $author.affiliation$ <$author.email$> \\
+$for(author)$$author.name$ $if(author.description)$,
+              $author.description$$endif$$if(author.affiliation)$, $author.affiliation$$endif$$if(author.email)$ <$author.email$>$endif$\\
 $endfor$
 
 
