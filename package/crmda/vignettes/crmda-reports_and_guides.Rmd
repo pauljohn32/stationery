@@ -1,27 +1,28 @@
 --- 
-output: 
-  pdf_document: 
-    keep_tex: true 
-    fig_caption: true 
-    latex_engine: pdflatex 
-    template: theme/crmda-boilerplate.tex 
-    pandoc_args: [ 
-        "--listings" 
-    ] 
-tables: true 
-preamble: 
+title: "CRDMA Guides and Reports"
+author:
+- affiliation: CRMDA
+  description: Director
+  email: pauljohn@ku.edu
+  name: Paul Johnson
+output:
+  pdf_document:
+    fig_caption: true
+    keep_tex: true
+    latex_engine: pdflatex
+    highlight: haddock
+    citation_package: natbib
+    pandoc_args: [
+        --listings
+    ]
+    template: theme/crmda-boilerplate.tex
+preamble:
 - \usepackage{xcolor}
 - \usepackage{amsmath}
 - \usepackage{fancybox}
 - \usepackage{calc}
-title: "CRDMA Guides and Reports" 
-author: 
-  - name: Paul Johnson
-    description: Director
-    affiliation: CRMDA 
-    email: pauljohn@ku.edu 
-keywords: "guides, report, pandoc, sweave, knitr"
-date: "`r format(Sys.time(), '%Y %B %d')`" 
+tables: yes
+keywords: guides, report, pandoc, sweave, knitr
 ---
 
 
@@ -83,7 +84,9 @@ instead LaTeX. This document is prepared with Rmarkdown, mainly to
 test a new frontend.
 
 
-# Choosing among Frontend and Backend Combinationss
+# Choosing among Frontend and Backend Combinations
+
+## `crmda` package document templates
 
 In the `crmda` package for R, we have report templates and
 instructions for various front ends and backends. The backend for
@@ -96,7 +99,8 @@ same as \LaTeX, but they have extra markup sections that need to be
 revised for presentation.  Noweb documents can be prepared with LyX,
 which I enjoy, but they also can be written with any ordinary text editor.
 
-At the moment, these are the available choices for input and output
+At the moment, these are the available choices for input and output,
+along with the intended document type and the code-chunk processing engine.
 
 1. Guides
     + rmd2html-guide
@@ -107,7 +111,9 @@ At the moment, these are the available choices for input and output
     + rnw2pdf-report-knit
     + rnw2pdf-report-sweave
 
-Two steps are necessary to convert a document from the frontend to the
+## Multi-stage document compilation.
+
+Two several steps are necessary to convert a document from the frontend to the
 backend.  The first step, called "weaving" or "knitting", converts
 computer code into an results and adjusts the document so that it is
 "aware" (generally speaking) of the results. The second step is
@@ -120,7 +126,7 @@ PDF by a sequence of transitions.
 1. Rnw -> tex.  This is called "weaving" or "knitting". R finds the
    code in the Rnw file and inserts results into a new LaTeX file. The
    difference between weaving and knitting will be explained below.
-2. tex -> pdf.  Usually uses `pdflatex`.
+2. tex -> pdf.  Usually we use `pdflatex`.
 
 If the document is edited with LyX, there is an implicit step 0,
 
@@ -134,26 +140,49 @@ transitions
    and output, converting the R markdown file into an ordinary
    markdown file.
 2. md -> HTML. Currently, most people use the program pandoc for
-   this. `pandoc` is distributed with Rstudio for Windows for the
-   convenience of users.
+   this. `pandoc` is distributed with Rstudio for the
+   convenience of users, but that is not without problems. Users can
+   install pandoc and it can be used instead.
 
-The production of PDF from markdown, of course, replaces the second
-step with "md -> PDF", which is, again, handled by `pandoc`, working
-together with \LaTeX. A sequence of itermediate steps is necessary,
-such as "md -> tex" and then "tex -> pdf".
+The production of PDF from markdown, involves an additional
+transition. The first is the same.
+
+1. Rmd -> md. Knitting converts code chunks into R input and output.
+2. md -> tex. A LaTeX file is created by `pandoc`. In the header of
+   the document, one can set "keep_tex: yes" (as we do here) in order
+   to review this intermediate step.
+3. tex -> pdf. The default is `pdflatex` for this step, but the
+   alternative `xelatex` is growing in popularity because it more
+   gracefully handles Unicode characters (utf8). If you are not aware
+   of this fact, it may be important to know that a \LaTeX document
+   may need to be run through `pdflatex` several times because
+   cross-references among pages and equations need to be made
+   consistent.
+
+## Avoiding compilation trouble
 
 It is worth mentioning this multi-stage process because the document
 production phase can fail at any one of these steps. Errors in
-embedded code, or document formatting, can appear that are difficult
-to correct.  As always, the advice that works for LaTeX documents
-applies here: 
+embedded code, or document formatting, may be difficult to correct
+because there are several conversions in the process. 
+
+This document includes the header argument `keep_tex: true`, which
+means we have a chance to review the intermediate files when
+debugging. The accompanying build script, `rmd2pdf.sh`, includes some
+settings that are passed to the `rmarkdown` render function that keeps
+the intermediate files in a directory named `tmp`.
+
+ As always, the
+advice that works for LaTeX documents applies here:
 
 \begin{quote}
 \textbf{Compile early, compile often!}
 \end{quote}
 
 The R packages "rmarkdown" and "knitr" orchestrate the process that
-builds the instructions to `pandoc`. Because the number of formats among
+builds the instructions to `pandoc`. 
+
+Because the number of formats among
 which `pandoc` can convert is truly immense, and the number of options
 for each format is immense, we expect that there are many details to
 be attended to.  When I'm producing the PDF for this document, the
@@ -166,11 +195,15 @@ not patient or well versed in LaTeX, HTML, and other formats. The
 experts have attempted to simplify this by setting acceptable defaults
 and leaving it open for users to make customizations. The defaults are
 controlled, first, by R packages `rmarkdown` and `knitr`, and then by
-`pandoc`.  Some of their decisions are not perfectly suited to CRMDA
-documents, so we exploit the customization opportunity in the `crmda`
-package.  In the crmda package, we introduce customized style sheets
-for HTML documents and a template for PDF output so that the results
-fit our specifications.
+`pandoc`.  A GUI R editor, say Rstudio, has a button to "knit" a
+document, a simplification that, to some extent, obscures the
+multi-stage nature of the process.
+
+Some of the defaults in rmarkdown's render function, or in knitr or
+Sweave, are not perfectly suited to CRMDA documents, so we exploit the
+customization opportunity in the `crmda` package.  In the crmda
+package, we introduce customized style sheets for HTML documents and a
+template for PDF output so that the results fit our specifications.
 
 Because we use some customization, tools which are not aware of
 our customization, such as Rstudio, may not successfully handle these
@@ -229,8 +262,7 @@ users.
 
 It is certainly also true that the author may have to work harder with
 \LaTeX, especially if one edits in "raw \LaTeX", without the help of a
-pleasant, supportive editing environment like Lyx
-(http://www.lyx.org). In my experience, the authoring experience in a
+pleasant, supportive editing environment like [Lyx](http://www.lyx.org). In my experience, the authoring experience in a
 program like LyX is much more pleasant than any markdown editing
 experience.  For that reason alone, I'm inclined to think that
 documents which are primarily intended to produce PDF should be
@@ -272,13 +304,13 @@ one must first abandon the idea that Microsoft Word can ever be useful
 for serious authorship. That's a big step for many graduate students
 and professors.
 
-If we look past GUI "what you see is what you get" (*wyswig*)  word processors, where do we go? For a
-long time, the only answer was \LaTeX. However, there was a fatal
-weakness in \LaTeX. It is intended for PDF output, not Web pages. Exports
-into HTML were problematic. \LaTeX was not only difficult for some to
-use, but it also did not benefit from fancy features that were
-becomming available in the Internet, especially cascading style sheets
-and Javascript.
+If we look past GUI "what you see is what you get" (*wyswig*) word
+processors, where do we go? For a long time, the only answer was
+\LaTeX. However, there was a fatal weakness in \LaTeX. It is intended
+for PDF output, not Web pages. Exports into HTML were
+problematic. \LaTeX was not only difficult for some to use, but it
+also did not benefit from fancy features that were becomming available
+in the Internet, especially cascading style sheets and Javascript.
 
 This gap in the document production process created a need for a new
 methods. In the 1990s, there was quite a bit of effort to make user
@@ -299,8 +331,8 @@ Markdown was developed as a rejection of both ugly markup documents
 documents should be text files that are readable *as is* but also
 convertible into other backends. The "markdown" movement seeks to
 deliver an easier-to-edit, less difficult-to-read, and
-easier-to-convert format. The leader is John Gruber
-(https://daringfireball.net/projects/markdown).
+easier-to-convert format. The leader is John Gruber, whose Website is
+boldly named ["daringfireball"](https://daringfireball.net/projects/markdown).
 
 Markdown is intended to be easy-to-read, so that even if it is not
 compiled into a backend, it might be presentable to an audience of
@@ -355,7 +387,40 @@ it since then.
 Should a worker be expected to master both LaTeX and markdown?  That
 is an open question at the current time.
 
-## Literate documents: required
+## Math
+
+We are a Center focused on methodology. It is necessary to be able to
+write about math, preferably with a standard, uniform mathematical
+markup language, such as \LaTeX.
+
+Many social scientists are not familiar with \LaTeX document
+preparation. That was a hurdle that kept many authors with Microsoft
+Word, even when they were frustrated with the difficulty of producing
+consistent, structured documents. To a significant extent, the
+difficulty of writing \LaTeX documents was solved by the LyX project,
+an open source graphical interface that makes \LaTeX as easy to use as
+Microsoft Word. With LyX, or other editors that could generate \LaTeX
+output (such as Scientific Word, TexMacs, or Abiword), authors who
+were not computer programmers could find their way to write about
+equations. The output format that worked well was PDF, however, which
+was not particularly well suited to the World Wide Web.
+
+For many years, the inability of Web pages to display equations was a
+major problem. It was suggested that we make little pictures (say,
+png) files with equation shapshots and weave them into our Webpages.
+There was talk about a general math markup language for years and
+years, nothing workable developed. A more-or-less workable solution
+was developed using MathJax. MathJax does not allow the inclusion of
+mathematics in a Web page, but it allows the inclusion of math markup
+in the page which--when the conditions are right--can be converted
+on-screen into equations.  This process is still a bit dicey, but it
+is working well enough. (More comments on MatJax are offered below).
+
+## Literate documents: include code and output
+
+We need to be able to write about computer code. The "old fashioned"
+way is to copy/paste code into documents.  That's somewhat error prone
+and difficult to keep up-to-date.
 
 Donald Knuth, a famous Stanford professor of computer science,
 proposed strategies to integrate the production of documents with the
@@ -363,12 +428,11 @@ development of computer code.  Rather than creating code in one file,
 and documentation in another, the idea was that the two parts of our
 work should be blended in a "literate programming" exercise. 
 
-It seems clear to me that the literate programming idea is more a
-general way of life than it is a particular document production
-strategy. It is, partly, aimed at programmers who don't like to write
-instruction manuals. In the end, however, it may have more impact on
-non-programmers who need to prepare technical reports that include
-computer code examples.
+The literate programming idea is more a general way of life than it is
+a particular document production strategy. It is, partly, aimed at
+programmers who don't like to write instruction manuals. In the end,
+however, it may have more impact on non-programmers who need to
+prepare technical reports that include computer code examples.
 
 In computer programming, one of the biggest impacts of literate
 programming is the proliferation of systems for preparation of
@@ -405,22 +469,25 @@ into the document. This is a tedious, error prone process about which
 there is almost nothing favorable to say. Documents produced in this
 way are difficult to keep up-to-date and difficult to proof read.
 
+A code chunk is a runable piece of R code. 
 
+Especially in guide documents, it is very helpful to intersperse code
+and results. Instead of cutting and pasting, we instead might embed
+computer code which would then be *run during document
+preparation*. The advantages of this are obvious.  The statistical
+code and results never become "out of step" with the final document.
+If the raw data is revised somehow, we no longer repeat the "old"
+fashioned process of re-running the analysis and then "copy/pasting"
+the results into a revised document. Instead, we run through the
+document preparation steps again and the results are *automatically*
+updated and revised.
 
-A code chunk is a runable piece of R code.  Especially in guide
-documents, it is very helpful to intersperse code and results. Instead of cutting and pasting, we instead might embed computer code
-which would then be *run during document preparation*. The advantages
-of this are obvious.  The statistical code and results never become
-"out of step" with the final document.  If the raw data is revised
-somehow, we no longer repeat the "old" fashioned process of re-running
-the analysis and then "copy/pasting" the results into a revised
-document. Instead, we run through the document preparation steps again
-and the results are *automatically* updated and revised.
-
-Code chunks are allowed in both \LaTeX and markdown documents. In R,
-the original method for this was called "Sweave"
-(https://leisch.userweb.mwn.de/Sweave). A code chunk is created by a
-somewhat cumbersome notation:
+Code chunks are allowed in both noweb \LaTeX and markdown documents
+intended for either HTML or PDF. In R, the original method for
+creating code is
+called ["Sweave"](https://leisch.userweb.mwn.de/Sweave). A code chunk
+is created by a somewhat cumbersome notation that begins with "<<>>="
+and ends with "@". Here is a code chunk that runs a regression model.
 
 ```
 <<>>=
@@ -431,21 +498,63 @@ lm(y ~ x, data = dat)
 In `Rmarkdown`, the outer boundaries are changed to three back ticks,
 along with squiggly braces.
 
-` ```{r}`  
-`lm(y ~ x, data = dat)`  
-` ``` `
-	 
+\begin{lstlisting}
+`r ''````{r}
+lm(y ~ x, data = dat)
+```
+\end{lstlisting}
+
 These are simple, unnamed chunks. In actual usage, the beginning of
 the chunk usually has several additional arguments, including a name
 for the chunk.  Names are helpful because error messages will later
 report the name of the failed chunk.  For that reason, we suggest, as
 a general policy, that *chunks should be named*.
 
-There are several options that can be used with chunks. The most vital
-chores that we need to be able to accomplish are to include code
-examples that:
 
-1. are not evaluated, but are displayed "beautifully" to the reader.
+```
+<<mychunk10>>=
+lm(y ~ x, data = dat)
+@
+```
+
+\begin{lstlisting}
+`r ''````{r mychunk10}
+lm(y ~ x, data = dat)
+```
+\end{lstlisting}
+
+The options, which control if the code is displayed in the document,
+or if the output is included, and so forth, can be specified after the
+chunk's name.
+
+## Should one prefer `Sweave` or `knitr`?
+
+Sweave works with noweb/\LaTeX documents--not with markdown
+documents. The code chunks for Sweave and knitr are written in the
+same format in a noweb document, i.e., with "<<>>=" and "@".  In
+Rmarkdown documents, there is no Sweave engine to process chunks, only
+`knitr`. Perhaps that suggests that, if one must learn one set of
+chunk options, then `knitr` options are the right place to start
+(since they can be used in documents intended for HTML or PDF). 
+
+The chunk options allowed the original `Sweave` were `echo` (include
+code with output?), `eval` (run the chunk calculations?),
+`include` (display the chunk in the document?), `fig` (code generates
+a figure?) and `results` (output in \LaTeX is handled differently than
+raw Tex.  There are a few others, but that is most of the story. `knitr`
+honored most of the Sweave options and then added many more(see [knitr
+code chunk options](https://yihui.name/knitr/options). A few of
+these knitr chunk options are displayed below in Section ??? ???
+
+?? ?? how enter cross section reference?
+
+Rather than going through all possible chunk arguments, we now survey
+(and give examples) of the chunk variations that we require in CRMDA
+documents.  The most vital chores that we need to be able to
+accomplish are chunks that:
+
+1. are not evaluated, but are displayed "beautifully" to the reader,
+   with syntax highlighting.
 2. are not displayed, but are evaluated, and the results may (or may
    not) be displayed for the reader.
 3. create graphics, which are automatically included in the document.
@@ -453,33 +562,18 @@ examples that:
    included in the document, but can be inserted at a different part
    in the document
 
-In the original `Sweave`, the chunk options are named `echo`, `eval`,
-`include`, `fig` and `results` (there are a few others).	 
-
-Because Sweave worked only with LaTeX document--not with markdown
-documents--it was necessary to develop a method to harvest code and
-insert results for markdown. At the same time, some authors wanted to
-customize chunks in Sweave. A new processing engine was created by
-Yihui Xie, who called his system `knitr`.  `knitr` is delivered as an
-R package that can process documents that are prepared in either LaTeX
-nor Rmarkdown.
-
-In LaTeX documents, I still prefer to write with `Sweave` code chuncks
-and compile with Sweave, but I understand that some people prefer to
-use the additional features of `knitr`
-(https://yihui.name/knitr/options/).  `knitr` understands a broader
-range of chunk options. A document prepared with Sweave chunks can be
-usually be handled by `knitr` tools. I prefer \LaTeX to markdown in
-large part because \LaTeX allows the `split=TRUE` document
-option. That option creates separate \*.tex output files for each code
-chunk.
+A \LaTeX document prepared with Sweave chunks can be be handled by
+`knitr` tools. I prefer to Sweave \LaTeX documents, in large part because
+\LaTeX allows the `split=TRUE` document option. That option creates
+separate \*.tex output files for each code chunk.
 
 On the other hand, when preparing an Rmarkdown document, `knitr` is
-the only show on the road. In Rmarkdown documents, the knitr chunks
-are written with the three ticks style, but the names of the options
-are the same as they are for knitr chunks in LaTeX documents. And the
-chunk options are named in a way that is, for the most part,
-consistent with Sweave.
+the only show on the road. I am enjoying the exploration into the
+chunk and document options. 
+
+One unanticipated benefit of markdown with knitr is that it is
+possible to make documents about other programs (not just R). I've
+explored knitr to weave documents about BASH shell programming, for example.
 
 # More about Document Preparation 
 
@@ -500,63 +594,148 @@ section will serve as an overview.
 	
 ### Use a text editor
 
-A markdown file is suffixed ".Rmd". It is a "raw text" file. Don't
-edit it with MS Word.  Instead, use a programmers file editor, such as
-Emacs, Notepad++, or an integrated development environment, such as
-Rstudio, to edit the file.
+An R markdown file is suffixed ".Rmd", *not* ".rmd". It is a "raw
+text" file. Don't edit it with MS Word.  Instead, use a programmers
+file editor, such as Emacs, Notepad++, or an integrated development
+environment, such as Rstudio, to edit the file.
 
-### The document must be "compiled" into HTML or PDF
+Remember that the markdown philosophy is that a document should look
+reasonably nice, even before it is compiled.  That means authors
+should take care that their document has reasonably "shaped"
+paragraphs. Lines should generally be 80 characters or less.
 
-The document preparation process is very complicated.  The Rmd file
-will undergo several conversions before it turns into the final
-result. 
+### Plan for either HTML or PDF output
+
+Although the pull-down menu in Rstudio might make a person think that
+it is simple to change the document backend from PDF to HTML, it is a
+mistake to believe that.  The special features we used in HTML
+documents do not convert gracefully into PDF, and the converse is also
+true.  The Rmd file will undergo several conversions before it turns
+into the final result and features that are not aligned with the 
+backend format are going to cause either errors or poor output.
+
 
 ## Basic Rmarkdown
 
-1. Character styling. *Italics* result from bracketing a word with asterixes
-(\*italics\*), **boldface** results from two asterixes
-(```**boldface**```). 
-2. Section headers. Use pound signs in column 1. There are 6 levels
-allowed, so insert `#` for a top level heading, `##` for second level,
-and so forth.
-3. Lists. Numbered lists can be created by putting a number in column
-1 of a new line, followed by a space.  A bullet point list is created
-by putting an asterix in column 1 of a new line, followed by a space.
+Some *basic markdown* is compatible with either HTML or PDF
+output. These are the most frequently used ones.
+
+1. Character styling. 
+*  *Italics* result from bracketing a word with asterixes
+(\*italics\*)
+*  **boldface** results from two asterixes (`**boldface**`).
+*  `code` special font presentation for code, function names (` `code` `) 
+2. Section headers. 
+*  `#` is level 1 header
+*  `**` is level 2 subheading
+*  levels below are used differently in HTML and PDF.  The ability of
+   html documents to include specialized subsections is one of the
+   advantages of that backend. In markdown, they provide for 6 levels
+   of headings.
+3. Lists. 
+*  Numbered lists can be created by putting a number in column 1 of a
+   new line, followed by a space.
+*  Bullet lists can be created by putting an asterix in column 1 of a
+new line, followed by a space.
+*  About lists: how do we insert separate paragraphs under list
+   headings in Rmarkdown ?? ??. Here it appears list numbering is
+   ruined if we insert paragraphs.
+4. Paragraphs are created by blank lines
+*  Blank spaces at end of line signify new line without creating new
+   paragraph below. 
+5. Hyperlinks, such as (CRMDA)[https://crmda.ku.edu], for which the
+   markdown is `(CRMDA)[https://crmda.ku.edu`
+5. Citations. ?? ???
+	
+## Math in Markdown documents
+
+There's a fairly broad range of mathematical markup that will work in
+Rmarkdown documents intended for PDF and HTML.  Here are the
+highlights.
+
+1. In-line math markup is dollar-sign bracketed, just as in \LaTeX
+   itself. We can write `$f_{ij} x_{i} \times y_{j}^2$` for
+   $f_{ij} x_{i} \times y_{j}^2$. Using the usual \LaTeX format, we
+   can write the Greek letters, binary relations, and other important
+   symbols. Behold:
+
+\[
+   \alpha, \beta, \gamma, \Gamma, \chi, \approx, \ne, \geq, \leq, \pm,
+   \sim, \rightarrow, \pi, \textrm{and} \infty.
+\]
+
+2. Displayed equations--equations that are centered or otherwise set
+apart from the text--should be bracketed by `\[` and `\]`. In \LaTeX,
+it is not longer recommended to use the double-dollar sign notation
+for displayed equations. So use `\[` and `\]`.  
+ 
+Compare the inline mode, $\bar{x} = \frac{1}{n} \sum_{i=1}^{n}x_{i}$
+with the display equation:
+
+\[
+\bar{x} = \frac{1}{n} \sum_{i=1}^{n}x_{i}
+\]
+
+that results from
+
+```
+\[
+\bar{x} = \frac{1}{n} \sum_{i=1}^{n}x_{i}
+\]
+```
+
+One can also use the \LaTeX ```\begin{equation}```, which comes from
+the \LaTeX package *amsmath*.
+
+\begin{equation}
+A_{m,n} = \left(\begin{array}{ccc}
+a & b & c\\
+d & e & f\\
+g & h & i\\
+\end{array}\right)
+\label{eq:another1}
+\end{equation}
+
+This is not the right place for a comprehensive guide to \LaTeX.
+Users will need to install a \LaTeX distribution and then a
+user-friendly editor that will help create equation markup.  Many
+users in the CRMDA lab use LyX, which offers a "View source" feature
+to inspect \LaTeX coding for equations.	
+
+## Caution about Rmarkdown markup
 
 As these examples indicate, Rmarkdown is similar to, but the same, as
-the Markdown (https://daringfireball.net/projects/markdown) and it is
-different from other specialized dialects, such as the GitHub Flavored
-Markdown (https://github.github.com/gfm) and other variants. Be
-cautious about using style guides that are not intended explicitly for
-Rmarkdown documents. There is a good chance their advice is
-irrelevant. Google searches will sometimes lead to the wrong answer
-for a particular form of Markdown.
+the [general markdown specification](https://daringfireball.net/projects/markdown) and
+it is different from other specialized dialects, such as the [GitHub
+Flavored Markdown](https://github.github.com/gfm) and other
+variants. Be cautious about using style guides that are not intended
+explicitly for Rmarkdown documents. There is a good chance their
+advice is irrelevant. Google searches will sometimes lead to the wrong
+answer for a particular form of Markdown.
 
-For technical documentation about Rmarkdown, see
+## Additional Material about Rmarkdown
 
-1. "R Markdown Reference Guide" (https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf)
-2. "R Markdown Cheatsheet"
-   (https://www.rstudio.com/wp-content/uploads/2016/03/rmarkdown-cheatsheet-2.0.pdf)
+1. [*R Markdown Reference Guide*](https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf)
+2. [*R Markdown Cheatsheet*](https://www.rstudio.com/wp-content/uploads/2016/03/rmarkdown-cheatsheet-2.0.pdf)
 3. Yihui Xie. 2015. *Dynamic Documents with R and Knitr. 2ed* Boca
 Raton, Florida: Chapman Hall/CRC. http://yihui.name/knitr.  On July 7,
-2017, Xie made available a new book manuscript, "bookdown: Authoring
-Books and Technical Documents with R Markdown"
+2017, Xie made available a new book manuscript, [*bookdown: Authoring
+Books and Technical Documents with R Markdown*]
 (https://bookdown.org/yihui/bookdown).
 
 User-friendly overviews and tutorials on Rmarkdown usage are
 available.
 
-1. "Markdown Basics"
- (http://rmarkdown.rstudio.com/authoring_basics.html). See also the
- Rmarkdown page at Rstudio corporation,
- http://rmarkdown.rstudio.com, which offers a "Get Started" Tutorial,
- http://rmarkdown.rstudio.com/lesson-1.html.
- 
+1. [*Markdown Basics*](http://rmarkdown.rstudio.com/authoring_basics.html). See
+ also the Rmarkdown page at Rstudio corporation, http://rmarkdown.rstudio.com, which offers a  
+["Get Started" Tutorial](http://rmarkdown.rstudio.com/lesson-1.html).
 2. Cosma Shalizi, "Using R Markdown for Class Reports",
    http://www.stat.cmu.edu/~cshalizi/rmarkdown.
-	
-	
-
+3. Wisconsin University Social Science
+   Computing Collaborative. "R for Researchers: R Markdown".  
+   http://www.ssc.wisc.edu/sscc/pubs/RFR/RFR_RMarkdown.html
+4. Karl Broman, "Knitr with R Markdown".  
+   http://kbroman.org/knitr_knutshell/pages/Rmarkdown.html
 	
 	
 # Using the `crmda` package
@@ -664,31 +843,43 @@ by inserting the arguments into the function call:
 
 The documentation for `rmd2pdf` should be helpful (or will be, eventually).
 
-# Markdown Document Preparation Basics
-
-We have three methods of beautifying text and creating structures.
 
 
-Because the document translation *pandoc* plays a critical role in the
-conversion of documents from markdown into HTML, documentation for
-pandoc will often be definitive.  Along those lines, we point
-readers to the Pandoc Markdown reference manual at Rstudio:
-http://rmarkdown.rstudio.com/authoring_pandoc_markdown.html.
-
-## \LaTeX markup
+## PDF versus HTML backends
 
 Because I am a very literate person, I would like to share with you a poem:
 
 \begin{quote}
-Markup documents intended for HTML allow some \LaTeX  functionality.\\
-Markup documents intended for PDF allow some \LaTeX  functionality.\\
-The allowed functionality is not the same and nor are the same things
-done consistently
+Markdown documents intended for HTML allow some \LaTeX code.\\
+Markdown documents intended for PDF allow more \LaTeX code.\\
+The allowed \LaTeX code is not the same and nor are the same things
+done consistently.
 \end{quote}
 
+Because no great poet ever stopped after one poem, here is the sequel
 
-#### Markup to produce the same result differs in mardown documents
-intended for PDF and HTML
+\begin{quote}
+Almost all HTML code is tolerated well in a Markdown document intended
+for HTML.\\
+No HTML code is tolerated in a document compiled into a PDF document.\\
+The HTML code that does not work in an Rmarkdown document will fail
+because `pandoc` does not (yet) understand what to do with it.
+\end{quote}
+
+Inspecting the intermediate files is often a good way to understand
+what is going wrong.
+
+Because the document translation software `pandoc` plays a critical
+role in the conversion of documents, the documentation for pandoc will
+sometimes give us hints about what is going wrong.  Along those lines,
+we point readers to the (Pandoc Markdown reference manual)[http://rmarkdown.rstudio.com/authoring_pandoc_markdown.html]. at the
+Rstudio website.
+
+
+#### Markup worries.
+
+To produce the same result differs in mardown documents intended for
+PDF and HTML
 
 In an Rmarkdown document intended for PDF, one
 writes `\LaTeX` to produce \LaTeX. On the other, in a document
@@ -714,56 +905,7 @@ used within the Rmd file intended for HTML output. I do not currently
 understand the boundaries, they are no doubt imposed by the combined
 converters of `rmarkdown` and `pandoc`. 
 
-### Math in Markdown documents
 
-There's a fairly broad range of mathematical markup that will work in
-Rmarkdown documents intended for PDF and HTML.  Here are the
-highlights.
-
-1. In-line math markup is dollar-sign bracketed, just as in \LaTeX
-   itself. We can write `$f_{ij} x_{i} \times y_{j}^2$` to write
-   $f_{ij} x_{i} \times y_{j}^2$. Using the usual \LaTeX format, we
-   can write the Greek letters, binary relations, and other important
-   symbols. Behold:
-
-   $\alpha$, $\beta$, $\gamma$, $\approx$, $\ne$, $\geq$, $\leq$, $\pm$,
-   $\sim$, $\rightarrow$, $\pi$, and $\infty$.
-
-2. Displayed equations--equations that are centered or otherwise set
-apart from the text--should be bracketed by `\[` and `\]`. Compare the
-inline mode, $\bar{x} = \frac{1}{n} \sum_{i=1}^{n}x_{i}$ (from
-`$\bar{x} = \frac{1}{n} \sum_{i=1}^{n}x_{i}$`) with the display
-equation output:
-
-\[
-\bar{x} = \frac{1}{n} \sum_{i=1}^{n}x_{i}
-\]
-
-that results from
-
-```
-\[
-\bar{x} = \frac{1}{n} \sum_{i=1}^{n}x_{i}
-\]
-```
-
-One can also use the \LaTeX ```\begin{equation}```, which comes from
-the \LaTeX package *amsmath*.
-
-\begin{equation}
-A_{m,n} = \left(\begin{array}{ccc}
-a & b & c\\
-d & e & f\\
-g & h & i\\
-\end{array}\right)
-\label{eq:another1}
-\end{equation}
-
-This is not the right place for a comprehensive guide to \LaTeX.
-Users will need to install a \LaTeX distribution and then a
-user-friendly editor that will help create equation markup.  Many
-users in the CRMDA lab use LyX, which offers a "View source" feature
-to inspect \LaTeX coding for equations.
 
 #### Caution
 We notice that errors in \LaTeX code are ignored by the HTML backend
@@ -853,78 +995,178 @@ To designate numbered equations.
 
 <!-- ##Knit (incorporate R code and output) -->
 
+# R code chunks
 
-<!-- ###Plots -->
+1. A chunk with commands that are echoed within the document, but not evaluated
 
-<!-- Plots or figures can be added to any Markdown document through the use of R code chunks.  -->
+```{r chunk10, eval=F}
+set.seed(234234)
+x <- rnorm(100)
+mean(x)
+```
 
-<!-- ```{r myFirstPlot, dev=c('png','pdf'), fig.keep='all'} -->
-<!-- hist(rnorm(500)) -->
-<!-- ``` -->
+2. A chunk that is evaluated, echoed, both input and output
 
-<!-- ```{r} -->
-<!-- x <- rnorm(1000) -->
-<!-- print(x[1:20]) -->
-<!-- ``` -->
+```{r chunk20}
+set.seed(234234)
+x <- rnorm(100)
+mean(x)
+```
 
-<!-- ```{r mySecondPlot, dev=c('png','pdf'), fig.keep='all'} -->
-<!-- hist(rnorm(20)) -->
-<!-- ``` -->
+3. A chunk that is evaluated, with output displayed, but code is not echoed
 
-<!-- ###Graphics & Figures -->
+```{r chunk30, echo=F}
+set.seed(234234)
+x <- rnorm(100)
+mean(x)
+```
 
-<!-- We can use mapping for geographically oriented information. -->
+4. A chunk that is evaluated, but neither is the input nor output displayed:
 
-<!-- ```{r, echo = FALSE, warning = FALSE} -->
-<!-- library(maps) -->
-<!-- par(mar=rep(0, 4)) -->
-<!-- map("nz", fill=TRUE, col="grey80") -->
-<!-- points(174.75, -36.87, pch=16, cex=2) -->
-<!-- arrows(172, -36.87, 174, -36.87, lwd=3) -->
-<!-- text(172, -36.87, "Auckland  ", adj=1, cex=.9) -->
+```{r chunk40, include=F}
+set.seed(234234)
+x <- rnorm(100)
+mean(x)
+```
+Do you see there was nothing there? After that, we have `x` in the
+on-going R session, it can be put to use.
 
-<!-- maplocs <- map(projection="sp_mercator", wrap=TRUE, lwd=0.1, -->
-<!--                col="dodgerblue", ylim=c(-60, 75), -->
-<!--                interior=FALSE, orientation=c(90, 180, 0), add=TRUE, -->
-<!--                plot=FALSE) -->
-<!-- xrange <- range(maplocs$x, na.rm=TRUE) -->
-<!-- yrange <- range(maplocs$y, na.rm=TRUE) -->
-<!-- aspect <- abs(diff(yrange))/abs(diff(xrange)) -->
-<!-- # customised to 6.5 by 4.5 figure size -->
-<!-- par(fig=c(0.99 - 0.5, 0.99, 0.01, 0.01 + 0.5*aspect*4.5/6.5), -->
-<!--     mar=rep(0, 4), new=TRUE) -->
-<!-- plot.new() -->
-<!-- plot.window(xlim=xrange, -->
-<!--             ylim=yrange) -->
-<!-- map(projection="sp_mercator", wrap=TRUE, lwd=0.1, ylim=c(-60, 75), -->
-<!--     interior=FALSE, orientation=c(90, 180, 0), add=TRUE) -->
-<!-- symbols(-.13, -0.8, circles=1, inches=0.1, add=TRUE) -->
-<!-- ``` -->
+5. A chunk that creates a graph and sizes it with knitr options, but
+   the code is not echoed. 
 
-<!-- Sometimes a figure expresses more than words. Figures can also be included in R markdown documents. -->
+```{r chunk50, fig=T, fig.height=3, fig.width=4, fig.show="hold", echo=F}
+hist(x, main = "One Histogram Displayed Inline")
+```
 
-<!-- ```{r, echo = FALSE, warning =FALSE} -->
-<!-- par(xaxs="i", yaxs="i", xpd=FALSE) -->
-<!--     plot(c(0, 1), c(0, 1), type="n", ann=FALSE, axes=FALSE) -->
-<!--     box("figure") -->
-<!--     rect(0, 0, 1, 1, col="light grey", border="grey") -->
-<!--     axis(1, at=c(0, 1), c("", "")) -->
-<!--     mtext("Min x", side=1, adj=0, line=1) -->
-<!--     mtext("Max x", side=1, adj=1, line=1) -->
-<!--     axis(2, at=c(0, 1), c("", "")) -->
-<!--     mtext("Min y", side=2, adj=0, line=1) -->
-<!--     mtext("Max y", side=2, adj=1, line=1) -->
-<!--     lines(c(.6, .6, 0), c(0, .6, .6), lty="dashed") -->
-<!--     text(.6, .6, expression(paste("The location ", -->
-<!--             group("(",list(x[i], y[i]),")"))), pos=3) -->
-<!--     points(.6, .6, pch=16) -->
-<!--     axis(1, at=.6, "") -->
-<!--     mtext(expression(x[i]), side=1, at=.6, line=.7) -->
-<!--     axis(2, at=.6, "") -->
-<!--     mtext(expression(y[i]), side=2, at=.6, line=.7) -->
-        
-<!-- ``` -->
 
+6. This is a special feature of the PDF backend. In previous example,
+   the figure was placed into the document at the point of the code
+   chunk. PDF documents have features for "floating" tables and
+   figures and these can be used.  A chunk that creates a graph and
+   provides a caption will cause a float to be created. 
+
+```{r chunk60, fig=T, fig.height=3, fig.width=4, fig.show="hold", echo=F, fig.cap = "\\label{fig:hfloat}A Floating Histogram"}
+hist(x, main = "One Histogram")
+```
+
+Observe in the output we have a numbers, floating figure. Because we
+inserted a label with the caption, we can cross-reference Figure
+\ref{fig:hfloat}. Figure numbers will be adjusted automatically as new
+figures are added before and after this chunk. This feature is not
+available in HTML.
+   
+7. A chunk that creates a graph, but does not display it, but does
+show the code that created the graph
+ 
+```{r chunk65, fig=T, fig.height=3, fig.width=4, fig.show="hide", dev=c('png','pdf')}
+hist(x, main = "Another Histogram")
+```
+
+Why do this? In HTML, we don't have the option to create figure
+floats, but the next-best option is to show code for a figure, but
+prevent its inclusion in the document by setting `fig.show="hide"`.
+
+In this code chunk, we asked for output in 2 formats, one as png and one as pdf.
+
+Now that the image file exists, we can insert it manually, because the
+pdf was saved in a file named "tmpout/p-chunk60-1.pdf". I chose the
+name "tmpout" in the template, that is configurable. But I like that
+name pretty much. Here, for example, is an HTML table in which I have
+embedded that image
+
+If we want to insert the figure with markdown tools, we could. This is
+the code that would typically be used.
+```
+![Another Histogram](tmpout/p-chunk65-1.pdf)
+```
+
+This is inflexible because the image cannot be rescaled.  Also, note
+that markdown does not have a concept of "centering" or "alignment" of
+a figure, so to a significant extent we have to focus on tools in the
+backend document language.  Here we suggest using backend-specific
+code to include--and scale--the figure. This inserts the figure using
+\LaTeX terminology in a PDF document__
+
+```
+\includegraphics[width=3.5in]{tmpout/p-chunk65-1.pdf}
+```
+
+\includegraphics[width=3.5in]{tmpout/p-chunk65-1.pdf}
+
+Here we are happy to see that the *raw \LaTeX* code for inserting
+graphics does work (but do not understand why).
+
+If we are targeting an HTML backend, we would write a similar request
+in HTML code, using the file `tmpout/p-chunk65-1.png`:
+
+```
+<img src="tmpout/p-chunk65-1.png" alt="a floating histogram" width="308"
+height = "216">
+```
+
+Here, we are guessing that the end user's screen will tolerate an
+image that is 308 pixels wide. If I were writing in HTML at the
+moment, I'd try harder on sizing that appropriately. But this is a PDF
+document and this is just an example of what an HTML author might do.
+
+
+8. One chunk that shows a series of commands. This is an example of a
+   strenght of knitr that is not present in Sweave.  The `knitr` code
+   chunk option will . It is possible to display the whole graph created by the
+   series of commands.
+ 
+In this case we have the usual R plotting exercise in which a "blank"
+plot is created, and then lines, points, and labels are added one by
+one.
+
+```{r chunk70, echo=F, include=F}
+## alter par, after keeping copy
+par.orig <- par(no.readonly = FALSE)
+par(xaxs="i", yaxs="i", xpd=FALSE)
+```
+
+```{r chunk71, eval=F, echo=TRUE, warning=FALSE, collapse=TRUE}
+plot(c(0, 1), c(0, 1), type = "n", ann = FALSE, axes = FALSE)
+rect(0, 0, 1, 1, col = "light grey", border = "grey")
+mtext(c("Min x", "Max x"), side = 1, line = 1, at = c(0, 1))
+mtext(c("Min y", "Max y"), side = 2, line = 1, at = c(0, 1))
+lines(c(.6, .6, 0), c(0, .6, .6), lty = "dashed")
+text(.6, .6, expression(paste("The location ",
+        group("(",list(x[i], y[i]),")"))), pos = 3)
+points(.6, .6, pch = 16)
+mtext(expression(x[i]), side = 1, at = .6, line = .7)
+mtext(expression(y[i]), side = 2, at = .6, line = .7)
+```
+
+If we run that code from top to bottom, it produces one figure, which
+we display here:
+
+```{r chunk75, ref.label='chunk71', echo=F, fig=T, fig.keep="last", collapse=T, fig.width=5, fig.height=5}
+```
+
+However, we might be in teaching mode and we need to demonstrate the
+effect of each successive instruction.  The `knitr` option list
+includes a parameter `fig.keep`, which we can ask to keep a snapshot of
+each stage in the creation of this figure.
+
+```{r chunk76, ref.label='chunk71', echo=F, fig=T, include=F, fig.keep="all", collapse=T, fig.width=4, fig.height=4}
+```
+
+A quick check of the tmpout directory shows that this code created several
+graphs, named `p-chunk-76-1.pdf` through `p-chunk-76-??.pdf`. The
+automatic display of the 16 figures is not terriffic, but it is easy
+enough to line them up in a table.
+
+figure begin top left   | continue row-wise
+------------------------|-----------------
+![a](tmpout/p-chunk76-2.pdf)|![b](tmpout/p-chunk76-5.pdf)
+![c](tmpout/p-chunk76-7.pdf)|![d](tmpout/p-chunk76-9.pdf)
+
+
+
+```{r chunk79, echo=F, include=F}
+par(par.orig)
+```
 
 
 <!-- ### Tables -->
