@@ -1,0 +1,458 @@
+--- 
+title: "Rmarkdown Basics"
+author:
+- affiliation: CRMDA
+  description: Director
+  email: pauljohn@ku.edu
+  name: Paul Johnson
+output:
+  pdf_document:
+    fig_caption: true
+    keep_tex: true 
+    latex_engine: pdflatex
+    highlight: haddock
+    citation_package: natbib
+    pandoc_args: [
+        --listings
+    ]
+    template: theme/crmda-boilerplate.tex
+    fontsize: 12pt
+preamble:
+-  \usepackage{xcolor}
+-  \usepackage{amsmath}
+-  \usepackage{amssymb}
+-  \usepackage{fancybox}
+-  \usepackage{calc}
+-  \usepackage{subfig}
+tables: yes
+keywords: guides, report, pandoc, sweave, knitr
+---
+
+
+```{r setup, include=FALSE}
+##This Invisible Chunk is required in all CRMDA documents
+outdir <- paste0("tmpout")
+if (!file.exists(outdir)) dir.create(outdir, recursive = TRUE)
+knitr::opts_chunk$set(echo=TRUE,
+          comment=NA, fig.path=paste0(outdir, "/p-"))
+options(width = 70)
+```
+
+\begin{abstract}
+This covers the basics on Rmarkdown that we expect all CRMDA authors
+using Rmarkdown must know.
+\end{abstract}
+
+# Introduction: Terminology
+
+`Rmarkdown` is a style of markdown document used for preparing
+guides and reports about R.  It is not the same as "markdown" and will
+not always follow the same rules.  The general framework to which it
+is closest is `pandoc` markdown.
+
+
+## Document-wide options
+
+
+# Preparing an Rmarkdown Document
+	
+## Use a text editor
+
+An R markdown file is suffixed ".Rmd", *not* ".rmd". It is a "raw
+text" file. Don't edit it with MS Word.  Instead, use a programmers
+file editor, such as Emacs, Notepad++, or an integrated development
+environment, such as Rstudio, to edit the file.
+
+Remember that the markdown philosophy is that a document should look
+reasonably nice, even before it is compiled.  That means authors
+should take care that their document has reasonably "shaped"
+paragraphs. Lines should generally be 80 characters or less.
+
+## Markdown documents: 2 parts
+
+### Header: YAML
+
+YAML="Yet Another Markup Language"
+
+Very "fussy" specifications for document format, input. The `crmda`
+package for R provides templates that we use.
+
+Settings in the YAML header can be over-ridden by document processing
+settings chosen by the user who compiles the document. Items in the
+header, like `keep_tex: true`, will be overridden by arguments
+`keep_tex=FALSE` given to the render function.
+
+## Body has Markdown, Plus
+
+The body of the Rmarkdown document can include both "markdown" syntax
+as well as a selection of backend-specific code input. In a document
+with an HTML backend, authors can write "raw" HTML when the can't find
+Rmarkdown syntax that work. 
+
+Similarly, documents intended for PDF output are going to be processed
+by a \LaTeX\ compiler (`pdflatex` or `xetex`). As a result, one can
+insert quite a bit of \LaTeX\ code and it will be successfully
+post-processed in the last stage of document compilation.
+
+We have found that some \LaTeX\ code does not work well, however, so
+it is not possible at the current time to say "everything
+works". However, many things do work and more features can be added.
+
+As in \LaTeX\ itself, when an author wants to add features, it is
+generally necessary to add `\usepackage{}` statements in the \LaTeX\
+document preamble. In the `crmda` package, the rmd2pdf document
+template is compiled with a \LaTeX\ template that includes quite a few
+packages. The template should not need revision (*after we perfect
+it*), but the document may add new packages in the preamble in several
+ways. In this document, the reader will find that we had a need for
+a mathematical symbol for which the `amsmath` package was needed. In
+the header, one will find:
+
+```
+preamble:
+-  \usepackage{amsmath}
+```
+
+# Basic Rmarkdown
+
+These are the most frequently used markdown idioms that work well in
+both HTML and PDF backends.
+
+1. Character styling. 
+    *  *Italics* result from asterixes (`*italics*`)
+    *  **bold face** results from two asterixes (`**boldface**`).
+    *  `computer code` should be a typewriter fixed width font produced by
+    using two "backticks" ($^\backprime \textrm{computer code} ^\backprime$) 
+1. Section headers. 
+    *  `#` is level 1 header
+    *  `##` is level 2 subheading
+    *  levels below are used differently in HTML and PDF.  The ability of
+   html documents to include specialized subsections is one of the
+   advantages of that backend. In markdown, they provide for 6 levels
+   of headings.
+1. Paragraph styling
+    * Paragraphs are created by blank lines
+    * Two blank spaces at end of line signify new line without creating new
+    paragraph (blank line) below.
+    *  Indented material like this:
+
+    >  quotations or other highlighted material (block quotes)
+
+    begins with a $>$ character in column 1, followed by a space:
+
+    \begin{lstlisting}
+    > quotations or other highlighted material (block quotes)
+    \end{lstlisting}
+
+    * code listings that are not chunks, such as
+
+    ```
+    int x = 3
+    ```
+
+    are requested by three ticks before and after
+
+    \begin{lstlisting}
+    `r ''````
+    int x = 3
+    `r ''````
+    \end{lstlisting}
+
+4. Lists. 
+    *  Numbered lists can be created by putting a number in column 1
+       of a new line, followed by a space.
+    *  Bullet lists can be created by putting an asterix in column 1
+       of a new line, followed by a space.
+ 
+    *  Lists can be nested by typing four blank spaces for each level
+       of nesting.
+    *  Question About lists: how do we insert separate paragraphs
+       under list headings and then re-continue the list in Rmarkdown
+       ?? ??.
+
+1. Hyperlinks, such as [CRMDA](https://crmda.ku.edu), for which the
+   markdown is `[CRMDA](https://crmda.ku.edu)`.
+5. Citations. Need to know how to use natbib citations in a markdown
+   document ?? ???
+	
+Some *basic markdown* is compatible with either HTML or PDF
+output. Where possible we should use the generic markup rather than
+format-specific markup, where possible. That is to say, even though
+one is allowed to use \LaTeX\ code to \emph{italicize} or
+\textbf{boldface} some characters, it is instead recommended to use
+the backend-neutral methods listed above.
+	
+We do not have a comprehensive list of all "backend-neutral" 
+markup notation, but we are accumulating examples.
+
+## Caution about Rmarkdown
+
+Rmarkdown is similar to, but the exactly
+the same, as the
+[general markdown specification](https://daringfireball.net/projects/markdown).
+It is different from other specialized dialects, such as
+the [GitHub Flavored Markdown](https://github.github.com/gfm) and
+other variants. Be cautious about using style guides that are not
+intended explicitly for Rmarkdown documents. There is a good chance
+their advice is irrelevant. Google searches will sometimes lead to the
+wrong answer for a particular form of Markdown.
+
+At the current time, we do not know the boundaries of what will work,
+but we do know (for sure) that Rmarkdown -> HTML document transition
+will ignore \LaTeX\ errors and replace errors with blank spaces.
+Hence, when producing HTML output, one should inspect output very
+carefully.	
+	
+## Math in Markdown documents
+
+There's a fairly broad range of mathematical markup that will work in
+Rmarkdown documents intended for PDF and HTML. This uses the language
+of \LaTeX\, even when the backend is HTML.
+
+Here are the highlights.
+
+1. In-line math markup is dollar-sign bracketed, just as in \LaTeX
+   itself. We can write `$f_{ij} x_{i} \times y_{j}^2$` for
+   $f_{ij} x_{i} \times y_{j}^2$. Using the usual \LaTeX\ format, we
+   can write the Greek letters, binary relations, and other important
+   symbols. Behold:
+
+\[
+   \alpha, \beta, \gamma, \Gamma, \chi, \approx, \ne, \geq, \leq, \pm,
+   \sim, \rightarrow, \pi, \textrm{and} \infty.
+\]
+
+2. Displayed equations--equations that are centered or otherwise set
+apart from the text--should be bracketed by `\[` and `\]`. In \LaTeX,
+it is not longer recommended to use the double-dollar sign notation
+for displayed equations.  
+ 
+Compare the inline mode, $\bar{x} = \frac{1}{n} \sum_{i=1}^{n}x_{i}$
+with the display equation:
+
+\[
+\bar{x} = \frac{1}{n} \sum_{i=1}^{n}x_{i}
+\]
+
+that results from
+
+```
+\[
+\bar{x} = \frac{1}{n} \sum_{i=1}^{n}x_{i}
+\]
+```
+
+One can also use the \LaTeX\ ```\begin{equation}```, which comes from
+the \LaTeX\ package *amsmath*.
+
+\begin{equation}
+A_{m,n} = \left(\begin{array}{ccc}
+a & b & c\\
+d & e & f\\
+g & h & i\\
+\end{array}\right)
+\label{eq:another1}
+\end{equation}
+
+This is not the right place for a comprehensive guide to \LaTeX.
+Users will need to install a \LaTeX\ distribution and then a
+user-friendly editor that will help create equation markup.  Many
+users in the CRMDA lab use LyX, which offers a "View source" feature
+to inspect \LaTeX\ coding for equations.	
+
+## Syntax and code chunks
+
+Code chunks are discussed in a separate vignette that is available
+with the `crmda` package, "Code Chunks".  Code chunks are allowed in
+`Rmarkdown` documents intended for either HTML or PDF.
+
+In `Rmarkdown` documents intended for HTML output, `knitr` is the only
+chunk-processing technology that is available.  In `Rmarkdown`
+documents, the outer boundaries of a chunk are demarcated by three
+back ticks, along with squiggly braces and the letter "r", which
+designates the language being processed (`knitr` can handle several
+languages).
+
+\begin{lstlisting}
+`r ''````{r}
+lm(y ~ x, data = dat)
+`r ''````
+\end{lstlisting}
+
+In contrast, a chunk in a `noweb`/\LaTeX\ document would look like
+this:
+
+```
+<<>>=
+lm(y ~ x, data = dat)
+@
+```
+
+Options which control chunk management are quite elaborate in `knitr`,
+but most authors will find that there are 5 (or so) options that they use
+frequently and the others can be discovered in the documentation
+when emergencies arise:
+
+1. eval
+1. echo
+1. include
+1. results
+
+These control if the chunk is calculated, displayed, and included in
+the output. 
+
+`knitr` has fine grained settings for sizing, saving, and placing
+figures. These are discussed in our vignette, "Code Chunks". We expect
+that all authors will not have too much difficulty creating chunks
+that
+
+1. are not evaluated, but are displayed "beautifully" to the reader.
+2. are not displayed, but are evaluated, and the results may (or may
+   not) be displayed for the reader.
+3. create graphics, which are automatically included in the document.
+4. create graphics (or other files) that are not automatically
+   included in the document. Graphics are saved in image files that
+   can be inserted at a different part in the document
+5. import previous chunks for re-analysis.
+
+
+## Presentable tables
+
+In a report document, it would be unusual to display a large chunk of
+R code or output. Instead, reports typically include stylized tables,
+graphs, and equations. 
+
+Unfortunately, this is a point at which the backend-neutral document
+processing strategies break down. Markdown allows some elementary
+tables, but these are unsuitable for statistical tables. Instead, one needs
+to create backend-specific tables in order to have something
+presentable. 
+
+For the sake of clarity, then, I state the following:
+
+> If the backend in PDF, one should should use functions that
+> provide tables using \LaTeX\ code.
+
+On the other hand, 
+
+> if the backend is HTML, then functions that create HTML markup code
+> should be used.
+
+The very nice table-making routines for R were originally developed
+for PDF/\LaTeX\, and alternative backends like HTML were added later.
+At the current time, regression tables can be generated in either
+\LaTeX\ or HTML by the R package `texreg`, `xtable`, `rockchalk`, and
+many others.
+
+## Warnings
+
+In some early tests, we have found that there are flaws in the
+`pandoc` processing of some vaid HTML markup. These are serious
+problems. Valid HTML (and PDF, for that matter) can include empty
+spaces that are inserted by authors to make their code tables easier
+to read.  The spaces are confusing to `pandoc`. Because markup
+documents use space as a formatting concept (indicating nesting of
+lists or code sections), thus `pandoc` is "fooled" by spaces into
+treating the HTML markup as an indented section. At the current time,
+the workaround for this is that the author must "sanitize" tables
+before embedding them in the document.
+
+One important piece of advice would be this. Even when the document
+compiles without error, especially when the backend is HTML, it is
+very likely that code errors were ignored and filled with blank
+space.  *Authors must exert themselves to proofread the HTML output to
+make sure it appears as intended.*
+
+### Warnings aside, here are 2 table-making recipes
+
+I have used two approaches to include tables in documents. 
+
+1. The "automatic" method.  Write a chunk that creates an output table
+   that is good enough to go into the report without revision and
+   allow the document to use it.
+1. The "slow lane" method. Write a chunk that creates a file on
+   disk. Then one can review and edit the file, and include it in the
+   document manually
+
+In "guides" and less formal documents, I often use the automatic
+method (beauty of presentation is not the primary emphasis). On the
+other hand, in reports to clients, I often need to use the second
+method because tables almost never come out in a perfectly presentable
+format.
+
+Because I wrote the `outreg` function in the rockchalk package before
+any of the other table-making packages were available, it still holds
+a special place in my heart, so I will use it for a
+demonstration. `outreg` works with standard R regressions (`lm`,
+`glm`).  Suppose a regression with two predictors
+
+```{r reg10, results="asis"}
+library(rockchalk)
+dat <- genCorrelatedData2(N = 1000, rho = c(0.1, 0.2, 0.7),
+                          beta = c(1, 1.0, -1.1, 0.1, 0.1, 0.1, 0, 0.1), stde = 1)
+m1 <- lm(y ~ x1 + x2 + x3, data = dat)
+m2 <- lm(y ~ x1 + x2*x3 + x1*x3, data = dat)
+varLab <- c(y = "Cancer", x1 = "Plutonium", x2 = "Veggies",
+            x3 = "Tobacco", `x2:x3` = "Veg $\\times$ Tob",
+            `x1:x3` = "Plut $\\times$ Tob", x1c = "Plutonium (cntr)",
+            x2c = "Veggies (cntr)", x3c = "Tobacco (cntr)",
+            `x2c:x3c` = "Veg $\\times$ Tob (cntr)", `x1c:x3c` = "Plut $\\times$ Tob (cntr)")
+m3 <- meanCenter(m2)
+or10 <- outreg(list("Cancer OLS" = m1, "Cancer Interaction" = m2, "Centered Interaction" = m3), varLab = varLab)
+```
+
+
+The other way:
+
+
+
+```{r reg20}
+cat(or10, file = "tmpout/or10file.tex")
+```
+
+\input{tmpout/or10file.tex}
+
+
+
+```
+Here's an empty spot that needs work
+```
+
+
+# Reading Material about Rmarkdown
+
+1. [*R Markdown Reference Guide*](https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf)
+2. [*R Markdown Cheatsheet*](https://www.rstudio.com/wp-content/uploads/2016/03/rmarkdown-cheatsheet-2.0.pdf)
+3. Yihui Xie. 2015. *Dynamic Documents with R and Knitr. 2ed* Boca
+Raton, Florida: Chapman Hall/CRC. http://yihui.name/knitr.  On July 7,
+2017, Xie made available a new book manuscript, [*bookdown: Authoring
+Books and Technical Documents with R Markdown*]
+(https://bookdown.org/yihui/bookdown).
+
+User-friendly overviews and tutorials on Rmarkdown usage are
+available.
+
+1. [*Markdown Basics*](http://rmarkdown.rstudio.com/authoring_basics.html). See
+ also the Rmarkdown page at Rstudio corporation, http://rmarkdown.rstudio.com, which offers a  
+["Get Started" Tutorial](http://rmarkdown.rstudio.com/lesson-1.html).
+2. Cosma Shalizi, "Using R Markdown for Class Reports",
+   http://www.stat.cmu.edu/~cshalizi/rmarkdown.
+3. Wisconsin University Social Science
+   Computing Collaborative. "R for Researchers: R Markdown".  
+   http://www.ssc.wisc.edu/sscc/pubs/RFR/RFR_RMarkdown.html
+4. Karl Broman, "Knitr with R Markdown".  
+   http://kbroman.org/knitr_knutshell/pages/Rmarkdown.html
+	
+
+
+# Session Info
+
+```{r session}
+warnings()
+sessionInfo()
+```
+
+
+Available under
+[Created Commons license 3.0 <img src="http://crmda.dept.ku.edu/images/cc-3.0.png" alt="CC BY" style="width: 75px;height: 20px;"/>](http://creativecommons.org/licenses/by/3.0/)
+

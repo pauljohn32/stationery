@@ -15,11 +15,7 @@ print(x[1:20])
 ## ----mySecondPlot, dev=c('png','pdf'), fig.keep='all'--------------------
 hist(rnorm(20))
 
-## ---- results="html"-----------------------------------------------------
-  xx <- "<table><tr><td>hipaul</td><td>zach</td></tr></table>\n"
-  xx
-
-## ---- results="asis"-----------------------------------------------------
+## ---- warning = FALSE, error = FALSE, message= FALSE,include=FALSE-------
 library(rockchalk)
    set.seed(2134234)
    dat <- data.frame(x1 = rnorm(100), x2 = rnorm(100))
@@ -38,12 +34,19 @@ or1 <- gsub("^\\ *", "", or1)
 or1 <- paste(or1, collapse = "")
 or1 <- gsub("\\ \\ \\ \\ \\ \\ ", " ", or1)
 or1 <- gsub("\\ \\ \\ ", " ", or1)
+
+## ----results="asis"------------------------------------------------------
 cat(or1)
 
 ## ---- results="asis"-----------------------------------------------------
     library(xtable)
     or2 <- xtable(summary(m1))
     print(or2, type="html")
+
+## ---- results="asis"-----------------------------------------------------
+    library(psych)
+print(xtable(describe(dat)),type = "html")
+    
 
 ## ---- eval=FALSE, include=FALSE------------------------------------------
 ## bscols <- data.frame(old = c("info", "warning", "danger"),

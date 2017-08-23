@@ -83,6 +83,8 @@ Someone's got to get credit for the wonderful report, right? If you're a graduat
 
 # LaTeX Syntax is allowed
 
+Inline $\alpha$ is allowed \LaTeX.
+
 ## Equations
 
 ```
