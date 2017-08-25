@@ -31,6 +31,7 @@ output:
     highlight: haddock
 ---
 
+
 ```{r setup, include=FALSE}
 ##This Invisible Chunk is required in all CRMDA documents
 outdir <- paste0("tmpout")
@@ -39,9 +40,10 @@ knitr::opts_chunk$set(echo=TRUE, comment=NA, fig.path=paste0(outdir, "/p-"))
 options(width = 70)
 ```
 
+
 # RMarkdown Basics
 
-Rstudio has great resources for R markdown basics. If you are a begginer to R markdown, we recommend covering some of RStudios R markdown basics.
+Rstudio has great resources for R markdown basics. If you are a begginer to R markdown, we recommend covering some of RStudio's R markdown basics.
 
 HTTP://markdown.rstudio.com/authoring_quick_tour.html
 
@@ -61,8 +63,115 @@ The rendered output (an HTML) file can be opened using Firefox or Chrome/Chromiu
 firefox guide-instructions.html
 ```
 
-# General Features
+# Illustration of Chunk Features
 
+1.) A chunk with no options, is evaluated and echoed. This means both the input and output will be displayed in the compiled HTML document.
+
+```{r chunk 1}
+set.seed(1991)
+x <- rpois(10,1)
+median(x)
+```
+
+2.) To show just the input code, but not have the code evaluated, eval = F is specified.
+
+```{r chunk 2, eval = F}
+set.seed(1856)
+y <- rnorm(10,10,10)
+mean(y)
+```
+There is no output,the code is not evaluated, it is simply displayed in a chunk in the compiled document. 
+
+
+3.) A chunk that is evaluated, and displays a result, but the input code is hidden can be achieved with echo = F. Like so:
+
+
+```{r chunk 3, echo = F}
+sqrt(100)*15
+
+10+3
+```
+
+4.) For a hidden code chunk, that is not evaluated and the code is not displayed, the user specifies eval = F and echo = F. This is useful for embedding notes to yourself in your own document.
+
+```{r chunk 4, echo = F, eval= F}
+x <- rnorm(100,100,15)
+median(x)
+```
+
+Note that there is R code between this sentence and the above paragraph, but it was hiddden in the compiled document.
+
+5.) A chunk that creates a graph and allows it to be displayed in the document, but the code is hidden can be achieved with 
+
+```{r chunk 5, echo = F}
+set.seed(234432)
+x <- rnorm(100)
+hist(x)
+```
+
+Note that the graph is shown, the code input is not.
+
+6.)The user can save a graph in a file and display it at a later point. Thic can be acheived by specifing: fig.show = "hold", echo = F, and by specifying the dimensions with fig.height and fig.width (in CM). The file will be saved in the current working directory.
+
+```{r chunk 6, fig = T,  fig.height=3, fig.width=4, fig.show="hold", dev = c('png','pdf'),fig.cap= "plot caption here"}
+
+hist(x)
+
+```
+
+7.) building of figure:
+
+```{r chunk 7,fig.keep = "all", collapse=T}
+
+plot(c(0, 1), c(0, 1), type="n", ann=FALSE, axes=FALSE)
+    box("figure")
+    rect(0, 0, 1, 1, col="light grey", border="grey")
+    axis(1, at=c(0, 1), c("", ""))
+    mtext("Min x", side=1, adj=0, line=1)
+    mtext("Max x", side=1, adj=1, line=1)
+    axis(2, at=c(0, 1), c("", ""))
+    mtext("Min y", side=2, adj=0, line=1)
+    mtext("Max y", side=2, adj=1, line=1)
+    lines(c(.6, .6, 0), c(0, .6, .6), lty="dashed")
+    text(.6, .6, expression(paste("The location ", 
+            group("(",list(x[i], y[i]),")"))), pos=3)
+    points(.6, .6, pch=16)
+    axis(1, at=.6, "")
+    mtext(expression(x[i]), side=1, at=.6, line=.7)
+    axis(2, at=.6, "")
+    mtext(expression(y[i]), side=2, at=.6, line=.7)
+ 
+```
+
+
+##Inserting External images
+
+External images can be embedded into html documents by calling html code. By using html, we avoid potential rescaling issues through the pandoc conversion process. Html will also give us optimal flexability in rescaling. This can be achieved with the following html code:
+
+```
+<img src="plot1.png" alt = "Floating .png"
+  width  = "308"
+  height = "216">
+
+```
+
+<img src="ext_img/plot1.png" alt = "An external .png"
+  width  = "308"
+  height = "216">
+
+We can insert more than just .png files, here is a .jpeg:
+
+<img src="ext_img/plot3.jpeg" alt = "An external .jpeg"
+  width  = "308"
+  height = "216">
+
+Currently .pdf files cannot be embedded in html documents, but there are methods for converting them. Either on the web at websites like:
+
+http://pdf2png.com/
+
+or through open source software like gimp:
+
+https://www.gimp.org/downloads/
 
 ## Math via $\LaTeX$ markup
 
@@ -236,7 +345,7 @@ symbols(-.13, -0.8, circles=1, inches=0.1, add=TRUE)
 Sometimes a figure expresses more than words. Figures can also be included in R markdown documents.
 
 ```{r, echo = FALSE, warning =FALSE}
-par(xaxs="i", yaxs="i", xpd=FALSE)
+
     plot(c(0, 1), c(0, 1), type="n", ann=FALSE, axes=FALSE)
     box("figure")
     rect(0, 0, 1, 1, col="light grey", border="grey")
@@ -288,18 +397,20 @@ or1 <- gsub("\\ \\ \\ ", " ", or1)
 cat(or1)
 ```
 
-We have settled on Xtable as a great table producing package which offers flexability and functionality.
+We have settled on pander as a great table producing package which offers flexability and functionality.
 
 ```{r, results="asis"}
-    library(xtable)
-    or2 <- xtable(summary(m1))
-    print(or2, type="html")
+library(pander)    
+sum<- summary(m1)
+pander(sum$coefficients)
+
 ```
 
 ```{r, results="asis"}
-    library(psych)
-print(xtable(describe(dat)),type = "html")
-    
+library(psych)
+
+
+pander(describe(dat))
 ```
 
 # Special Features for Rmd into HTML documents.
