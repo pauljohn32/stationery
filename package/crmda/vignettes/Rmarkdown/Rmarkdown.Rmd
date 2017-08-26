@@ -583,17 +583,16 @@ wrong answer for a particular form of Markdown.
 
 Another major concern is that illegal \LaTeX\ code in documents
 intended for HTML will be ignored in the document production process.
-Even when the document compiles without error, HTML output may be
-incomplete. Where we expect to see math, there is *empty nothing*.  In
-my opinion, the document compilation process should fail and warn the
-author. Instead `pandoc` renders incomplete HTML.  The conversion from
-`markdown` to HTML appears to be the weak spot. It is worth mentioning
-that the \LaTeX\ compiler generally does not have the same bad
-tendency. It will fail, admittedly with error messages that are
-somewhat difficult to understand. The conclusion from all of this is
-the following: 
+The document compiles without error, but HTML result is
+incomplete. Where we expect to see math, there is *empty nothing*.  By
+itself, this problem seems serious enough to make me think the HTML
+backend should not be used. The `markdown` $\rightarrow$ HTML conversion is the
+weak spot. The `markdown` $\rightarrow$ PDF transition is not similarly
+flawed. It halts with error messages.  The conclusion from all of this
+is the following: 
+
 > *Authors must exert themselves to proofread the
-    HTML output to make sure it appears as intended.*
+> HTML output to make sure it appears as intended.*
 
 Another problem we have discovered is that even valid HTML markup can
 sometimes be corrupted by `pandoc`. Valid HTML (and PDF, for that
@@ -605,6 +604,33 @@ current time, it appears to be necessary to process all HTML markup
 that goes into the markdown document to remove spaces in the beginning
 of lines.
 
+In our experimentation with Rmarkdown, we have noticed another quirk.  I
+document intended for PDF, one writes `\LaTeX` to produce \LaTeX. On
+the other, in a document intended for HTML, writing `\LaTeX` produces
+one of those empty spaces previously mentioned.  Instead, in the
+document intended for HTML one must insert `$\LaTeX$`, as if this were
+a valid mathematical expression, which it is not. Inserting `$\LaTeX$`
+in Rmarkdown intended for PDF results in an error message:
+
+\begin{lstlisting}
+! You can't use `\spacefactor' in math mode.
+\@->\spacefactor
+                 \@m {}
+l.934 ...to compile and the error message \(\LaTeX
+
+pandoc: Error producing PDF
+\end{lstlisting}
+
+Finally, there is a fundamental weakness of HTML documents. Math is
+not "in" the HTML file. Instead, there is javascript code that is
+shown in the Web browser using a framework called MathJax. MathJax
+allows inclusion of math markup in the page which--when the conditions
+are right--can be converted by the Web browser to look like equations.
+The MathJax display system works better and better over time; it
+*almost always works*. The Web browser must be able to retrieve files
+from the MathJax server in order to display the document.
+If the reader is offline, or the MathJax server fails. Users will see
+markup, rather than equations, when the network fails.
 
 # Conclusion
 
