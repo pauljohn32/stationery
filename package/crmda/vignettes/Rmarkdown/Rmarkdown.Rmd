@@ -39,19 +39,107 @@ options(width = 70)
 ```
 
 \begin{abstract}
-This covers the basics on Rmarkdown that we expect all CRMDA authors
-using Rmarkdown must know.
+This discusses the basics of Rmarkdown that are important for
+authors who want to formulate their stratedies for document
+preparation. In our center, we expect all authors who prepare
+documents with Rmarkdown should understand the issues.
 \end{abstract}
 
 # Introduction: Terminology
 
-`Rmarkdown` is a style of markdown document used for preparing
-guides and reports about R.  It is not the same as "markdown" and will
-not always follow the same rules.  The general framework to which it
-is closest is `pandoc` markdown.
+`Rmarkdown` is a style of markdown document used for preparing guides
+and reports about R.  It is not the same as "markdown," for which
+there are many different dialects, and will Rmarkdown does not always
+follow the same syntax.  The general framework to which it is closest
+is `pandoc` markdown because the program `pandoc` is used in several
+parts of the document compilation process.
 
 
-## Document-wide options
+# Document-wide options
+
+In the beginning of a markdown document, there is a header written in
+the YAML format (YAML = Yet Another Markup Language). 
+
+The header for the document you are reading now in PDF is:
+
+```
+--- 
+title: "Rmarkdown Basics"
+author:
+- affiliation: CRMDA
+  description: Director
+  email: pauljohn@ku.edu
+  name: Paul Johnson
+output:
+  pdf_document:
+    fig_caption: true
+    keep_tex: true 
+    latex_engine: pdflatex
+    highlight: haddock
+    citation_package: natbib
+    pandoc_args: [
+        --listings
+    ]
+    template: theme/crmda-boilerplate.tex
+    fontsize: 12pt
+preamble:
+-  \usepackage{xcolor}
+-  \usepackage{amsmath}
+-  \usepackage{amssymb}
+-  \usepackage{fancybox}
+-  \usepackage{calc}
+-  \usepackage{subfig}
+tables: yes
+keywords: guides, report, pandoc, sweave, knitr
+---
+```
+
+What do we have there? Main sections that begin with keywords `title`,
+`author`, `output`, `preamble`, `tables`, and `keywords`. The output
+spection specifies `pdf_document`, which means that the `Rmarkdown`
+file will be converted from `Rmarkdown` to `markdown`, then into
+\LaTeX, then PDF.  The `preamble` section is relevant only to the
+\LaTeX stage of document preparation.
+
+#### Observations about YAML
+
+1. The header begins with, in column 1
+    
+    `---`
+    
+    and ends with
+    
+    `---`
+2. The format of the YAML header is **VERY** sensitive. Errors in
+   formatting are fatal.
+
+    A. Subsections are represented by indentation
+
+    B. Use spaces to intend, NEVER tabs. Use an editor that displays
+    in fixed width fonts, so that the number of spaces is apparent.
+
+3. Parameter and value are separated by `:`, a colon, rather than
+   equal sign.
+4. The backend, either HTML or PDF, is specified here. This choice
+   determines the other settings that are allowed.
+ 
+    Beyond the very simple headers, be aware that it is generally NOT
+    possible to change from a PDF to HTML backend without making a lot
+    of changes in the header. Please be warned that the Rstudio
+    pulldown menu that says "Knit to PDF" or "Knit to HTML" is
+    deceptive, implying one can easily choose between backends and that the
+    document will work well in either output format. This is decidedly
+    untrue. Be warned also that Rstudio will revise the content of the
+    document header, possibly corrupting its formatting.
+5. The package `rmarkdown` provides a function named `render`. This
+    function is the orchestrator of the document production process. R
+    code chunks are processed (knitted) into the markdown document,
+    then it is "compiled" into HTML or PDF.  The `render` function
+    allows arguments that can override the YAML header arguments.  They
+    generally have the same name.
+
+    For example, the header setting `keep_tex: true`, will be
+    overridden by argument `keep_tex=FALSE` given to the render function.
 
 
 # Preparing an Rmarkdown Document
@@ -68,55 +156,55 @@ reasonably nice, even before it is compiled.  That means authors
 should take care that their document has reasonably "shaped"
 paragraphs. Lines should generally be 80 characters or less.
 
-## Markdown documents: 2 parts
 
-### Header: YAML
+## Document body has markdown, plus
 
-YAML="Yet Another Markup Language"
+The body of the Rmarkdown document can include both "markdown" syntax,
+which we hope is compatible with either PDF or HTML backends, as well
+as a selection of backend-specific code input. In a document with an
+HTML backend, authors can write "raw" HTML when they can't find
+Rmarkdown syntax that works.
 
-Very "fussy" specifications for document format, input. The `crmda`
-package for R provides templates that we use.
-
-Settings in the YAML header can be over-ridden by document processing
-settings chosen by the user who compiles the document. Items in the
-header, like `keep_tex: true`, will be overridden by arguments
-`keep_tex=FALSE` given to the render function.
-
-## Body has Markdown, Plus
-
-The body of the Rmarkdown document can include both "markdown" syntax
-as well as a selection of backend-specific code input. In a document
-with an HTML backend, authors can write "raw" HTML when the can't find
-Rmarkdown syntax that work. 
-
-Similarly, documents intended for PDF output are going to be processed
-by a \LaTeX\ compiler (`pdflatex` or `xetex`). As a result, one can
-insert quite a bit of \LaTeX\ code and it will be successfully
-post-processed in the last stage of document compilation.
+In our experience, it is also *mostly* workable to include \LaTeX\
+code in `Rmarkdown` documents. Recall that documents in `Rmarkdown`
+are conveted from `Rmd` to `md` by the knitting process, and then into
+\LaTeX\ by `pandoc`, and then into PDF by a \LaTeX\ compiler
+(`pdflatex` or `xetex`). As a result, one can insert quite a bit of
+\LaTeX\ code and it will often be successfully post-processed in the
+last stage of document compilation.
 
 We have found that some \LaTeX\ code does not work well, however, so
 it is not possible at the current time to say "everything
-works". However, many things do work and more features can be added.
+works". However, many things do work.
 
 As in \LaTeX\ itself, when an author wants to add features, it is
 generally necessary to add `\usepackage{}` statements in the \LaTeX\
-document preamble. In the `crmda` package, the rmd2pdf document
-template is compiled with a \LaTeX\ template that includes quite a few
-packages. The template should not need revision (*after we perfect
-it*), but the document may add new packages in the preamble in several
-ways. In this document, the reader will find that we had a need for
-a mathematical symbol for which the `amsmath` package was needed. In
-the header, one will find:
+document preamble. Note that, as we insert \LaTeX\ code in this
+document, we need to insert \LaTeX\ `\usepackage code` to make the
+features available to the compiler. These appear in the YAML header 
+like so.
 
 ```
 preamble:
 -  \usepackage{amsmath}
 ```
 
+That one was needed when some math expressions were inserted in the
+document.  
+
+We use a \LaTeX\ template for this document.  That template creates a
+document style and it also can include `\usepackage{}`
+statements. Packages that are not included in the template (where we
+include packages that we *always* expect to use) are tucked into the
+document header.
+
+
 # Basic Rmarkdown
 
 These are the most frequently used markdown idioms that work well in
-both HTML and PDF backends.
+both HTML and PDF backends. These things work well in either backend
+because they are understood to `pandoc`, which has the job to convert
+the `markdown` document into either \LaTeX\ or HTML.
 
 1. Character styling. 
     *  *Italics* result from asterixes (`*italics*`)
@@ -132,8 +220,8 @@ both HTML and PDF backends.
    of headings.
 1. Paragraph styling
     * Paragraphs are created by blank lines
-    * Two blank spaces at end of line signify new line without creating new
-    paragraph (blank line) below.
+    * Single-spaced line: Two blank spaces at end of line signify new
+    line without creating new paragraph (blank line) below.
     *  Indented material like this:
 
     >  quotations or other highlighted material (block quotes)
@@ -175,39 +263,28 @@ both HTML and PDF backends.
 5. Citations. Need to know how to use natbib citations in a markdown
    document ?? ???
 	
-Some *basic markdown* is compatible with either HTML or PDF
-output. Where possible we should use the generic markup rather than
-format-specific markup, where possible. That is to say, even though
-one is allowed to use \LaTeX\ code to \emph{italicize} or
-\textbf{boldface} some characters, it is instead recommended to use
-the backend-neutral methods listed above.
+This *basic markdown* is compatible with either HTML or PDF
+output. While I am writing in a document intended for PDF, I can use
+\LaTeX\ code `\emph{italicize}` to \emph{italicize}, as you can see,
+but I can also use markdown syntax `*italicize*` to *italicize*. If I
+were intending this document for HTML, I could insert
+`<i>italicize</i>` to reach the same result. Where possible, we should
+use the generic syntax rather than backend-specific markup, because
+this keeps open the door that we might want to change the backend from
+PDF to HTML at some point. Of course, *the key assumption is that the
+backend-neutral methods actually work* to get the job done, and that
+is simply untrue in my experience. Every document worth presenting
+will have at least one backend-specific feature.
 	
-We do not have a comprehensive list of all "backend-neutral" 
-markup notation, but we are accumulating examples.
 
-## Caution about Rmarkdown
-
-Rmarkdown is similar to, but the exactly
-the same, as the
-[general markdown specification](https://daringfireball.net/projects/markdown).
-It is different from other specialized dialects, such as
-the [GitHub Flavored Markdown](https://github.github.com/gfm) and
-other variants. Be cautious about using style guides that are not
-intended explicitly for Rmarkdown documents. There is a good chance
-their advice is irrelevant. Google searches will sometimes lead to the
-wrong answer for a particular form of Markdown.
-
-At the current time, we do not know the boundaries of what will work,
-but we do know (for sure) that Rmarkdown -> HTML document transition
-will ignore \LaTeX\ errors and replace errors with blank spaces.
-Hence, when producing HTML output, one should inspect output very
-carefully.	
-	
 ## Math in Markdown documents
 
 There's a fairly broad range of mathematical markup that will work in
-Rmarkdown documents intended for PDF and HTML. This uses the language
-of \LaTeX\, even when the backend is HTML.
+Rmarkdown documents intended for PDF and HTML. So far as we can tell,
+documents intended for PDF (which can add \LaTeX\ packages) can
+exploit all of the mathematical features, while HTML documents do not
+have that same bragging point. There are other weaknesses in the math
+tool chaing for HTML documents, to which we shall return.
 
 Here are the highlights.
 
@@ -223,27 +300,54 @@ Here are the highlights.
 \]
 
 2. Displayed equations--equations that are centered or otherwise set
-apart from the text--should be bracketed by `\[` and `\]`. In \LaTeX,
+apart from the text--can be bracketed by `\[` and `\]`. In \LaTeX,
 it is not longer recommended to use the double-dollar sign notation
-for displayed equations.  
+for displayed equations.
  
 Compare the inline mode, $\bar{x} = \frac{1}{n} \sum_{i=1}^{n}x_{i}$
 with the display equation:
 
 \[
-\bar{x} = \frac{1}{n} \sum_{i=1}^{n}x_{i}
+\bar{x} = \frac{1}{n} \sum_{i=1}^{n}x_{i}.
 \]
 
 that results from
 
 ```
 \[
-\bar{x} = \frac{1}{n} \sum_{i=1}^{n}x_{i}
+\bar{x} = \frac{1}{n} \sum_{i=1}^{n}x_{i}.
 \]
 ```
 
-One can also use the \LaTeX\ ```\begin{equation}```, which comes from
+After some testing, it appears that in order to have equations with
+numbers (via labels, allowing cross references), the best avenue is to
+change the display markup to use `amsmath` equations. In the
+following, we use the \LaTeX\ ```\begin{equation}```, which comes from
 the \LaTeX\ package *amsmath*.
+
+```
+\begin{equation}
+\bar{x} = \frac{1}{n} \sum_{i=1}^{n}x_{i}.
+\label{eq:mean}
+\end{equation}
+```
+
+This equation is numbered, because the label macro is included within
+the equation:
+
+\begin{equation}
+\bar{x} = \frac{1}{n} \sum_{i=1}^{n}x_{i}.
+\label{eq:mean}
+\end{equation}
+
+Because we labeled the equation, we can now use cross references. As
+the reader can see in equation (\ref{eq:mean}), the arithmetic mean is
+a very lovely formula. If we insert equations before or after that
+one, they will be renumbered automatically and cross references will
+be adjusted.
+
+Another benefit of introducing the amsmath support is that arrays
+can be demonstrated.
 
 \begin{equation}
 A_{m,n} = \left(\begin{array}{ccc}
@@ -251,8 +355,12 @@ a & b & c\\
 d & e & f\\
 g & h & i\\
 \end{array}\right)
-\label{eq:another1}
+\label{eq:amatrix}
 \end{equation}
+
+Given the fact that the `equation` environment provides all of the
+needed features, it seems obvious that authors should prefer to use
+it, rather than the simpler `\[` markup.
 
 This is not the right place for a comprehensive guide to \LaTeX.
 Users will need to install a \LaTeX\ distribution and then a
@@ -328,6 +436,178 @@ tables, but these are unsuitable for statistical tables. Instead, one needs
 to create backend-specific tables in order to have something
 presentable. 
 
+
+The very nice table-making routines for R were originally developed
+for PDF/\LaTeX\, and alternative backends like HTML were added later.
+At the current time, regression tables can be generated in either
+\LaTeX\ or HTML by the R package `texreg`, `xtable`, `rockchalk`, and
+many others.
+
+
+### Warnings aside, here are 2 table-making recipes
+
+I have used two approaches to include tables in documents. 
+
+1. The "automatic" method.  Write a code chunk that creates an output table
+   that is good enough to go into the report without revision and
+   allow the document to use it. The chunk option `results="asis"` is 
+   used to signal that the result of the chunk is valid markup that is
+   to go directly into the backend document.
+1. The "slow lane" method. Write a chunk that creates a table in a
+   file on disk. Then one can review and edit the file, and include it
+   in the document manually.
+
+In "guides" and less formal documents, I often use the automatic
+method (beauty of presentation is not the primary emphasis). In
+reports to clients, I often need to use the second method because
+tables almost never come out in a perfectly presentable format.
+
+Because I wrote the `outreg` function in the rockchalk a long time
+ago, it still holds a special place in my heart. I will use it for a
+demonstration. `outreg` works with standard R regressions (`lm`,
+`glm`).  Suppose we have data about cancer prevalence (y) and predictors
+including exposure to plutonium (x1), vegetables (x2), and tobacco (x3). 
+
+```{r fakedata, include=F}
+library(rockchalk)
+dat <- genCorrelatedData2(N = 1000, rho = c(0.1, 0.2, 0.7),
+                          beta = c(1, 1.0, -1.1, 0.1, 0.1, 0.1, 0, 0.1), stde = 1)
+```
+
+Regressions are estimated. The second regression includes
+interactions.
+
+```{r reg10, echo=T, results="hide"}
+m1 <- lm(y ~ x1 + x2 + x3, data = dat)
+m2 <- lm(y ~ x1 + x2*x3 + x1*x3, data = dat)
+
+```
+
+The variable labels are created as `varLab` and they are supplied in
+the call to `outreg`. 
+
+\begin{lstlisting}
+`r ''````{r reg20, results="asis"}
+varLab <- c(y = "Cancer", x1 = "Plutonium", x2 = "Veggies",
+            x3 = "Tobacco", `x2:x3` = "Veg $\\times$ Tob",
+            `x1:x3` = "Plut $\\times$ Tob")
+or10 <- outreg(list("Cancer OLS" = m1, "Cancer Interaction" = m2), 
+               tight=FALSE, varLab = varLab)
+`r ''````
+\end{lstlisting}
+
+The table is inserted flush left in the document at the point of the
+code chunk because I did not create a floating table object in which
+to situate it.
+
+```{r reg20, echo=F, results="asis"}
+varLab <- c(y = "Cancer", x1 = "Plutonium", x2 = "Veggies",
+            x3 = "Tobacco", `x2:x3` = "Veg $\\times$ Tob",
+            `x1:x3` = "Plut $\\times$ Tob")
+or10 <- outreg(list("Cancer OLS" = m1, "Cancer Interaction" = m2),
+               tight=FALSE, varLab = varLab)
+```
+
+
+The other way to do this is to save the table in a file, and then
+include it in a document.  I do this in some reports because the
+\LaTeX\ (or HTML) tables created by software are never *exactly* right
+and I want to fine tune them.
+
+```{r reg30}
+cat(or10, file = "tmpout/or10file.tex")
+```
+
+The file "or10file.tex" can be edited by hand, and then inserted into
+the \LaTeX\ document (for the PDF backend). If I am using this method,
+I can insert a floating table with a proper caption and label. See
+Table \ref{tab:reg30}, which results from the following.  
+
+```
+\begin{table} \caption{Regression Analysis\label{tab:reg30}}
+\input{tmpout/or10file.tex} \end{table} 
+``` 
+
+\begin{table}
+\caption{Regression Analysis\label{tab:reg30}}
+\input{tmpout/or10file.tex} 
+\end{table}
+
+Admittedly, this two step process to create the floating \LaTeX\ label
+is not truly necessary.  The `outreg` function could do that for
+us. The same result using the results="asis" chunk:
+
+\begin{lstlisting}
+`r ''````{r reg40, results="asis"}
+or10 <- outreg(list("Cancer OLS" = m1, "Cancer Interaction" = m2), tight=FALSE,
+               varLab = varLab, title = "Regression Analysis asdfasdf",
+               label="tab:reg30")
+`r ''````
+\end{lstlisting}
+
+Because this document is intended for the PDF backend, any \LaTeX\
+generating table function should work.  For linear regressions,
+multilevel models, and glm fits, I find the `rockchalk::outreg` output
+is fine, but other kinds of models often arrive with custom
+table-making routines. I have not found a single approach that works
+beautifully for all kinds of regressions, and I expect other authors
+will say the same thing because new packages to create \LaTeX\ tables
+seem to crop up in the R repositories on a monthly basis. It is worth
+mentioning that some of the \LaTeX\ table generators, like `texreg`,
+allow the use of `bookman` markup to beautify the placement of
+horizontal lines, so the document preamble must be modified to include
+that package.
+
+I often need to include simpler tabular material in documents and I
+always try to use the package `xtable`. `xtable` is not the simplest
+package, but it has been around longer than the others and it has more
+detailed features than any other package. In particular, the
+`longtable` class, which allows tables that gracefully split over
+"page breaks", is available. If I cannot get the result I want with
+`xtable`, the second approach I try is the `latex` function in the
+`Hmisc` package. There are plenty of other table-making R packages,
+but my opinion is that if one can master `xtable`, then one can
+generate just about any kind of table.
+
+## Warnings, cautions and other hysterical statements
+
+Rmarkdown is similar to, but the exactly
+the same, as the
+[general markdown specification](https://daringfireball.net/projects/markdown).
+It is different from other specialized dialects, such as
+the [GitHub Flavored Markdown](https://github.github.com/gfm) and
+other variants. Be cautious about using style guides that are not
+intended explicitly for Rmarkdown documents. There is a good chance
+their advice is irrelevant. Google searches will sometimes lead to the
+wrong answer for a particular form of Markdown.
+
+Another major concern is that illegal \LaTeX\ code in documents
+intended for HTML will be ignored in the document production process.
+Even when the document compiles without error, HTML output may be
+incomplete. Where we expect to see math, there is *empty nothing*.  In
+my opinion, the document compilation process should fail and warn the
+author. Instead `pandoc` renders incomplete HTML.  The conversion from
+`markdown` to HTML appears to be the weak spot. It is worth mentioning
+that the \LaTeX\ compiler generally does not have the same bad
+tendency. It will fail, admittedly with error messages that are
+somewhat difficult to understand. The conclusion from all of this is
+the following: 
+> *Authors must exert themselves to proofread the
+    HTML output to make sure it appears as intended.*
+
+Another problem we have discovered is that even valid HTML markup can
+sometimes be corrupted by `pandoc`. Valid HTML (and PDF, for that
+matter) can include empty spaces that are inserted by authors to make
+their markup easier to read.  The spaces are confusing to `pandoc`,
+which may interpret them as markdown formatting statements (markdown
+uses spaces to indicate nesting of lists or code sections.  At the
+current time, it appears to be necessary to process all HTML markup
+that goes into the markdown document to remove spaces in the beginning
+of lines.
+
+
+# Conclusion
+
 For the sake of clarity, then, I state the following:
 
 > If the backend in PDF, one should should use functions that
@@ -337,86 +617,6 @@ On the other hand,
 
 > if the backend is HTML, then functions that create HTML markup code
 > should be used.
-
-The very nice table-making routines for R were originally developed
-for PDF/\LaTeX\, and alternative backends like HTML were added later.
-At the current time, regression tables can be generated in either
-\LaTeX\ or HTML by the R package `texreg`, `xtable`, `rockchalk`, and
-many others.
-
-## Warnings
-
-In some early tests, we have found that there are flaws in the
-`pandoc` processing of some vaid HTML markup. These are serious
-problems. Valid HTML (and PDF, for that matter) can include empty
-spaces that are inserted by authors to make their code tables easier
-to read.  The spaces are confusing to `pandoc`. Because markup
-documents use space as a formatting concept (indicating nesting of
-lists or code sections), thus `pandoc` is "fooled" by spaces into
-treating the HTML markup as an indented section. At the current time,
-the workaround for this is that the author must "sanitize" tables
-before embedding them in the document.
-
-One important piece of advice would be this. Even when the document
-compiles without error, especially when the backend is HTML, it is
-very likely that code errors were ignored and filled with blank
-space.  *Authors must exert themselves to proofread the HTML output to
-make sure it appears as intended.*
-
-### Warnings aside, here are 2 table-making recipes
-
-I have used two approaches to include tables in documents. 
-
-1. The "automatic" method.  Write a chunk that creates an output table
-   that is good enough to go into the report without revision and
-   allow the document to use it.
-1. The "slow lane" method. Write a chunk that creates a file on
-   disk. Then one can review and edit the file, and include it in the
-   document manually
-
-In "guides" and less formal documents, I often use the automatic
-method (beauty of presentation is not the primary emphasis). On the
-other hand, in reports to clients, I often need to use the second
-method because tables almost never come out in a perfectly presentable
-format.
-
-Because I wrote the `outreg` function in the rockchalk package before
-any of the other table-making packages were available, it still holds
-a special place in my heart, so I will use it for a
-demonstration. `outreg` works with standard R regressions (`lm`,
-`glm`).  Suppose a regression with two predictors
-
-```{r reg10, results="asis"}
-library(rockchalk)
-dat <- genCorrelatedData2(N = 1000, rho = c(0.1, 0.2, 0.7),
-                          beta = c(1, 1.0, -1.1, 0.1, 0.1, 0.1, 0, 0.1), stde = 1)
-m1 <- lm(y ~ x1 + x2 + x3, data = dat)
-m2 <- lm(y ~ x1 + x2*x3 + x1*x3, data = dat)
-varLab <- c(y = "Cancer", x1 = "Plutonium", x2 = "Veggies",
-            x3 = "Tobacco", `x2:x3` = "Veg $\\times$ Tob",
-            `x1:x3` = "Plut $\\times$ Tob", x1c = "Plutonium (cntr)",
-            x2c = "Veggies (cntr)", x3c = "Tobacco (cntr)",
-            `x2c:x3c` = "Veg $\\times$ Tob (cntr)", `x1c:x3c` = "Plut $\\times$ Tob (cntr)")
-m3 <- meanCenter(m2)
-or10 <- outreg(list("Cancer OLS" = m1, "Cancer Interaction" = m2, "Centered Interaction" = m3), varLab = varLab)
-```
-
-
-The other way:
-
-
-
-```{r reg20}
-cat(or10, file = "tmpout/or10file.tex")
-```
-
-\input{tmpout/or10file.tex}
-
-
-
-```
-Here's an empty spot that needs work
-```
 
 
 # Reading Material about Rmarkdown
