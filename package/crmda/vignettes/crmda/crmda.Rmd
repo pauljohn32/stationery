@@ -550,11 +550,6 @@ middle of a markdown document.
 
 # 
 
-```{r session}
-warnings()
-sessionInfo()
-```
-
 
 
 <!-- ## Raw HTML -->
@@ -634,117 +629,6 @@ sessionInfo()
 <!--     library(psych) -->
 <!-- print(xtable(describe(dat)),type = "html") -->
     
-<!-- ``` -->
-
-<!-- # Special Features for Rmd into HTML documents. -->
-
-<!-- HTML documents allow for interactivity as compared to other forms of markdown output. Below are some unique features we take advantage of in HTML output. -->
-
-
-<!-- ## Collored Callouts -->
-
-<!-- Callouts allow the user to specify code chunks, tables, plots, or paragraphs to be collored. This is a great way to get your readers attention. These are always preceded by four # signs. Yes, ####. We stole this idea from other -->
-<!-- styles and put them into ours. See usage of {.bs-callout.bs-callout-whatever_you_put here}, where whatever_you_put_here iseither "gray", "red", "orange", "blue", or "green". -->
-   
-<!-- ```{r, eval=FALSE, include=FALSE} -->
-<!-- bscols <- data.frame(old = c("info", "warning", "danger"), -->
-<!--                      new = c("blue", "orange", "red")) -->
-<!-- ``` -->
-
-<!-- ### Demonstrating Callouts -->
-
-<!-- #### Gray Callout {.bs-callout .bs-callout-gray} -->
-<!-- Content here: Gray for wisdom -->
-
-<!-- #### Red Callout {.bs-callout .bs-callout-red} -->
-<!-- Red for warnings -->
-
-<!-- #### Orange Callout {.bs-callout .bs-callout-orange} -->
-<!-- Orange for examples -->
-
-<!-- #### Blue Callout {.bs-callout .bs-callout-blue} -->
-<!-- Blue for right answers -->
-
-<!-- #### Green Callout {.bs-callout .bs-callout-green} -->
-<!-- Green for future directions -->
-
-
-<!-- <\!-- #### R code inside a callout {.bs-callout .bs-callout-red} -\-> -->
-<!-- <\!-- ```{r xsummary} -\-> -->
-<!-- <\!-- summary(x) -\-> -->
-<!-- <\!-- ``` -\-> -->
-	  
-
-
-<!-- ## Interactive Tabs -->
-
-<!-- If you'd like, you can include interactive tabs to HTML reports. Maybe you want to show two similar versions of the same analysis. Or maybe something else. Whatever it may be, be sure to include `{.tabset .tabset-fade}` along with a level 2 header (##). For each tab, put the information under the level 3 header (###). Use another level 2 header to get out of the tabs mode. -->
-
-<!-- The only way (that we know of) to get colors is to wrap the tab headers in a `<span style>` as shown below. This might be useful to draw attention to the tabs. Blue is the default color. -->
-<!-- #### What tabs look like {.bs-callout .bs-callout-blue} -->
-
-<!-- ``` -->
-<!-- ## You have the ability to include tabs {.tabset .tabset-fade} -->
-
-<!-- If you'd like, you can include different tabs. Maybe you want to show -->
-<!-- two similar versions of the same analysis. Or maybe something -->
-<!-- else. Whatever it may be, be sure to include `{.tabset .tabset-fade}` -->
-<!-- along with a level 2 header (##). For each tab, put the information -->
-<!-- under the level 3 header (###). Use another level 2 header to get out -->
-<!-- of the tabs mode. -->
-
-<!-- The only way (that we know of) to get colors is to wrap the tab -->
-<!-- headers in a `<span style>` as shown below. This might be useful to -->
-<!-- draw attention to the tabs. Blue is the default color. -->
-
-<!-- ### <span style="color:red">First Tab Here</span> -->
-
-<!-- Some information you'd like to show. -->
-
-<!-- ### <span style="color:orange">Second Tab Here</span> -->
-
-<!-- Some more information you'd like to show. -->
-
-<!-- Some more information you'd like to show. -->
-
-<!-- ### Third Tab Here -->
-
-<!-- Some final information you'd like to show. -->
-
-<!-- Some final information you'd like to show. -->
-
-<!-- Some final information you'd like to show. -->
-<!-- ``` -->
-
-<!-- ## {.tabset .tabset-fade} -->
-
-<!-- ### <span style="color:red">First Tab Here</span> -->
-
-<!-- Some information you'd like to show. -->
-
-<!-- ### <span style="color:orange">Second Tab Here</span> -->
-
-<!-- Some more information you'd like to show. -->
-
-<!-- Some more information you'd like to show. -->
-
-<!-- ### Third Tab Here -->
-
-<!-- Some final information you'd like to show. -->
-
-<!-- Some final information you'd like to show. -->
-
-<!-- Some final information you'd like to show. -->
-
-
-<!-- ## International characters -->
-
-<!-- Accented letters, often in non-English names, like -->
-
-<!-- Karl Gustav Jöreskog and Dag Sörbom -->
-
-<!-- Linda Muthén and Bengt Muthén -->
-
 
 <!-- # Policies about writing in these documents. {.bs-callout .bs-callout-red} -->
 
@@ -773,13 +657,22 @@ document. That has had disastrous consequences in the preparation of
 this manuscript.
 
 
-<!-- [//]: (All guides must have this as the final stanza) -->
+# Required footer 
 
-<!-- ```{r sessionInfo, echo = FALSE} -->
-<!-- sessionInfo() -->
-<!-- ``` -->
+The guide documents we require authors include a final chunk that
+includes the session information, to be used in
+bug-tracking. 
 
+Reports do not include raw output, so it is not recommended to insert
+that raw output in the report. Instead, we ask report writers to
+include a final R chunk that saves the session information in a file
+in the same directory as the pdf output.
 
+```{r session, include=F}
+zz <- "crmda-sessionInfo.Rout"
+capture.output(warnings(), file = zz)
+capture.output(sessionInfo(), file = zz, append = TRUE)
+```
 
 Available under
 [Created Commons license 3.0 <img src="http://crmda.dept.ku.edu/images/cc-3.0.png" alt="CC BY"
