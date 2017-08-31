@@ -730,12 +730,22 @@ Where markdown is not capable, one can still write "raw HTML" in the
 middle of a markdown document.
 
 
+# Required footer 
 
-```{r session}
-warnings()
-sessionInfo()
+The guide documents we require authors include a final chunk that
+includes the session information, to be used in
+bug-tracking. 
+
+Reports do not include raw output, so it is not recommended to insert
+that raw output in the report. Instead, we ask report writers to
+include a final R chunk that saves the session information in a file
+in the same directory as the pdf output.
+
+```{r session, include=F}
+zz <- "crmda-sessionInfo.Rout"
+capture.output(warnings(), file = zz)
+capture.output(sessionInfo(), file = zz, append = TRUE)
 ```
-
 
 Available under
 [Created Commons license 3.0 <img src="http://crmda.dept.ku.edu/images/cc-3.0.png" alt="CC BY"
