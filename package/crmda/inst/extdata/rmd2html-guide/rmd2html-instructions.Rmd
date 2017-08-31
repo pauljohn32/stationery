@@ -95,6 +95,7 @@ between exciting colors like red and blue!
 
 #### Red Callout {.bs-callout .bs-callout-red}
 Syntax: 
+
     ```
     #### Red Callout {.bs-callout .bs-callout-red}
     ```
@@ -116,9 +117,11 @@ Orange might be used for examples.
 Blue is for correct answers, at least according to the color Nazis.
 
 #### Green Callout {.bs-callout .bs-callout-green}
+
     ```
     #### Green Callout {.bs-callout .bs-callout-green}
     ```
+
 Green is the color of the Earth, of course, so we use it for
 ideas, suggestions, or whatever we like. 
 
@@ -149,8 +152,8 @@ dat <- data.frame(x=rnorm(1000), y=rpois(1000, l=7))
 summary(dat)
 ```
 
-```{r fig, fig=T}
-hist(dat$x)
+```{r fig, fig=T, fig.height=2.5, fig.width=5}
+hist(dat$x, xlab = "Monkey Weight (deviations)", main = "Histogram", prob = TRUE, ylim = c(0, 1))
 ```
 
 Note that the colored tabs, which were level 4 headings, are
@@ -252,7 +255,11 @@ words here!
 ## Inserting images: Use HTML code
 
 Pictures or graphics can be inserted into Rmarkdown documents. The
-usual markdown syntax for image inserts is ??? ???.  
+usual markdown syntax for image inserts is
+
+```
+![alt text](image/location/file.png "Image Title Text")
+```
 
 That syntax is somewhat limiting, mostly because we cannot resize the
 images. Another limitation is that some graphics formats are not
@@ -307,87 +314,237 @@ In the `crmda` package `code_chunks`, we explain the idea that in both
 processed.  There, we spell out a list of requirements for any chunk
 based system along with examples.
 
-In the following, we demonstrate those chunk examples.
+We run the same code chunks here, to compare the HTML output
+with PDF from the `crmda` vignette.
 
-1.) A chunk with no options, is evaluated and echoed. This means both the input and output will be displayed in the compiled HTML document.
+## Chunks that do not generate graphics
 
-```{r chunk 1}
-set.seed(1991)
-x <- rpois(10,1)
-median(x)
-```
+1. A chunk that is evaluated, echoed, both input and output. This is a
+standard chunk, no chunk options are used:
 
-2.) To show just the input code, but not have the code evaluated, eval = F is specified.
+    \begin{lstlisting}
+    `r ''````{r chunk10}
+    set.seed(234234)
+    x <- rnorm(100)
+    mean(x)
+    `r ''````
+    \end{lstlisting}
 
-```{r chunk 2, eval = F}
-set.seed(1856)
-y <- rnorm(10,10,10)
-mean(y)
-```
-There is no output,the code is not evaluated, it is simply displayed in a chunk in the compiled document. 
+    The user will see both the input code and the output, each in a
+    separate box:
+
+    ```{r chunk10}
+    set.seed(234234)
+    x <- rnorm(100)
+    mean(x)
+    ```
+
+    Notice the code highlighting is not entirely successful, and is
+    different from results we see in other backends.
 
 
-3.) A chunk that is evaluated, and displays a result, but the input code is hidden can be achieved with echo = F. Like so:
+2. A chunk with commands that are echoed into the document, but not
+   evaluated (`eval=F`).
+
+    When the document is compiled, the reader will see the depiction of
+    the code, which is (by default) beautified and reformatted:
+
+    ```{r chunk20, eval=F}
+    set.seed(234234)
+    x <- rnorm(100)
+    mean(x)
+    ``` 
+
+3. A chunk that is evaluated, with output displayed, but code is not
+   echoed (`echo=F`). It is not necessary to specify `eval=T` because
+   that is a default.
+
+    The user will not see any code that runs, but only a result:
+
+    ```{r chunk30, echo=F}
+    x <- rnorm(100)
+    mean(x)
+    ```
 
 
-```{r chunk 3, echo = F}
-sqrt(100)*15
+4. A hidden code chunk. A chunk that is evaluated, but neither is the
+   input nor output displayed (`include=F`)
 
-10+3
-```
+     
+    ```{r chunk40, include=F}
+    set.seed(234234)
+    x <- rnorm(100)
+    mean(x)
+    ```
 
-4.) For a hidden code chunk, that is not evaluated and the code is not displayed, the user specifies eval = F and echo = F. This is useful for embedding notes to yourself in your own document.
+    What is the grammatically correct way to say "did you see nothing?"
+    You should not even see an empty box? After that, the object `x`
+    exists in the on-going R session, it can be put to use.
 
-```{r chunk 4, echo = F, eval= F}
-x <- rnorm(100,100,15)
-median(x)
-```
 
-Note that there is R code between this sentence and the above paragraph, but it was hiddden in the compiled document.
+## Chunks with graphics
 
-5.) A chunk that creates a graph and allows it to be displayed in the document, but the code is hidden can be achieved with 
+5. A chunk that creates a graph, and allows it to be inserted into the
+       document, but the code is not echoed for the reader to see.
+    
+    ```{r chunk50, fig=T, fig.height=3, fig.width=4, fig.show="hold", echo=F}
+    hist(x, main = "One Histogram Displayed Inline")
+    ```
 
-```{r chunk 5, echo = F}
-set.seed(234432)
-x <- rnorm(100)
-hist(x)
-```
-
-Note that the graph is shown, the code input is not.
-
-6.)The user can save a graph in a file and display it at a later point. Thic can be acheived by specifing: fig.show = "hold", echo = F, and by specifying the dimensions with fig.height and fig.width (in CM). The file will be saved in the current working directory.
-
-```{r chunk 6, fig = T,  fig.height=3, fig.width=4, fig.show="hold", dev = c('png','pdf'),fig.cap= "plot caption here"}
-
-hist(x)
-
-```
-
-7.) building of figure:
-
-```{r chunk 7,fig.keep = "all", collapse=T}
-
-plot(c(0, 1), c(0, 1), type="n", ann=FALSE, axes=FALSE)
-    box("figure")
-    rect(0, 0, 1, 1, col="light grey", border="grey")
-    axis(1, at=c(0, 1), c("", ""))
-    mtext("Min x", side=1, adj=0, line=1)
-    mtext("Max x", side=1, adj=1, line=1)
-    axis(2, at=c(0, 1), c("", ""))
-    mtext("Min y", side=2, adj=0, line=1)
-    mtext("Max y", side=2, adj=1, line=1)
-    lines(c(.6, .6, 0), c(0, .6, .6), lty="dashed")
-    text(.6, .6, expression(paste("The location ", 
-            group("(",list(x[i], y[i]),")"))), pos=3)
-    points(.6, .6, pch=16)
-    axis(1, at=.6, "")
-    mtext(expression(x[i]), side=1, at=.6, line=.7)
-    axis(2, at=.6, "")
-    mtext(expression(y[i]), side=2, at=.6, line=.7)
+6. Save a graph in a file and display it at a later point. 
  
+    This can be acheived by specifing: fig.show="hold", echo=F.
+    Optionally we can specify the height and width of the figure with
+    fig.height and fig.width (which are always in inches).  The file
+    will be saved in the current working directory.
+
+    ```{r chunk65, fig=T, fig.height=3, fig.width=4, fig.show="hide", dev=c('png'),fig.cap="A caption"}
+    hist(x, main = "Another Histogram")
+    ```
+    
+
+7. A chunk that shows a series of plotting commands. 
+
+    This is a named chunk that is not evaluated, but it is displayed
+    to reader. The same code is then put to use twice in what follows.
+
+    ```{r chunk71, eval=F, echo=TRUE, warning=FALSE}
+    par(mar = c(3,2,0.5,0.5))
+    cax <- 0.7 ## cex.axis
+    plot(c(0, 1), c(0, 1), xlim = c(0,1), ylim = c(0,1), type = "n", ann = FALSE, axes = FALSE)
+    rect(0, 0, 1, 1, col = "light grey", border = "grey")
+    axis(1, tck = 0.01, pos = 0, cex.axis = cax, padj = -2.8, lwd = 0.3,
+          at = seq(0, 1, by = 0.2), labels = c("", seq(0.2,0.8, by=0.2), ""))
+    axis(2, tck = 0.01, pos = 0, cex.axis = cax, padj = 2.8, lwd = 0.3,
+         at = seq(0, 1, by = 0.2), labels = c("", seq(0.2,0.8, by=0.2), ""))
+    mtext(expression(x), side = 1, line = 0.5, at = .5, cex = cax)
+    mtext(expression(y), side = 2, line = 0.5, at = .5, cex = cax)
+    mtext(c("Min x", "Max x"), side = 1, line = -0.5, at = c(0.05, 0.95), cex = cax)
+    mtext(c("Min y", "Max y"), side = 2, line = -0.5, at = c(0.05, 0.95), cex = cax)
+    lines(c(.6, .6, 0), c(0, .6, .6), lty = "dashed")
+    text(.6, .6, expression(paste("The location ",
+                    group("(",list(x[i] == .6, y[i] == .6),")"))), pos = 3, cex = cax + 0.1)
+    points(.6, .6, pch = 16)
+    ```
+
+    The first re-use of this code simply runs the whole chunk, and
+    keeps the final figure. This figure is a png file that is embedded
+    in the HTML document.
+
+    <a name="specialfig"></a>
+    ```{r chunk75, ref.label='chunk71', echo=F, fig=T, fig.keep="last", fig.width=5, fig.height=5, fig.cap="A Special Figure", fig.align="center"}
+    ```
+  	
+    ```{r chunk76, ref.label='chunk71', echo=F, fig=T, include=F, fig.keep="all", fig.width=4, fig.height=4, dev=c('png')}
+    ```
+  
+    A special feature of knitr is the ability to keep the intermediate
+    plots that are produced by each line.  An inspection of the
+    `tmpout` directory shows that this code created several
+    graphs. Observe there are several files:
+
+    ```{r chunk76b}
+    list.files("tmpout", pattern="p-chunk76.*png") 
+    ```
+
+    In a way that is rather similar to the PDF backend, we use a
+    backend-specific table structure to display four of the images. The
+    display of the table's caption is controlled by the style sheet.
+
+```
+<table border="0" cellpadding="0">
+<caption>Figure: Table Array of Four Graphics</caption>
+<tr><td><img src="tmpout/p-chunk76-4.png" height=350 width=350 alt = "a png"></td>
+<td><img src="tmpout/p-chunk76-8.png" height=350 width=350 alt = "b png"></td></tr>
+<tr><td><img src="tmpout/p-chunk76-9.png" height=350 width=350 alt = "c png"></td>
+<td><img src="tmpout/p-chunk76-11.png" height=350 width=350 alt = "d png"> </td></tr>
+</table>
 ```
 
-# Dealing with missing features
+<table border="0" cellpadding="0">
+<caption>Figure: Table Array of Four Graphics</caption>
+<tr><td><img src="tmpout/p-chunk76-4.png" height=350 width=350 alt = "a png"></td>
+<td><img src="tmpout/p-chunk76-8.png" height=350 width=350 alt = "b png"></td></tr>
+<tr><td><img src="tmpout/p-chunk76-9.png" height=350 width=350 alt = "c png"></td>
+<td><img src="tmpout/p-chunk76-11.png" height=350 width=350 alt = "d png"> </td></tr>
+</table>
+	
+	
+	
+## Chunks with tables
+
+Markdown includes a rather crude table-making syntax. We used it above
+in to display the purpose to color relationship of the colored callout
+boxes. For most serious analysis, that type of table will not be
+sufficient.
+
+The chunk option `results="asis"` is used to display HTML markup that
+can be created by R functions. The cascading style sheet will play an
+important role in the final display. If we are unhappy with the
+rendering of the tables, we should concentrate on fixing the CSS,
+rather than finger-painting borders and such. While working on this
+project we discovered a flaw in the pandoc processing engine that
+caused tables to fail. If the HTML generated by the chunk includes
+spaces, `pandoc` can be fooled into thinking the text is markdown
+rather than HTML. 
+
+8. Using results="asis" to display HTML markup: Regression Tables
+
+There are many packages that can create near-publication-quality
+regression tables. Here is an example of the rockchalk package can
+create HTML code for a regression table. In this case, we run the code
+chunk to generate the HTML code, and then we have to manually purge
+the extra spaces in the output so that `pandoc` will not corrupt the
+output.
+
+```{r, warning = FALSE, error = FALSE, message= FALSE, include=FALSE}
+library(rockchalk)
+   set.seed(2134234)
+   dat <- data.frame(x1 = rnorm(100), x2 = rnorm(100))
+   dat$y1 <- 30 + 5 * rnorm(100) + 3 * dat$x1 + 4 * dat$x2
+   dat$y2 <- rnorm(100) + 5 * dat$x2
+   m1 <- lm(y1 ~ x1, data = dat)
+   m2 <- lm(y1 ~ x2, data = dat)
+   m3 <- lm(y1 ~ x1 + x2, data = dat)
+   gm1 <- glm(y1 ~ x1, family = Gamma, data = dat)
+
+or1 <- outreg(list("Amod" = m1, "Bmod" = m2, "Gmod" = m3),
+title = "My Three Linear Regressions", float = FALSE, type = "html",
+browse = FALSE)
+or1 <- gsub("&nbsp;", " ", or1)
+## eliminate spaces at beginning of rows
+or1 <- gsub("^\\s+", "", or1)
+## Change multiple spaces to single spaces:
+or1 <- gsub("\\s+", " ", or1)
+or1 <- paste(or1, collapse = "")
+```
+
+```{r,results="asis"}
+cat(or1)
+```
+
+9. General purpose HTML output from the pander package
+
+The package `pander` is a great table producing package which offers
+flexability and functionality. It can display an R table, the
+coefficient object generated by a regression summary
+
+```{r, results="asis"}
+library(pander)    
+sum <- summary(m1)
+pander(sum$coefficients)
+
+```
+
+and it can also display a matrix created by the package `psyc`
+
+```{r, results="asis"}
+library(psych)
+pander(describe(dat))
+```
+	
+	
+# Dealing with missing features in HTML documents
 
 Some document elements that are available in PDF output are missing in
 Rmarkdown to HTML conversion.  The most serious missing pieces are
@@ -428,75 +585,22 @@ to manually renumber these.  In addition, there is no HTML backend
 method to then refer to equation (3) without explicitly typing in the
 equation number.
 
+## Cross references
+
 HTML does offer its own form of cross referencing by hyperlink
-anchors, however. ??? ???
-
-
-```{r, echo = FALSE, warning =FALSE}
-
-    plot(c(0, 1), c(0, 1), type="n", ann=FALSE, axes=FALSE)
-    box("figure")
-    rect(0, 0, 1, 1, col="light grey", border="grey")
-    axis(1, at=c(0, 1), c("", ""))
-    mtext("Min x", side=1, adj=0, line=1)
-    mtext("Max x", side=1, adj=1, line=1)
-    axis(2, at=c(0, 1), c("", ""))
-    mtext("Min y", side=2, adj=0, line=1)
-    mtext("Max y", side=2, adj=1, line=1)
-    lines(c(.6, .6, 0), c(0, .6, .6), lty="dashed")
-    text(.6, .6, expression(paste("The location ", 
-            group("(",list(x[i], y[i]),")"))), pos=3)
-    points(.6, .6, pch=16)
-    axis(1, at=.6, "")
-    mtext(expression(x[i]), side=1, at=.6, line=.7)
-    axis(2, at=.6, "")
-    mtext(expression(y[i]), side=2, at=.6, line=.7)
-        
-```
-
-
-
-### Tables
-
-Here is an example of the rockchalk packages model comparison table
-
-```{r, warning = FALSE, error = FALSE, message= FALSE,include=FALSE}
-library(rockchalk)
-   set.seed(2134234)
-   dat <- data.frame(x1 = rnorm(100), x2 = rnorm(100))
-   dat$y1 <- 30 + 5 * rnorm(100) + 3 * dat$x1 + 4 * dat$x2
-   dat$y2 <- rnorm(100) + 5 * dat$x2
-   m1 <- lm(y1 ~ x1, data = dat)
-   m2 <- lm(y1 ~ x2, data = dat)
-   m3 <- lm(y1 ~ x1 + x2, data = dat)
-   gm1 <- glm(y1 ~ x1, family = Gamma, data = dat)
-
-or1 <- outreg(list("Amod" = m1, "Bmod" = m2, "Gmod" = m3),
-title = "My Three Linear Regressions", float = FALSE, type = "html",
-browse = FALSE)
-or1 <- gsub("&nbsp;"," ", or1)
-or1 <- gsub("^\\ *", "", or1)
-or1 <- paste(or1, collapse = "")
-or1 <- gsub("\\ \\ \\ \\ \\ \\ ", " ", or1)
-or1 <- gsub("\\ \\ \\ ", " ", or1)
-```
-
-```{r,results="asis"}
-cat(or1)
-```
-
-We have settled on pander as a great table producing package which offers flexability and functionality.
-
-```{r, results="asis"}
-library(pander)    
-sum<- summary(m1)
-pander(sum$coefficients)
+anchors, however. Suppose we want the reader to be able to click
+a link that goes to a figure that we have presented previously. 
+We go that that figure and insert HTML code along these lines: 
 
 ```
+<a name="specialfig"></a>
+```
 
-```{r, results="asis"}
-library(psych)
-pander(describe(dat))
+When we want to write something like <a href="#specialfig">click here
+to see the special figure</a>", the HTML markup is
+
+```
+<a href="#specialfig">click here to see the special figure</a>
 ```
 
 
