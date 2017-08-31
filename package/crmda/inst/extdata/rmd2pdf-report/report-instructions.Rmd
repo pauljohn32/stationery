@@ -37,153 +37,82 @@ options(width = 70)
 
 # Nuts and Bolts
 
-## DO NOT change the top part.
+## Minor header edits only
 
-Leave the "output" section, font size, and that LaTeX stuff
+The header has a place to insert a title, subtitle, email
+addresses. Do not change the `pdf_document` settings unless you want
+to get serious.
+
+## To compile this document
+
+To compile, either start R and use the function `rmd2pdf` or use the
+shell script that is in the same directory as the `Rmd` file.
+
+Compiling the document will also produce an R file that is a "tangled"
+version of the code chunks in the document.
+
+## Document customization: essentials
+
+The function `rmd2pdf` (same as the script) supplies settings,
+including a \LaTeX template called "crmda-boilerplate.tex".  That
+boilerplate is, by default, found in the package itself, NOT in the
+theme folder that is provided with this document.  If you do
+want to edit the theme boilerplate, then it is necessary to respecify
+the document header.  If you edit theme/crdma-boilerplate.tex, then
+insert this in the header, within the pdf_document section:
 
 ```
-output: 
-  pdf_document:
-    keep_tex: true
-    fig_caption: true
-    latex_engine: pdflatex
-    template: crmda-boilerplate.tex
-    pandoc_args: [
-      "--listings"
-    ]
-fontsize: 11pt
-tables: true
+template: theme/crmda-boilerplate.tex
+```
+
+In addition, if you insert \LaTeX features that require packages
+that are not currently in the crmda-boilerplate.tex, then those
+packages can be inserted into the preamble by YAML header markup like
+so:
+
+```
 preamble:
-- \usepackage{xcolor}
-- \usepackage{lipsum}    
+-  \usepackage{xcolor}
+-  \usepackage{amsmath}
+-  \usepackage{amssymb}
+-  \usepackage{fancybox}
 ```
 
-This is pretty standard and you shouldn't change it. Some changes might
-be needed if you *ADD* LaTeX preamble statements, but don't delete
-the onese we have.
+That example has the package `amssymb` because some non-standard math
+symbols were needed.
 
-## DO please change Title, subtitle, your name
+# For math, much \LaTeX Syntax is allowed
 
-```
-title: "My Fancy Rmd to PDF Document"
-subtitle: "Made by yours truly!"
-```
-Include a title, a subtitle.
+This is explained in the `crmda` package vignette `Rmarkdown`.
 
-```
-author:
-- name: Paul Johnson
-  affiliation: Center for Research Methods and Data Analysis
-  description: Ze Director
-  email: crmda@ku.edu
-```
-
-Someone's got to get credit for the wonderful report, right? If you're a graduate student, you can put that right in the description line. If you are not the CRMDA, then you might want to change the email line.
-
-
-# LaTeX Syntax is allowed
-
-## Equations
-
-```
-\[
-\Sigma_{gt}=\Lambda_{gt}\Psi_{gt}\Lambda'_{gt}+\Theta_{gt}
-\]
-```
-
-produces:
+Use `\[` and `\[` for display equations:
 
 \[
 \Sigma_{gt}=\Lambda_{gt}\Psi_{gt}\Lambda'_{gt}+\Theta_{gt}
 \]
 
+Note that the preamble 
+
+# `R` code chunks
+
+As explained in the `crmda` vignette `code_chunks`, many 
+options are avaiable for code chunks.
+
+# Required footer
+
+Reports do not have the R session replication information, generally 
+speaking.  However, compiling the document will produce a
+record-keeping file in which the session information is saved. This
+will be in the current working directory.
+
+<!-- ```{r session, include=F} -->
+<!-- zz <- file("report-instructions-sessionInfo.Rout", open = "wt") -->
+<!-- sink(zz) -->
+<!-- sessionInfo() -->
+<!-- sink() -->
+<!-- ``` -->
+
+```{r session, include=F}
+zz <- "report-instructions-sessionInfo.Rout"
+capture.output(sessionInfo(), file = zz)
 ```
-\[
-f(y|N,p) = \frac{N!}{y!(N-y)!}\cdot p^y \cdot (1-p)^{N-y} = {{N}\choose{y}} \cdot p^y \cdot (1-p)^{N-y}
-\]
-```
-
-produces:
-
-\[
-f(y|N,p) = \frac{N!}{y!(N-y)!}\cdot p^y \cdot (1-p)^{N-y} = {{N}\choose{y}} \cdot p^y \cdot (1-p)^{N-y}
-\]
-
-```
-$\hat{y}=\beta_{0}+\beta_{2}x_{i}+\beta_{3}+x_{j}+\varepsilon_{ij}$
-```
-
-produces:
-
-$\hat{y}=\beta_{0}+\beta_{2}x_{i}+\beta_{3}+x_{j}+\varepsilon_{ij}$
-
-## ```R``` code 
-
-```{r ex-1, results='asis', echo=TRUE}
-## This can be changed in the .tex preamble under lstset
-set.seed(1234)
-x <- rnorm(100, 0, 1)
-y <- rnorm(100, 0, 1)
-plot(x, y)
-knitr::kable(head(data.frame(x, y)))
-z <- "A Character String"
-```
-
-```{r, results='asis',message=F}
-library(xtable)
-print(xtable(head(data.frame(x,y))), comment=FALSE)
-```
-
-```{r, include=FALSE}
-xtbout <- xtable(head(data.frame(x,y)))
-print(xtbout, file = file.path(tmpdir, "xtabl.tex"),
-      type = "latex", include.rownames = FALSE)
-```
-
-```{r, include=FALSE}
-print(xtbout, file = file.path(tmpdir, "xtabl.html"),
-      type = "html", include.rownames = FALSE)
-```	
-
-```{r}
-library(rockchalk)
-set.seed(2134234)
-dat <- data.frame(x1 = rnorm(100), x2 = rnorm(100))
-dat$y1 <- 30 + 5 * rnorm(100) + 3 * dat$x1 + 4 * dat$x2
-dat$y2 <- rnorm(100) + 5 * dat$x2
-m1 <- lm(y1 ~ x1, data = dat)
-m2 <- lm(y1 ~ x2, data = dat)
-m3 <- lm(y1 ~ x1 + x2, data = dat)
-gm1 <- glm(y1 ~ x1, family = Gamma, data = dat)
-```
-
-```{r}
-summary(gm1)
-```
-
-
-```{r, results="asis"}
-outreg(list("Whichever" = m1, "Whatever" = m2),
-       title = "Still have showAIC argument, as in previous versions",
-       showAIC = TRUE, float = TRUE)   
-```     
-
-```{r, include=FALSE}
-  o1 <- outreg(list("Whichever" = m1, "Whatever" = m2),
-            showAIC = TRUE, float=FALSE)
-  cat(o1, file = file.path(tmpdir, "outreg1.tex"))
-```
-
-\begin{center}
-\input{"tmpout/outreg1.tex"}
-\end{center}
-
-Here's the question: Is this report stationary better than what we
-had? 
-
-Lets get a team vote.
-
-By the way, in case you wanted to see a giant copy of the logo, lets
-test the ability to insert a PDF graphic:
-
-\includegraphics[width=4in]{"theme/CRMDA_logo"}
