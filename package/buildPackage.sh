@@ -24,7 +24,7 @@ cd ../..
 R --vanilla -f runRoxygen2.R
 
 
-R CMD build ${PACKAGE}.gitex --resave-data
+R CMD build ${PACKAGE}.gitex --resave-data --no-build-vignettes
 
 
 read -p "Run check: OK? (y or n)" result

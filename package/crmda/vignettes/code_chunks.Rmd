@@ -16,6 +16,7 @@ output:
         --listings
     ]
     template: theme/report-boilerplate.tex
+fontsize: 12pt
 preamble:
 -  \usepackage{xcolor}
 -  \usepackage{amsmath}
@@ -23,13 +24,20 @@ preamble:
 -  \usepackage{fancybox}
 -  \usepackage{calc}
 -  \usepackage{subfig}
-tables: yes
+addr1a: 1425 Jayhawk Blvd
+addr1b: Watson Library, Suite 470
+addr1c: Lawrence, KS 66045-7594
+addr2a: "Phone: 785-864-3353"
+addr2b: "Web: http://crmda.ku.edu"
+addr2c: "Email: crmda@ku.edu"
+logo: theme/CRMDAlogo.pdf
 keywords: guides, report, pandoc, sweave, knitr
 vignette: >
     %\VignetteIndexEntry{code_chunks}
     %\VignetteEngine{knitr::rmarkdown}
 ---
-
+addr1: 1425 Jayhawk Blvd.\\470 Watson Library\\ Lawrence, KS 66045-7594
+addr2: Phone: 785-864-3353\\ Website: crmda.ku.edu\\ Email: crmda@ku.edu
 
 ```{r setup, include=FALSE}
 ##This Invisible Chunk is required in all CRMDA documents
@@ -41,19 +49,39 @@ options(width = 70)
 ```
 
 \begin{abstract}
-This is about code chunks and interacting with statistical software.
+This is about code chunks and interacting with statistical software
+via a document.
 \end{abstract}
 
 # Introduction: Terminology
 
-> A code chunk is a runable piece of R code. Producing the document
+> A code chunk is a runable piece of R code. Re-producing the document
 > will re-run calculations.
 
-The CRMDA document family, provided by the `crmda` package for R (so
-far includes):
+Code chunk technology is beneficial because the risk of mismatch 
+between the commentary in a paper and the results being discussed
+is reduced.
+
+The document family offered by the `crmda` package for R a number of
+code-chunk worthy document templates. We can write in either
+`Rmarkdown` (file format: `Rmd`) or `noweb`/\LaTeX\ (file format:
+`Rnw`) to produce formal report documents or informal guides for
+educational presentations. There are two chunk management "engines"
+that can be used with `noweb`/\LaTeX\ documents, `Sweave` and `knitr`,
+while for `Rmarkdown` documents the only code chunk engine is `knitr`.
+The output format may be either HTML for Web pages or portable
+document format (PDF).
+
+As a result of the "mixing and matching" among document preparation
+formats, output formats, and processing technologies, we have a fairly
+large family of document types among which to choose. We refer to the
+in and output formats by the a shorthand, "input2output", as in
+"rmd2html" to mean an `Rmd` document that will end up as a Web page.
+The formats that we are preparing at this time are:
 
 1. Guides
     + rmd2html-guide
+    + rmd2pdf-guide
     + rnw2pdf-guide-knit
     + rnw2pdf-guide-sweave
 2. Reports 
@@ -61,10 +89,10 @@ far includes):
     + rnw2pdf-report-knit
     + rnw2pdf-report-sweave
 
-Code chunks are not a required element in these documents, but the
-templates and the script processors are set up to allow them. 
+Some documents may not use the code chunks. But it is nice to know
+they are available when we need them. 
 
-When a document is prepared in `noweb`/\LaTeX or `Rmarkdown`, a
+When a document is prepared in `noweb`/\LaTeX\ or `Rmarkdown`, a
 document will be converted through several formats to arrive in either
 HTML or PDF. If everything "just works", then authors might not worry
 too much about success at each individual stage. In my experience,
@@ -353,7 +381,7 @@ document.
     `r ''````
     \end{lstlisting}
 
-    ```{r chunk65, fig=T, fig.height=3, fig.width=4, fig.show="hide", dev=c("pdf", "png")}
+    ```{r chunk65, fig=T, fig.height=3, fig.width=4, fig.show="hide", dev=c("pdf", "png"), echo=F}
     hist(x, main = "Another Histogram")
     ```
 
@@ -504,6 +532,24 @@ structure to do this work.
 par(par.orig)
 ```
 
+## Chunks with tables
+
+8. "Made to fit" analysis tables.
+
+If the backend is HTML, we probably need R functions that will
+write HTML code that can slide into our document *as is*. 
+If the backend is PDF, we probably need a table in
+\LaTeX\ markup.  I say *probably* because sometimes the
+compilation fails, even if we have the expected formats, because
+there are little wrinkles 
+
+```{r chunk80, echo=F, include=F}
+## alter par, after keeping copy
+par.orig <- par(no.readonly = FALSE)
+par(xaxs="i", yaxs="i", xpd=FALSE)
+```
+
+
 ## Other special features of `knitr`
 
 ### Chunk caching
@@ -547,55 +593,7 @@ PDF documents, but it can be done.
 
 <!-- INSERT EXAMPLE and COMMENTARY on Chunk Caching -->
 
-## Document-wide options
-
-
-## Presentable tables
-
-In a report document, it would be unusual to display a large chunk of
-R code or output. Instead, reports typically include stylized tables,
-graphs, and equations. 
-
-# More about Rmarkdown
-	
-## Use a text editor
-
-An R markdown file is suffixed ".Rmd", *not* ".rmd". It is a "raw
-text" file. Don't edit it with MS Word.  Instead, use a programmers
-file editor, such as Emacs, Notepad++, or an integrated development
-environment, such as Rstudio, to edit the file.
-
-Remember that the markdown philosophy is that a document should look
-reasonably nice, even before it is compiled.  That means authors
-should take care that their document has reasonably "shaped"
-paragraphs. Lines should generally be 80 characters or less.
-
-## Additional Material about Rmarkdown
-
-1. [*R Markdown Reference Guide*](https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf)
-2. [*R Markdown Cheatsheet*](https://www.rstudio.com/wp-content/uploads/2016/03/rmarkdown-cheatsheet-2.0.pdf)
-3. Yihui Xie. 2015. *Dynamic Documents with R and Knitr. 2ed* Boca
-Raton, Florida: Chapman Hall/CRC. http://yihui.name/knitr.  On July 7,
-2017, Xie made available a new book manuscript, [*bookdown: Authoring
-Books and Technical Documents with R Markdown*]
-(https://bookdown.org/yihui/bookdown).
-
-User-friendly overviews and tutorials on Rmarkdown usage are
-available.
-
-1. [*Markdown Basics*](http://rmarkdown.rstudio.com/authoring_basics.html). See
- also the Rmarkdown page at Rstudio corporation, http://rmarkdown.rstudio.com, which offers a  
-["Get Started" Tutorial](http://rmarkdown.rstudio.com/lesson-1.html).
-2. Cosma Shalizi, "Using R Markdown for Class Reports",
-   http://www.stat.cmu.edu/~cshalizi/rmarkdown.
-3. Wisconsin University Social Science
-   Computing Collaborative. "R for Researchers: R Markdown".  
-   http://www.ssc.wisc.edu/sscc/pubs/RFR/RFR_RMarkdown.html
-4. Karl Broman, "Knitr with R Markdown".  
-   http://kbroman.org/knitr_knutshell/pages/Rmarkdown.html
-	
-
-# Sweave equivalents
+# Sweave
 
 At the beginning of an Sweave document, we can specify document-wide
 paramters. Here is a standard piece that I use in `noweb`/\LaTeX\

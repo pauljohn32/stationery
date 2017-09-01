@@ -15,8 +15,12 @@ output:
     pandoc_args: [
         --listings
     ]
-    template: theme/crmda-boilerplate.tex
-    fontsize: 12pt
+    template: theme/report-boilerplate.tex
+fontsize: 12pt
+vignette: >
+    %\VignetteIndexEntry{crmda}
+    %\VignetteEngine{knitr::rmarkdown}
+    %\VignetteEncoding{UTF-8}
 preamble:
 -  \usepackage{xcolor}
 -  \usepackage{amsmath}
@@ -24,7 +28,6 @@ preamble:
 -  \usepackage{fancybox}
 -  \usepackage{calc}
 -  \usepackage{subfig}
-tables: yes
 keywords: guides, report, pandoc, sweave, knitr
 ---
 
