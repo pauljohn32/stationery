@@ -36,8 +36,7 @@ vignette: >
     %\VignetteIndexEntry{code_chunks}
     %\VignetteEngine{knitr::rmarkdown}
 ---
-addr1: 1425 Jayhawk Blvd.\\470 Watson Library\\ Lawrence, KS 66045-7594
-addr2: Phone: 785-864-3353\\ Website: crmda.ku.edu\\ Email: crmda@ku.edu
+
 
 ```{r setup, include=FALSE}
 ##This Invisible Chunk is required in all CRMDA documents

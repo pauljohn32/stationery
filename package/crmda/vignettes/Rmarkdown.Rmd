@@ -28,6 +28,13 @@ preamble:
 -  \usepackage{fancybox}
 -  \usepackage{calc}
 -  \usepackage{subfig}
+addr1a: 1425 Jayhawk Blvd
+addr1b: Watson Library, Suite 470
+addr1c: Lawrence, KS 66045-7594
+addr2a: "Phone: 785-864-3353"
+addr2b: "Web: http://crmda.ku.edu"
+addr2c: "Email: crmda@ku.edu"
+logo: theme/CRMDAlogo.pdf
 keywords: guides, report, pandoc, sweave, knitr
 ---
 
@@ -43,7 +50,7 @@ options(width = 70)
 
 \begin{abstract}
 This discusses the basics of Rmarkdown that are important for
-authors who want to formulate their stratedies for document
+authors who want to formulate their strategies for document
 preparation. In our center, we expect all authors who prepare
 documents with Rmarkdown should understand the issues.
 \end{abstract}
@@ -170,7 +177,7 @@ Rmarkdown syntax that works.
 
 In our experience, it is also *mostly* workable to include \LaTeX\
 code in `Rmarkdown` documents. Recall that documents in `Rmarkdown`
-are conveted from `Rmd` to `md` by the knitting process, and then into
+are converted from `Rmd` to `md` by the knitting process, and then into
 \LaTeX\ by `pandoc`, and then into PDF by a \LaTeX\ compiler
 (`pdflatex` or `xetex`). As a result, one can insert quite a bit of
 \LaTeX\ code and it will often be successfully post-processed in the
@@ -210,8 +217,8 @@ because they are understood to `pandoc`, which has the job to convert
 the `markdown` document into either \LaTeX\ or HTML.
 
 1. Character styling. 
-    *  *Italics* result from asterixes (`*italics*`)
-    *  **bold face** results from two asterixes (`**boldface**`).
+    *  *Italics* result from asterisks (`*italics*`)
+    *  **bold face** results from two asterisks (`**boldface**`).
     *  `computer code` should be a typewriter fixed width font produced by
     using two "backticks" ($^\backprime \textrm{computer code} ^\backprime$) 
 1. Section headers. 

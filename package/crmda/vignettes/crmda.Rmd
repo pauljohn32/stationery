@@ -28,7 +28,13 @@ preamble:
 -  \usepackage{fancybox}
 -  \usepackage{calc}
 -  \usepackage{subfig}
-tables: yes
+addr1a: 1425 Jayhawk Blvd
+addr1b: Watson Library, Suite 470
+addr1c: Lawrence, KS 66045-7594
+addr2a: "Phone: 785-864-3353"
+addr2b: "Web: http://crmda.ku.edu"
+addr2c: "Email: crmda@ku.edu"
+logo: theme/CRMDAlogo.pdf
 keywords: guides, report, pandoc, sweave, knitr
 ---
 
