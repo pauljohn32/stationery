@@ -15,10 +15,11 @@ cd ${PACKAGE}
 git ls-files . | tar cT - | tar -x -C "../${PACKAGE}.gitex"
 cd ..
 
-## cd ${PACKAGE}.gitex/vignettes
-#### perl -pi.bak  -e 's/bibliography\{0.*rockchalk\}/bibliography{rockchalk}/' rockchalk.Rnw
-## cp -f variablekey.pdf ../inst/doc
-## cd ../..
+cd ${PACKAGE}.gitex/vignettes
+cp -f crmda/crmda.pdf ../inst/doc
+cp -f Rmarkdown/Rmarkdown.pdf ../inst/doc
+cp -f code_chunks/code_chunks.pdf ../inst/doc
+cd ../..
 
 R --vanilla -f runRoxygen2.R
 
