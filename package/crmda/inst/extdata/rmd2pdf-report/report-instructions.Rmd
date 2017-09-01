@@ -4,7 +4,7 @@ output:
     keep_tex: true
     fig_caption: true
     latex_engine: pdflatex
-    template: theme/crmda-boilerplate.tex
+    template: theme/report-boilerplate.tex
     pandoc_args: [
       "--listings"
     ]
@@ -54,19 +54,19 @@ version of the code chunks in the document.
 ## Document customization: essentials
 
 The function `rmd2pdf` (same as the script) supplies settings,
-including a \LaTeX template called "crmda-boilerplate.tex".  That
+including a \LaTeX template called "report-boilerplate.tex".  That
 boilerplate is, by default, found in the package itself, NOT in the
 theme folder that is provided with this document.  If you do
 want to edit the theme boilerplate, then it is necessary to respecify
-the document header.  If you edit theme/crdma-boilerplate.tex, then
+the document header.  If you edit theme/report-boilerplate.tex, then
 insert this in the header, within the pdf_document section:
 
 ```
-template: theme/crmda-boilerplate.tex
+template: theme/report-boilerplate.tex
 ```
 
 In addition, if you insert \LaTeX features that require packages
-that are not currently in the crmda-boilerplate.tex, then those
+that are not currently in the report-boilerplate.tex, then those
 packages can be inserted into the preamble by YAML header markup like
 so:
 >>>>>>> zr_branch

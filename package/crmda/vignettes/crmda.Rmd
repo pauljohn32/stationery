@@ -5,18 +5,22 @@ author:
   description: Director
   email: pauljohn@ku.edu
   name: Paul Johnson
+fontsize: 12pt
 output:
   pdf_document:
     fig_caption: true
-    keep_tex: false
+    keep_tex: true
     latex_engine: pdflatex
     highlight: haddock
     citation_package: natbib
     pandoc_args: [
         --listings
     ]
-    template: theme/crmda-boilerplate.tex
-    fontsize: 12pt
+    template: theme/report-boilerplate.tex
+vignette: >
+    %\VignetteIndexEntry{crmda}
+    %\VignetteEngine{knitr::rmarkdown}
+    %\VignetteEncoding{UTF-8}
 preamble:
 -  \usepackage{xcolor}
 -  \usepackage{amsmath}

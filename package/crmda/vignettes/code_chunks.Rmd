@@ -15,8 +15,7 @@ output:
     pandoc_args: [
         --listings
     ]
-    template: theme/crmda-boilerplate.tex
-    fontsize: 12pt
+    template: theme/report-boilerplate.tex
 preamble:
 -  \usepackage{xcolor}
 -  \usepackage{amsmath}
@@ -26,6 +25,9 @@ preamble:
 -  \usepackage{subfig}
 tables: yes
 keywords: guides, report, pandoc, sweave, knitr
+vignette: >
+    %\VignetteIndexEntry{code_chunks}
+    %\VignetteEngine{knitr::rmarkdown}
 ---
 
 
@@ -319,12 +321,12 @@ document.
     B. For HTML output, the best we can do is save a graph, but does not allow it to be displayed immediately. 
  
     \begin{lstlisting}
-    `r ''````{r chunk65, fig=T, fig.height=3, fig.width=4, fig.show="hide", dev=c('png','pdf')}
+    `r ''````{r chunk65, fig=T, fig.height=3, fig.width=4, fig.show="hide", dev=c("pdf", "png")}
     hist(x, main = "Another Histogram")
     `r ''````
     \end{lstlisting}
 
-    ```{r chunk65, fig=T, fig.height=3, fig.width=4, fig.show="hide", dev=c('png','pdf')}
+    ```{r chunk65, fig=T, fig.height=3, fig.width=4, fig.show="hide", dev=c("pdf", "png")}
     hist(x, main = "Another Histogram")
     ```
 
@@ -438,7 +440,7 @@ keep a snapshot of each separate image in the creation of this figure.
 `r ''````
 \end{lstlisting}
 
-```{r chunk76, ref.label='chunk71', echo=F, fig=T, include=F, fig.keep="all", collapse=T, fig.width=4, fig.height=4, dev=c('png','pdf')}
+```{r chunk76, ref.label='chunk71', echo=F, fig=T, include=F, fig.keep="all", collapse=T, fig.width=4, fig.height=4, dev=c('pdf')}
 ```
 
 A quick check of the tmpout directory shows that this code created several

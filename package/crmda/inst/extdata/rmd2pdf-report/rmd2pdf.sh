@@ -33,11 +33,11 @@ pwd=`pwd`
 ## It will be fed into the rmd2pdf function
 ## Our basic version: do not keep intermediate outputs
 defaults="toc=TRUE, output_dir=\"$pwd\", clean=TRUE, keep_tex=FALSE, quiet=TRUE"
-## If you don't want the default crmda-boilerplate theme,
+## If you don't want the default report-boilerplate theme,
 ## edit the one in the theme folder and change to
-## defaults="toc=TRUE, output_dir=\"$pwd\", clean=TRUE, keep_tex=FALSE, quiet=TRUE, template=\"theme/crmda-boilerplate.tex\""
+## defaults="toc=TRUE, output_dir=\"$pwd\", clean=TRUE, keep_tex=FALSE, quiet=TRUE, template=\"theme/report-boilerplate.tex\""
 ## If there is trouble compiling, change clean to FALSE, keep_tex to TRUE, and quiet to FALSE:
-## defaults="toc=TRUE, output_dir=\"$pwd\", clean=FALSE, keep_tex=TRUE, quiet=FALSE, template=\"theme/crmda-boilerplate.tex\""
+## defaults="toc=TRUE, output_dir=\"$pwd\", clean=FALSE, keep_tex=TRUE, quiet=FALSE, template=\"theme/report-boilerplate.tex\""
 
 
 ## Retrieve the number of arguments

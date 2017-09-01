@@ -10,7 +10,6 @@
 \usepackage{graphicx}
 \usepackage{setspace}
 \usepackage{multicol}
-\usepackage{graphicx}
 \usepackage{xcolor}
 \usepackage[yyyymmdd,hhmmss]{datetime}
 \usepackage{lastpage}
@@ -33,12 +32,11 @@ $for(preamble)$
 $preamble$
 $endfor$
 
-$if(tables)$
-\usepackage{longtable}
 \usepackage{booktabs}
+\usepackage{dcolumn}
+
 \newcommand{\PreserveBackslash}[1]{\let\temp=\\#1\let\\=\temp}
 \let\PBS=\PreserveBackslash
-$endif$
 
 \usepackage[includehead,includefoot]{geometry}
 \geometry{
@@ -51,8 +49,8 @@ headsep=0pt,
 marginparwidth=0pt,
 footskip=1.5\baselineskip,
 }
-\usepackage{fancyhdr}
 
+\usepackage{fancyhdr}
 \lhead{}
 \chead{}
 \rhead{}
@@ -74,9 +72,7 @@ footskip=1.5\baselineskip,
 }
 
 \pagestyle{fancy}
-
-
-
+\thispagestyle{firststyle}
 
 %graphics and such inside floats are centered by default
 \renewenvironment{figure}[1][]{%
@@ -97,25 +93,17 @@ footskip=1.5\baselineskip,
  }%
 
  \centering
-%  \setlength{\@tempdima}{\abovecaptionskip}%
-%  \setlength{\abovecaptionskip}{\belowcaptionskip}%
-% \setlength{\belowcaptionskip}{\@tempdima}%
 }{%
  \end@float
 }
 
-\thispagestyle{firststyle}
 
-\usepackage{dcolumn}
-\usepackage{booktabs}
-\usepackage{multicol}
-
+%% Eliminate reliance on Sweavel or Sweave
 %% \usepackage{Sweavel}
 %% \usepackage[noae]{Sweave}
-\usepackage{graphicx}
 
 \usepackage{listings}
-\usepackage{upquote,fancyvrb,relsize,ae}
+\usepackage{upquote, fancyvrb, relsize, ae}
 
 %%\lstset{tabsize=2, breaklines=true,style=Rstyle}
 \definecolor{darkgreen}{RGB}{0,100,0}
