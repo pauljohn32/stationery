@@ -21,6 +21,7 @@ output:
     toc: true
     toc_depth: 3
     highlight: haddock
+    css: "../theme/kutils.css"
 ---
 
 ```{r setup, include=FALSE}
@@ -71,8 +72,9 @@ Info in second tab
 
 ## Chunks
 
-```{r myFirstPlot, dev=c('png','pdf'), fig.keep='all'}
-hist(rnorm(500))
+```{r myFirstPlot, dev=c('png','pdf')}
+x <- rnorm(500)
+hist(x)
 ```
 ```
 

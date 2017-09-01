@@ -92,7 +92,6 @@ rmd2html <- function(fn = NULL, wd = NULL, verbose = FALSE, ...) {
         render_args <- list(input = x, output_format = htmldoc, quiet = !verbose,
                             envir = globalenv())
         render_argz <- modifyList(render_args, dots_for_render)
-        browser()
         knitr::purl(fn)
         if(verbose) {print(paste("dots_for_render"));  lapply(dots_for_render, print)}
         do.call(rmarkdown::render, render_argz)
@@ -141,16 +140,16 @@ rmd2html <- function(fn = NULL, wd = NULL, verbose = FALSE, ...) {
 ##' @export
 ##' @examples
 ##' ## put some file name in
-##' fp <- system.file("extdata/rmd2pdf-guide", "guide-template.Rmd", package = "crmda")
-##' tdir <- tempdir()
-##' file.copy(fp, to = tdir, copy.mode = TRUE, copy.date = TRUE)
-##' wd.orig <- getwd()
-##' setwd(tdir)
-##' of1 <- rmd2pdf(fp, output_dir = getwd())
+##' ## fp <- system.file("extdata/rmd2pdf-guide", "guide-template.Rmd", package = "crmda")
+##' ## tdir <- tempdir()
+##' ## file.copy(fp, to = tdir, copy.mode = TRUE, copy.date = TRUE)
+##' ## wd.orig <- getwd()
+##' ## setwd(tdir)
+##' ## of1 <- rmd2pdf(fp, output_dir = getwd())
 ##' ## if(interactive()) browseURL(of1[1])
-##' of2 <- rmd2pdf(fp, toc = FALSE, output_dir = getwd())
+##' ## of2 <- rmd2pdf(fp, toc = FALSE, output_dir = getwd())
 ##' ## if(interactive()) browseURL(of2[1])
-##' setwd(wd.orig)
+##' ## setwd(wd.orig)
 rmd2pdf <- function(fn = NULL, wd = NULL, verbose = FALSE, ...) {
     if (!is.null(wd)){
         wd.orig <- getwd()
@@ -236,12 +235,13 @@ rmd2pdf <- function(fn = NULL, wd = NULL, verbose = FALSE, ...) {
 ##' wdir <- file.path(tmpdir, basename(fdir))
 ##' dir.create(wdir, recursive = TRUE)
 ##' file.copy(from = fdir, to = tmpdir, recursive = TRUE)
-##' rnw2pdf("guide-template.lyx", wd = wdir, engine = "Sweave")
+##' rnw2pdf("guide-sweave-template.lyx", wd = wdir, engine = "Sweave")
 ##' tmpdir <- paste0(tmpdir, "-2")
 ##' wdir <- file.path(tmpdir, basename(fdir))
 ##' dir.create(wdir, recursive = TRUE)
 ##' file.copy(from = fdir, to = tmpdir, recursive = TRUE)
-##' rnw2pdf("guide-template.Rnw", wd = wdir, engine = "Sweave")
+##' rnw2pdf("guide-sweave-template.Rnw", wd = wdir, engine = "Sweave")
+##' list.files()
 ##' setwd(wd.orig)
 rnw2pdf <- function(fn = NULL, wd = NULL, engine = "knitr", verbose = FALSE,
                     envir = parent.frame(), encoding = getOption("encoding")) {
