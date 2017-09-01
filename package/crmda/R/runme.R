@@ -181,7 +181,7 @@ rmd2pdf <- function(fn = NULL, wd = NULL, verbose = FALSE, ...) {
     dots_for_render <- dots[formals_render[formals_render %in% names(dots)]]
        
     pdf_args <- list(highlight="haddock",
-                     template = system.file("extdata/rmd2pdf-report/theme", "crmda-boilerplate.tex", package = "crmda"),
+                     template = system.file("extdata/rmd2pdf-report/theme", "report-boilerplate.tex", package = "crmda"),
                      pandoc_args="--listings")
     pdf_argz <- modifyList(pdf_args, dots_for_pdf_document)
     if(verbose) {print(paste("dots_for_pdf")); lapply(pdf_argz, print)}

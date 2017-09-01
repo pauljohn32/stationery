@@ -6,7 +6,7 @@
 \origin unavailable
 \textclass scrartcl
 \begin_preamble
-\usepackage{Sweavel}
+\usepackage{kureport}
 \usepackage[includehead,includefoot]{geometry}
 \geometry{
 lmargin=1in,
@@ -120,22 +120,22 @@ footskip=1.5\baselineskip,
 % Can specify \color[gray]{1} for white background or just \color{white}
 
 
-\lstdefinestyle{Rstyle}{fancyvrb=false,
-                        frame=none,
-                        escapechar=`,
-                        language=R,%
-                        basicstyle={\Rcolor\Sweavesize},%
-                        backgroundcolor=\Rbackground,%
-                        showstringspaces=false,%
-                        keywordstyle=\Rcolor,%
-                        commentstyle={\Rcommentcolor\ttfamily\itshape},%
-                        literate={<-}{{$\leftarrow$}}2{<<-}{{$\twoheadleftarrow$}}2{~}{{$\sim$}}1{<=}{{$\leq$}}2{>=}{{$\geq$}}2{^}{{$^{\scriptstyle\wedge}$}}1,%
-                        alsoother={$},%
-                        alsoletter={.<-},%
-                        otherkeywords={!,!=,~,$,*,\&,\%/\%,\%*\%,\%\%,<-,<<-,/},%
-                        escapeinside={(*}{*)}}%
-
-\lstset{tabsize=2, breaklines=true, style=Rstyle}
+%\lstdefinestyle{Rstyle}{fancyvrb=false,
+%                        frame=none,
+%                        escapechar=`,
+%                        language=R,%
+%                        basicstyle={\Rcolor\Sweavesize},%
+%                        backgroundcolor=\Rbackground,%
+%                        showstringspaces=false,%
+%                        keywordstyle=\Rcolor,%
+%                        commentstyle={\Rcommentcolor\ttfamily\itshape},%
+%                        literate={<-}{{$\leftarrow$}}2{<<-}{{$\twoheadleftarrow$}}2{~}{{$\sim$}}1{<=}{{$\leq$}}2{>=}{{$\geq$}}2{^}{{$^{\scriptstyle\wedge}$}}1,%
+%                        alsoother={$},%
+%                        alsoletter={.<-},%
+%                        otherkeywords={!,!=,~,$,*,\&,\%/\%,\%*\%,\%\%,<-,<<-,/},%
+%                        escapeinside={(*}{*)}}%
+%
+%\lstset{tabsize=2, breaklines=true, style=Rstyle}
 \end_preamble
 \use_default_options false
 \begin_modules
@@ -307,19 +307,19 @@ Title of this Document: A Subtitle that may Flow onto Additional Space if
 \begin_inset VSpace defskip
 \end_inset
 
-Your Name Here, Your Title, CRMDA
+Author One, Title, CRMDA
 \end_layout
 
 \begin_layout Plain Layout
-<your_email@ku.edu>
+<email@ku.edu>
 \end_layout
 
 \begin_layout Plain Layout
-Other author names here, Title, CRMDA
+Author Two, Title, CRMDA
 \end_layout
 
 \begin_layout Plain Layout
-<their_email@ku.edu>
+<email@ku.edu>
 \end_layout
 
 \begin_layout Plain Layout

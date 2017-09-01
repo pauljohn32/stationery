@@ -133,7 +133,7 @@ overwhelming.  When I'm producing the PDF for this document, the
 > --to latex --from
 > markdown+autolink_bare_uris+ascii_identifiers+tex_math_single_backslash
 > --table-of-contents --toc-depth 2 --template
-> theme/crmda-boilerplate.tex --highlight-style haddock --latex-engine 
+> theme/report-boilerplate.tex --highlight-style haddock --latex-engine 
 > pdflatex --listings
  
 These can be customized, both by revising the document header and by
@@ -294,7 +294,7 @@ asked to keep the \LaTeX\ intermediate files.  Hence, my `defaults` string has
 
 ```
 defaults="toc=TRUE, output_dir=\"$pwd\", clean=FALSE, keep_tex=TRUE, 
-		  quiet=FALSE, template=\"theme/crmda-boilerplate.tex\""
+		  quiet=FALSE, template=\"theme/report-boilerplate.tex\""
 ```
 
 Because I don't clean and keep the LaTeX intermediate file, the
@@ -320,7 +320,7 @@ by inserting the arguments into the function call:
 ```
 > rmd2html("guide-template.Rmd", toc=TRUE, output_dir="$pwd", 
           clean=FALSE, quiet=FALSE,
-		  template="theme/crmda-boilerplate.tex", 
+		  template="theme/report-boilerplate.tex", 
 		  keep_tex=TRUE)
 ```
 

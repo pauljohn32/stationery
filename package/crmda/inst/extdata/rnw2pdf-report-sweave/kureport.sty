@@ -21,7 +21,8 @@
 \RequirePackage[T1]{fontenc}
 \IfFileExists{upquote.sty}{\RequirePackage{upquote}}{}
 
-\providecommand{\Sweavesize}{\smaller}
+\providecommand{\Sweavesize}{\normalsize}
+\providecommand{\Soutsize}{\scriptsize}
 
 \providecommand{\Rcolor}{\color[rgb]{0, 0.5, 0.5}}
 \providecommand{\Routcolor}{\color[rgb]{0.461, 0.039, 0.102}}
@@ -49,7 +50,7 @@
 % keywordstyle={\bf\Rcolor}
 
 \lstdefinestyle{Routstyle}{fancyvrb=false,literate={~}{{$\sim$}}1{R^2}{{$R^{2}$}}2{^}{{$^{\scriptstyle\wedge}$}}1{R-squared}{{$R^{2}$}}2,%
- frame=single,framerule=0.2pt,framesep=1pt,basicstyle=\Routcolor\Sweavesize,%
+ frame=single,framerule=0.2pt,framesep=1pt,basicstyle=\Routcolor\Soutsize,%
  backgroundcolor=\Routbackground}
 
 \newenvironment{Schunk}{}{}

@@ -147,7 +147,33 @@ The options, which control if the code is displayed in the document,
 or if the output is included, and so forth, can be specified after the
 chunk's name.
 
-# Illustration of Chunk Features with R and `knitr`
+# Chunk options
+
+Whether we use knitr or Sweave to handle code chunks, the same chores
+must be handled. The key options available in both frameworks are
+
+1. echo: if TRUE, the R code will be displayed along with the output
+2. include: the chunk is evaluated, but neither the echo nor the
+   results are displayed
+3. eval: if FALSE, the chunk is not sent to the R session, but it is
+   checked for correctness of code.
+4. fig: if TRUE, the chunk creates a graphic to be saved (usually pdf
+   or png)
+5. results: indicate if results should be included, possibly
+   specifying details
+
+In the documentation for Sweave, the original chunk processor, the
+options are declared by short names `T` or `F`, while in the time
+since then the R Core generally suggests writing the full names `TRUE`
+and `FALSE`.  In documentation about `knitr`, authors are much more
+likely to write out the full names `TRUE` and `FALSE`. 
+
+`knitr` differs from `Sweave` in a few interesting ways that we will
+explore as we go. `knitr` has different codes for document-wide
+options. It also has a richer set of options to control functions to
+handle the document processing. One benefit of knitr is that it can be
+used to write about other kinds of programs. I've used it to write
+about the BASH shell, for example.
 
 Rather than going through all possible chunk arguments, we now survey
 (and give examples) of the chunk variations that we require in
@@ -161,7 +187,8 @@ chunks that:
 3. create graphics, which are automatically included in the document.
 4. create graphics (or other files) that are not automatically
    included in the document. Graphics are saved in image files that
-   can be inserted at a different part in the document
+   can be inserted at a different part in the document. I call this
+   the "save something for later" approach.
 5. import previous chunks for re-analysis.
 
 This document is prepared with `Rmarkdown`. The chunks are converted
@@ -567,6 +594,164 @@ available.
 4. Karl Broman, "Knitr with R Markdown".  
    http://kbroman.org/knitr_knutshell/pages/Rmarkdown.html
 	
+
+# Sweave equivalents
+
+At the beginning of an Sweave document, we can specify document-wide
+paramters. Here is a standard piece that I use in `noweb`/\LaTeX\
+documents.
+
+```
+\SweaveOpts{prefix.string=tmpout/t, split=TRUE, ae=FALSE, height=5, width=6}
+```
+
+Here are the highlights:
+
+1. The `prefix.string` parameter specifies that output files will be
+placed in a folder `tmpout` and the first letter will be `t`. The user
+can, of course, change the prefix to any letter. (Because each
+document can have a different prefix, it is possible then to have
+several document that output files into the same output folder.)
+
+2. `split=TRUE` asks Sweave to keep each chunks input and output
+results in a separate file. This is very handy, as will be explained
+below.
+
+3. Turn off the `ae` feature set. Those features were created long ago
+and they interfere with more modern packages. 
+
+After the R session is started, one of the first chunks will create
+the `tmpout` directory, the collector of output graphs and code chunks:
+
+```
+<<echo=F>>=
+if(!dir.exists("tmpout"))dir.create("tmpout", recursive = TRUE)
+@
+```
+
+Some R users may not have noticed, but all R sessions include a large
+array of default settings that control display of warnings, the
+command prompt, reporting of decimals, and so forth. The `options`
+function is used to control the line length of output and the display
+of the command prompt.  There is also an object called par, which sets
+defaults for plots.  I almost always have a chunk that adjusts both
+`par` and `opt`. 
+
+```
+<<Roptions, echo=F, include=F>>=
+opts.orig <- options()
+options(device = pdf)
+options(width=160, prompt=" ", continue="  ")
+options(useFancyQuotes = FALSE) 
+set.seed(12345)
+par.orig <- par(no.readonly=TRUE) 
+pjmar <- c(5.1, 5.1, 1.5, 2.1) 
+options(SweaveHooks=list(fig=function() par(mar=pjmar, ps=10)))
+pdf.options(onefile=FALSE, family="Times", pointsize=10)
+@
+```
+
+Save something for later
+
+Use `include=F` to save something for later. This avoids some output
+problems that result from the one-size-fits-all tendency of the
+"completely automatic" document builder.  In the usual ``weave''
+documentation, a user is told to type in a chunk and then the output
+plops into the document ``right there''.  Sometimes, it is nicer to
+create the chunk outputs and figures, and then insert them later. This
+gives the author much more control over the size and position of
+graphs (and it is why we turn off `ae`).  I learned this trick from
+Duncan Murdoch in the r-help email list.
+
+This chunk would create a figure named `tmpout/t-chunkfig.pdf`. The
+chunk will not be displayed in the document, but it will still 
+create a code chunk output file because `echo=T`.
+
+```
+<<chunkfig, include=F, echo=T, fig=T>>=
+## R code for figure here
+ @
+```
+
+A file named `tmpout/t-chunkfig.pdf` will be created in the `tmpout`
+directory. (Recall `t-` was designated as the prefix).  
+
+Now that the chunk was created, we are free to insert the graphic
+wherever we want in the usual \LaTeX\ way. For example, 
+
+```
+\includegraphics[width=5in]{tmpout/t-chunkfig}
+```
+
+Note `.pdf` is not incldued with the file name. 
+
+The echo result created a file named `tmpout/t-chunkfig.tex` and we
+insert that wherever we want with the \LaTeX\ input
+macro. Interestingly, we need to provide the full name, including
+`.tex`:
+
+```
+\input{tmpout/t-chunkfig.tex}
+```
+
+There are many R functions that can create \LaTeX\ markup. This is
+especially useful for tables. If a chunk's output is text with \LaTeX\
+markup, and we want that tex to go "into the document immediately,
+right here," then we add the chunk argument `results=tex`. However,
+it is also possible to use the "save something for later" approach.
+
+```
+<<chunktable, include=F, results=tex>>=
+# R code here
+@
+```
+
+That creates a file named `tmpout/t-chunktable.tex`, which
+I would insert into the document whenever I like with
+
+```
+\input{tmpout/t-chunktable.tex}
+```
+
+Why do this? Why separate chunk output creation from inclusion in a
+document? I can put the chunk in wherever I want, but more importantly
+I might that chunk in a different document. It is very convenient to
+come along later sort through the output in the tmpout folder. I might
+need to make a separate slide show document displaying the same tables
+and/or figures and this makes it easy to do that.
+
+The automatic ``stick this output in where the chunk is placed''
+approach works great with lecture notes and guides because these things
+are easy to update and re-run.
+
+In conclusion, the "automatic" "self-documenting" report is almost
+never exactly correct. It requires some "finger painting", if only to
+regain control of the position and size of figures. By saving the
+chunks, we give ourselves a degree of control.
+
+#Listings, not Verbatim
+
+The Sweave default system uses the \LaTeX\ Verbatim class to offer input
+and output chunks in the document. A better approach, pioneered by
+Frank Harrell (Vanderbilt) uses the \LaTeX\ class `listings`. Harrell
+prepared a replacement for R's Sweave.sty and called it
+Sweavel.sty. I've used that for many years.  Because we made a few
+minor customizations, that style file is now called `kureport.sty`.
+
+We are using the listings class to display input and output chunks
+in this document. In the preamble, we have some special settings that
+control the color of text, the background, and so forth. The listings
+class has an elaborate settings framework. 
+
+The following is a listings display. It is not Sweaved, it is simply a
+LaTeX listings environment colored by the settings in the preamble
+
+\begin{lstlisting}
+x <- rnorm(100)
+y <- rpois(100, lambda = 2)
+plot(y ~ x)
+\end{lstlisting}
+
 
 
 # Session Info

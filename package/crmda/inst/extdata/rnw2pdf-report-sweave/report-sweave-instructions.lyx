@@ -541,20 +541,32 @@ knitr
 \end_layout
 
 \begin_layout Section*
-This Document will Compile
+Sweave the chunks
 \end_layout
 
 \begin_layout Standard
-Use it as a 
-\begin_inset Quotes eld
-\end_inset
-
-crash test dummy
-\begin_inset Quotes erd
-\end_inset
-
-.
+The syntax for chunks in Sweave is like this.
  
+\end_layout
+
+\begin_layout LyX-Code
+<<chunkname, fig=T, eval=T, include=F, echo=T>>=
+\end_layout
+
+\begin_layout LyX-Code
+# R code here
+\end_layout
+
+\begin_layout LyX-Code
+@
+\end_layout
+
+\begin_layout LyX-Code
+
+\end_layout
+
+\begin_layout Section
+LyX user Caution
 \end_layout
 
 \begin_layout Standard
@@ -570,221 +582,8 @@ CAUTION
  Other than that, I don't know of any settings that are fatal.
 \end_layout
 
-\begin_layout Section*
-Knitting and Sweaving Terminology
-\end_layout
-
-\begin_layout Standard
-Some elements are still not well integrated.
- Going between 
-\begin_inset Quotes eld
-\end_inset
-
-raw
-\begin_inset Quotes erd
-\end_inset
-
- LaTeX, knitr, and Sweave is sometimes confusing.
-\end_layout
-
-\begin_layout Subsection*
-Code Chunks
-\end_layout
-
-\begin_layout Standard
-The syntax for 
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-knitr
-\end_layout
-
-\end_inset
-
- code chunks is only slightly different than the syntax for 
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-Sweave
-\end_layout
-
-\end_inset
-
- chunks.
- Sometimes the syntax can be identical.
- Many of the options are identical.
- 
-\end_layout
-
-\begin_layout Standard
-The LaTeX syntax for a code chunk in both cases is like so
-\end_layout
-
-\begin_layout LyX-Code
-<<chunkname, eval=TorF, include=TorF, echo=TorF>>=
-\end_layout
-
 \begin_layout LyX-Code
 
-\end_layout
-
-\begin_layout LyX-Code
-# R code here
-\end_layout
-
-\begin_layout LyX-Code
-\begin_inset Phantom HPhantom
-status open
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-
-@
-\end_layout
-
-\begin_layout LyX-Code
-
-\end_layout
-
-\begin_layout Standard
-where by 
-\begin_inset Quotes eld
-\end_inset
-
-
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-TorF
-\end_layout
-
-\end_inset
-
-
-\begin_inset Quotes erd
-\end_inset
-
- I mean you can choose either T or F.
- In the original documentation for Sweave, which was written more than one
- decade ago, the letters T and F are used, not the full words TRUE and FALSE.
- 
-\end_layout
-
-\begin_layout Standard
-These chunk arguments are allowed in either 
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-knitr
-\end_layout
-
-\end_inset
-
- or 
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-Sweave
-\end_layout
-
-\end_inset
-
-, they are the ones I use most often.
- Briefly:
-\end_layout
-
-\begin_layout Description
-1.
-\begin_inset space ~
-\end_inset
-
-echo: when the chunk is processed, the R code will be displayed along with
- the output
-\end_layout
-
-\begin_layout Description
-2.
-\begin_inset space ~
-\end_inset
-
-include: the chunk is evaluated, but neither the echo nor the results are
- displayed
-\end_layout
-
-\begin_layout Description
-3.
-\begin_inset space ~
-\end_inset
-
-eval: if F, the chunk is not sent to the R session, but it is checked for
- correctness of code at compile time.
-\end_layout
-
-\begin_layout Subsection*
-Where knitr differs from Sweave
-\end_layout
-
-\begin_layout Standard
-If a chunk produces non-text output, such as a figure, a LaTeX table, or
- other output (such as HTML), then the chunk will require some other arguments.
- This is a case where 
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-knitr
-\end_layout
-
-\end_inset
-
- chunks will differ from 
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-Sweave
-\end_layout
-
-\end_inset
-
- chunks.
-\end_layout
-
-\begin_layout Standard
-There is a knitr version of this document, it points out more of the details.
- knitr markup differs in several ways.
- 
-\end_layout
-
-\begin_layout Enumerate
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-knitr
-\end_layout
-
-\end_inset
-
- chunks offer a larger set of legal flags.
-\end_layout
-
-\begin_layout Enumerate
-knitr has different code for document-wide options.
- It also has a richer set of options to control functions to handle the
- document processing.
- One benefit of knitr is that it can be used to write about other kinds
- of programs.
- I've used it to write about the BASH shell, for example.
- 
 \end_layout
 
 \begin_layout Subsubsection*
