@@ -13,6 +13,8 @@
 ##'     used.
 ##' @param verbose The opposite of render(quiet = TRUE). Shows compile
 ##'     commentary and pandoc command. Can be informative!
+##' @param template An html template file, defaults as guide-boilerplate.html in this packge.
+##' @param css Cascading style sheet, defaults as kutils.css in this package
 ##' @param ... Arguments that will be passed to render and
 ##'     html_document. The defaults set within the
 ##'     \code{rmarkdown::render} and \code{rmarkdown::html_documents}
@@ -38,7 +40,7 @@
 ##' @export
 ##' @examples
 ##' ## put some file name in
-##' fp <- system.file("extdata/rmd2html-guide", "guide-template.Rmd", package = "crmda")
+##' fp <- system.file("rmarkdown/templates/rmd2html-guide/skeleton", "skeleton.Rmd", package = "crmda")
 ##' tdir <- tempdir()
 ##' file.copy(fp, to = tdir, copy.mode = TRUE, copy.date = TRUE)
 ##' wd.orig <- getwd()
@@ -48,7 +50,10 @@
 ##' of2 <- rmd2html(fp, toc = FALSE, output_dir = getwd())
 ##' if(interactive()) browseURL(of2[1])
 ##' setwd(wd.orig)
-rmd2html <- function(fn = NULL, wd = NULL, verbose = FALSE, ...) {
+rmd2html <- function(fn = NULL, wd = NULL, verbose = FALSE,
+                     template = system.file("rmarkdown/templates/rmd2html-guide/skeleton/theme", "guide-boilerplate.html", package = "crmda"),
+                     css = system.file("rmarkdown/templates/rmd2html-guide/skeleton/theme", "kutils.css", package = "crmda"),
+                     ...) {
     if (!is.null(wd)){
         wd.orig <- getwd()
         setwd(wd)
@@ -80,9 +85,11 @@ rmd2html <- function(fn = NULL, wd = NULL, verbose = FALSE, ...) {
 
    
     dots_for_render <- dots[formals_render[formals_render %in% names(dots)]]
-       
-    html_args <- list(template = system.file("extdata/theme", "guide-boilerplate.html", package = "crmda") , 
-                      css = system.file("extdata/theme", "kutils.css", package = "crmda"),
+    ## Suppose this is an rmd2html-guide document
+    ## crmda_template <- system.file("rmarkdown/templates/rmd2html-guide/skeleton/theme", "guide-boilerplate.html", package = "crmda")
+    ## crmda_css <- system.file("rmarkdown/templates/rmd2html-guide/skeleton/theme", "kutils.css", package = "crmda")
+    html_args <- list(template = template, 
+                      css = css,
                       toc = TRUE)
     html_argz <- modifyList(html_args, dots_for_html_document)
     if(verbose) {print(paste("dots_for_html")); lapply(html_argz, print)}
@@ -143,6 +150,10 @@ crmda_html_document <- function(template = "custom_template", ...) {
 ##'     used.
 ##' @param verbose The opposite of render(quiet = TRUE). Shows compile
 ##'     commentary and pandoc command. Can be informative!
+##' @param type either (default) "report" or "guide"
+##' @param template An LaTeX template file, defaults as
+##'     report-boilerplate.tex, or, if type = "guide" then
+##'     guide-boilerplate.tex in this packge.
 ##' @param ... Arguments that will be passed to \code{render} and
 ##'     \code{pdf_document}. Our defaults set a LaTeX template, toc =
 ##'     TRUE, and the pandoc_args includes use of the listings class.
@@ -165,7 +176,7 @@ crmda_html_document <- function(template = "custom_template", ...) {
 ##' @export
 ##' @examples
 ##' ## put some file name in
-##' ## fp <- system.file("extdata/rmd2pdf-guide", "guide-template.Rmd", package = "crmda")
+##' ## fp <- system.file("rmarkdown/templates/rmd2pdf-report", "skeleton.Rmd", package = "crmda")
 ##' ## tdir <- tempdir()
 ##' ## file.copy(fp, to = tdir, copy.mode = TRUE, copy.date = TRUE)
 ##' ## wd.orig <- getwd()
@@ -175,7 +186,9 @@ crmda_html_document <- function(template = "custom_template", ...) {
 ##' ## of2 <- rmd2pdf(fp, toc = FALSE, output_dir = getwd())
 ##' ## if(interactive()) browseURL(of2[1])
 ##' ## setwd(wd.orig)
-rmd2pdf <- function(fn = NULL, wd = NULL, verbose = FALSE, ...) {
+rmd2pdf <- function(fn = NULL, wd = NULL, verbose = FALSE, type = "report",
+                    template = NULL, package = "crmda",
+                    ...) {
     if (!is.null(wd)){
         wd.orig <- getwd()
         setwd(wd)
@@ -186,6 +199,17 @@ rmd2pdf <- function(fn = NULL, wd = NULL, verbose = FALSE, ...) {
         fn <- list.files(pattern="Rmd$")
     }    
 
+    if (is.null(template)){
+        if (type == "report"){
+            template <- system.file("rmarkdown/templates/rmd2pdf-report/skeleton/theme", "report-boilerplate.tex", package = "crmda")
+        } else if (type == "guide"){
+            template <-system.file("rmarkdown/templates/rmd2pdf-guide/skeleton/theme", "guide-boilerplate.tex", package = "crmda")
+        } else {
+            MESSG <- paste("No boilerplate defined for type", type)
+            stop(MESSG)
+        }
+    }
+    
     dots <- list(...)
 
     formals_pdf_document <- c("toc", "toc_depth",
@@ -201,13 +225,12 @@ rmd2pdf <- function(fn = NULL, wd = NULL, verbose = FALSE, ...) {
                         "intermediates_dir", "knit_root_dir",
                         "runtime", "clean", "params", "knit_meta",
                         "envir", "run_pandoc", "quiet", "encoding")
-
    
     dots_for_render <- dots[formals_render[formals_render %in% names(dots)]]
        
-    pdf_args <- list(highlight="haddock",
-                     template = system.file("extdata/rmd2pdf-report/theme", "report-boilerplate.tex", package = "crmda"),
-                     pandoc_args="--listings")
+    pdf_args <- list(highlight = "haddock",
+                     template = template,
+                     pandoc_args = "--listings")
     pdf_argz <- modifyList(pdf_args, dots_for_pdf_document)
     if(verbose) {print(paste("dots_for_pdf")); lapply(pdf_argz, print)}
     
@@ -256,16 +279,16 @@ rmd2pdf <- function(fn = NULL, wd = NULL, verbose = FALSE, ...) {
 ##' @examples
 ##' wd.orig <- getwd()
 ##' tmpdir <- tempdir()
-##' fdir <- system.file("extdata/rnw2pdf-guide-sweave", "", package = "crmda")
+##' fdir <- system.file("rmarkdown/templates/rnw2pdf-guide-sweave", "", package = "crmda")
 ##' wdir <- file.path(tmpdir, basename(fdir))
 ##' dir.create(wdir, recursive = TRUE)
 ##' file.copy(from = fdir, to = tmpdir, recursive = TRUE)
-##' rnw2pdf("guide-sweave-template.lyx", wd = wdir, engine = "Sweave")
+##' rnw2pdf("skeleton.lyx", wd = wdir, engine = "Sweave")
 ##' tmpdir <- paste0(tmpdir, "-2")
 ##' wdir <- file.path(tmpdir, basename(fdir))
 ##' dir.create(wdir, recursive = TRUE)
 ##' file.copy(from = fdir, to = tmpdir, recursive = TRUE)
-##' rnw2pdf("guide-sweave-template.Rnw", wd = wdir, engine = "Sweave")
+##' rnw2pdf("skeleton.Rnw", wd = wdir, engine = "Sweave")
 ##' list.files()
 ##' setwd(wd.orig)
 rnw2pdf <- function(fn = NULL, wd = NULL, engine = "knitr", verbose = FALSE,
@@ -336,6 +359,6 @@ rnw2pdf <- function(fn = NULL, wd = NULL, engine = "knitr", verbose = FALSE,
 ##' @author Paul Johnson <pauljohn@@ku.edu>
 ##' @importFrom rmarkdown html_document
 crmda_guide <- function(toc = FALSE, verbose = FALSE){
-    css <- system.file("extdata/theme/kutils.css", package = "crmda") 
+    css <- system.file("rmarkdown/templates/rmd2html-guide/skeleton/theme/kutils.css", package = "crmda") 
     rmarkdown::html_document(toc = toc, css = css, quiet = !verbose)
 }

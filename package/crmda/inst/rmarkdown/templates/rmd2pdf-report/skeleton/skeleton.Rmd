@@ -1,17 +1,4 @@
 ---
-output: 
-  pdf_document:
-    keep_tex: true
-    fig_caption: true
-    latex_engine: pdflatex
-    pandoc_args: [
-      "--listings"
-    ]
-fontsize: 11pt
-tables: true
-preamble:
-- \usepackage{xcolor}
-
 title: "Title of this Document"
 subtitle: "A Subtitle that may Flow onto Additional Space if Necessary"
 author:
@@ -23,6 +10,28 @@ author:
   affiliation: Institute
   description: Title
   email: email@ku.edu
+addr:
+    l1: 1425 Jayhawk Blvd
+    l2: Watson Library, Suite 470
+    l3: Lawrence, KS 66045-7594
+    r1: "Phone: 785-864-3353"
+    r2: "Web: http://crmda.ku.edu"
+    r3: "Email: crmda@ku.edu"
+logo: theme/CRMDAlogo.pdf
+output: 
+  pdf_document:
+    keep_tex: false
+    fig_caption: true
+    latex_engine: pdflatex
+    highlight: haddock
+    citation_package: natbib
+    pandoc_args: [
+      "--listings"
+    ]
+    template: theme/report-boilerplate.tex
+fontsize: 12pt
+header-includes:
+- \usepackage{xcolor}
 ---
 
 ```{r setup, include=FALSE}

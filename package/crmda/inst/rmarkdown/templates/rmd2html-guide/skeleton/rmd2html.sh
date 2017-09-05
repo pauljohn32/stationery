@@ -31,7 +31,7 @@ pwd=`pwd`
 
 ## The defaults string is R expression, inserted after
 ## the file name argument in rmd2html. 
-defaults="toc=TRUE, output_dir=\"$pwd\", template = \"guide-boilerplate.html\""
+defaults="toc=TRUE, output_dir=\"$pwd\", template = \"theme/guide-boilerplate.html\""
 ## Unless you specify otherwise, this will use the kutils.css file.
 
 ## Retrieve the number of arguments

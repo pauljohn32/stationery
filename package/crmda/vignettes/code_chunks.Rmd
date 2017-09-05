@@ -17,19 +17,20 @@ output:
     ]
     template: theme/report-boilerplate.tex
 fontsize: 12pt
-preamble:
+header-includes:
 -  \usepackage{xcolor}
 -  \usepackage{amsmath}
 -  \usepackage{amssymb}
 -  \usepackage{fancybox}
 -  \usepackage{calc}
 -  \usepackage{subfig}
-addr1a: 1425 Jayhawk Blvd
-addr1b: Watson Library, Suite 470
-addr1c: Lawrence, KS 66045-7594
-addr2a: "Phone: 785-864-3353"
-addr2b: "Web: http://crmda.ku.edu"
-addr2c: "Email: crmda@ku.edu"
+addr:
+    l1: 1425 Jayhawk Blvd
+    l2: Watson Library, Suite 470
+    l3: Lawrence, KS 66045-7594
+    r1: "Phone: 785-864-3353"
+    r2: "Web: http://crmda.ku.edu"
+    r3: "Email: crmda@ku.edu"
 logo: theme/CRMDAlogo.pdf
 keywords: guides, report, pandoc, sweave, knitr
 vignette: >

@@ -896,7 +896,7 @@ summary(dat)
 \end_layout
 
 \begin_layout Standard
-In the kutils package, we made a function cfaTable that is intended to help
+In the kutils package, we made a function semTable that is intended to help
  with nice looking.
  Usually, we want a bigger table in a floating element.
  Please see Table 
@@ -991,7 +991,7 @@ status open
 
 \begin_layout Plain Layout
 
-cfa1 <- cfaTable(output1, fit = "rmsea", standardized = TRUE, params = c("loadin
+cfa1 <- semTable(output1, fit = "rmsea", standardized = TRUE, params = c("loadin
 gs", "latentvariances"), type = "latex")
 \end_layout
 

@@ -369,7 +369,7 @@ status open
 \shape smallcaps
 \size giant
 \begin_inset Graphics
-	filename theme/CRMDA_logo.pdf
+	filename theme/CRMDAlogo.pdf
 	lyxscale 40
 	width 2in
 

@@ -3,26 +3,28 @@ title: "Template for Guide Documents"
 subtitle: "Subtitle"
 author:
  - name: Firstname1 Lastname1
-   affiliation: Center for Research Methods and Data Analysis, University of Kansas
+   affiliation: CRMDA, University of Kansas
    email: email1@ku.edu
  - name: Firstname2 Lastname2
-   affiliation: Center for Research Methods and Data Analysis, University of Kansas
+   affiliation: CRMDA, University of Kansas
    email: email2@ku.edu
- - name: "CRMDA Guide #40. Please visit [http://crmda.ku.edu/guides](http://crmda.ku.edu/guides) for updates."
- - name: "Tags: guides, tag1, tag2, please_leave_guides"
+ - name: "CRMDA Guide #XX. Please visit [http://crmda.ku.edu/guides](http://crmda.ku.edu/guides) for updates."
+tags: tag1, tag2
 
 abstract:
     Author, please REMEMBER TO INCLUDE AN ABSTRACT BEFORE FINALIZING THIS DOCUMENT!
 checked_by: "First Last"
 Note to Authors: please_dont_change_the_next 4 lines!
-date: "`r format(Sys.time(), '%Y %B %d')`"
+date: "`r format(Sys.time(), '%b. %e %Y')`"
 output:
-  my_html_document:
+  crmda::crmda_html_document:
     toc: true
     toc_depth: 3
     highlight: haddock
-    css: "../theme/kutils.css"
-    template: "guide-boilerplate.html"
+    css: "theme/kutils.css"
+    template: "theme/guide-boilerplate.html"
+logoleft: theme/jayhawk.png
+logoright: theme/CRMDAlogo.png
 ---
 
 ```{r setup, include=FALSE}

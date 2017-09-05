@@ -21,19 +21,20 @@ vignette: >
     %\VignetteIndexEntry{crmda}
     %\VignetteEngine{knitr::rmarkdown}
     %\VignetteEncoding{UTF-8}
-preamble:
+header-includes:
 -  \usepackage{xcolor}
 -  \usepackage{amsmath}
 -  \usepackage{amssymb}
 -  \usepackage{fancybox}
 -  \usepackage{calc}
 -  \usepackage{subfig}
-addr1a: 1425 Jayhawk Blvd
-addr1b: Watson Library, Suite 470
-addr1c: Lawrence, KS 66045-7594
-addr2a: "Phone: 785-864-3353"
-addr2b: "Web: http://crmda.ku.edu"
-addr2c: "Email: crmda@ku.edu"
+addr:
+    l1: 1425 Jayhawk Blvd
+    l2: Watson Library, Suite 470
+    l3: Lawrence, KS 66045-7594
+    r1: "Phone: 785-864-3353"
+    r2: "Web: http://crmda.ku.edu"
+    r3: "Email: crmda@ku.edu"
 logo: theme/CRMDAlogo.pdf
 keywords: guides, report, pandoc, sweave, knitr
 ---
@@ -68,7 +69,8 @@ parts of the document compilation process.
 # Document-wide options
 
 In the beginning of a markdown document, there is a header written in
-the YAML format (YAML = Yet Another Markup Language). 
+the YAML format (YAML, which originally meant *Yet Another Markup
+Language* but its developers now prefer *YAML Ain't Markup Language*). 
 
 The header for the document you are reading now in PDF is:
 
@@ -90,25 +92,36 @@ output:
     pandoc_args: [
         --listings
     ]
-    template: theme/crmda-boilerplate.tex
-    fontsize: 12pt
-preamble:
+    template: theme/report-boilerplate.tex
+fontsize: 12pt
+vignette: >
+    %\VignetteIndexEntry{crmda}
+    %\VignetteEngine{knitr::rmarkdown}
+    %\VignetteEncoding{UTF-8}
+header-includes:
 -  \usepackage{xcolor}
 -  \usepackage{amsmath}
 -  \usepackage{amssymb}
 -  \usepackage{fancybox}
 -  \usepackage{calc}
 -  \usepackage{subfig}
-tables: yes
-keywords: guides, report, pandoc, sweave, knitr
+addr:
+    l1: 1425 Jayhawk Blvd
+    l2: Watson Library, Suite 470
+    l3: Lawrence, KS 66045-7594
+    r1: "Phone: 785-864-3353"
+    r2: "Web: http://crmda.ku.edu"
+    r3: "Email: crmda@ku.edu"
+logo: theme/CRMDAlogo.pdf
+keywords: guides, report, pandoc, Rmarkdown, sweave, knitr
 ---
 ```
 
 What do we have there? Main sections that begin with keywords `title`,
-`author`, `output`, `preamble`, `tables`, and `keywords`. The output
+`author`, `output`, `header-includes`, and `keywords`. The output
 spection specifies `pdf_document`, which means that the `Rmarkdown`
 file will be converted from `Rmarkdown` to `markdown`, then into
-\LaTeX, then PDF.  The `preamble` section is relevant only to the
+\LaTeX, then PDF.  The `header-includes` section is relevant only to the
 \LaTeX stage of document preparation.
 
 #### Observations about YAML
@@ -195,7 +208,7 @@ features available to the compiler. These appear in the YAML header
 like so.
 
 ```
-preamble:
+header-includes:
 -  \usepackage{amsmath}
 ```
 
