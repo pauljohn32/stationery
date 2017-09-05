@@ -17,11 +17,12 @@ checked_by: "First Last"
 Note to Authors: please_dont_change_the_next 4 lines!
 date: "`r format(Sys.time(), '%Y %B %d')`"
 output:
-  html_document:
+  my_html_document:
     toc: true
     toc_depth: 3
     highlight: haddock
     css: "../theme/kutils.css"
+    template: "guide-boilerplate.html"
 ---
 
 ```{r setup, include=FALSE}

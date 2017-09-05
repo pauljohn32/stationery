@@ -1,7 +1,12 @@
+2017-09-05  Paul Johnson  <pauljohn@delllap-16>
+
+	* ../R/runme.R (crmda_html_document): wrapper function to make
+	custom html template work with MathJax. See function doc
+
 2017-08-08  Paul Johnson  <pauljohn@delllap-16>
 
 	* extdata/rmd2html-guide/rmd2html.sh: copy argument-handling
-	scheme from rmd2pdf-report 
+	scheme from rmd2pdf-report
 
 	* extdata/rmd2pdf-report/rmd2pdf.sh: overhaul function argument handling.
 

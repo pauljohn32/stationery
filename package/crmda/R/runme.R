@@ -81,12 +81,13 @@ rmd2html <- function(fn = NULL, wd = NULL, verbose = FALSE, ...) {
    
     dots_for_render <- dots[formals_render[formals_render %in% names(dots)]]
        
-    html_args <- list(css = system.file("extdata/theme", "kutils.css", package = "crmda"),
+    html_args <- list(template = system.file("extdata/theme", "guide-boilerplate.html", package = "crmda") , 
+                      css = system.file("extdata/theme", "kutils.css", package = "crmda"),
                       toc = TRUE)
     html_argz <- modifyList(html_args, dots_for_html_document)
     if(verbose) {print(paste("dots_for_html")); lapply(html_argz, print)}
     
-    htmldoc <- do.call(rmarkdown::html_document, html_argz)
+    htmldoc <- do.call(crmda::crmda_html_document, html_argz)
     
     res <- sapply(fn, function(x) {
         render_args <- list(input = x, output_format = htmldoc, quiet = !verbose,
@@ -100,6 +101,30 @@ rmd2html <- function(fn = NULL, wd = NULL, verbose = FALSE, ...) {
         setwd(wd.orig)
     }
     res
+}
+
+
+
+
+##' custom output_format object to make MathJax work with custom HTML template
+##'
+##' The \code{rmarkdown::html_document} fails to use MathJax if a custom HTML
+##' template is supplied. This is described here
+##' \url{https://github.com/rstudio/rmarkdown/issues/727}.  The workaround
+##' is to provide this wrapper
+##' @param template Name of file that has custom template
+##' @param ... Any arguments passed along to html_document in
+##'     rmarkdown
+##' @return html_document object with custom template
+##' @export
+##' @author Paul Johnson
+crmda_html_document <- function(template = "custom_template", ...) {
+  base_format <- rmarkdown::html_document(...)
+
+  template_arg <- which(base_format$pandoc$args == "--template") + 1L
+  base_format$pandoc$args[template_arg] <- template
+
+  base_format
 }
 
 
