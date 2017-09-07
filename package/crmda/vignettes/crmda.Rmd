@@ -5,7 +5,13 @@ author:
   description: Director
   email: pauljohn@ku.edu
   name: Paul Johnson
-fontsize: 12pt
+addr:
+    l1: 1425 Jayhawk Blvd
+    l2: Watson Library, Suite 470
+    l3: Lawrence, KS 66045-7594
+    r1: "Phone: 785-864-3353"
+    r2: "Web: http://crmda.ku.edu"
+    r3: "Email: crmda@ku.edu"
 output:
   pdf_document:
     fig_caption: true
@@ -16,7 +22,7 @@ output:
     pandoc_args: [
         --listings
     ]
-    template: theme/report-boilerplate.tex
+    template: theme/guide-boilerplate.tex
 vignette: >
     %\VignetteIndexEntry{crmda}
     %\VignetteEngine{knitr::rmarkdown}
@@ -28,14 +34,9 @@ header-includes:
 -  \usepackage{fancybox}
 -  \usepackage{calc}
 -  \usepackage{subfig}
-addr:
-    l1: 1425 Jayhawk Blvd
-    l2: Watson Library, Suite 470
-    l3: Lawrence, KS 66045-7594
-    r1: "Phone: 785-864-3353"
-    r2: "Web: http://crmda.ku.edu"
-    r3: "Email: crmda@ku.edu"
-logo: theme/CRMDAlogo.pdf
+logoleft: theme/jayhawk.pdf
+logoright: theme/CRMDAlogo.pdf
+fontsize: 12pt
 keywords: guides, report, pandoc, sweave, knitr
 ---
 

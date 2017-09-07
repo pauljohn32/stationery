@@ -1,3 +1,10 @@
+2017-09-07  Paul Johnson  <pauljohn@delllap-16>
+
+	* rmarkdown/templates/rmd2html-guide/skeleton/theme: Big policy
+	change. The original, working copies of styles, css, icons are
+	under vignettes/theme, and in the folders under
+	inst/rmarkdown/templates... we will have symbolic links
+
 2017-09-05  Paul Johnson  <pauljohn@delllap-16>
 
 	* ../R/runme.R (crmda_html_document): wrapper function to make

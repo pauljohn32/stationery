@@ -6,7 +6,10 @@
 \origin unavailable
 \textclass scrartcl
 \begin_preamble
-\usepackage{Sweavel}
+% Don't remove next commented line, its needed to fool Sweave
+%\usepackage{Sweave}
+\usepackage{kureport}
+
 \usepackage[includehead,includefoot]{geometry}
 \geometry{
 lmargin=1in,
@@ -24,22 +27,29 @@ footskip=1.5\baselineskip,
 \usepackage{graphicx}
 \usepackage{color}
 \usepackage[yyyymmdd,hhmmss]{datetime}
-\lstset{tabsize=2, breaklines=true, 
+
+% May be customized for this document
+\lstdefinestyle{custom}{
+  tabsize=2, 
+  breaklines=true, 
   breakatwhitespace=true,
-  %language=R,
   captionpos=b,
   frame=single,
   framerule=0.2pt,
   framesep=1pt,
   numbersep=5pt,
   showstringspaces=false,
-  basicstyle=\footnotesize,
+  basicstyle=\normalsize\ttfamily,%
+  columns=fixed%,
+  \lst@ifdisplaystyle\scriptsize\fi,%
   identifierstyle=,
   keywordstyle=\bfseries,
   commentstyle=\color{darkgreen},
   stringstyle=,
   backgroundcolor=\color[gray]{0.935}
 }
+
+
 \usepackage{fancyhdr}
 \usepackage{lastpage}
 \usepackage{babel}
@@ -100,42 +110,26 @@ footskip=1.5\baselineskip,
 \usepackage{multicol}
 \usepackage{graphicx}
 
+
+
 %% PJ 20161110
 %% I want to use listings in the document and I want nice/same as knitr.
 %% Does knitr provide all of these settings for other listing uses outside
 %% weaved part?
 \usepackage{fancyvrb}
 \fvset{listparameters={\setlength{\topsep}{0em}}}
-\usepackage{listings}
-\def\Sweavesize{\normalsize} 
-\def\Rcolor{\color{black}} 
-\def\Rbackground{\color[gray]{0.95}}
-\providecommand{\Rcolor}{\color[rgb]{0, 0.5, 0.5}}
+
+%\def\Sweavesize{\normalsize} 
+%\def\Rcolor{\color{black}} 
+%\def\Rbackground{\color[gray]{0.95}}
+%\providecommand{\Rcolor}{\color[rgb]{0, 0.5, 0.5}}
 %%\providecommand{\Routcolor}{\color[rgb]{0.461, 0.039, 0.102}}
-\providecommand{\Routcolor}{\color[rgb]{1.0, 0.0, 0.0}}
-\providecommand{\Rcommentcolor}{\color[rgb]{0.101, 0.043, 0.432}}
+%\providecommand{\Routcolor}{\color[rgb]{1.0, 0.0, 0.0}}
+%\providecommand{\Rcommentcolor}{\color[rgb]{0.101, 0.043, 0.432}}
 
-\providecommand{\Rbackground}{\color[gray]{0.95}}
-\providecommand{\Routbackground}{\color[gray]{0.80}}
+%\providecommand{\Rbackground}{\color[gray]{0.95}}
+%\providecommand{\Routbackground}{\color[gray]{0.80}}
 % Can specify \color[gray]{1} for white background or just \color{white}
-
-
-\lstdefinestyle{Rstyle}{fancyvrb=false,
-                        frame=none,
-                        escapechar=`,
-                        language=R,%
-                        basicstyle={\Rcolor\Sweavesize},%
-                        backgroundcolor=\Rbackground,%
-                        showstringspaces=false,%
-                        keywordstyle=\Rcolor,%
-                        commentstyle={\Rcommentcolor\ttfamily\itshape},%
-                        literate={<-}{{$\leftarrow$}}2{<<-}{{$\twoheadleftarrow$}}2{~}{{$\sim$}}1{<=}{{$\leq$}}2{>=}{{$\geq$}}2{^}{{$^{\scriptstyle\wedge}$}}1,%
-                        alsoother={$},%
-                        alsoletter={.<-},%
-                        otherkeywords={!,!=,~,$,*,\&,\%/\%,\%*\%,\%\%,<-,<<-,/},%
-                        escapeinside={(*}{*)}}%
-
-\lstset{tabsize=2, breaklines=true, style=Rstyle}
 \end_preamble
 \use_default_options false
 \begin_modules
@@ -288,7 +282,7 @@ Title of this Document: A Subtitle that may Flow onto Additional Space if
 
 \begin_layout Plain Layout
 \begin_inset Graphics
-	filename theme/CRMDA_logo.pdf
+	filename theme/CRMDAlogo.pdf
 	width 2in
 
 \end_inset
@@ -307,19 +301,11 @@ Title of this Document: A Subtitle that may Flow onto Additional Space if
 \begin_inset VSpace defskip
 \end_inset
 
-Your Name Here, Your Title, CRMDA
+Your Name Here, Your Title, CRMDA <your_email@ku.edu>
 \end_layout
 
 \begin_layout Plain Layout
-<your_email@ku.edu>
-\end_layout
-
-\begin_layout Plain Layout
-Other author names here, Title, CRMDA
-\end_layout
-
-\begin_layout Plain Layout
-<their_email@ku.edu>
+Other author names here, Title, CRMDA <their_email@ku.edu>
 \end_layout
 
 \begin_layout Plain Layout
@@ -648,28 +634,20 @@ tmpout
 If I make a figure, the chunk will look like this
 \end_layout
 
-\begin_layout LyX-Code
-\begin_inset ERT
+\begin_layout Standard
+\begin_inset listings
+lstparams "style=custom"
+inline false
 status open
 
 \begin_layout Plain Layout
 
-$<<$chunkfig, include=F, echo=F, fig=T$>>=$
+ <<chunkfig, eval=F, include=F, echo=F, fig=T>>=
 \end_layout
 
 \begin_layout Plain Layout
 
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-# R code for figure here
-\end_layout
-
-\begin_layout Plain Layout
-
+ # R code for figure here
 \end_layout
 
 \begin_layout Plain Layout
@@ -747,10 +725,22 @@ t-
  will write a LaTeX statement
 \end_layout
 
-\begin_layout LyX-Code
+\begin_layout Standard
+\begin_inset listings
+lstparams "style=custom"
+inline false
+status open
+
+\begin_layout Plain Layout
+
 
 \backslash
 includegraphics[width=5in]{tmpout/t-chunkfig}
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -778,33 +768,25 @@ t-chunkfig.pdf
 If the code makes a LaTeX table, I'll have this instead
 \end_layout
 
-\begin_layout LyX-Code
-\begin_inset ERT
+\begin_layout Standard
+\begin_inset listings
+lstparams "style=custom"
+inline false
 status open
 
 \begin_layout Plain Layout
 
-$<<$chunktable, include=F, results=tex$>>=$
+ <<chunktable, include=F, results=tex>>=
 \end_layout
 
 \begin_layout Plain Layout
 
+ # R code here
 \end_layout
 
 \begin_layout Plain Layout
 
-
-\backslash
-# R code here
-\end_layout
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\begin_layout Plain Layout
-
-@
+ @
 \end_layout
 
 \end_inset
@@ -822,16 +804,24 @@ tmpout/t-chunktable.tex
 \end_inset
 
 .
- 
+ Then put that into the document where you want with: 
 \end_layout
 
-\begin_layout LyX-Code
+\begin_layout Standard
+\begin_inset listings
+lstparams "style=custom"
+inline false
+status open
 
+\begin_layout Plain Layout
+
+ 
 \backslash
 input{tmpout/t-chunktable.tex}
 \end_layout
 
-\begin_layout LyX-Code
+\end_inset
+
 
 \end_layout
 
@@ -1843,7 +1833,7 @@ kutils
 status open
 
 \begin_layout Plain Layout
-cfaTable
+semTable
 \end_layout
 
 \end_inset
@@ -1922,7 +1912,7 @@ output1 <- cfa(HS.model, data = HolzingerSwineford1939, std.lv = TRUE)
 
 \begin_layout Plain Layout
 
-cfa1 <- cfaTable(output1, fit = "rmsea", standardized = TRUE, params = c("loadin
+cfa1 <- semTable(output1, fit = "rmsea", standardized = TRUE, params = c("loadin
 gs", "latentvariances"), type = "latex")
 \end_layout
 

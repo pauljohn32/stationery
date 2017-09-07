@@ -100,15 +100,17 @@ insert more \LaTeX\ functionality.
 As explained in the `crmda` vignette `code_chunks`, many 
 options are avaiable for code chunks.
 
-# Required footer
+# Session Info
 
-Reports do not have the R session replication information, generally 
+Reports do not include the R session replication information, generally 
 speaking.  However, compiling the document will produce a
 record-keeping file in which the session information is saved. This
 will be in the current working directory.
 
 ```{r session, include=F}
-zz <- "report-instructions-sessionInfo.Rout"
-capture.output(warnings(), file = zz)
+zz <- gsub("Rmd", "Rout", knitr::current_input())
 capture.output(sessionInfo(), file = zz, append = TRUE)
+if (!is.null(warnings())){
+    capture.output(warnings(), file = zz)
+}
 ```

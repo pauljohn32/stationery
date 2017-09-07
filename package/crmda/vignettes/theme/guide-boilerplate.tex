@@ -140,7 +140,9 @@ footskip=2.5\baselineskip,
   alsoother={$$},
   alsoletter={.<-},%
   otherkeywords={!,!=,~,$$,*,\&,\%/\%,\%*\%,\%\%,<-,<<-,/},
-  backgroundcolor=\Rbackground
+  backgroundcolor=\Rbackground,
+  numbers=left,
+  numberstyle={\tiny}
 }%
 
 \lstset{style=Rstylecrmda}
@@ -153,36 +155,60 @@ footskip=2.5\baselineskip,
 \usepackage{babel}
 \begin{document}
 
+\begin{tabular}{|>{\centering}p{1.3in}>{\raggedright}p{3.5in}>{\raggedleft}p{2in}|}
+\hline 
+\begin{minipage}[c]{1in}%
+  \begin{center}
+    $if(logoleft)$\includegraphics[width=1in]{$logoleft$}$endif$
+    \par
+  \end{center}%
+\end{minipage} & %
+\begin{minipage}[c]{3.5in}%
+  \begin{center}
+     \begin{minipage}[t]{1\columnwidth}%
+      \begin{center}
+        \bigskip
+        \textbf{\larger{}$title$$if(subtitle)$: $subtitle$$endif$}
+      \end{center}
+      \vspace{-15pt}
+      \rule[0ex]{1\linewidth}{1pt}%
+    \end{minipage}
+    \par\end{center}{\Huge \par}
 \begin{minipage}[t]{1\columnwidth}%
 \begin{center}
-\begin{tabular}[t]{>{\raggedright}p{4in}>{\centering}p{2.25in}}
-\hline 
-\medskip{}
-$if(title)$
-\textsc{\Large{}$title$$if(subtitle)$: $subtitle$$endif$}{\Large \par}
-$endif$
-
-\medskip{}  & \medskip{} $if(logo)$\includegraphics[width=2in]{$logo$}$endif$\tabularnewline
-\hline
-
-\multicolumn{2}{>{\raggedright}p{6in}}{\medskip{}
-$for(author)$$author.name$$if(author.description)$,
-              $author.description$$endif$$if(author.affiliation)$,
-              $author.affiliation$$endif$$if(author.email)$ <$author.email$>$endif$\\
+  $for(author)$\textbf{$author.name$}%
+  $if(author.description)$, $author.description$$endif$%
+  $if(author.affiliation)$, $author.affiliation$$endif$%
+  $if(author.email)$ <$author.email$>$endif$\\
+  \smallskip
 $endfor$
+\par\end{center}%
+\end{minipage}
+%\smallskip{}%
+\begin{flushleft}
+  $if(guidenum)$\textbf{Guide No}: $guidenum$.\\$endif$
+  $if(keywords)$\textbf{Keywords}: $keywords$.\\$endif$
+  $if(guideurl)$See $guideurl$ for updates.$endif$
+  \par\end{flushleft}%
+\smallskip
+\end{minipage} & %
+\begin{minipage}[c]{2in}%
+\begin{center}
+$if(logoright)$\includegraphics[width=1.5in]{$logoright$}$endif$
+\par\end{center}
+\end{minipage}
 
-
-\begin{singlespace}
-% \noindent 
-\raggedright{}\textbf{\today}
-\end{singlespace}
-}\tabularnewline
+\begin{minipage}[c]{2in}%
+  \begin{center}
+    \medskip
+    \today\par
+  \end{center}%
+\end{minipage}\tabularnewline
 \hline 
 \end{tabular}
-\par\end{center}
+
 \medskip{}
 
-\end{minipage}
 
 $body$
 

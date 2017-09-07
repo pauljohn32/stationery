@@ -36,6 +36,7 @@ keywords: guides, report, pandoc, sweave, knitr
 vignette: >
     %\VignetteIndexEntry{code_chunks}
     %\VignetteEngine{knitr::rmarkdown}
+    %\VignetteEncoding{UTF-8}
 ---
 
 

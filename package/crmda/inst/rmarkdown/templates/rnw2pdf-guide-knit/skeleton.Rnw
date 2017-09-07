@@ -8,9 +8,16 @@
 \usepackage[latin9]{inputenc}
 \setlength{\parskip}{\medskipamount}
 \setlength{\parindent}{0pt}
+\usepackage{color}
+\usepackage{babel}
 \usepackage{array}
 \usepackage{url}
 \usepackage{graphicx}
+\usepackage[unicode=true,pdfusetitle,
+ bookmarks=true,bookmarksnumbered=false,bookmarksopen=false,
+ breaklinks=true,pdfborder={0 0 0},pdfborderstyle={},backref=false,colorlinks=true]
+ {hyperref}
+\usepackage{breakurl}
 
 \makeatletter
 
@@ -37,7 +44,7 @@ footskip=1.5\baselineskip,
 \usepackage{multicol}
 \usepackage{listings}
 \usepackage{graphicx}
-\usepackage{color}
+\usepackage{xcolor}
 \usepackage[yyyymmdd,hhmmss]{datetime}
 \lstset{tabsize=2, breaklines=true, 
   breakatwhitespace=true,
@@ -103,18 +110,22 @@ footskip=1.5\baselineskip,
  }%
 
  \centering
-%  \setlength{\@tempdima}{\abovecaptionskip}%
-%  \setlength{\abovecaptionskip}{\belowcaptionskip}%
-% \setlength{\belowcaptionskip}{\@tempdima}%
 }{%
  \end@float
 }
+
+%% Assume Lyx Loads hyperref
+%% \usepackage[hidelinks]{hyperref}
+\definecolor{darkblue}{HTML}{1e2277}
+\hypersetup{breaklinks=true, colorlinks=true, linkcolor=, urlcolor=darkblue}
+
+
+
 
 \thispagestyle{firststyle}
 
 \makeatother
 
-\usepackage{babel}
 \begin{document}
 \begin{tabular}{|>{\centering}p{1.6in}>{\raggedright}p{3in}>{\raggedleft}p{2in}|}
 \hline 
@@ -123,37 +134,44 @@ footskip=1.5\baselineskip,
 \textsc{\Huge{}\includegraphics[width=1in]{theme/jayhawk}}
 \par\end{center}%
 \end{minipage} & %
-\begin{minipage}[c]{3in}%
+\begin{minipage}[c][1\totalheight][b]{3in}%
 \begin{center}
 \textsc{\Huge{}}%
-\begin{minipage}[t]{1\columnwidth}%
+\begin{minipage}[t][1\totalheight][b]{1\columnwidth}%
 \begin{center}
-{\large{}Title}
-\par\end{center}{\large \par}
-\rule[0.5ex]{1\linewidth}{1pt}%
+{\large{}\smallskip{}
+}\textbf{\large{}Title, Possibly Long: Written in Title Case}\\
+\rule[0.5ex]{1\linewidth}{1pt}
+\par\end{center}%
 \end{minipage}
 \par\end{center}{\Huge \par}
 \begin{minipage}[t]{1\columnwidth}%
 \begin{center}
-Author(s)
+Firstname1 Lastname1, CRMDA <email1@ku.edu>\\
+Firstname2 Lastname2, CRMDA <email2@ku.edu>
 \par\end{center}%
 \end{minipage}
 
-\bigskip{}
-%
+\smallskip{}
+
+\begin{flushleft}
+Guide No: XXX. Please visit \url{http://crmda.ku.edu/guides} for
+updates\\
+\par\end{flushleft}%
 \end{minipage} & %
 \begin{minipage}[c]{2in}%
+\smallskip{}
+
 \begin{center}
-\textsc{\Huge{}\includegraphics[width=2in]{theme/CRMDAlogo}}
-\par\end{center}{\Huge \par}
-\begin{center}
-\url{http://crmda.ku.edu}
-\par\end{center}%
+\textsc{\Huge{}\includegraphics[width=1.25in]{theme/CRMDAlogo-vert}}
+\par\end{center}{\Huge \par}%
 \end{minipage}
 
 \begin{minipage}[c]{2in}%
+\smallskip{}
+
 \begin{center}
-\textsc{Guide No:} XXX
+\today
 \par\end{center}%
 \end{minipage}\tabularnewline
 \hline 
@@ -184,7 +202,22 @@ pdf.options(onefile=FALSE,family="Times",pointsize=10)
 
 Leave the chunks before this
 
-Leave the chunk after this
+\section{Write your sections \& subsections here}
+
+The next thing should be the last section. Please leave the last section
+as it is for guide documents.
+
+\section{Don't use LyX to change geometry or margins. That is written into
+the preamble}
+
+\section{Session Info}
+
+<<session, echo=F>>=
+sessionInfo()
+if(!is.null(warnings())){
+    print("Warnings:")
+    warnings()}
+@
 
 <<opts20, include=F>>=
 ## Don't delete this. It puts the interactive session options

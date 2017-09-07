@@ -1,25 +1,37 @@
 ---
-title: "Instructions on Using rmd2html to Produce Guide Documents"
-subtitle: "Subtitle following the colon"
+title: "HTML Special Features"
+subtitle: "KU CRMDA Markdown"
 author:
  - name: Paul Johnson
-   affiliation: Center for Research Methods and Data Analysis, University of Kansas
+   affiliation: CRMDA
    email: pauljohn@ku.edu
  - name: Zack Roman
-   affiliation: Center for Research Methods and Data Analysis, University of Kansas
+   affiliation: CRMDA
    email: zroman@ku.edu
- - name: "Tags: guides, rmarkdown, rmd2html"
-
-abstract: This guide describes several key features/functionalities of R Markdown for producing
-    colorful and vivid HTML documents.
+advertise: >
+   Please  visit 
+   [http://crmda.ku.edu/guides](http://crmda.ku.edu/guides) 
+keywords: guides, rmarkdown, rmd2html
+abstract: >
+   This guide describes several key features/functionalities of R 
+   Markdown for producing colorful and vivid HTML documents.
+fontsize: 12pt
 checked_by: "Paul Johnson"
-Note to Authors: please_dont_change_the_next 4 lines!
-date: "`r format(Sys.time(), '%Y %B %d')`"
+Note to Authors: please_dont_change_the_next lines!
+date: "`r format(Sys.time(), '%B %d %Y')`"
 output:
-  html_document:
-    toc: TRUE
+  crmda::crmda_html_document:
+    toc: true
     toc_depth: 3
     highlight: haddock
+    css: "theme/kutils.css"
+    template: "theme/guide-boilerplate.html"
+logoleft: theme/jayhawk.png
+logoright: theme/CRMDAlogo.png
+vignette: >
+    %\VignetteIndexEntry{crmda}
+    %\VignetteEngine{knitr::rmarkdown}
+    %\VignetteEncoding{UTF-8}
 ---
 
 
@@ -621,9 +633,20 @@ package. For example, `crmda::rmd2html("filename.Rmd")`
 
 [//]: (All guides must have this as the final stanza)
 
+# Session Info
+
 ```{r sessionInfo, echo = FALSE}
 sessionInfo()
 ```
+
+
+```{r warnings, echo = FALSE}
+if(!is.null(warnings())) {
+    print("Warnings:")
+    warnings()
+}
+```
+
 
 Available under
 [Created Commons license 3.0 <img src="http://crmda.dept.ku.edu/images/cc-3.0.png" alt="CC BY"

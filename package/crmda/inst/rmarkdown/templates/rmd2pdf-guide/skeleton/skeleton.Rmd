@@ -1,15 +1,17 @@
 ---
 title: "Title of this Document"
 subtitle: "A Subtitle that may Flow onto Additional Space if Necessary"
+guidenum: XX
+guideurl: http://crmda.ku.edu/guides
+keywords: Rmarkdown, R, documents
 author:
-- name: Author One
-  affiliation: Institute
+- name: Firstname1 Lastname1
+  affiliation: CRMDA
   description: Title
-  email: email@ku.edu
-- name:  Author Two 
-  affiliation: Institute
-  description: Title
-  email: email@ku.edu
+  email: email1@ku.edu
+- name:  Firstname2 Middlename2 Lastname2
+  affiliation: Dept. of Chemistry
+  email: email2@ku.edu
 addr:
     l1: 1425 Jayhawk Blvd
     l2: Watson Library, Suite 470
@@ -17,7 +19,8 @@ addr:
     r1: "Phone: 785-864-3353"
     r2: "Web: http://crmda.ku.edu"
     r3: "Email: crmda@ku.edu"
-logo: theme/CRMDAlogo.pdf
+logoleft: theme/jayhawk.pdf
+logoright: theme/CRMDAlogo-vert.pdf
 output: 
   pdf_document:
     keep_tex: false
@@ -28,8 +31,8 @@ output:
     pandoc_args: [
       "--listings"
     ]
-    template: theme/report-boilerplate.tex
-fontsize: 12pt
+    template: theme/guide-boilerplate.tex
+fontsize: 11pt
 header-includes:
 - \usepackage{xcolor}
 ---
@@ -43,7 +46,7 @@ options(width = 70)
 ```
 
 \begin{abstract}
-Please include abstract here
+This is the abstract.
 \end{abstract}
 
 
@@ -71,12 +74,16 @@ library(xtable)
 print(xtable(head(data.frame(x, y))), comment=FALSE)
 ```
 
-# Session Info
+[//]: (All guides must have this as the final stanza)
 
-```{r session, include=F}
-zz <- gsub("Rmd", "Rout", knitr::current_input())
-capture.output(sessionInfo(), file = zz, append = FALSE)
-if (!is.null(warnings())){
-    capture.output(warnings(), file = zz, append = TRUE)
+# R Session Info
+```{r sessionInfo, echo = FALSE}
+sessionInfo()
+```
+
+```{r warnings, echo = FALSE}
+if(!is.null(warnings())){
+    print("Warnings:")
+    warnings()
 }
 ```

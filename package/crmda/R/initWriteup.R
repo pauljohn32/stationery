@@ -6,19 +6,17 @@
 ##' one of those folders into one's current working directory and
 ##' then editing the files. The document skeleton is created in a
 ##' directory that will be created if it does not exist.
-##'
-##' The directories we currently provide are
-##' 1) rmd2html-guide 2) rmd2pdf-report
-##' 3) rnw2pdf-guide-knit 4) rnw2pdf-guide-sweave
-##' 5) rnw2pdf-report-knit 6) rnw2pdf-report-sweave
-##' 7) tex2pdf-report
-##'
+##' 
+##' 1) rmd2html-guide  2) rmd2pdf-report
+##' 3) rnw2pdf-guide-sweave  4) rnw2pdf-report-sweave  
+##' 5) rmd2pdf-guide   6) rnw2pdf-guide-knit
+##' 7) rnw2pdf-report-knit
+##' 
 ##' Each selection offers a self-contained working document and enough
 ##' information to compile that document.
 ##'
 ##' @section Report or Guide?: As one can see, documents can be prepared in markdown
-##'     "rmd", R noweb (either with Sweave or knitr style), or simply
-##'     as a LaTeX document that does not interact with R at all.  The
+##'     "rmd", R noweb (either with Sweave or knitr style).  The
 ##'     allowed components in a report or guide depend on whether the
 ##'     eventual output is HTML or PDF. That's why we need to have so
 ##'     many mix-and match combinations of document types and report
@@ -28,11 +26,11 @@
 ##'
 ##' The examples demonstrate all three of these scenarios.
 ##' @param type One of these: \code{c("rmd2html-guide",
-##'     "rmd2pdf-report", "rnw2pdf-guide-knit", "rnw2pdf-guide-sweave",
-##'     "rnw2pdf-report-knit", "rnw2pdf-report-sweave",
-##'     "tex2pdf-report")}
-##' @param dir Type "." for current working directory.
-##' Default is a new directory named "writeup"
+##'     "rmd2pdf-report", "rnw2pdf-guide-knit",
+##'     "rnw2pdf-guide-sweave", "rmd2pdf-guide",
+##'     "rnw2pdf-report-knit", "rnw2pdf-report-sweave")}
+##' @param dir Type "." for current working directory.  Default is a
+##'     new directory named "writeup"
 ##' @importFrom kutils initProject
 ##' @export
 ##' @return The normalized path of the new directory
@@ -58,13 +56,14 @@ initWriteup <- function(type = NULL,
                         dir = "writeup")
 {
     wd <- getwd()
-   
+
+    dir <- file.path(dir, type)
     ## Only create dir if dir NULL
     if (!dir.exists(dir)){
         dir.create(dir, recursive = TRUE)
     }
 
-    dir.path <- system.file("extdata", type, package = "crmda")
+    dir.path <- system.file("rmarkdown/templates/", type, "skeleton", package = "crmda")
     
     if (dir.path == "") {
         messg <- paste0("type", type, "not found")
@@ -72,7 +71,8 @@ initWriteup <- function(type = NULL,
         return(invisible(NULL))
     }
 
-    file.copy(dir.path, to = dir, recursive = TRUE, copy.date = TRUE) 
+    file.copy(from = Sys.glob(paste0(dir.path, "/*")), to = dir,
+              recursive = TRUE, copy.date = TRUE) 
     normalizePath(dir)
 }
 

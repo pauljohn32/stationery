@@ -21,7 +21,7 @@ footskip=1.5\baselineskip,
 \usepackage{multicol}
 \usepackage{listings}
 \usepackage{graphicx}
-\usepackage{color}
+\usepackage{xcolor}
 \usepackage[yyyymmdd,hhmmss]{datetime}
 \lstset{tabsize=2, breaklines=true, 
   breakatwhitespace=true,
@@ -87,12 +87,17 @@ footskip=1.5\baselineskip,
  }%
 
  \centering
-%  \setlength{\@tempdima}{\abovecaptionskip}%
-%  \setlength{\abovecaptionskip}{\belowcaptionskip}%
-% \setlength{\belowcaptionskip}{\@tempdima}%
 }{%
  \end@float
 }
+
+%% Assume Lyx Loads hyperref
+%% \usepackage[hidelinks]{hyperref}
+\definecolor{darkblue}{HTML}{1e2277}
+\hypersetup{breaklinks=true, colorlinks=true, linkcolor=, urlcolor=darkblue}
+
+
+
 
 \thispagestyle{firststyle}
 \end_preamble
@@ -123,7 +128,16 @@ knitr
 \index_command default
 \paperfontsize 11
 \spacing single
-\use_hyperref false
+\use_hyperref true
+\pdf_bookmarks true
+\pdf_bookmarksnumbered false
+\pdf_bookmarksopen false
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks true
+\pdf_pdfborder true
+\pdf_colorlinks true
+\pdf_backref false
+\pdf_pdfusetitle true
 \papersize letterpaper
 \use_geometry false
 \use_package amsmath 1
@@ -175,7 +189,7 @@ knitr
 \begin_inset Tabular
 <lyxtabular version="3" rows="1" columns="3">
 <features tabularvalignment="middle">
-<column alignment="center" valignment="top" width="1.6in">
+<column alignment="center" valignment="top" width="1.25in">
 <column alignment="left" valignment="top" width="3in">
 <column alignment="right" valignment="top" width="2in">
 <row>
@@ -206,7 +220,6 @@ status open
 \align center
 
 \shape smallcaps
-\size giant
 \begin_inset Graphics
 	filename theme/jayhawk.pdf
 	lyxscale 40
@@ -232,10 +245,10 @@ status open
 position "c"
 hor_pos "c"
 has_inner_box 1
-inner_pos "c"
+inner_pos "b"
 use_parbox 0
 use_makebox 0
-width "3in"
+width "3.5in"
 special "none"
 height "1in"
 height_special "totalheight"
@@ -247,6 +260,22 @@ backgroundcolor "none"
 status open
 
 \begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+bigskip
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
 \noindent
 \align center
 
@@ -256,7 +285,7 @@ status open
 position "t"
 hor_pos "c"
 has_inner_box 1
-inner_pos "t"
+inner_pos "b"
 use_parbox 0
 use_makebox 0
 width "100col%"
@@ -274,12 +303,16 @@ status open
 \noindent
 \align center
 
+\series bold
 \size large
-Title
-\end_layout
+Title, Possibly Long: Written in Title Case in Bold Face
+\begin_inset Newline newline
+\end_inset
 
-\begin_layout Plain Layout
-\noindent
+
+\series default
+\size default
+
 \begin_inset CommandInset line
 LatexCommand rule
 offset "0.5ex"
@@ -318,7 +351,19 @@ status open
 \begin_layout Plain Layout
 \noindent
 \align center
-Author(s)
+
+\series bold
+Firstname1 Lastname1
+\series default
+, CRMDA <email1@ku.edu>
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+Firstname2 Lastname2
+\series default
+, CRMDA <email2@ku.edu>
 \end_layout
 
 \end_inset
@@ -327,7 +372,57 @@ Author(s)
 \end_layout
 
 \begin_layout Plain Layout
-\begin_inset VSpace bigskip
+\begin_inset VSpace smallskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\noindent
+\align left
+
+\series bold
+Guide No
+\series default
+: XXX.
+ Please visit
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+Keywords
+\series default
+: Rmarkdown
+\begin_inset Newline newline
+\end_inset
+
+See 
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+http://crmda.ku.edu/guides
+\end_layout
+
+\end_inset
+
+ for updates.
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+smallskip
+\end_layout
+
 \end_inset
 
 
@@ -363,16 +458,7 @@ backgroundcolor "none"
 status open
 
 \begin_layout Plain Layout
-\noindent
-\align center
-
-\shape smallcaps
-\size giant
-\begin_inset Graphics
-	filename theme/CRMDAlogo.pdf
-	lyxscale 40
-	width 2in
-
+\begin_inset VSpace smallskip
 \end_inset
 
 
@@ -381,13 +467,13 @@ status open
 \begin_layout Plain Layout
 \noindent
 \align center
-\begin_inset Flex URL
-status open
 
-\begin_layout Plain Layout
-
-http://crmda.ku.edu
-\end_layout
+\shape smallcaps
+\size giant
+\begin_inset Graphics
+	filename theme/CRMDAlogo-vert.pdf
+	lyxscale 40
+	width 1.25in
 
 \end_inset
 
@@ -419,13 +505,28 @@ backgroundcolor "none"
 status open
 
 \begin_layout Plain Layout
+\begin_inset VSpace smallskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
 \noindent
 \align center
+\begin_inset ERT
+status open
 
-\shape smallcaps
-Guide No:
-\shape default
- XXX
+\begin_layout Plain Layout
+
+
+\backslash
+today
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -587,8 +688,99 @@ pdf.options(onefile=FALSE,family="Times",pointsize=10)
 Leave the chunks before this
 \end_layout
 
+\begin_layout Section
+Write your sections & subsections here
+\end_layout
+
 \begin_layout Standard
-Leave the chunk after this
+The next thing should be the last section.
+ Please leave the last section as it is for guide documents.
+\end_layout
+
+\begin_layout Section
+Test a code chunk
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<norm10>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+x <- rnorm(100)
+\end_layout
+
+\begin_layout Plain Layout
+
+head(x)
+\end_layout
+
+\begin_layout Plain Layout
+
+mean(x)
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Don't use LyX to change geometry or margins.
+ That is written into the preamble
+\end_layout
+
+\begin_layout Section
+Session Info
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<session, echo=F>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+sessionInfo()
+\end_layout
+
+\begin_layout Plain Layout
+
+if(!is.null(warnings())){
+\end_layout
+
+\begin_layout Plain Layout
+
+    print("Warnings:")
+\end_layout
+
+\begin_layout Plain Layout
+
+    warnings()}
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard

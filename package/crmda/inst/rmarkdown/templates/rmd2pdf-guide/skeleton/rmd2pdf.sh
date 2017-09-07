@@ -1,14 +1,14 @@
 #!/bin/bash
 
 ## Paul Johnson
-## 2017-08-08
+## 2017-08-04
 
 
 ## all Rmd files in working directory are compiled
 compileall() {
 	for fn in *.Rmd
 	do
-		Rscript -e "library(crmda); rmd2html(\"$fn\", $defaults)"
+		Rscript -e "library(crmda); rmd2pdf(\"$fn\", $defaults)"
 	done
 }
 
@@ -29,13 +29,16 @@ usage() {
 
 pwd=`pwd`
 
-## The defaults string is R expression, inserted after
-## the file name argument in rmd2html.
+## The $defaults string is your chance to customize the compilation.
+## It will be fed into the rmd2pdf function
+## Our basic version: do not keep intermediate outputs
+defaults="toc=TRUE, output_dir=\"$pwd\", clean=TRUE, keep_tex=FALSE, quiet=TRUE, type = \"guide\""
+## If you don't want the default guide-boilerplate theme,
+## edit the one in the theme folder and change to
+defaults="toc=TRUE, output_dir=\"$pwd\", clean=TRUE, keep_tex=FALSE, quiet=TRUE, template=\"theme/guide-boilerplate.tex\""
+## If there is trouble compiling, change clean to FALSE, keep_tex to TRUE, and quiet to FALSE:
+##defaults="toc=TRUE, output_dir=\"$pwd\", clean=FALSE, keep_tex=TRUE, quiet=FALSE, type="guide", template=\"theme/guide-boilerplate.tex\""
 
-##defaults="toc=TRUE, output_dir=\"$pwd\""
-## specify the template explicity
-defaults="toc=TRUE, output_dir=\"$pwd\", template = \"theme/guide-boilerplate.html\""
-## Unless you specify otherwise, this will use the kutils.css file.
 
 ## Retrieve the number of arguments
 nargs=$#
@@ -57,7 +60,7 @@ for filename in "$@"; do
 		shopt -s nocasematch
 		if [[ "$exten" == "Rmd" ]]; then
 			echo -e "compile $filename"
-			Rscript -e "library(crmda); rmd2html(\"$filename\", $defaults)"
+			Rscript -e "library(crmda); rmd2pdf(\"$filename\", $defaults)"
 		else
 			echo -e "Error: $filename. Extension should be \"Rmd\""
 		fi
@@ -66,6 +69,4 @@ for filename in "$@"; do
 	fi
 done
 exit 0
-
-
 

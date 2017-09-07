@@ -154,6 +154,7 @@ crmda_html_document <- function(template = "custom_template", ...) {
 ##' @param template An LaTeX template file, defaults as
 ##'     report-boilerplate.tex, or, if type = "guide" then
 ##'     guide-boilerplate.tex in this packge.
+##' @param package Defaults as "crmda" to find files in this package.
 ##' @param ... Arguments that will be passed to \code{render} and
 ##'     \code{pdf_document}. Our defaults set a LaTeX template, toc =
 ##'     TRUE, and the pandoc_args includes use of the listings class.

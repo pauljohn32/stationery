@@ -6,7 +6,10 @@
 \origin unavailable
 \textclass scrartcl
 \begin_preamble
+% Don't remove next commented line, its needed to fool Sweave
+%\usepackage{Sweave}
 \usepackage{kureport}
+
 \usepackage[includehead,includefoot]{geometry}
 \geometry{
 lmargin=1in,
@@ -24,22 +27,29 @@ footskip=1.5\baselineskip,
 \usepackage{graphicx}
 \usepackage{color}
 \usepackage[yyyymmdd,hhmmss]{datetime}
-\lstset{tabsize=2, breaklines=true, 
+
+% May be customized for this document
+\lstdefinestyle{custom}{
+  tabsize=2, 
+  breaklines=true, 
   breakatwhitespace=true,
-  %language=R,
   captionpos=b,
   frame=single,
   framerule=0.2pt,
   framesep=1pt,
   numbersep=5pt,
   showstringspaces=false,
-  basicstyle=\footnotesize,
+  basicstyle=\normalsize\ttfamily,%
+  columns=fixed%,
+  \lst@ifdisplaystyle\scriptsize\fi,%
   identifierstyle=,
   keywordstyle=\bfseries,
   commentstyle=\color{darkgreen},
   stringstyle=,
   backgroundcolor=\color[gray]{0.935}
 }
+
+
 \usepackage{fancyhdr}
 \usepackage{lastpage}
 \usepackage{babel}
@@ -100,42 +110,26 @@ footskip=1.5\baselineskip,
 \usepackage{multicol}
 \usepackage{graphicx}
 
+
+
 %% PJ 20161110
 %% I want to use listings in the document and I want nice/same as knitr.
 %% Does knitr provide all of these settings for other listing uses outside
 %% weaved part?
 \usepackage{fancyvrb}
 \fvset{listparameters={\setlength{\topsep}{0em}}}
-\usepackage{listings}
-\def\Sweavesize{\normalsize} 
-\def\Rcolor{\color{black}} 
-\def\Rbackground{\color[gray]{0.95}}
-\providecommand{\Rcolor}{\color[rgb]{0, 0.5, 0.5}}
+
+%\def\Sweavesize{\normalsize} 
+%\def\Rcolor{\color{black}} 
+%\def\Rbackground{\color[gray]{0.95}}
+%\providecommand{\Rcolor}{\color[rgb]{0, 0.5, 0.5}}
 %%\providecommand{\Routcolor}{\color[rgb]{0.461, 0.039, 0.102}}
-\providecommand{\Routcolor}{\color[rgb]{1.0, 0.0, 0.0}}
-\providecommand{\Rcommentcolor}{\color[rgb]{0.101, 0.043, 0.432}}
+%\providecommand{\Routcolor}{\color[rgb]{1.0, 0.0, 0.0}}
+%\providecommand{\Rcommentcolor}{\color[rgb]{0.101, 0.043, 0.432}}
 
-\providecommand{\Rbackground}{\color[gray]{0.95}}
-\providecommand{\Routbackground}{\color[gray]{0.80}}
+%\providecommand{\Rbackground}{\color[gray]{0.95}}
+%\providecommand{\Routbackground}{\color[gray]{0.80}}
 % Can specify \color[gray]{1} for white background or just \color{white}
-
-
-%\lstdefinestyle{Rstyle}{fancyvrb=false,
-%                        frame=none,
-%                        escapechar=`,
-%                        language=R,%
-%                        basicstyle={\Rcolor\Sweavesize},%
-%                        backgroundcolor=\Rbackground,%
-%                        showstringspaces=false,%
-%                        keywordstyle=\Rcolor,%
-%                        commentstyle={\Rcommentcolor\ttfamily\itshape},%
-%                        literate={<-}{{$\leftarrow$}}2{<<-}{{$\twoheadleftarrow$}}2{~}{{$\sim$}}1{<=}{{$\leq$}}2{>=}{{$\geq$}}2{^}{{$^{\scriptstyle\wedge}$}}1,%
-%                        alsoother={$},%
-%                        alsoletter={.<-},%
-%                        otherkeywords={!,!=,~,$,*,\&,\%/\%,\%*\%,\%\%,<-,<<-,/},%
-%                        escapeinside={(*}{*)}}%
-%
-%\lstset{tabsize=2, breaklines=true, style=Rstyle}
 \end_preamble
 \use_default_options false
 \begin_modules
@@ -288,7 +282,7 @@ Title of this Document: A Subtitle that may Flow onto Additional Space if
 
 \begin_layout Plain Layout
 \begin_inset Graphics
-	filename theme/CRMDA_logo.pdf
+	filename theme/CRMDAlogo.pdf
 	width 2in
 
 \end_inset
@@ -307,19 +301,11 @@ Title of this Document: A Subtitle that may Flow onto Additional Space if
 \begin_inset VSpace defskip
 \end_inset
 
-Author One, Title, CRMDA
+Author One, Title, CRMDA <email@ku.edu>
 \end_layout
 
 \begin_layout Plain Layout
-<email@ku.edu>
-\end_layout
-
-\begin_layout Plain Layout
-Author Two, Title, CRMDA
-\end_layout
-
-\begin_layout Plain Layout
-<email@ku.edu>
+Author Two, Title, CRMDA <email@ku.edu>
 \end_layout
 
 \begin_layout Plain Layout
@@ -537,15 +523,50 @@ Don't change document margins with LyX menus.
 \end_layout
 
 \begin_layout Standard
-Please see the 
-\begin_inset Quotes eld
+We have separate instructions for the crmda package in vignettes.
+ if you want more detailed information about what to do.
+\end_layout
+
+\begin_layout Standard
+Test a code chunk.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+x <- rnorm(100)
+\end_layout
+
+\begin_layout Plain Layout
+
+head(x, 10)
+\end_layout
+
+\begin_layout Plain Layout
+
+mean(x)
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
 \end_inset
 
-report-sweave-instructions
-\begin_inset Quotes erd
-\end_inset
 
- document if you want more detailed information about what to do.
+\end_layout
+
+\begin_layout Standard
+Please leave these chunks:
 \end_layout
 
 \begin_layout Standard
@@ -582,6 +603,50 @@ options(opts.orig)
 \begin_layout Plain Layout
 
 par(par.orig)
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<sessioninfo, include=F>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+zz <- "skeleton.Rout"
+\end_layout
+
+\begin_layout Plain Layout
+
+capture.output(sessionInfo(), file = zz, append = FALSE)
+\end_layout
+
+\begin_layout Plain Layout
+
+if (!is.null(warnings())){
+\end_layout
+
+\begin_layout Plain Layout
+
+    capture.output(warnings(), file = zz, append =  TRUE)
+\end_layout
+
+\begin_layout Plain Layout
+
+}
 \end_layout
 
 \begin_layout Plain Layout

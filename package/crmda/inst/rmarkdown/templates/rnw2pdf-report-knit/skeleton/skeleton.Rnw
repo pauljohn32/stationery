@@ -170,7 +170,7 @@ Additional Space if Necessary}{\Large \par}
 \medskip{}
  & \medskip{}
 
-\includegraphics[width=2in]{theme/CRMDA_logo}\tabularnewline
+\includegraphics[width=2in,bb = 0 0 200 100, draft, type=eps]{theme/CRMDA_logo.pdf}\tabularnewline
 \hline 
 \multicolumn{2}{>{\raggedright}p{5in}}{\medskip{}
 Your Name Here, Your Title, CRMDA
