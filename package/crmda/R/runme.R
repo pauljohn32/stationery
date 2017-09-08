@@ -180,7 +180,7 @@ crmda_html_document <- function(template = "custom_template", ...) {
 ##' dir.tmp <- tempdir()
 ##' setwd(dir.tmp)
 ##' fnt <- "rmd2pdf-guide"
-##' initWriteup(fmt, "skeleton.Rmd", package = "crmda")
+##' initWriteup(fmt, "skeleton.Rmd")
 ##' setwd(file.path(dir.tmp, fmt, "skeleton"))
 ##' of1 <- rmd2pdf(fp, output_dir = getwd())
 ##' if(interactive()) browseURL(of1[1])
