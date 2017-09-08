@@ -6,6 +6,8 @@
 \origin unavailable
 \textclass scrartcl
 \begin_preamble
+% Following comment is required. Do not delete it.
+%\usepackage{Sweave}
 \usepackage{kuguide}
 
 \usepackage[includehead,includefoot]{geometry}
@@ -199,7 +201,7 @@ sweave
 <features tabularvalignment="middle">
 <column alignment="center" valignment="top" width="1.25in">
 <column alignment="left" valignment="top" width="3.5in">
-<column alignment="right" valignment="top" width="1.5in">
+<column alignment="left" valignment="middle" width="1.5in">
 <row>
 <cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
 \begin_inset Text
@@ -212,7 +214,7 @@ has_inner_box 1
 inner_pos "c"
 use_parbox 0
 use_makebox 0
-width "1in"
+width "1.25in"
 special "none"
 height "1in"
 height_special "totalheight"
@@ -229,7 +231,7 @@ status open
 
 \shape smallcaps
 \begin_inset Graphics
-	filename /home/pauljohn/GIT/CRMDA/software/crmda/package/crmda/inst/rmarkdown/templates/rnw2pdf-guide-knit/theme/jayhawk.pdf
+	filename theme/jayhawk.pdf
 	lyxscale 40
 	width 1.25in
 
@@ -443,7 +445,7 @@ smallskip
 
 \end_inset
 </cell>
-<cell alignment="right" valignment="top" topline="true" bottomline="true" rightline="true" usebox="none">
+<cell alignment="left" valignment="top" topline="true" bottomline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -454,7 +456,7 @@ has_inner_box 1
 inner_pos "c"
 use_parbox 0
 use_makebox 0
-width "1.5in"
+width "1.25in"
 special "none"
 height "1in"
 height_special "totalheight"
@@ -479,7 +481,7 @@ status open
 \shape smallcaps
 \size giant
 \begin_inset Graphics
-	filename /home/pauljohn/GIT/CRMDA/software/crmda/package/crmda/inst/rmarkdown/templates/rnw2pdf-guide-knit/theme/CRMDAlogo-vert.pdf
+	filename theme/CRMDAlogo-vert.pdf
 	lyxscale 40
 	width 1.5in
 
@@ -505,7 +507,7 @@ has_inner_box 1
 inner_pos "c"
 use_parbox 0
 use_makebox 0
-width "1.5in"
+width "1.25in"
 special "none"
 height "1in"
 height_special "totalheight"
