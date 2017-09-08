@@ -46,24 +46,45 @@ footskip=1.5\baselineskip,
 \usepackage{graphicx}
 \usepackage{xcolor}
 \usepackage[yyyymmdd,hhmmss]{datetime}
-\lstset{tabsize=2, breaklines=true, 
-  breakatwhitespace=true,
-  %language=R,
-  captionpos=b,
-  frame=single,
-  framerule=0.2pt,
-  framesep=1pt,
+
+\def\Sweavesize{\scriptsize} 
+\def\Rcolor{\color{black}} 
+\def\Rbackground{\color[gray]{0.95}}
+
+
+\usepackage{listings}
+\usepackage{upquote, fancyvrb, relsize, ae}
+\lstdefinestyle{Rstylecrmda}{
+  language=R,
+  escapechar=`,
+  fancyvrb=false,%
+  tabsize=2,%
+  breaklines=true,
+  breakatwhitespace=true,%
+  captionpos=b,%
+  frame=single,%
+  framerule=0.2pt,%
+  framesep=1pt,%
+  showstringspaces=false,%
+  basicstyle=\normalsize\ttfamily,%
+  columns=fixed%,
+  \lst@ifdisplaystyle\scriptsize\fi,%
+  identifierstyle=,%
+  keywords=\bfseries,%
+  keywordstyle=\color[rgb]{0, 0.5, 0.5},
+  escapeinside={(*}{*)},
+  literate={~}{{$$\sim$$}}1 {==}{{=\,=}}2,
+  alsoother={$$},
+  alsoletter={.<-},%
+  otherkeywords={!,!=,~,$$,*,\&,\%/\%,\%*\%,\%\%,<-,<<-,/},
+  backgroundcolor=\Rbackground,
   numbers=left,
-  numberstyle=\tiny,
-  numbersep=5pt,
-  showstringspaces=false,
-  basicstyle=\footnotesize,
-  identifierstyle=,
-  keywordstyle=\bfseries,
-  commentstyle=\color{darkgreen},
-  stringstyle=,
-  backgroundcolor=\color[gray]{0.935}
-}
+  numberstyle={\tiny}
+}%
+
+\lstset{style=Rstylecrmda}
+
+
 \usepackage{fancyhdr}
 \usepackage{lastpage}
 \usepackage{babel}
@@ -119,55 +140,55 @@ footskip=1.5\baselineskip,
 \definecolor{darkblue}{HTML}{1e2277}
 \hypersetup{breaklinks=true, colorlinks=true, linkcolor=, urlcolor=darkblue}
 
-
-
-
 \thispagestyle{firststyle}
 
 \makeatother
 
 \begin{document}
-\begin{tabular}{|>{\centering}p{1.6in}>{\raggedright}p{3in}>{\raggedleft}p{2in}|}
+\begin{tabular}{|>{\centering}p{1.25in}>{\raggedright}p{3.5in}>{\raggedleft}p{2in}|}
 \hline 
-\begin{minipage}[c]{1in}%
+\begin{minipage}[c]{1.25in}%
 \begin{center}
-\textsc{\Huge{}\includegraphics[width=1in]{theme/jayhawk}}
+\textsc{\includegraphics[width=1.25in]{theme/jayhawk}}
 \par\end{center}%
 \end{minipage} & %
-\begin{minipage}[c][1\totalheight][b]{3in}%
+\begin{minipage}[c][1\totalheight][b]{3.5in}%
+\bigskip
 \begin{center}
 \textsc{\Huge{}}%
 \begin{minipage}[t][1\totalheight][b]{1\columnwidth}%
 \begin{center}
-{\large{}\smallskip{}
-}\textbf{\large{}Title, Possibly Long: Written in Title Case}\\
+\textbf{\large{}Title, Possibly Long: Written in Title Case in Bold
+Face}\\
 \rule[0.5ex]{1\linewidth}{1pt}
 \par\end{center}%
 \end{minipage}
 \par\end{center}{\Huge \par}
 \begin{minipage}[t]{1\columnwidth}%
 \begin{center}
-Firstname1 Lastname1, CRMDA <email1@ku.edu>\\
-Firstname2 Lastname2, CRMDA <email2@ku.edu>
+\textbf{Firstname1 Lastname1}, CRMDA <email1@ku.edu>\\
+\textbf{Firstname2 Lastname2}, CRMDA <email2@ku.edu>
 \par\end{center}%
 \end{minipage}
 
 \smallskip{}
 
 \begin{flushleft}
-Guide No: XXX. Please visit \url{http://crmda.ku.edu/guides} for
-updates\\
-\par\end{flushleft}%
+\textbf{Guide No}: XXX. Please visit\\
+\textbf{Keywords}: Rmarkdown\\
+See \url{http://crmda.ku.edu/guides} for updates.
+\par\end{flushleft}
+\smallskip%
 \end{minipage} & %
-\begin{minipage}[c]{2in}%
+\begin{minipage}[c]{1.75in}%
 \smallskip{}
 
 \begin{center}
-\textsc{\Huge{}\includegraphics[width=1.25in]{theme/CRMDAlogo-vert}}
+\textsc{\Huge{}\includegraphics[width=1.75in]{theme/CRMDAlogo-vert}}
 \par\end{center}{\Huge \par}%
 \end{minipage}
 
-\begin{minipage}[c]{2in}%
+\begin{minipage}[c]{1.75in}%
 \smallskip{}
 
 \begin{center}
@@ -206,6 +227,14 @@ Leave the chunks before this
 
 The next thing should be the last section. Please leave the last section
 as it is for guide documents.
+
+\section{Test a code chunk}
+
+<<norm10>>=
+x <- rnorm(100)
+head(x)
+mean(x)
+@
 
 \section{Don't use LyX to change geometry or margins. That is written into
 the preamble}
