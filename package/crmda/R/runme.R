@@ -176,17 +176,17 @@ crmda_html_document <- function(template = "custom_template", ...) {
 ##' @author Paul Johnson <pauljohn@@ku.edu>
 ##' @export
 ##' @examples
-##' ## put some file name in
-##' ## fp <- system.file("rmarkdown/templates/rmd2pdf-report", "skeleton.Rmd", package = "crmda")
-##' ## tdir <- tempdir()
-##' ## file.copy(fp, to = tdir, copy.mode = TRUE, copy.date = TRUE)
-##' ## wd.orig <- getwd()
-##' ## setwd(tdir)
-##' ## of1 <- rmd2pdf(fp, output_dir = getwd())
-##' ## if(interactive()) browseURL(of1[1])
-##' ## of2 <- rmd2pdf(fp, toc = FALSE, output_dir = getwd())
-##' ## if(interactive()) browseURL(of2[1])
-##' ## setwd(wd.orig)
+##' wd.orig <- getwd()
+##' tdir <- tempdir()
+##' setwd(tdir)
+##' fnt <- "rmd2pdf-guide"
+##' initWriteup(fmt", "skeleton.Rmd", package = "crmda")
+##' setwd(file.path(tdir, fmt, "skeleton"))
+##' of1 <- rmd2pdf(fp, output_dir = getwd())
+##' if(interactive()) browseURL(of1[1])
+##' of2 <- rmd2pdf(fp, toc = FALSE, output_dir = getwd())
+##' if(interactive()) browseURL(of2[1])
+##' setwd(wd.orig)
 rmd2pdf <- function(fn = NULL, wd = NULL, verbose = FALSE, type = "report",
                     template = NULL, package = "crmda",
                     ...) {
@@ -279,17 +279,13 @@ rmd2pdf <- function(fn = NULL, wd = NULL, verbose = FALSE, type = "report",
 ##' @importFrom utils Stangle
 ##' @examples
 ##' wd.orig <- getwd()
-##' tmpdir <- tempdir()
-##' fdir <- system.file("rmarkdown/templates/rnw2pdf-guide-sweave", "", package = "crmda")
-##' wdir <- file.path(tmpdir, basename(fdir))
-##' dir.create(wdir, recursive = TRUE)
-##' file.copy(from = fdir, to = tmpdir, recursive = TRUE)
-##' rnw2pdf("skeleton.lyx", wd = wdir, engine = "Sweave")
-##' tmpdir <- paste0(tmpdir, "-2")
-##' wdir <- file.path(tmpdir, basename(fdir))
-##' dir.create(wdir, recursive = TRUE)
-##' file.copy(from = fdir, to = tmpdir, recursive = TRUE)
-##' rnw2pdf("skeleton.Rnw", wd = wdir, engine = "Sweave")
+##' dir.tmp <- tempdir()
+##' setwd(dir.tmp)
+##' fmt <- "rnw2pdf-guide-sweave"
+##' initWrite(fmt)
+##' wd <- file.path(tdir, fmt, "skeleton")
+##' setwd(file.path(tdir, fmt, "skeleton"))
+##' of1 <- rmd2pdf("skeleton.Rmd", output_dir = getwd())
 ##' list.files()
 ##' setwd(wd.orig)
 rnw2pdf <- function(fn = NULL, wd = NULL, engine = "knitr", verbose = FALSE,
