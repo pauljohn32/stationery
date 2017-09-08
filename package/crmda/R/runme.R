@@ -177,11 +177,11 @@ crmda_html_document <- function(template = "custom_template", ...) {
 ##' @export
 ##' @examples
 ##' wd.orig <- getwd()
-##' tdir <- tempdir()
-##' setwd(tdir)
+##' dir.tmp <- tempdir()
+##' setwd(dir.tmp)
 ##' fnt <- "rmd2pdf-guide"
-##' initWriteup(fmt", "skeleton.Rmd", package = "crmda")
-##' setwd(file.path(tdir, fmt, "skeleton"))
+##' initWriteup(fmt, "skeleton.Rmd", package = "crmda")
+##' setwd(file.path(dir.tmp, fmt, "skeleton"))
 ##' of1 <- rmd2pdf(fp, output_dir = getwd())
 ##' if(interactive()) browseURL(of1[1])
 ##' of2 <- rmd2pdf(fp, toc = FALSE, output_dir = getwd())
@@ -282,9 +282,9 @@ rmd2pdf <- function(fn = NULL, wd = NULL, verbose = FALSE, type = "report",
 ##' dir.tmp <- tempdir()
 ##' setwd(dir.tmp)
 ##' fmt <- "rnw2pdf-guide-sweave"
-##' initWrite(fmt)
-##' wd <- file.path(tdir, fmt, "skeleton")
-##' setwd(file.path(tdir, fmt, "skeleton"))
+##' initWriteup(fmt)
+##' wd <- file.path(dir.tmp, fmt, "skeleton")
+##' setwd(wd)
 ##' of1 <- rmd2pdf("skeleton.Rmd", output_dir = getwd())
 ##' list.files()
 ##' setwd(wd.orig)
