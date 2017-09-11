@@ -180,11 +180,11 @@ crmda_html_document <- function(template = "custom_template", ...) {
 ##' dir.tmp <- tempdir()
 ##' setwd(dir.tmp)
 ##' fmt <- "rmd2pdf-guide"
-##' initWriteup(fmt, "skeleton.Rmd")
-##' setwd(file.path(dir.tmp, fmt, "skeleton"))
-##' of1 <- rmd2pdf(fp, output_dir = getwd())
+##' dir.new <- initWriteup(fmt)
+##' setwd(dir.new)
+##' of1 <- rmd2pdf("skeleton.Rmd", type = "guide", output_dir = getwd())
 ##' if(interactive()) browseURL(of1[1])
-##' of2 <- rmd2pdf(fp, toc = FALSE, output_dir = getwd())
+##' of2 <- rmd2pdf("skeleton.Rmd", type = "guide", toc = FALSE, output_dir = getwd())
 ##' if(interactive()) browseURL(of2[1])
 ##' setwd(wd.orig)
 rmd2pdf <- function(fn = NULL, wd = NULL, verbose = FALSE, type = "report",
@@ -270,6 +270,7 @@ rmd2pdf <- function(fn = NULL, wd = NULL, verbose = FALSE, type = "report",
 ##' @param envir environment for evaluation, see \code{knitr}
 ##'     documents, defaults to parent.frame().
 ##' @param encoding character encoding, defaults from user options
+##' @param ... Other parameters
 ##' @return NULL
 ##' @export
 ##' @author Paul Johnson <pauljohn@@ku.edu>
@@ -282,14 +283,14 @@ rmd2pdf <- function(fn = NULL, wd = NULL, verbose = FALSE, type = "report",
 ##' dir.tmp <- tempdir()
 ##' setwd(dir.tmp)
 ##' fmt <- "rnw2pdf-guide-sweave"
-##' initWriteup(fmt)
-##' wd <- file.path(dir.tmp, fmt, "skeleton")
-##' setwd(wd)
-##' of1 <- rmd2pdf("skeleton.Rmd", output_dir = getwd())
+##' dir.new <- initWriteup(fmt)
+##' setwd(dir.new)
+##' of1 <- rnw2pdf("skeleton.Rnw", engine = "Sweave")
 ##' list.files()
 ##' setwd(wd.orig)
 rnw2pdf <- function(fn = NULL, wd = NULL, engine = "knitr", verbose = FALSE,
-                    envir = parent.frame(), encoding = getOption("encoding")) {
+                    envir = parent.frame(), encoding = getOption("encoding"),
+                    ...) {
     if (!is.null(wd)) {
         wd.orig <- getwd()
         setwd(wd)
