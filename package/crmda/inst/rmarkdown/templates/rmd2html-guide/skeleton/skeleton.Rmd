@@ -13,7 +13,6 @@ advertise: >
    [http://crmda.ku.edu/guides](http://crmda.ku.edu/guides) 
    for updates.
 keywords: guide, Rmarkdown
-
 abstract: >
     Author, please REMEMBER TO INCLUDE AN ABSTRACT BEFORE FINALIZING THIS DOCUMENT!
 checked_by: "First Last"
@@ -24,10 +23,10 @@ output:
     toc: true
     toc_depth: 3
     highlight: haddock
-    css: "theme/kutils.css"
-    template: "theme/guide-boilerplate.html"
-logoleft: theme/jayhawk.png
-logoright: theme/CRMDAlogo-vert.png
+    css: "`r system.file('theme/kutils.css', package = 'crmda')`"
+    template: "`r system.file('theme/guide-boilerplate.html', package = 'crmda')`"
+logoleft: "`r system.file('theme/jayhawk.png', package = 'crmda')`"
+logoright: "`r system.file('theme/CRMDAlogo-vert.png', package = 'crmda')`"
 ---
 
 ```{r setup, include=FALSE}
