@@ -22,13 +22,10 @@
 \RequirePackage[T1]{fontenc}
 \IfFileExists{upquote.sty}{\RequirePackage{upquote}}{}
 
-\providecommand{\Rsize}{\normalsize}
-% For backward compatability:%
 \providecommand{\Sweavesize}{\normalsize}
 \providecommand{\Routsize}{\scriptsize}
 
 \providecommand{\Rcolor}{\color[rgb]{0, 0.5, 0.5}}
-
 \providecommand{\Routcolor}{\color[rgb]{0.461, 0.039, 0.102}}
 \providecommand{\Rcommentcolor}{\color[rgb]{0.101, 0.043, 0.432}}
 
@@ -39,7 +36,7 @@
 
 % \lstdefinestyle{Rstyle}{fancyvrb=false,
 %   escapechar=`,language=R,%
-%   basicstyle={\Rcolor\Rsize},%
+%   basicstyle={\Rcolor\Sweavesize},%
 %   backgroundcolor=\Rbackground,%
 %   showstringspaces=false,%
 %   keywordstyle=\Rcolor,%
@@ -64,7 +61,7 @@
   framerule=0.2pt,%
   framesep=1pt,%
   showstringspaces=false,%
-  basicstyle=\Rsize\ttfamily,%
+  basicstyle=\normalsize\ttfamily,%
   columns=fixed%,
   \lst@ifdisplaystyle\scriptsize\fi,%
   identifierstyle=,%
@@ -82,7 +79,6 @@
 % frame=single,framerule=0.1pt,framesep=1pt,rulecolor=\color{blue},
 % numbers=left,numberstyle=\tiny,stepnumber=1,numbersep=7pt,
 % keywordstyle={\bf\Rcolor}
-
 
 \lstdefinestyle{Routput}{fancyvrb=false,
   literate={~}{{$\sim$}}1{R^2}{{$R^{2}$}}2{^}{{$^{\scriptstyle\wedge}$}}1{R-squared}{{$R^{2}$}}2,%

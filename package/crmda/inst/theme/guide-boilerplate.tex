@@ -1,0 +1,215 @@
+\documentclass[$if(fontsize)$$fontsize$$endif$,english,letterpaper]{scrartcl}
+\usepackage{lmodern}
+\renewcommand{\sfdefault}{lmss}
+\renewcommand{\ttdefault}{lmtt}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\setlength{\parskip}{\medskipamount}
+\setlength{\parindent}{0pt}
+\usepackage{array}
+\usepackage{graphicx}
+\usepackage{setspace}
+\usepackage{multicol}
+\usepackage{xcolor}
+\usepackage[yyyymmdd,hhmmss]{datetime}
+\usepackage{lastpage}
+\usepackage{babel}
+
+\usepackage[hidelinks]{hyperref}
+\definecolor{darkblue}{HTML}{1e2277}
+\hypersetup{breaklinks=true, colorlinks=true, linkcolor=, urlcolor=darkblue}
+
+\makeatletter
+
+\providecommand{\tabularnewline}{\\}
+
+%% Work around problem: https://tex.stackexchange.com/questions/257418/error-tightlist-converting-md-file-into-pdf-using-pandoc
+\def\tightlist{}
+
+\@ifundefined{date}{}{\date{}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+$for(header-includes)$
+$header-includes$
+$endfor$
+
+\usepackage{booktabs}
+\usepackage{dcolumn}
+
+\newcommand{\PreserveBackslash}[1]{\let\temp=\\#1\let\\=\temp}
+\let\PBS=\PreserveBackslash
+
+\usepackage[includehead,includefoot]{geometry}
+\geometry{
+lmargin=1in,
+rmargin=1in,
+tmargin=0.75in,
+bmargin=1.0in,
+headheight=0pt,
+headsep=0pt,
+marginparwidth=0pt,
+footskip=2.5\baselineskip,
+}
+
+\usepackage{fancyhdr}
+\lhead{}
+\chead{}
+\rhead{}
+\renewcommand{\headrulewidth}{0pt}
+\lfoot{}
+\cfoot{{Page} \thepage { of} \pageref{LastPage}}
+\rfoot{}
+
+\fancypagestyle{firststyle}
+{
+\lfoot{}
+% \cfoot{{Page} \thepage { of} \pageref{LastPage}}
+\cfoot{}
+\rfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\fancyfoot[L]{$if(addr.l1)$$addr.l1$\\$endif$$if(addr.l2)$$addr.l2$\\$endif$$if(addr.l3)$$addr.l3$$endif$}
+\fancyfoot[R]{$if(addr.r1)$$addr.r1$\\$endif$$if(addr.r2)$$addr.r2$\\$endif$$if(addr.r3)$$addr.r3$$endif$}
+\renewcommand{\footrulewidth}{.1pt}
+}
+
+\pagestyle{fancy}
+\thispagestyle{firststyle}
+
+%graphics and such inside floats are centered by default
+\renewenvironment{figure}[1][]{%
+ \ifthenelse{\equal{#1}{}}{%
+   \@float{figure}
+ }{%
+   \@float{figure}[#1]%
+ }%
+ \centering
+}{%
+ \end@float
+}
+\renewenvironment{table}[1][]{%
+ \ifthenelse{\equal{#1}{}}{%
+   \@float{table}
+ }{%
+   \@float{table}[#1]%
+ }%
+
+ \centering
+}{%
+ \end@float
+}
+
+
+%% Eliminate reliance on Sweavel or Sweave
+%% \usepackage{Sweavel}
+%% \usepackage[noae]{Sweave}
+
+\usepackage{listings}
+\usepackage{upquote, fancyvrb, relsize, ae}
+
+%%\lstset{tabsize=2, breaklines=true,style=Rstyle}
+\definecolor{darkgreen}{RGB}{0,100,0}
+\definecolor{indianred}{RGB}{205,92,92}
+\definecolor{steelblue}{RGB}{70,130,180}
+\definecolor{antwhite}{RGB}{139,119,101}
+\definecolor{lightgray}{RGB}{240,240,240}
+
+
+\def\Sweavesize{\scriptsize} 
+\def\Rcolor{\color{black}} 
+\def\Rbackground{\color[gray]{0.95}}
+
+\lstdefinestyle{Rstylecrmda}{
+  language=R,
+  escapechar=`,
+  fancyvrb=false,%
+  tabsize=2,%
+  breaklines=true,
+  breakatwhitespace=true,%
+  captionpos=b,%
+  frame=single,%
+  framerule=0.2pt,%
+  framesep=1pt,%
+  showstringspaces=false,%
+  basicstyle=\normalsize\ttfamily,%
+  columns=fixed%,
+  \lst@ifdisplaystyle\scriptsize\fi,%
+  identifierstyle=,%
+  keywords=\bfseries,%
+  keywordstyle=\color[rgb]{0, 0.5, 0.5},
+  escapeinside={(*}{*)},
+  literate={~}{{$$\sim$$}}1 {==}{{=\,=}}2,
+  alsoother={$$},
+  alsoletter={.<-},%
+  otherkeywords={!,!=,~,$$,*,\&,\%/\%,\%*\%,\%\%,<-,<<-,/},
+  backgroundcolor=\Rbackground,
+  numbers=left,
+  numberstyle={\tiny}
+}%
+
+\lstset{style=Rstylecrmda}
+
+\fvset{listparameters={\setlength{\topsep}{0em}}}
+
+
+\makeatother
+
+\usepackage{babel}
+\begin{document}
+
+\begin{tabular}{|>{\centering}p{1.3in}>{\raggedright}p{3.5in}>{\raggedleft}p{2in}|}
+\hline 
+\begin{minipage}[c]{1in}%
+  \begin{center}
+    $if(logoleft)$\includegraphics[width=1in]{$logoleft$}$endif$
+    \par
+  \end{center}%
+\end{minipage} & %
+\begin{minipage}[c]{3.5in}%
+  \begin{center}
+     \begin{minipage}[t]{1\columnwidth}%
+      \begin{center}
+        \bigskip
+        \textbf{\larger{}$title$$if(subtitle)$: $subtitle$$endif$}
+      \end{center}
+      \vspace{-15pt}
+      \rule[0ex]{1\linewidth}{1pt}%
+    \end{minipage}
+    \par\end{center}{\Huge \par}
+\begin{minipage}[t]{1\columnwidth}%
+\begin{center}
+  $for(author)$\textbf{$author.name$}%
+  $if(author.description)$, $author.description$$endif$%
+  $if(author.affiliation)$, $author.affiliation$$endif$%
+  $if(author.email)$ <$author.email$>$endif$\\
+  \smallskip
+$endfor$
+\par\end{center}%
+\end{minipage}
+%\smallskip{}%
+\begin{flushleft}
+  $if(guidenum)$\textbf{Guide No}: $guidenum$.\\$endif$
+  $if(keywords)$\textbf{Keywords}: $keywords$.\\$endif$
+  $if(guideurl)$See $guideurl$ for updates.$endif$
+  \par\end{flushleft}%
+\smallskip
+\end{minipage} & %
+\begin{minipage}[c]{2in}%
+\begin{center}
+$if(logoright)$\includegraphics[width=1.5in]{$logoright$}$endif$
+\par\end{center}
+\end{minipage}
+
+\begin{minipage}[c]{2in}%
+  \begin{center}
+    \medskip
+    \today\par
+  \end{center}%
+\end{minipage}\tabularnewline
+\hline 
+\end{tabular}
+
+\medskip{}
+
+
+$body$
+
+\end{document}

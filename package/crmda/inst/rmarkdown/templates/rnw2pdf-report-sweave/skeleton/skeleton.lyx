@@ -542,6 +542,11 @@ status open
 
 \begin_layout Plain Layout
 
+## Create 100 random standard normal observations
+\end_layout
+
+\begin_layout Plain Layout
+
 x <- rnorm(100)
 \end_layout
 
