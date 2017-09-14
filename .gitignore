@@ -33,3 +33,5 @@
 *.tar.gz
 *.*~
 tmpout
+*.Rout
+

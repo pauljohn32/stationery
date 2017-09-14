@@ -51,8 +51,8 @@
 ##' if(interactive()) browseURL(of2[1])
 ##' setwd(wd.orig)
 rmd2html <- function(fn = NULL, wd = NULL, verbose = FALSE,
-                     template = system.file("rmarkdown/templates/rmd2html-guide/skeleton/theme", "guide-boilerplate.html", package = "crmda"),
-                     css = system.file("rmarkdown/templates/rmd2html-guide/skeleton/theme", "kutils.css", package = "crmda"),
+                     template = system.file("theme", "guide-boilerplate.html", package = "crmda"),
+                     css = system.file("theme", "kutils.css", package = "crmda"),
                      ...) {
     if (!is.null(wd)){
         wd.orig <- getwd()
@@ -151,9 +151,9 @@ crmda_html_document <- function(template = "custom_template", ...) {
 ##' @param verbose The opposite of render(quiet = TRUE). Shows compile
 ##'     commentary and pandoc command. Can be informative!
 ##' @param type either (default) "report" or "guide"
-##' @param template An LaTeX template file, defaults as
+##' @param template An LaTeX template file, defaults for type = "report" as
 ##'     report-boilerplate.tex, or, if type = "guide" then
-##'     guide-boilerplate.tex in this packge.
+##'     guide-boilerplate.tex in this package.
 ##' @param package Defaults as "crmda" to find files in this package.
 ##' @param ... Arguments that will be passed to \code{render} and
 ##'     \code{pdf_document}. Our defaults set a LaTeX template, toc =
@@ -188,7 +188,8 @@ crmda_html_document <- function(template = "custom_template", ...) {
 ##' if(interactive()) browseURL(of2[1])
 ##' setwd(wd.orig)
 rmd2pdf <- function(fn = NULL, wd = NULL, verbose = FALSE, type = "report",
-                    template = NULL, package = "crmda",
+                    template = system.file("theme", paste0(type, "-boilerplate.tex"), package = "crmda"),
+                    package = "crmda",
                     ...) {
     if (!is.null(wd)){
         wd.orig <- getwd()
@@ -199,17 +200,6 @@ rmd2pdf <- function(fn = NULL, wd = NULL, verbose = FALSE, type = "report",
         cat("Will render all *.Rmd files in current working directory\n")
         fn <- list.files(pattern="Rmd$")
     }    
-
-    if (is.null(template)){
-        if (type == "report"){
-            template <- system.file("rmarkdown/templates/rmd2pdf-report/skeleton/theme", "report-boilerplate.tex", package = "crmda")
-        } else if (type == "guide"){
-            template <-system.file("rmarkdown/templates/rmd2pdf-guide/skeleton/theme", "guide-boilerplate.tex", package = "crmda")
-        } else {
-            MESSG <- paste("No boilerplate defined for type", type)
-            stop(MESSG)
-        }
-    }
     
     dots <- list(...)
 
