@@ -27,7 +27,7 @@ output:
     css: "theme/kutils.css"
     template: "theme/guide-boilerplate.html"
 logoleft: theme/jayhawk.png
-logoright: theme/CRMDAlogo.png
+logoright: theme/CRMDAlogo-vert.png
 vignette: >
     %\VignetteIndexEntry{crmda}
     %\VignetteEngine{knitr::rmarkdown}
