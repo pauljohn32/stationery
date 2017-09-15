@@ -8,17 +8,12 @@
 \usepackage[latin9]{inputenc}
 \setlength{\parskip}{\medskipamount}
 \setlength{\parindent}{0pt}
-\usepackage{array}
-\usepackage{url}
-\usepackage{graphicx}
 
 \makeatletter
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
 \special{papersize=\the\paperwidth,\the\paperheight}
 
-%% Because html converters don't know tabularnewline
-\providecommand{\tabularnewline}{\\}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
 <<echo=F>>=
@@ -83,10 +78,9 @@ footskip=1.5\baselineskip,
 
 \lstset{style=Rstylecrmda}
 
-
 \usepackage{fancyhdr}
 \usepackage{lastpage}
-\usepackage{babel}
+
 % Now fancy header/footer settings
 \lhead{}
 \chead{}
@@ -134,6 +128,150 @@ footskip=1.5\baselineskip,
  \end@float
 }
 
+\usepackage{array, tabularx}
+\usepackage{xparse}
+\ExplSyntaxOn
+\NewDocumentCommand \guidesetup { +m }
+{
+  \bool_set_false:N \l_guide_twoauthors_bool
+  \bool_set_false:N \l_guide_threeauthors_bool
+  \keys_set:nn { guide } { #1 }
+}
+\keys_define:nn { guide }
+{
+    firstauthor .code:n = {
+      \keys_set:nn { guide / firstauthor } { #1 }
+    },
+    secondauthor .code:n = {
+      \keys_set:nn { guide } { twoauthors }
+      \keys_set:nn { guide / secondauthor } { #1 }
+    },
+    thirdauthor .code:n = {
+      \keys_set:nn { guide } { threeauthors }
+      \keys_set:nn { guide / thirdauthor } { #1 }
+    },
+    twoauthors .bool_set:N = \l_guide_twoauthors_bool,
+    twoauthors .default:n = true,
+    twoauthors .initial:n = false,
+    threeauthors .bool_set:N = \l_guide_threeauthors_bool,
+    threeauthors .default:n = true,
+    threeauthors .initial:n = false,
+    firstauthor / firstname .tl_set:N = \l_guide_first_firstname_tl,
+    firstauthor / lastname .tl_set:N = \l_guide_first_lastname_tl,
+    firstauthor / affiliation .tl_set:N = \l_guide_first_affil_tl,
+    firstauthor / email .tl_set:N = \l_guide_first_email_tl,
+    secondauthor / firstname .tl_set:N = \l_guide_second_firstname_tl,
+    secondauthor / lastname .tl_set:N = \l_guide_second_lastname_tl,
+    secondauthor / affiliation .tl_set:N = \l_guide_second_affil_tl,
+    secondauthor / email .tl_set:N = \l_guide_second_email_tl,
+    thirdauthor / firstname .tl_set:N = \l_guide_third_firstname_tl,
+    thirdauthor / lastname .tl_set:N = \l_guide_third_lastname_tl,
+    thirdauthor / affiliation .tl_set:N = \l_guide_third_affil_tl,
+    thirdauthor / email .tl_set:N = \l_guide_third_email_tl,
+    leftlogo .tl_set:N = \l_guide_leftlogo_tl,
+    rightlogo .tl_set:N = \l_guide_rightlogo_tl,
+    number .int_set:N = \l_guide_number_int,
+    title .tl_set:N = \l_guide_title_tl,
+    keywords .tl_set:N = \l_guide_keywords_tl,
+    url .tl_set:N = \l_guide_url_tl,
+    firstauthor .initial:n = { firstname = a, lastname = b,
+      affiliation = c, email = d},
+    secondauthor .initial:n = { firstname = g, lastname = h,
+      affiliation = i, email = j},
+    thirdauthor .initial:n = { firstname = g, lastname = h,
+      affiliation = i, email = j},
+    url .initial:n = {https://ku.edu},
+    number .initial:n = 42,
+    title .initial:n = {Guide ~ to ~ Guides},
+    keywords .initial:n = {guide},
+}
+\NewDocumentCommand \guidehdr { +o }
+{
+  \group_begin:
+    \IfValueT { #1 } 
+    {
+      \bool_set_false:N \l_guide_twoauthors_bool 
+      \keys_set:nn { guide } { #1 }
+    }
+    \guide_hdr:
+    \group_end:
+}
+\cs_new_protected:Nn \guide_hdr:
+{
+  \noindent
+  \begin{tabularx}{\textwidth}{|>{\centering\arraybackslash}p{1.25in}>{\centering\arraybackslash}X>{\raggedleft\arraybackslash}p{1.25in}|}
+    \hline 
+    \begin{minipage}[c]{\linewidth}
+      \begin{center}
+        \includegraphics[width=\linewidth]{\l_guide_leftlogo_tl}
+        \par
+      \end{center}%
+    \end{minipage} & 
+    \begin{minipage}[c][1\totalheight][b]{3.5in}%
+      \bigskip
+      \begin{center}
+        \begin{minipage}[t][1\totalheight][b]{1\columnwidth}%
+          \begin{center}
+            \textbf{ \large \l_guide_title_tl }\\
+            \rule[0.5ex]{1\linewidth}{1pt}
+            \par\end{center}%
+        \end{minipage}
+        \par
+      \end{center}
+      \begin{minipage}[t]{1\columnwidth}
+        \begin{center}
+          \textbf{\l_guide_first_firstname_tl {} ~ \l_guide_first_lastname_tl}, ~\l_guide_first_affil_tl {} ~ <\l_guide_first_email_tl >
+          \bool_if:NT \l_guide_twoauthors_bool
+          {
+            \\
+            \textbf{\l_guide_second_firstname_tl {} ~ \l_guide_second_lastname_tl}, ~\l_guide_second_affil_tl {} ~ <\l_guide_second_email_tl >
+          }
+          \bool_if:NT \l_guide_threeauthors_bool
+          {
+            \\
+            \textbf{\l_guide_third_firstname_tl {} ~ \l_guide_third_lastname_tl}, ~\l_guide_third_affil_tl {} ~ <\l_guide_third_email_tl >
+          }
+          \par
+        \end{center}
+      \end{minipage}      
+      \smallskip
+      \par     
+      \begin{flushleft}
+        {\small{}\textbf{Guide ~ No}: ~ \int_to_arabic:n { \l_guide_number_int  }}\\
+        \textbf{Keywords}: ~ \l_guide_keywords_tl \\
+        See ~ \url{\l_guide_url_tl} ~ for ~ updates.
+        \par
+      \end{flushleft}
+      \smallskip
+    \end{minipage} & 
+    \begin{minipage}[c]{\linewidth}
+      \smallskip
+      \par
+      \begin{center}
+        \includegraphics[width=\linewidth]{\l_guide_rightlogo_tl}
+        \par
+      \end{center}
+      {\Huge \par}
+    \end{minipage}
+    \par
+    \begin{minipage}[c]{\linewidth}
+      \smallskip
+      \begin{center}
+        \today
+        \par
+      \end{center}
+    \end{minipage}
+    \tabularnewline
+    \hline 
+  \end{tabularx}
+}
+\ExplSyntaxOff
+
+
+
+
+
+
 %% Assume Lyx Loads hyperref
 \usepackage[hidelinks]{hyperref}
 \definecolor{darkblue}{HTML}{1e2277}
@@ -145,59 +283,19 @@ footskip=1.5\baselineskip,
 
 \usepackage{babel}
 \begin{document}
-\begin{tabular}{|>{\centering}p{1.25in}>{\raggedright}p{3.5in}>{\raggedright}m{1.5in}|}
-\hline 
-\begin{minipage}[c]{1.25in}%
-\begin{center}
-\textsc{\includegraphics[width=1.25in]{theme/jayhawk}}
-\par\end{center}%
-\end{minipage} & %
-\begin{minipage}[c][1\totalheight][b]{3.5in}%
-\bigskip
-\begin{center}
-\textsc{\Huge{}}%
-\begin{minipage}[t][1\totalheight][b]{1\columnwidth}%
-\begin{center}
-\textbf{\large{}Title, Possibly Long: Written in Title Case in Bold
-Face}\\
-\rule[0.5ex]{1\linewidth}{1pt}
-\par\end{center}%
-\end{minipage}
-\par\end{center}{\Huge \par}
-\begin{minipage}[t]{1\columnwidth}%
-\begin{center}
-\textbf{Firstname1 Lastname1}, CRMDA <email1@ku.edu>\\
-\textbf{Firstname2 Lastname2}, CRMDA <email2@ku.edu>
-\par\end{center}%
-\end{minipage}
-
-\smallskip{}
-
-\begin{flushleft}
-\textbf{Guide No}: XXX. Please visit\\
-\textbf{Keywords}: Rmarkdown\\
-See \url{http://crmda.ku.edu/guides} for updates.
-\par\end{flushleft}
-\smallskip%
-\end{minipage} & %
-\begin{minipage}[c]{1.25in}%
-\smallskip{}
-
-\begin{flushleft}
-\textsc{\Huge{}\includegraphics[width=1.5in]{theme/CRMDAlogo-vert}}
-\par\end{flushleft}{\Huge \par}%
-\end{minipage}
-
-\medskip{}
-\begin{minipage}[c]{1.25in}%
-\smallskip{}
-
-\begin{center}
-\today
-\par\end{center}%
-\end{minipage}\tabularnewline
-\hline 
-\end{tabular}
+\guidesetup{%
+  firstauthor={last name=Author , first name=First, affiliation=CRMDC,
+    email=lone.edu},
+  secondauthor={lastname=Author, firstname=Second, affiliation=CRMDD, email=g},
+  thirdauthor={lastname=Author, firstname=Third, affiliation=i, email=g}, 
+  url={https://crmda.ku.edu/guides},
+  keywords={single-authoring, just one},
+  title={Another Very Long Title: With a Possibly Long Subtitle},
+  leftlogo={theme/jayhawk.pdf},
+  rightlogo={theme/CRMDAlogo-vert.pdf},
+  number=48,
+}
+\guidehdr
 
 <<echo=F>>=
 ##unlink("tmpout", recursive=T)

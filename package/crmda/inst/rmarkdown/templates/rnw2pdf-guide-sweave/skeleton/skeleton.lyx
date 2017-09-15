@@ -62,10 +62,9 @@ footskip=1.5\baselineskip,
 
 \lstset{style=Rstylecrmda}
 
-
 \usepackage{fancyhdr}
 \usepackage{lastpage}
-\usepackage{babel}
+
 % Now fancy header/footer settings
 \lhead{}
 \chead{}
@@ -112,6 +111,150 @@ footskip=1.5\baselineskip,
 }{%
  \end@float
 }
+
+\usepackage{array, tabularx}
+\usepackage{xparse}
+\ExplSyntaxOn
+\NewDocumentCommand \guidesetup { +m }
+{
+  \bool_set_false:N \l_guide_twoauthors_bool
+  \bool_set_false:N \l_guide_threeauthors_bool
+  \keys_set:nn { guide } { #1 }
+}
+\keys_define:nn { guide }
+{
+    firstauthor .code:n = {
+      \keys_set:nn { guide / firstauthor } { #1 }
+    },
+    secondauthor .code:n = {
+      \keys_set:nn { guide } { twoauthors }
+      \keys_set:nn { guide / secondauthor } { #1 }
+    },
+    thirdauthor .code:n = {
+      \keys_set:nn { guide } { threeauthors }
+      \keys_set:nn { guide / thirdauthor } { #1 }
+    },
+    twoauthors .bool_set:N = \l_guide_twoauthors_bool,
+    twoauthors .default:n = true,
+    twoauthors .initial:n = false,
+    threeauthors .bool_set:N = \l_guide_threeauthors_bool,
+    threeauthors .default:n = true,
+    threeauthors .initial:n = false,
+    firstauthor / firstname .tl_set:N = \l_guide_first_firstname_tl,
+    firstauthor / lastname .tl_set:N = \l_guide_first_lastname_tl,
+    firstauthor / affiliation .tl_set:N = \l_guide_first_affil_tl,
+    firstauthor / email .tl_set:N = \l_guide_first_email_tl,
+    secondauthor / firstname .tl_set:N = \l_guide_second_firstname_tl,
+    secondauthor / lastname .tl_set:N = \l_guide_second_lastname_tl,
+    secondauthor / affiliation .tl_set:N = \l_guide_second_affil_tl,
+    secondauthor / email .tl_set:N = \l_guide_second_email_tl,
+    thirdauthor / firstname .tl_set:N = \l_guide_third_firstname_tl,
+    thirdauthor / lastname .tl_set:N = \l_guide_third_lastname_tl,
+    thirdauthor / affiliation .tl_set:N = \l_guide_third_affil_tl,
+    thirdauthor / email .tl_set:N = \l_guide_third_email_tl,
+    leftlogo .tl_set:N = \l_guide_leftlogo_tl,
+    rightlogo .tl_set:N = \l_guide_rightlogo_tl,
+    number .int_set:N = \l_guide_number_int,
+    title .tl_set:N = \l_guide_title_tl,
+    keywords .tl_set:N = \l_guide_keywords_tl,
+    url .tl_set:N = \l_guide_url_tl,
+    firstauthor .initial:n = { firstname = a, lastname = b,
+      affiliation = c, email = d},
+    secondauthor .initial:n = { firstname = g, lastname = h,
+      affiliation = i, email = j},
+    thirdauthor .initial:n = { firstname = g, lastname = h,
+      affiliation = i, email = j},
+    url .initial:n = {https://ku.edu},
+    number .initial:n = 42,
+    title .initial:n = {Guide ~ to ~ Guides},
+    keywords .initial:n = {guide},
+}
+\NewDocumentCommand \guidehdr { +o }
+{
+  \group_begin:
+    \IfValueT { #1 } 
+    {
+      \bool_set_false:N \l_guide_twoauthors_bool 
+      \keys_set:nn { guide } { #1 }
+    }
+    \guide_hdr:
+    \group_end:
+}
+\cs_new_protected:Nn \guide_hdr:
+{
+  \noindent
+  \begin{tabularx}{\textwidth}{|>{\centering\arraybackslash}p{1.25in}>{\centering\arraybackslash}X>{\raggedleft\arraybackslash}p{1.25in}|}
+    \hline 
+    \begin{minipage}[c]{\linewidth}
+      \begin{center}
+        \includegraphics[width=\linewidth]{\l_guide_leftlogo_tl}
+        \par
+      \end{center}%
+    \end{minipage} & 
+    \begin{minipage}[c][1\totalheight][b]{3.5in}%
+      \bigskip
+      \begin{center}
+        \begin{minipage}[t][1\totalheight][b]{1\columnwidth}%
+          \begin{center}
+            \textbf{ \large \l_guide_title_tl }\\
+            \rule[0.5ex]{1\linewidth}{1pt}
+            \par\end{center}%
+        \end{minipage}
+        \par
+      \end{center}
+      \begin{minipage}[t]{1\columnwidth}
+        \begin{center}
+          \textbf{\l_guide_first_firstname_tl {} ~ \l_guide_first_lastname_tl}, ~\l_guide_first_affil_tl {} ~ <\l_guide_first_email_tl >
+          \bool_if:NT \l_guide_twoauthors_bool
+          {
+            \\
+            \textbf{\l_guide_second_firstname_tl {} ~ \l_guide_second_lastname_tl}, ~\l_guide_second_affil_tl {} ~ <\l_guide_second_email_tl >
+          }
+          \bool_if:NT \l_guide_threeauthors_bool
+          {
+            \\
+            \textbf{\l_guide_third_firstname_tl {} ~ \l_guide_third_lastname_tl}, ~\l_guide_third_affil_tl {} ~ <\l_guide_third_email_tl >
+          }
+          \par
+        \end{center}
+      \end{minipage}      
+      \smallskip
+      \par     
+      \begin{flushleft}
+        {\small{}\textbf{Guide ~ No}: ~ \int_to_arabic:n { \l_guide_number_int  }}\\
+        \textbf{Keywords}: ~ \l_guide_keywords_tl \\
+        See ~ \url{\l_guide_url_tl} ~ for ~ updates.
+        \par
+      \end{flushleft}
+      \smallskip
+    \end{minipage} & 
+    \begin{minipage}[c]{\linewidth}
+      \smallskip
+      \par
+      \begin{center}
+        \includegraphics[width=\linewidth]{\l_guide_rightlogo_tl}
+        \par
+      \end{center}
+      {\Huge \par}
+    \end{minipage}
+    \par
+    \begin{minipage}[c]{\linewidth}
+      \smallskip
+      \begin{center}
+        \today
+        \par
+      \end{center}
+    \end{minipage}
+    \tabularnewline
+    \hline 
+  \end{tabularx}
+}
+\ExplSyntaxOff
+
+
+
+
+
 
 %% Assume Lyx Loads hyperref
 \usepackage[hidelinks]{hyperref}
@@ -196,80 +339,6 @@ sweave
 
 \begin_layout Standard
 \noindent
-\begin_inset Tabular
-<lyxtabular version="3" rows="1" columns="3">
-<features tabularvalignment="middle">
-<column alignment="center" valignment="top" width="1.25in">
-<column alignment="left" valignment="top" width="3.5in">
-<column alignment="left" valignment="middle" width="1.5in">
-<row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Box Frameless
-position "c"
-hor_pos "c"
-has_inner_box 1
-inner_pos "c"
-use_parbox 0
-use_makebox 0
-width "1.25in"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-\noindent
-\align center
-
-\shape smallcaps
-\begin_inset Graphics
-	filename theme/jayhawk.pdf
-	lyxscale 40
-	width 1.25in
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="left" valignment="top" topline="true" bottomline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Box Frameless
-position "c"
-hor_pos "c"
-has_inner_box 1
-inner_pos "b"
-use_parbox 0
-use_makebox 0
-width "3.5in"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
 \begin_inset ERT
 status open
 
@@ -277,281 +346,71 @@ status open
 
 
 \backslash
-bigskip
-\end_layout
-
-\end_inset
-
-
+guidesetup{%
 \end_layout
 
 \begin_layout Plain Layout
-\noindent
-\align center
 
-\shape smallcaps
-\size giant
-\begin_inset Box Frameless
-position "t"
-hor_pos "c"
-has_inner_box 1
-inner_pos "b"
-use_parbox 0
-use_makebox 0
-width "100col%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-\noindent
-\align center
-
-\series bold
-\size large
-Title, Possibly Long: Written in Title Case in Bold Face
-\begin_inset Newline newline
-\end_inset
-
-
-\series default
-\size default
-
-\begin_inset CommandInset line
-LatexCommand rule
-offset "0.5ex"
-width "100line%"
-height "1pt"
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
+  firstauthor={last name=Author , first name=First, affiliation=CRMDC,
 \end_layout
 
 \begin_layout Plain Layout
-\begin_inset Box Frameless
-position "t"
-hor_pos "c"
-has_inner_box 1
-inner_pos "t"
-use_parbox 0
-use_makebox 0
-width "100col%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
 
-\begin_layout Plain Layout
-\noindent
-\align center
-
-\series bold
-Firstname1 Lastname1
-\series default
-, CRMDA <email1@ku.edu>
-\begin_inset Newline newline
-\end_inset
-
-
-\series bold
-Firstname2 Lastname2
-\series default
-, CRMDA <email2@ku.edu>
-\end_layout
-
-\end_inset
-
-
+    email=lone.edu},
 \end_layout
 
 \begin_layout Plain Layout
-\begin_inset VSpace smallskip
-\end_inset
 
-
+  secondauthor={lastname=Author, firstname=Second, affiliation=CRMDD, email=g},
 \end_layout
 
 \begin_layout Plain Layout
-\noindent
-\align left
 
-\series bold
-Guide No
-\series default
-: XXX.
- Please visit
-\begin_inset Newline newline
-\end_inset
-
-
-\series bold
-Keywords
-\series default
-: Rmarkdown
-\begin_inset Newline newline
-\end_inset
-
-See 
-\begin_inset Flex URL
-status open
-
-\begin_layout Plain Layout
-
-http://crmda.ku.edu/guides
-\end_layout
-
-\end_inset
-
- for updates.
+  thirdauthor={lastname=Author, firstname=Third, affiliation=i, email=g},
+ 
 \end_layout
 
 \begin_layout Plain Layout
-\begin_inset ERT
-status open
+
+  url={https://crmda.ku.edu/guides},
+\end_layout
+
+\begin_layout Plain Layout
+
+  keywords={single-authoring, just one},
+\end_layout
+
+\begin_layout Plain Layout
+
+  title={Another Very Long Title: With a Possibly Long Subtitle},
+\end_layout
+
+\begin_layout Plain Layout
+
+  leftlogo={theme/jayhawk.pdf},
+\end_layout
+
+\begin_layout Plain Layout
+
+  rightlogo={theme/CRMDAlogo-vert.pdf},
+\end_layout
+
+\begin_layout Plain Layout
+
+  number=48,
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
 
 \begin_layout Plain Layout
 
 
 \backslash
-smallskip
+guidehdr
 \end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="left" valignment="top" topline="true" bottomline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Box Frameless
-position "c"
-hor_pos "c"
-has_inner_box 1
-inner_pos "c"
-use_parbox 0
-use_makebox 0
-width "1.25in"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-\begin_inset VSpace smallskip
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\noindent
-\align left
-
-\shape smallcaps
-\size giant
-\begin_inset Graphics
-	filename theme/CRMDAlogo-vert.pdf
-	lyxscale 40
-	width 1.5in
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset VSpace medskip
-\end_inset
-
-
-\begin_inset Box Frameless
-position "c"
-hor_pos "c"
-has_inner_box 1
-inner_pos "c"
-use_parbox 0
-use_makebox 0
-width "1.25in"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-\begin_inset VSpace smallskip
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\noindent
-\align center
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-today
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-</lyxtabular>
 
 \end_inset
 
