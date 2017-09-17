@@ -1,6 +1,6 @@
 %% LyX 2.2.2 created this file.  For more info, see http://www.lyx.org/.
 %% Do not edit unless you really know what you are doing.
-\documentclass[11pt,letterpaper,english]{scrartcl}
+\documentclass[11pt,letterpaper,english]{extarticle}
 \usepackage{lmodern}
 \renewcommand{\sfdefault}{lmss}
 \renewcommand{\ttdefault}{lmtt}
@@ -24,7 +24,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
 % Following comment is required. Do not delete it.
 %\usepackage{Sweave}
-\usepackage{kuguide}
 
 \usepackage[includehead,includefoot]{geometry}
 \geometry{
@@ -43,6 +42,8 @@ footskip=1.5\baselineskip,
 \usepackage{graphicx}
 \usepackage{xcolor}
 \usepackage[yyyymmdd,hhmmss]{datetime}
+
+\input{theme/guide.tex}
 
 \def\Sweavesize{\scriptsize} 
 \def\Rcolor{\color{black}} 
@@ -76,36 +77,8 @@ footskip=1.5\baselineskip,
   numberstyle={\tiny}
 }%
 
-\lstset{style=Rstylecrmda}
 
-\usepackage{fancyhdr}
-\usepackage{lastpage}
-
-% Now fancy header/footer settings
-\lhead{}
-\chead{}
-\rhead{}
-\renewcommand{\headrulewidth}{0pt}
-\lfoot{}
-\cfoot{{Page} \thepage { of} \pageref{LastPage}}
-\rfoot{}
-
-\fancypagestyle{firststyle}
-{
-\lfoot{}
-%\cfoot{{Page} \thepage { of} \pageref{LastPage}}
-\cfoot{}
-\rfoot{}
-\renewcommand{\headrulewidth}{0pt}
-\fancyfoot[L]{1425 Jayhawk Blvd.\\470 Watson Library\\ Lawrence, KS 66045-7555}
-\fancyfoot[R]{Phone: 785-864-3353\\ Website: crmda.ku.edu\\ Email: crmda@ku.edu}
-\renewcommand{\footrulewidth}{.1pt}
-}
-
-\pagestyle{fancy}
-
-
-%graphics and such inside floats are centered by default
+%%BEGIN: graphics and such inside floats are centered by default
 \renewenvironment{figure}[1][]{%
  \ifthenelse{\equal{#1}{}}{%
    \@float{figure}
@@ -127,7 +100,9 @@ footskip=1.5\baselineskip,
 }{%
  \end@float
 }
+%%END: graphics and such inside floats are centered by default
 
+%%BEGIN: This begins the custom header
 \usepackage{array, tabularx}
 \usepackage{xparse}
 \ExplSyntaxOn
@@ -266,18 +241,87 @@ footskip=1.5\baselineskip,
   \end{tabularx}
 }
 \ExplSyntaxOff
+%%END This ends the custom header
 
 
+%% BEGIN: Footer
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+\ExplSyntaxOn
+\NewDocumentCommand \footersetup { +m }
+{
+\keys_set:nn { footer } { #1 }
+}
+\keys_define:nn { footer }
+{	
+    leftside .code:n = {
+\keys_set:nn { footer / leftside } { #1 }
+},
+rightside .code:n = {
+\keys_set:nn { footer / rightside } { #1 }
+},
+    leftside / lone .tl_set:N = \l_footer_leftside_lone_tl,
+    leftside / ltwo .tl_set:N = \l_footer_leftside_ltwo_tl,
+    leftside / lthree .tl_set:N = \l_footer_leftside_lthree_tl,
+    rightside / rone .tl_set:N = \l_footer_rightside_rone_tl,
+    rightside / rtwo .tl_set:N = \l_footer_rightside_rtwo_tl,
+    rightside / rthree .tl_set:N = \l_footer_rightside_rthree_tl,
+    leftside .initial:n = {lone = , ltwo = ~, lthree = ~ },
+    rightside .initial:n = {rone = ~, rtwo = ~,  rthree = ~},
+    leftside .default:n = {lone = , ltwo = ~, lthree = ~ },
+    rightside .default:n = {rone = ~, rtwo = ~,  rthree = ~},
+}
+\NewDocumentCommand \guideftr { +o }
+{
+  \IfValueT { #1 } 
+  {
+    \keys_set:nn { footer } { #1 }
+  }
+  \guide_ftr:
+}
+\cs_new_protected:Nn \guide_ftr:
+{
+  % Now fancy header/footer settings
+  \lhead{}%
+  \chead{}%
+  \rhead{}%
+  \renewcommand{\headrulewidth}{0pt}%
+  \lfoot{}%
+  \cfoot{{Page} \thepage { of} \pageref{LastPage}}%
+  \rfoot{}%
+
+  \fancypagestyle{firststyle}%
+  {%
+    \lhead{}%
+    \chead{}%
+    \rhead{}%
+    \lfoot{}%
+    \cfoot{}%
+    \rfoot{}%
+    \renewcommand{\headrulewidth}{0pt}%
+    \fancyfoot[L]{\l_footer_leftside_lone_tl {}\\%
+      \l_footer_leftside_ltwo_tl {}\\%
+      \l_footer_leftside_lone_tl {}}%
+    \fancyfoot[R]{\l_footer_rightside_rone_tl {}\\%
+      \l_footer_rightside_rtwo_tl {}\\%
+      \l_footer_rightside_rthree_tl {}%
+      \renewcommand{\footrulewidth}{.1pt}}%
+  }%
+  \thispagestyle{firststyle}
+}
+\ExplSyntaxOff
+
+\pagestyle{fancy}
+%% End of fancy footer setup
 
 
-
-
-%% Assume Lyx Loads hyperref
-\usepackage[hidelinks]{hyperref}
 \definecolor{darkblue}{HTML}{1e2277}
-\hypersetup{breaklinks=true, colorlinks=true, linkcolor=, urlcolor=darkblue}
-
-\thispagestyle{firststyle}
+\usepackage[unicode=true,pdfusetitle,
+bookmarks=true,bookmarksnumbered=false, bookmarksopen=false,
+breaklinks=true, pdfborder={0 0 0},
+pdfborderstyle={}, backref=false,
+colorlinks=true, urlcolor=darkblue] {hyperref}
 
 \makeatother
 
@@ -296,6 +340,18 @@ footskip=1.5\baselineskip,
   number=48,
 }
 \guidehdr
+
+%% Specify fully the left and right sides of footer, 3 lines
+%% If blanks are needed, must insert value " ~ "
+\footersetup{
+  leftside={lone=1425 Jayhawk Blvd., 
+  ltwo=470 Watson Library, 
+  lthree=Lawrence\, KS 66045-7555},
+  rightside={rone=\url{https://crmda.ku.edu},
+  rtwo=\href{mailto:crmda@ku.edu}{crmda@ku.edu},
+  rthree=Phone: 785-864-3353}
+}
+\guideftr
 
 <<echo=F>>=
 ##unlink("tmpout", recursive=T)
