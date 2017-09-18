@@ -8,29 +8,16 @@
 \usepackage[latin9]{inputenc}
 \setlength{\parskip}{\medskipamount}
 \setlength{\parindent}{0pt}
-\usepackage{color}
-\usepackage{babel}
-\usepackage{array}
-\usepackage{url}
-\usepackage{graphicx}
-\usepackage[unicode=true,pdfusetitle,
- bookmarks=true,bookmarksnumbered=false,bookmarksopen=false,
- breaklinks=true,pdfborder={0 0 0},pdfborderstyle={},backref=false,colorlinks=true]
- {hyperref}
-\usepackage{breakurl}
 
 \makeatletter
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
 \special{papersize=\the\paperwidth,\the\paperheight}
 
-%% Because html converters don't know tabularnewline
-\providecommand{\tabularnewline}{\\}
 
 \@ifundefined{date}{}{\date{}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
-\usepackage[includehead,includefoot]{geometry}
-\geometry{
+\usepackage[includehead, includefoot,
 lmargin=1in,
 rmargin=1in,
 tmargin=0.75in,
@@ -39,7 +26,7 @@ headheight=0pt,
 headsep=0pt,
 marginparwidth=0pt,
 footskip=1.5\baselineskip,
-}
+]{geometry}
 
 \usepackage{multicol}
 \usepackage{listings}
@@ -54,7 +41,7 @@ footskip=1.5\baselineskip,
 
 \usepackage{listings}
 \usepackage{upquote, fancyvrb, relsize, ae}
-\lstdefinestyle{Rstylecrmda}{
+\lstdefinestyle{custom}{
   language=R,
   escapechar=`,
   fancyvrb=false,%
@@ -82,133 +69,56 @@ footskip=1.5\baselineskip,
   numberstyle={\tiny}
 }%
 
-\lstset{style=Rstylecrmda}
+\lstset{style=custom}
 
 
-\usepackage{fancyhdr}
-\usepackage{lastpage}
-\usepackage{babel}
-% Now fancy header/footer settings
-\lhead{}
-\chead{}
-\rhead{}
-\renewcommand{\headrulewidth}{0pt}
-\lfoot{}
-\cfoot{{Page} \thepage { of} \pageref{LastPage}}
-\rfoot{}
-
-\fancypagestyle{firststyle}
-{
-\lfoot{}
-%\cfoot{{Page} \thepage { of} \pageref{LastPage}}
-\cfoot{}
-\rfoot{}
-\renewcommand{\headrulewidth}{0pt}
-\fancyfoot[L]{1425 Jayhawk Blvd.\\470 Watson Library\\ Lawrence, KS 66045-7555}
-\fancyfoot[R]{Phone: 785-864-3353\\ Website: crmda.ku.edu\\ Email: crmda@ku.edu}
-\renewcommand{\footrulewidth}{.1pt}
-}
-
-\pagestyle{fancy}
-
-
-%graphics and such inside floats are centered by default
-\renewenvironment{figure}[1][]{%
- \ifthenelse{\equal{#1}{}}{%
-   \@float{figure}
- }{%
-   \@float{figure}[#1]%
- }%
- \centering
-}{%
- \end@float
-}
-\renewenvironment{table}[1][]{%
- \ifthenelse{\equal{#1}{}}{%
-   \@float{table}
- }{%
-   \@float{table}[#1]%
- }%
-
- \centering
-}{%
- \end@float
-}
-
-%% Assume Lyx Loads hyperref
-%% \usepackage[hidelinks]{hyperref}
-\definecolor{darkblue}{HTML}{1e2277}
-\hypersetup{breaklinks=true, colorlinks=true, linkcolor=, urlcolor=darkblue}
-
-\thispagestyle{firststyle}
+\input{theme/guidePreambleHeader.tex}
+\input{theme/preambleFooter.tex}
+\input{theme/preambleFloatCenter.tex}
+%% Load Hyperref, don't let LyX do this
+\input{theme/preambleHyperref.tex}
 
 \makeatother
 
+\usepackage{babel}
 \begin{document}
-\begin{tabular}{|>{\centering}p{1.25in}>{\raggedright}p{3.5in}>{\raggedleft}p{2in}|}
-\hline 
-\begin{minipage}[c]{1.25in}%
-\begin{center}
-\textsc{\includegraphics[width=1.25in]{theme/jayhawk}}
-\par\end{center}%
-\end{minipage} & %
-\begin{minipage}[c][1\totalheight][b]{3.5in}%
-\bigskip
-\begin{center}
-\textsc{\Huge{}}%
-\begin{minipage}[t][1\totalheight][b]{1\columnwidth}%
-\begin{center}
-\textbf{\large{}Title, Possibly Long: Written in Title Case in Bold
-Face}\\
-\rule[0.5ex]{1\linewidth}{1pt}
-\par\end{center}%
-\end{minipage}
-\par\end{center}{\Huge \par}
-\begin{minipage}[t]{1\columnwidth}%
-\begin{center}
-\textbf{Firstname1 Lastname1}, CRMDA <email1@ku.edu>\\
-\textbf{Firstname2 Lastname2}, CRMDA <email2@ku.edu>
-\par\end{center}%
-\end{minipage}
+%%Fill in values of the arguments here. 
+%% Delete secondauthor and thirdauthor if not needed
+%% MUST ESCAPE Commas in values! See lthree example of that
+\guidesetup{%
+  firstauthor={last name=Author , first name=First, affiliation=CRMDA,
+    email=lone.edu},
+  secondauthor={lastname=Author, firstname=Second, affiliation=CRMDA, email=g},
+  thirdauthor={lastname=Author, firstname=Third, affiliation=i, email=g}, 
+  url={https://crmda.ku.edu/guides},
+  keywords={single-authoring, just one},
+  title={Another Very Long Title: With a Possibly Long Subtitle},
+  leftlogo={theme/jayhawk.pdf},
+  rightlogo={theme/CRMDAlogo-vert.pdf},
+  number=48,
+}
+\guidehdr
 
-\smallskip{}
-
-\begin{flushleft}
-\textbf{Guide No}: XXX. Please visit\\
-\textbf{Keywords}: Rmarkdown\\
-See \url{http://crmda.ku.edu/guides} for updates.
-\par\end{flushleft}
-\smallskip%
-\end{minipage} & %
-\begin{minipage}[c]{1.75in}%
-\smallskip{}
-
-\begin{center}
-\textsc{\Huge{}\includegraphics[width=1.75in]{theme/CRMDAlogo-vert}}
-\par\end{center}{\Huge \par}%
-\end{minipage}
-
-\begin{minipage}[c]{1.75in}%
-\smallskip{}
-
-\begin{center}
-\today
-\par\end{center}%
-\end{minipage}\tabularnewline
-\hline 
-\end{tabular}
+%% Specify fully the left and right sides of footer, 3 lines
+%% If blanks are needed, must insert value " ~ "
+\footersetup{
+  leftside={
+    lone=1425 Jayhawk Blvd., 
+    ltwo=470 Watson Library, 
+    lthree=Lawrence\, KS 66045-7555},
+  rightside={
+    rone=\url{https://crmda.ku.edu},
+    rtwo=\href{mailto:crmda@ku.edu}{crmda@ku.edu},
+    rthree=Phone: 785-864-3353}
+}
+\guideftr
 
 <<echo=F>>=
 ##unlink("tmpout", recursive=T)
 if(!dir.exists("tmpout")) dir.create("tmpout", showWarnings=FALSE)
 @
 
-% In document Latex options:
-% THE FOLLOWING LINE CAUSES AN ERROR AND DOCUMENT DOES NOT COMPILE
-% \fvset{listparameters={\setlength{\topsep}{0em}}}
-% \SweaveOpts{prefix.string=tmpout/t,split=T,ae=F,height=3,width=5}
-
-<<include=F>>=
+<<include=FALSE>>=
 library(knitr)
 opts_chunk$set(fig.path="tmpout/t-", split=TRUE, ae=FALSE, fig.height=3, fig.width=5, comment=NA)
 @
@@ -223,12 +133,16 @@ pdf.options(onefile=FALSE,family="Times",pointsize=10)
 
 Leave the chunks before this
 
-\section{Write your sections \& subsections here}
+\section{Write Sections \& Subsections here}
 
 The next thing should be the last section. Please leave the last section
 as it is for guide documents.
 
-\section{Test a code chunk}
+\section{Test a Code Chunk}
+
+If you choose to use knitr rather than Sweave as the chunk-processor,
+you should study the knitr chunk options. There are some truly different
+features.
 
 <<norm10>>=
 x <- rnorm(100)
@@ -236,8 +150,13 @@ head(x)
 mean(x)
 @
 
-\section{Don't use LyX to change geometry or margins. That is written into
-the preamble}
+\section{LyX Caution}
+
+Don't use LyX to change geometry or margins or hyperlink settings. 
+
+The geometry and hyperlink values are set into the preamble. Don't
+use LyX menus to adjust them, or else document will not compile (contradictory
+settings will result)
 
 \section{Session Info}
 

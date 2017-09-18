@@ -6,8 +6,7 @@
 \origin unavailable
 \textclass scrartcl
 \begin_preamble
-\usepackage[includehead,includefoot]{geometry}
-\geometry{
+\usepackage[includehead, includefoot,
 lmargin=1in,
 rmargin=1in,
 tmargin=0.75in,
@@ -16,7 +15,7 @@ headheight=0pt,
 headsep=0pt,
 marginparwidth=0pt,
 footskip=1.5\baselineskip,
-}
+]{geometry}
 
 \usepackage{multicol}
 \usepackage{listings}
@@ -31,7 +30,7 @@ footskip=1.5\baselineskip,
 
 \usepackage{listings}
 \usepackage{upquote, fancyvrb, relsize, ae}
-\lstdefinestyle{Rstylecrmda}{
+\lstdefinestyle{custom}{
   language=R,
   escapechar=`,
   fancyvrb=false,%
@@ -59,65 +58,14 @@ footskip=1.5\baselineskip,
   numberstyle={\tiny}
 }%
 
-\lstset{style=Rstylecrmda}
+\lstset{style=custom}
 
 
-\usepackage{fancyhdr}
-\usepackage{lastpage}
-\usepackage{babel}
-% Now fancy header/footer settings
-\lhead{}
-\chead{}
-\rhead{}
-\renewcommand{\headrulewidth}{0pt}
-\lfoot{}
-\cfoot{{Page} \thepage { of} \pageref{LastPage}}
-\rfoot{}
-
-\fancypagestyle{firststyle}
-{
-\lfoot{}
-%\cfoot{{Page} \thepage { of} \pageref{LastPage}}
-\cfoot{}
-\rfoot{}
-\renewcommand{\headrulewidth}{0pt}
-\fancyfoot[L]{1425 Jayhawk Blvd.\\470 Watson Library\\ Lawrence, KS 66045-7555}
-\fancyfoot[R]{Phone: 785-864-3353\\ Website: crmda.ku.edu\\ Email: crmda@ku.edu}
-\renewcommand{\footrulewidth}{.1pt}
-}
-
-\pagestyle{fancy}
-
-
-%graphics and such inside floats are centered by default
-\renewenvironment{figure}[1][]{%
- \ifthenelse{\equal{#1}{}}{%
-   \@float{figure}
- }{%
-   \@float{figure}[#1]%
- }%
- \centering
-}{%
- \end@float
-}
-\renewenvironment{table}[1][]{%
- \ifthenelse{\equal{#1}{}}{%
-   \@float{table}
- }{%
-   \@float{table}[#1]%
- }%
-
- \centering
-}{%
- \end@float
-}
-
-%% Assume Lyx Loads hyperref
-%% \usepackage[hidelinks]{hyperref}
-\definecolor{darkblue}{HTML}{1e2277}
-\hypersetup{breaklinks=true, colorlinks=true, linkcolor=, urlcolor=darkblue}
-
-\thispagestyle{firststyle}
+\input{theme/guidePreambleHeader.tex}
+\input{theme/preambleFooter.tex}
+\input{theme/preambleFloatCenter.tex}
+%% Load Hyperref, don't let LyX do this
+\input{theme/preambleHyperref.tex}
 \end_preamble
 \use_default_options false
 \begin_modules
@@ -146,7 +94,7 @@ knitr
 \index_command default
 \paperfontsize 11
 \spacing single
-\use_hyperref true
+\use_hyperref false
 \pdf_bookmarks true
 \pdf_bookmarksnumbered false
 \pdf_bookmarksopen false
@@ -204,358 +152,173 @@ knitr
 
 \begin_layout Standard
 \noindent
-\begin_inset Tabular
-<lyxtabular version="3" rows="1" columns="3">
-<features tabularvalignment="middle">
-<column alignment="center" valignment="top" width="1.25in">
-<column alignment="left" valignment="top" width="3.5in">
-<column alignment="right" valignment="top" width="2in">
-<row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Box Frameless
-position "c"
-hor_pos "c"
-has_inner_box 1
-inner_pos "c"
-use_parbox 0
-use_makebox 0
-width "1.25in"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-\noindent
-\align center
-
-\shape smallcaps
-\begin_inset Graphics
-	filename theme/jayhawk.pdf
-	lyxscale 40
-	width 1.25in
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="left" valignment="top" topline="true" bottomline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Box Frameless
-position "c"
-hor_pos "c"
-has_inner_box 1
-inner_pos "b"
-use_parbox 0
-use_makebox 0
-width "3.5in"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
 \begin_inset ERT
-status open
+status collapsed
+
+\begin_layout Plain Layout
+
+%%Fill in values of the arguments here.
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+%% Delete secondauthor and thirdauthor if not needed
+\end_layout
+
+\begin_layout Plain Layout
+
+%% MUST ESCAPE Commas in values! See lthree example of that
+\end_layout
 
 \begin_layout Plain Layout
 
 
 \backslash
-bigskip
-\end_layout
-
-\end_inset
-
-
+guidesetup{%
 \end_layout
 
 \begin_layout Plain Layout
-\noindent
-\align center
 
-\shape smallcaps
-\size giant
-\begin_inset Box Frameless
-position "t"
-hor_pos "c"
-has_inner_box 1
-inner_pos "b"
-use_parbox 0
-use_makebox 0
-width "100col%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-\noindent
-\align center
-
-\series bold
-\size large
-Title, Possibly Long: Written in Title Case in Bold Face
-\begin_inset Newline newline
-\end_inset
-
-
-\series default
-\size default
-
-\begin_inset CommandInset line
-LatexCommand rule
-offset "0.5ex"
-width "100line%"
-height "1pt"
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
+  firstauthor={last name=Author , first name=First, affiliation=CRMDA,
 \end_layout
 
 \begin_layout Plain Layout
-\begin_inset Box Frameless
-position "t"
-hor_pos "c"
-has_inner_box 1
-inner_pos "t"
-use_parbox 0
-use_makebox 0
-width "100col%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
 
-\begin_layout Plain Layout
-\noindent
-\align center
-
-\series bold
-Firstname1 Lastname1
-\series default
-, CRMDA <email1@ku.edu>
-\begin_inset Newline newline
-\end_inset
-
-
-\series bold
-Firstname2 Lastname2
-\series default
-, CRMDA <email2@ku.edu>
-\end_layout
-
-\end_inset
-
-
+    email=lone.edu},
 \end_layout
 
 \begin_layout Plain Layout
-\begin_inset VSpace smallskip
-\end_inset
 
-
+  secondauthor={lastname=Author, firstname=Second, affiliation=CRMDA, email=g},
 \end_layout
 
 \begin_layout Plain Layout
-\noindent
-\align left
 
-\series bold
-Guide No
-\series default
-: XXX.
- Please visit
-\begin_inset Newline newline
-\end_inset
-
-
-\series bold
-Keywords
-\series default
-: Rmarkdown
-\begin_inset Newline newline
-\end_inset
-
-See 
-\begin_inset Flex URL
-status open
-
-\begin_layout Plain Layout
-
-http://crmda.ku.edu/guides
-\end_layout
-
-\end_inset
-
- for updates.
+  thirdauthor={lastname=Author, firstname=Third, affiliation=i, email=g},
+ 
 \end_layout
 
 \begin_layout Plain Layout
-\begin_inset ERT
-status open
+
+  url={https://crmda.ku.edu/guides},
+\end_layout
+
+\begin_layout Plain Layout
+
+  keywords={single-authoring, just one},
+\end_layout
+
+\begin_layout Plain Layout
+
+  title={Another Very Long Title: With a Possibly Long Subtitle},
+\end_layout
+
+\begin_layout Plain Layout
+
+  leftlogo={theme/jayhawk.pdf},
+\end_layout
+
+\begin_layout Plain Layout
+
+  rightlogo={theme/CRMDAlogo-vert.pdf},
+\end_layout
+
+\begin_layout Plain Layout
+
+  number=48,
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
 
 \begin_layout Plain Layout
 
 
 \backslash
-smallskip
+guidehdr
 \end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="right" valignment="top" topline="true" bottomline="true" rightline="true" usebox="none">
-\begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Box Frameless
-position "c"
-hor_pos "c"
-has_inner_box 1
-inner_pos "c"
-use_parbox 0
-use_makebox 0
-width "1.75in"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-\begin_inset VSpace smallskip
-\end_inset
-
 
 \end_layout
 
 \begin_layout Plain Layout
-\noindent
-\align center
 
-\shape smallcaps
-\size giant
-\begin_inset Graphics
-	filename theme/CRMDAlogo-vert.pdf
-	lyxscale 40
-	width 1.75in
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
+%% Specify fully the left and right sides of footer, 3 lines
 \end_layout
 
 \begin_layout Plain Layout
-\begin_inset Box Frameless
-position "c"
-hor_pos "c"
-has_inner_box 1
-inner_pos "c"
-use_parbox 0
-use_makebox 0
-width "1.75in"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
 
-\begin_layout Plain Layout
-\begin_inset VSpace smallskip
-\end_inset
-
-
+%% If blanks are needed, must insert value " ~ "
 \end_layout
-
-\begin_layout Plain Layout
-\noindent
-\align center
-\begin_inset ERT
-status open
 
 \begin_layout Plain Layout
 
 
 \backslash
-today
+footersetup{
 \end_layout
 
-\end_inset
+\begin_layout Plain Layout
 
-
+  leftside={
 \end_layout
 
-\end_inset
+\begin_layout Plain Layout
 
-
+    lone=1425 Jayhawk Blvd., 
 \end_layout
 
-\end_inset
-</cell>
-</row>
-</lyxtabular>
+\begin_layout Plain Layout
+
+    ltwo=470 Watson Library, 
+\end_layout
+
+\begin_layout Plain Layout
+
+    lthree=Lawrence
+\backslash
+, KS 66045-7555},
+\end_layout
+
+\begin_layout Plain Layout
+
+  rightside={
+\end_layout
+
+\begin_layout Plain Layout
+
+    rone=
+\backslash
+url{https://crmda.ku.edu},
+\end_layout
+
+\begin_layout Plain Layout
+
+    rtwo=
+\backslash
+href{mailto:crmda@ku.edu}{crmda@ku.edu},
+\end_layout
+
+\begin_layout Plain Layout
+
+    rthree=Phone: 785-864-3353}
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+guideftr
+\end_layout
 
 \end_inset
 
@@ -597,44 +360,7 @@ status open
 
 \begin_layout Plain Layout
 
-% In document Latex options:
-\end_layout
-
-\begin_layout Plain Layout
-
-% THE FOLLOWING LINE CAUSES AN ERROR AND DOCUMENT DOES NOT COMPILE
-\end_layout
-
-\begin_layout Plain Layout
-
-% 
-\backslash
-fvset{listparameters={
-\backslash
-setlength{
-\backslash
-topsep}{0em}}}
-\end_layout
-
-\begin_layout Plain Layout
-
-% 
-\backslash
-SweaveOpts{prefix.string=tmpout/t,split=T,ae=F,height=3,width=5}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-<<include=F>>=
+<<include=FALSE>>=
 \end_layout
 
 \begin_layout Plain Layout
@@ -707,7 +433,7 @@ Leave the chunks before this
 \end_layout
 
 \begin_layout Section
-Write your sections & subsections here
+Write Sections & Subsections here
 \end_layout
 
 \begin_layout Standard
@@ -716,7 +442,13 @@ The next thing should be the last section.
 \end_layout
 
 \begin_layout Section
-Test a code chunk
+Test a Code Chunk
+\end_layout
+
+\begin_layout Standard
+If you choose to use knitr rather than Sweave as the chunk-processor, you
+ should study the knitr chunk options.
+ There are some truly different features.
 \end_layout
 
 \begin_layout Standard
@@ -754,8 +486,18 @@ mean(x)
 \end_layout
 
 \begin_layout Section
-Don't use LyX to change geometry or margins.
- That is written into the preamble
+LyX Caution
+\end_layout
+
+\begin_layout Standard
+Don't use LyX to change geometry or margins or hyperlink settings.
+ 
+\end_layout
+
+\begin_layout Standard
+The geometry and hyperlink values are set into the preamble.
+ Don't use LyX menus to adjust them, or else document will not compile (contradi
+ctory settings will result)
 \end_layout
 
 \begin_layout Section
