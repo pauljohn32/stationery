@@ -19,19 +19,17 @@ addr:
     r1: "Phone: 785-864-3353"
     r2: "Web: http://crmda.ku.edu"
     r3: "Email: crmda@ku.edu"
-logoleft: theme/jayhawk.pdf
-logoright: theme/CRMDAlogo-vert.pdf
+logoleft: "theme/jayhawk.pdf"
+logoright: "theme/CRMDAlogo-vert.pdf"
 output: 
   pdf_document:
-    keep_tex: false
-    fig_caption: true
-    latex_engine: pdflatex
-    highlight: haddock
     citation_package: natbib
+    fig_caption: yes
+    highlight: haddock
     pandoc_args: [
-      "--listings"
+        --listings
     ]
-    template: theme/guide-boilerplate.tex
+    template: "theme/guide-boilerplate.tex"
 fontsize: 11pt
 header-includes:
 - \usepackage{xcolor}

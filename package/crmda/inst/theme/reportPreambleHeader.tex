@@ -1,0 +1,108 @@
+
+% $ This nullifies emacs subscripting in following%
+%%BEGIN: This begins the custom header
+\usepackage{array, tabularx}
+\usepackage{xparse}
+\usepackage{setspace}
+\ExplSyntaxOn
+\NewDocumentCommand \reportsetup { +m }
+{
+  \bool_set_false:N \l_report_twoauthors_bool
+  \bool_set_false:N \l_report_threeauthors_bool
+  \keys_set:nn { report } { #1 }
+}
+\keys_define:nn { report }
+{
+    firstauthor .code:n = {
+      \keys_set:nn { report / firstauthor } { #1 }
+    },
+    secondauthor .code:n = {
+      \keys_set:nn { report } { twoauthors }
+      \keys_set:nn { report / secondauthor } { #1 }
+    },
+    thirdauthor .code:n = {
+      \keys_set:nn { report } { threeauthors }
+      \keys_set:nn { report / thirdauthor } { #1 }
+    },
+    twoauthors .bool_set:N = \l_report_twoauthors_bool,
+    twoauthors .default:n = true,
+    twoauthors .initial:n = false,
+    threeauthors .bool_set:N = \l_report_threeauthors_bool,
+    threeauthors .default:n = true,
+    threeauthors .initial:n = false,
+    firstauthor / firstname .tl_set:N = \l_report_first_firstname_tl,
+    firstauthor / lastname .tl_set:N = \l_report_first_lastname_tl,
+    firstauthor / affiliation .tl_set:N = \l_report_first_affil_tl,
+    firstauthor / email .tl_set:N = \l_report_first_email_tl,
+    secondauthor / firstname .tl_set:N = \l_report_second_firstname_tl,
+    secondauthor / lastname .tl_set:N = \l_report_second_lastname_tl,
+    secondauthor / affiliation .tl_set:N = \l_report_second_affil_tl,
+    secondauthor / email .tl_set:N = \l_report_second_email_tl,
+    thirdauthor / firstname .tl_set:N = \l_report_third_firstname_tl,
+    thirdauthor / lastname .tl_set:N = \l_report_third_lastname_tl,
+    thirdauthor / affiliation .tl_set:N = \l_report_third_affil_tl,
+    thirdauthor / email .tl_set:N = \l_report_third_email_tl,
+    rightlogo .tl_set:N = \l_report_rightlogo_tl,
+    title .tl_set:N = \l_report_title_tl,
+    firstauthor .initial:n = { firstname = a, lastname = b,
+      affiliation = c, email = d},
+    secondauthor .initial:n = { firstname = g, lastname = h,
+      affiliation = i, email = j},
+    thirdauthor .initial:n = { firstname = g, lastname = h,
+      affiliation = i, email = j},
+    title .initial:n = {Report ~ to ~ Reports},
+}
+\NewDocumentCommand \reporthdr { +o }
+{
+  \group_begin:
+    \IfValueT { #1 } 
+    {
+      \bool_set_false:N \l_report_twoauthors_bool 
+      \keys_set:nn { report } { #1 }
+    }
+    \report_hdr:
+    \group_end:
+}
+\cs_new_protected:Nn \report_hdr:
+{
+  \noindent
+  \begin{minipage}[t]{1\columnwidth}%
+    \begin{center}
+      \begin{tabular}[t]{>{\raggedright}p{4in}>{\centering}p{2.25in}}
+        \hline 
+        \medskip{}
+        \textsc{\Large{}\l_report_title_tl}{\par}
+        \medskip{}
+        & \medskip{}
+          \includegraphics[width=2in]{\l_report_rightlogo_tl}\tabularnewline
+          \hline 
+          \multicolumn{2}{>{\raggedright}p{5in}}{\medskip{}
+          
+          \textbf{\l_report_first_firstname_tl {} ~ \l_report_first_lastname_tl}, ~\l_report_first_affil_tl {} ~ <\href{mailto:\l_report_first_email_tl}{\l_report_first_email_tl}>
+          \bool_if:NT \l_report_twoauthors_bool
+          {
+        \\
+        \textbf{\l_report_second_firstname_tl {} ~ \l_report_second_lastname_tl}, ~\l_report_second_affil_tl {} ~ <\href{mailto:\l_report_second_email_tl}{\l_report_second_email_tl} >
+        }
+        \bool_if:NT \l_report_threeauthors_bool
+        {
+        \\
+        \textbf{\l_report_third_firstname_tl {} ~ \l_report_third_lastname_tl}, ~\l_report_third_affil_tl {} ~ <\href{mailto:\l_report_third_email_tl}{\l_report_third_email_tl} >
+        }
+        \par
+
+        \begin{singlespace}
+          \raggedright{}\textbf{\today}
+        \end{singlespace}
+        }\tabularnewline
+        \hline 
+      \end{tabular}
+      \par
+    \end{center}
+    \medskip{}
+    % 
+  \end{minipage}
+}
+\ExplSyntaxOff
+%%END This ends the custom header
+

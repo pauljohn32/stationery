@@ -8,10 +8,8 @@
 \begin_preamble
 % Don't remove next commented line, its needed to fool Sweave
 %\usepackage{Sweave}
-\usepackage{kureport}
 
-\usepackage[includehead,includefoot]{geometry}
-\geometry{
+\usepackage[includehead,includefoot,
 lmargin=1in,
 rmargin=1in,
 tmargin=0.75in,
@@ -20,12 +18,12 @@ headheight=0pt,
 headsep=0pt,
 marginparwidth=0pt,
 footskip=1.5\baselineskip,
-}
+]{geometry}
 
 \usepackage{multicol}
 \usepackage{listings}
 \usepackage{graphicx}
-\usepackage{color}
+\usepackage{xcolor}
 \usepackage[yyyymmdd,hhmmss]{datetime}
 
 % May be customized for this document
@@ -50,86 +48,21 @@ footskip=1.5\baselineskip,
 }
 
 
-\usepackage{fancyhdr}
-\usepackage{lastpage}
-\usepackage{babel}
-% Now fancy header/footer settings
-\lhead{}
-\chead{}
-\rhead{}
-\renewcommand{\headrulewidth}{0pt}
-\lfoot{}
-\cfoot{{Page} \thepage { of} \pageref{LastPage}}
-\rfoot{}
-
-\fancypagestyle{firststyle}
-{
-\lfoot{}
-%\cfoot{{Page} \thepage { of} \pageref{LastPage}}
-\cfoot{}
-\rfoot{}
-\renewcommand{\headrulewidth}{0pt}
-\fancyfoot[L]{1425 Jayhawk Blvd.\\470 Watson Library\\ Lawrence, KS 66045-7555}
-\fancyfoot[R]{Phone: 785-864-3353\\ Website: crmda.ku.edu\\ Email: crmda@ku.edu}
-\renewcommand{\footrulewidth}{.1pt}
-}
-
-\pagestyle{fancy}
-
-
-%graphics and such inside floats are centered by default
-\renewenvironment{figure}[1][]{%
- \ifthenelse{\equal{#1}{}}{%
-   \@float{figure}
- }{%
-   \@float{figure}[#1]%
- }%
- \centering
-}{%
- \end@float
-}
-\renewenvironment{table}[1][]{%
- \ifthenelse{\equal{#1}{}}{%
-   \@float{table}
- }{%
-   \@float{table}[#1]%
- }%
-
- \centering
-%  \setlength{\@tempdima}{\abovecaptionskip}%
-%  \setlength{\abovecaptionskip}{\belowcaptionskip}%
-% \setlength{\belowcaptionskip}{\@tempdima}%
-}{%
- \end@float
-}
-
-\thispagestyle{firststyle}
-
 \usepackage{dcolumn}
 \usepackage{booktabs}
 \usepackage{multicol}
 \usepackage{graphicx}
 
 
+\input{theme/reportPreambleHeader.tex}
+\input{theme/preambleFooter.tex}
+\input{theme/preambleFloatCenter.tex}
+%% Load Hyperref, don't let LyX do this
+\input{theme/preambleHyperref.tex}
+\input{theme/reportPreambleSweavel.tex}
 
-%% PJ 20161110
-%% I want to use listings in the document and I want nice/same as knitr.
-%% Does knitr provide all of these settings for other listing uses outside
-%% weaved part?
 \usepackage{fancyvrb}
 \fvset{listparameters={\setlength{\topsep}{0em}}}
-
-%\def\Sweavesize{\normalsize} 
-%\def\Rcolor{\color{black}} 
-%\def\Rbackground{\color[gray]{0.95}}
-%\providecommand{\Rcolor}{\color[rgb]{0, 0.5, 0.5}}
-%%\providecommand{\Routcolor}{\color[rgb]{0.461, 0.039, 0.102}}
-%\providecommand{\Routcolor}{\color[rgb]{1.0, 0.0, 0.0}}
-%\providecommand{\Rcommentcolor}{\color[rgb]{0.101, 0.043, 0.432}}
-
-%\providecommand{\Rbackground}{\color[gray]{0.95}}
-%\providecommand{\Routbackground}{\color[gray]{0.80}}
-% Can specify \color[gray]{1} for white background or just \color{white}
 \end_preamble
 \use_default_options false
 \begin_modules
@@ -211,163 +144,156 @@ sweave
 \begin_body
 
 \begin_layout Standard
-\begin_inset Box Frameless
-position "t"
-hor_pos "c"
-has_inner_box 1
-inner_pos "t"
-use_parbox 0
-use_makebox 0
-width "100col%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
 \noindent
-\align center
-\begin_inset Tabular
-<lyxtabular version="3" rows="2" columns="2">
-<features tabularvalignment="top">
-<column alignment="left" valignment="top" width="4in">
-<column alignment="center" valignment="top" width="2.25in">
-<row>
-<cell alignment="left" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset VSpace defskip
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-
-\shape smallcaps
-\size larger
-Title of this Document: A Subtitle that may Flow onto Additional Space if
- Necessary
-\end_layout
-
-\begin_layout Plain Layout
-\noindent
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset VSpace defskip
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset VSpace medskip
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Graphics
-	filename theme/CRMDAlogo.pdf
-	width 2in
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell multicolumn="1" alignment="left" valignment="top" topline="true" bottomline="true" usebox="none" width="5in">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset VSpace defskip
-\end_inset
-
-Author One, Title, CRMDA <email@ku.edu>
-\end_layout
-
-\begin_layout Plain Layout
-Author Two, Title, CRMDA <email@ku.edu>
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Will insert correct date.
- Replace following if you want fixed date.
- 
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\paragraph_spacing single
-\noindent
-\align left
-
-\series bold
 \begin_inset ERT
 status open
 
 \begin_layout Plain Layout
 
+%%Fill in values of the arguments here.
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+%% Delete secondauthor and thirdauthor if not needed
+\end_layout
+
+\begin_layout Plain Layout
+
+%% MUST ESCAPE Commas in values! See lthree example of that
+\end_layout
+
+\begin_layout Plain Layout
+
 
 \backslash
-today
+reportsetup{%
 \end_layout
 
-\end_inset
+\begin_layout Plain Layout
 
-
+  firstauthor={last name=Author , first name=First, affiliation=CRMDA,
 \end_layout
 
-\end_inset
-</cell>
-<cell multicolumn="2" alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
-\begin_inset Text
+\begin_layout Plain Layout
+
+    email=first@ku.edu},
+\end_layout
+
+\begin_layout Plain Layout
+
+  secondauthor={lastname=Author, firstname=Second, affiliation=CRMDA, email=seco
+nd@ku.edu},
+\end_layout
+
+\begin_layout Plain Layout
+
+  thirdauthor={lastname=Author, firstname=Third, affiliation=Institute of
+ Knowledge, email=third@ku.edu}, 
+\end_layout
+
+\begin_layout Plain Layout
+
+  title={Another Very Long Title: With a Possibly Long Subtitle},
+\end_layout
+
+\begin_layout Plain Layout
+
+  rightlogo={theme/CRMDAlogo.pdf},
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+reporthdr
+\end_layout
 
 \begin_layout Plain Layout
 
 \end_layout
 
-\end_inset
-</cell>
-</row>
-</lyxtabular>
-
-\end_inset
-
+\begin_layout Plain Layout
 
 \end_layout
 
 \begin_layout Plain Layout
-\begin_inset VSpace medskip
-\end_inset
+
+%% Specify fully the left and right sides of footer, 3 lines
+\end_layout
+
+\begin_layout Plain Layout
+
+%% If blanks are needed, must insert value " ~ "
+\end_layout
+
+\begin_layout Plain Layout
 
 
+\backslash
+footersetup{
+\end_layout
+
+\begin_layout Plain Layout
+
+  leftside={
+\end_layout
+
+\begin_layout Plain Layout
+
+    lone=1425 Jayhawk Blvd., 
+\end_layout
+
+\begin_layout Plain Layout
+
+    ltwo={Watson Library, Suite 470}, 
+\end_layout
+
+\begin_layout Plain Layout
+
+    lthree={Lawrence, KS 66045-7594}},
+\end_layout
+
+\begin_layout Plain Layout
+
+  rightside={
+\end_layout
+
+\begin_layout Plain Layout
+
+    rone=
+\backslash
+url{https://crmda.ku.edu},
+\end_layout
+
+\begin_layout Plain Layout
+
+    rtwo=
+\backslash
+href{mailto:crmda@ku.edu}{crmda@ku.edu},
+\end_layout
+
+\begin_layout Plain Layout
+
+    rthree=Phone: 785-864-3353}
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+guideftr
 \end_layout
 
 \end_inset

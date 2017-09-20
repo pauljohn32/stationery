@@ -1,0 +1,25 @@
+
+
+%%BEGIN: graphics and such inside floats are centered by default
+\renewenvironment{figure}[1][]{%
+ \ifthenelse{\equal{#1}{}}{%
+   \@float{figure}
+ }{%
+   \@float{figure}[#1]%
+ }%
+ \centering
+}{%
+ \end@float
+}
+\renewenvironment{table}[1][]{%
+ \ifthenelse{\equal{#1}{}}{%
+   \@float{table}
+ }{%
+   \@float{table}[#1]%
+ }%
+
+ \centering
+}{%
+ \end@float
+}
+%%END: graphics and such inside floats are centered by default
