@@ -301,22 +301,74 @@ guideftr
 \end_layout
 
 \begin_layout Standard
+
+\lang english
 \begin_inset ERT
 status open
 
 \begin_layout Plain Layout
 
-<<echo=F>>=
+<<texcopy, include=FALSE>>=
 \end_layout
 
 \begin_layout Plain Layout
 
-##unlink("tmpout", recursive=T)
+library(kutils)
 \end_layout
 
 \begin_layout Plain Layout
 
-if(!dir.exists("tmpout")) dir.create("tmpout", showWarnings=FALSE)
+## If theme directory does not have required images or TeX files
+\end_layout
+
+\begin_layout Plain Layout
+
+## we need to retrieve them and put them in "theme" directory.
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+logos <- c(logoleft = "jayhawk.pdf", 
+\end_layout
+
+\begin_layout Plain Layout
+
+            logoright = "CRMDAlogo-vert.pdf")
+\end_layout
+
+\begin_layout Plain Layout
+
+texfiles <- c("guidePreambleHeader.tex", 
+\end_layout
+
+\begin_layout Plain Layout
+
+              "preambleFooter.tex", 
+\end_layout
+
+\begin_layout Plain Layout
+
+              "preambleFloatCenter.tex",  
+\end_layout
+
+\begin_layout Plain Layout
+
+              "preambleHyperref.tex")
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+kutils::getFiles(logos, pkg = "crmda")
+\end_layout
+
+\begin_layout Plain Layout
+
+kutils::getFiles(texfiles, pkg = "crmda")
 \end_layout
 
 \begin_layout Plain Layout
@@ -335,39 +387,12 @@ status open
 
 \begin_layout Plain Layout
 
-% In document Latex options:
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-fvset{listparameters={
-\backslash
-setlength{
-\backslash
-topsep}{0em}}}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-SweaveOpts{prefix.string=tmpout/t,split=T,ae=F,height=3,width=5}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
 <<Roptions, echo=F>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+if(!dir.exists("tmpout")) dir.create("tmpout", showWarnings=FALSE)
 \end_layout
 
 \begin_layout Plain Layout
@@ -411,11 +436,39 @@ pdf.options(onefile=FALSE,family="Times",pointsize=10)
 \end_layout
 
 \begin_layout Standard
-Leave the code chunks before this point.
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+% In document Latex options:
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+fvset{listparameters={
+\backslash
+setlength{
+\backslash
+topsep}{0em}}}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+SweaveOpts{prefix.string=tmpout/t,split=TRUE, ae=FALSE, height=3, width=5}
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
-
+Leave the code chunks before this point.
 \end_layout
 
 \begin_layout Standard

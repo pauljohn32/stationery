@@ -3,6 +3,9 @@
 %%BEGIN: This begins the custom header
 \usepackage{array, tabularx}
 \usepackage{xparse}
+\usepackage{datetime}
+\newdateformat{crmda}{\shortmonthname[\THEMONTH] \THEDAY, \THEYEAR}
+
 \ExplSyntaxOn
 \NewDocumentCommand \guidesetup { +m }
 {
@@ -128,7 +131,7 @@
     \begin{minipage}[c]{\linewidth}
       \smallskip
       \begin{center}
-        \today
+        \crmda\today
         \par
       \end{center}
         \smallskip

@@ -4,6 +4,9 @@
 \usepackage{array, tabularx}
 \usepackage{xparse}
 \usepackage{setspace}
+\usepackage{datetime}
+\newdateformat{crmda}{\shortmonthname[\THEMONTH] \THEDAY, \THEYEAR}
+
 \ExplSyntaxOn
 \NewDocumentCommand \reportsetup { +m }
 {
@@ -92,7 +95,7 @@
         \par
 
         \begin{singlespace}
-          \raggedright{}\textbf{\today}
+          \raggedright{}{\crmda\today}
         \end{singlespace}
         }\tabularnewline
         \hline 

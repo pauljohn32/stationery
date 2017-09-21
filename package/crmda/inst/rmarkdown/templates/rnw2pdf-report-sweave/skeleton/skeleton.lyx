@@ -4,7 +4,7 @@
 \begin_header
 \save_transient_properties true
 \origin unavailable
-\textclass scrartcl
+\textclass extarticle
 \begin_preamble
 % Don't remove next commented line, its needed to fool Sweave
 %\usepackage{Sweave}
@@ -24,7 +24,8 @@ footskip=1.5\baselineskip,
 \usepackage{listings}
 \usepackage{graphicx}
 \usepackage{xcolor}
-\usepackage[yyyymmdd,hhmmss]{datetime}
+\usepackage{dcolumn}
+\usepackage{booktabs}
 
 % May be customized for this document
 \lstdefinestyle{custom}{
@@ -48,8 +49,6 @@ footskip=1.5\baselineskip,
 }
 
 
-\usepackage{dcolumn}
-\usepackage{booktabs}
 
 \input{theme/reportPreambleHeader.tex}
 \input{theme/preambleFooter.tex}
@@ -67,9 +66,9 @@ logicalmkup
 sweave
 \end_modules
 \maintain_unincluded_children false
-\language english
+\language american
 \language_package default
-\inputencoding iso8859-15
+\inputencoding utf8
 \fontencoding global
 \font_roman "lmodern" "default"
 \font_sans "lmss" "default"

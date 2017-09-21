@@ -4,7 +4,7 @@
 \begin_header
 \save_transient_properties true
 \origin unavailable
-\textclass scrartcl
+\textclass extarticle
 \begin_preamble
 \usepackage[includehead, includefoot,
 lmargin=1in,
@@ -21,12 +21,11 @@ footskip=1.5\baselineskip,
 \usepackage{listings}
 \usepackage{graphicx}
 \usepackage{xcolor}
-\usepackage[yyyymmdd,hhmmss]{datetime}
+
 
 \def\Sweavesize{\scriptsize} 
 \def\Rcolor{\color{black}} 
 \def\Rbackground{\color[gray]{0.95}}
-
 
 \usepackage{listings}
 \usepackage{upquote, fancyvrb, relsize, ae}
@@ -75,7 +74,7 @@ knitr
 \maintain_unincluded_children false
 \language english
 \language_package default
-\inputencoding iso8859-15
+\inputencoding utf8
 \fontencoding global
 \font_roman "lmodern" "default"
 \font_sans "lmss" "default"
@@ -153,11 +152,11 @@ knitr
 \begin_layout Standard
 \noindent
 \begin_inset ERT
-status collapsed
+status open
 
 \begin_layout Plain Layout
 
-%%Fill in values of the arguments here.
+%% Fill in values of the arguments here.
  
 \end_layout
 
@@ -180,23 +179,62 @@ guidesetup{%
 
 \begin_layout Plain Layout
 
-  firstauthor={last name=Author , first name=First, affiliation=CRMDA,
+  firstauthor={lastname=Author, 
 \end_layout
 
 \begin_layout Plain Layout
 
-    email=lone.edu},
+               firstname=First, 
 \end_layout
 
 \begin_layout Plain Layout
 
-  secondauthor={lastname=Author, firstname=Second, affiliation=CRMDA, email=g},
+               affiliation=CRMDA,
 \end_layout
 
 \begin_layout Plain Layout
 
-  thirdauthor={lastname=Author, firstname=Third, affiliation=i, email=g},
- 
+               email=lone.edu},
+\end_layout
+
+\begin_layout Plain Layout
+
+  secondauthor={lastname=Author, 
+\end_layout
+
+\begin_layout Plain Layout
+
+               firstname=Second, 
+\end_layout
+
+\begin_layout Plain Layout
+
+               affiliation=CRMDA, 
+\end_layout
+
+\begin_layout Plain Layout
+
+               email=second@ku.edu}, 
+\end_layout
+
+\begin_layout Plain Layout
+
+ thirdauthor={lastname=Author,
+\end_layout
+
+\begin_layout Plain Layout
+
+               firstname=Third, 
+\end_layout
+
+\begin_layout Plain Layout
+
+               affiliation=Dept of Statistics,
+\end_layout
+
+\begin_layout Plain Layout
+
+               email=third@ku.edu}, 
 \end_layout
 
 \begin_layout Plain Layout
@@ -279,9 +317,7 @@ footersetup{
 
 \begin_layout Plain Layout
 
-    lthree=Lawrence
-\backslash
-, KS 66045-7555},
+    lthree=Lawrence, KS 66045-7555},
 \end_layout
 
 \begin_layout Plain Layout
@@ -331,17 +367,67 @@ status open
 
 \begin_layout Plain Layout
 
-<<echo=F>>=
+<<texcopy, include=FALSE>>=
 \end_layout
 
 \begin_layout Plain Layout
 
-##unlink("tmpout", recursive=T)
+library(kutils)
 \end_layout
 
 \begin_layout Plain Layout
 
-if(!dir.exists("tmpout")) dir.create("tmpout", showWarnings=FALSE)
+## If theme directory does not have required images or TeX files
+\end_layout
+
+\begin_layout Plain Layout
+
+## we need to retrieve them and put them in "theme" directory.
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+logos <- c(logoleft = "jayhawk.pdf", 
+\end_layout
+
+\begin_layout Plain Layout
+
+           logoright = "CRMDAlogo-vert.pdf")
+\end_layout
+
+\begin_layout Plain Layout
+
+texfiles <- c("guidePreambleHeader.tex", 
+\end_layout
+
+\begin_layout Plain Layout
+
+              "preambleFooter.tex", 
+\end_layout
+
+\begin_layout Plain Layout
+
+              "preambleFloatCenter.tex",  
+\end_layout
+
+\begin_layout Plain Layout
+
+              "preambleHyperref.tex")
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+getFiles(logos, pkg = "crmda")
+\end_layout
+
+\begin_layout Plain Layout
+
+getFiles(texfiles, pkg = "crmda")
 \end_layout
 
 \begin_layout Plain Layout
@@ -360,7 +446,12 @@ status open
 
 \begin_layout Plain Layout
 
-<<include=FALSE>>=
+<<knitropts, echo=FALSE>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+## Chunk output 
 \end_layout
 
 \begin_layout Plain Layout
@@ -370,8 +461,17 @@ library(knitr)
 
 \begin_layout Plain Layout
 
-opts_chunk$set(fig.path="tmpout/t-", split=TRUE, ae=FALSE, fig.height=3, fig.width=
-5, comment=NA)
+if(!dir.exists("tmpout")) dir.create("tmpout", showWarnings=FALSE)
+\end_layout
+
+\begin_layout Plain Layout
+
+opts_chunk$set(fig.path="tmpout/t-", split=TRUE, 
+\end_layout
+
+\begin_layout Plain Layout
+
+               ae=FALSE, fig.height=3, fig.width=5, comment=NA)
 \end_layout
 
 \begin_layout Plain Layout
@@ -390,7 +490,7 @@ status open
 
 \begin_layout Plain Layout
 
-<<Roptions, echo=F>>=
+<<Roptions, echo=FALSE>>=
 \end_layout
 
 \begin_layout Plain Layout
