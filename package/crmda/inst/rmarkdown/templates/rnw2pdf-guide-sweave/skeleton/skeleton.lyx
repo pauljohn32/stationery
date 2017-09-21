@@ -25,10 +25,13 @@ footskip=1.5\baselineskip,
 \usepackage{listings}
 \usepackage{graphicx}
 \usepackage{xcolor}
-\usepackage[yyyymmdd,hhmmss]{datetime}
 
-\input{theme/guide.tex}
+\input{theme/guidePreambleHeader.tex}
+\input{theme/preambleFooter.tex}
+\input{theme/preambleFloatCenter.tex}
 \input{theme/preambleHyperref.tex}
+\input{theme/guidePreambleSweavel.tex}
+
 
 \lstdefinestyle{custom}{
   language=R,
@@ -64,9 +67,9 @@ logicalmkup
 sweave
 \end_modules
 \maintain_unincluded_children false
-\language english
+\language american
 \language_package default
-\inputencoding iso8859-15
+\inputencoding utf8
 \fontencoding global
 \font_roman "lmodern" "default"
 \font_sans "lmss" "default"
@@ -156,17 +159,13 @@ guidesetup{%
 
 \begin_layout Plain Layout
 
-  firstauthor={last name=Author , first name=First, affiliation=CRMDC,
+  firstauthor={last name=Author, first name=First, affiliation=CRMDA, email=lone.
+edu},
 \end_layout
 
 \begin_layout Plain Layout
 
-    email=lone.edu},
-\end_layout
-
-\begin_layout Plain Layout
-
-  secondauthor={lastname=Author, firstname=Second, affiliation=CRMDD, email=g},
+  secondauthor={lastname=Author, firstname=Second, affiliation=CRMDA, email=g},
 \end_layout
 
 \begin_layout Plain Layout
@@ -416,8 +415,7 @@ Leave the code chunks before this point.
 \end_layout
 
 \begin_layout Standard
-This uses Sweavel.
- If you don't have Sweavel in your package path, it will fail
+
 \end_layout
 
 \begin_layout Standard

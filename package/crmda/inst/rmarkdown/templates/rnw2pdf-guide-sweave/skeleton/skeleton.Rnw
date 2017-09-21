@@ -1,11 +1,11 @@
 %% LyX 2.2.2 created this file.  For more info, see http://www.lyx.org/.
 %% Do not edit unless you really know what you are doing.
-\documentclass[11pt,letterpaper,english]{extarticle}
+\documentclass[11pt,letterpaper,american]{extarticle}
 \usepackage{lmodern}
 \renewcommand{\sfdefault}{lmss}
 \renewcommand{\ttdefault}{lmtt}
 \usepackage[T1]{fontenc}
-\usepackage[latin9]{inputenc}
+\usepackage[utf8]{inputenc}
 \setlength{\parskip}{\medskipamount}
 \setlength{\parindent}{0pt}
 
@@ -41,15 +41,15 @@ footskip=1.5\baselineskip,
 \usepackage{listings}
 \usepackage{graphicx}
 \usepackage{xcolor}
-\usepackage[yyyymmdd,hhmmss]{datetime}
 
-\input{theme/guide.tex}
+\input{theme/guidePreambleHeader.tex}
+\input{theme/preambleFooter.tex}
+\input{theme/preambleFloatCenter.tex}
+\input{theme/preambleHyperref.tex}
+\input{theme/guidePreambleSweavel.tex}
 
-\def\Sweavesize{\scriptsize} 
-\def\Rcolor{\color{black}} 
-\def\Rbackground{\color[gray]{0.95}}
 
-\lstdefinestyle{Rstylecrmda}{
+\lstdefinestyle{custom}{
   language=R,
   escapechar=`,
   fancyvrb=false,%
@@ -77,260 +77,15 @@ footskip=1.5\baselineskip,
   numberstyle={\tiny}
 }%
 
-
-%%BEGIN: graphics and such inside floats are centered by default
-\renewenvironment{figure}[1][]{%
- \ifthenelse{\equal{#1}{}}{%
-   \@float{figure}
- }{%
-   \@float{figure}[#1]%
- }%
- \centering
-}{%
- \end@float
-}
-\renewenvironment{table}[1][]{%
- \ifthenelse{\equal{#1}{}}{%
-   \@float{table}
- }{%
-   \@float{table}[#1]%
- }%
-
- \centering
-}{%
- \end@float
-}
-%%END: graphics and such inside floats are centered by default
-
-%%BEGIN: This begins the custom header
-\usepackage{array, tabularx}
-\usepackage{xparse}
-\ExplSyntaxOn
-\NewDocumentCommand \guidesetup { +m }
-{
-  \bool_set_false:N \l_guide_twoauthors_bool
-  \bool_set_false:N \l_guide_threeauthors_bool
-  \keys_set:nn { guide } { #1 }
-}
-\keys_define:nn { guide }
-{
-    firstauthor .code:n = {
-      \keys_set:nn { guide / firstauthor } { #1 }
-    },
-    secondauthor .code:n = {
-      \keys_set:nn { guide } { twoauthors }
-      \keys_set:nn { guide / secondauthor } { #1 }
-    },
-    thirdauthor .code:n = {
-      \keys_set:nn { guide } { threeauthors }
-      \keys_set:nn { guide / thirdauthor } { #1 }
-    },
-    twoauthors .bool_set:N = \l_guide_twoauthors_bool,
-    twoauthors .default:n = true,
-    twoauthors .initial:n = false,
-    threeauthors .bool_set:N = \l_guide_threeauthors_bool,
-    threeauthors .default:n = true,
-    threeauthors .initial:n = false,
-    firstauthor / firstname .tl_set:N = \l_guide_first_firstname_tl,
-    firstauthor / lastname .tl_set:N = \l_guide_first_lastname_tl,
-    firstauthor / affiliation .tl_set:N = \l_guide_first_affil_tl,
-    firstauthor / email .tl_set:N = \l_guide_first_email_tl,
-    secondauthor / firstname .tl_set:N = \l_guide_second_firstname_tl,
-    secondauthor / lastname .tl_set:N = \l_guide_second_lastname_tl,
-    secondauthor / affiliation .tl_set:N = \l_guide_second_affil_tl,
-    secondauthor / email .tl_set:N = \l_guide_second_email_tl,
-    thirdauthor / firstname .tl_set:N = \l_guide_third_firstname_tl,
-    thirdauthor / lastname .tl_set:N = \l_guide_third_lastname_tl,
-    thirdauthor / affiliation .tl_set:N = \l_guide_third_affil_tl,
-    thirdauthor / email .tl_set:N = \l_guide_third_email_tl,
-    leftlogo .tl_set:N = \l_guide_leftlogo_tl,
-    rightlogo .tl_set:N = \l_guide_rightlogo_tl,
-    number .int_set:N = \l_guide_number_int,
-    title .tl_set:N = \l_guide_title_tl,
-    keywords .tl_set:N = \l_guide_keywords_tl,
-    url .tl_set:N = \l_guide_url_tl,
-    firstauthor .initial:n = { firstname = a, lastname = b,
-      affiliation = c, email = d},
-    secondauthor .initial:n = { firstname = g, lastname = h,
-      affiliation = i, email = j},
-    thirdauthor .initial:n = { firstname = g, lastname = h,
-      affiliation = i, email = j},
-    url .initial:n = {https://ku.edu},
-    number .initial:n = 42,
-    title .initial:n = {Guide ~ to ~ Guides},
-    keywords .initial:n = {guide},
-}
-\NewDocumentCommand \guidehdr { +o }
-{
-  \group_begin:
-    \IfValueT { #1 } 
-    {
-      \bool_set_false:N \l_guide_twoauthors_bool 
-      \keys_set:nn { guide } { #1 }
-    }
-    \guide_hdr:
-    \group_end:
-}
-\cs_new_protected:Nn \guide_hdr:
-{
-  \noindent
-  \begin{tabularx}{\textwidth}{|>{\centering\arraybackslash}p{1.25in}>{\centering\arraybackslash}X>{\raggedleft\arraybackslash}p{1.25in}|}
-    \hline 
-    \begin{minipage}[c]{\linewidth}
-      \begin{center}
-        \includegraphics[width=\linewidth]{\l_guide_leftlogo_tl}
-        \par
-      \end{center}%
-    \end{minipage} & 
-    \begin{minipage}[c][1\totalheight][b]{3.5in}%
-      \bigskip
-      \begin{center}
-        \begin{minipage}[t][1\totalheight][b]{1\columnwidth}%
-          \begin{center}
-            \textbf{ \large \l_guide_title_tl }\\
-            \rule[0.5ex]{1\linewidth}{1pt}
-            \par\end{center}%
-        \end{minipage}
-        \par
-      \end{center}
-      \begin{minipage}[t]{1\columnwidth}
-        \begin{center}
-          \textbf{\l_guide_first_firstname_tl {} ~ \l_guide_first_lastname_tl}, ~\l_guide_first_affil_tl {} ~ <\l_guide_first_email_tl >
-          \bool_if:NT \l_guide_twoauthors_bool
-          {
-            \\
-            \textbf{\l_guide_second_firstname_tl {} ~ \l_guide_second_lastname_tl}, ~\l_guide_second_affil_tl {} ~ <\l_guide_second_email_tl >
-          }
-          \bool_if:NT \l_guide_threeauthors_bool
-          {
-            \\
-            \textbf{\l_guide_third_firstname_tl {} ~ \l_guide_third_lastname_tl}, ~\l_guide_third_affil_tl {} ~ <\l_guide_third_email_tl >
-          }
-          \par
-        \end{center}
-      \end{minipage}      
-      \smallskip
-      \par     
-      \begin{flushleft}
-        {\small{}\textbf{Guide ~ No}: ~ \int_to_arabic:n { \l_guide_number_int  }}\\
-        \textbf{Keywords}: ~ \l_guide_keywords_tl \\
-        See ~ \url{\l_guide_url_tl} ~ for ~ updates.
-        \par
-      \end{flushleft}
-      \smallskip
-    \end{minipage} & 
-    \begin{minipage}[c]{\linewidth}
-      \smallskip
-      \par
-      \begin{center}
-        \includegraphics[width=\linewidth]{\l_guide_rightlogo_tl}
-        \par
-      \end{center}
-      {\Huge \par}
-    \end{minipage}
-    \par
-    \begin{minipage}[c]{\linewidth}
-      \smallskip
-      \begin{center}
-        \today
-        \par
-      \end{center}
-    \end{minipage}
-    \tabularnewline
-    \hline 
-  \end{tabularx}
-}
-\ExplSyntaxOff
-%%END This ends the custom header
-
-
-%% BEGIN: Footer
-\usepackage{fancyhdr}
-\usepackage{lastpage}
-
-\ExplSyntaxOn
-\NewDocumentCommand \footersetup { +m }
-{
-\keys_set:nn { footer } { #1 }
-}
-\keys_define:nn { footer }
-{	
-    leftside .code:n = {
-\keys_set:nn { footer / leftside } { #1 }
-},
-rightside .code:n = {
-\keys_set:nn { footer / rightside } { #1 }
-},
-    leftside / lone .tl_set:N = \l_footer_leftside_lone_tl,
-    leftside / ltwo .tl_set:N = \l_footer_leftside_ltwo_tl,
-    leftside / lthree .tl_set:N = \l_footer_leftside_lthree_tl,
-    rightside / rone .tl_set:N = \l_footer_rightside_rone_tl,
-    rightside / rtwo .tl_set:N = \l_footer_rightside_rtwo_tl,
-    rightside / rthree .tl_set:N = \l_footer_rightside_rthree_tl,
-    leftside .initial:n = {lone = , ltwo = ~, lthree = ~ },
-    rightside .initial:n = {rone = ~, rtwo = ~,  rthree = ~},
-    leftside .default:n = {lone = , ltwo = ~, lthree = ~ },
-    rightside .default:n = {rone = ~, rtwo = ~,  rthree = ~},
-}
-\NewDocumentCommand \guideftr { +o }
-{
-  \IfValueT { #1 } 
-  {
-    \keys_set:nn { footer } { #1 }
-  }
-  \guide_ftr:
-}
-\cs_new_protected:Nn \guide_ftr:
-{
-  % Now fancy header/footer settings
-  \lhead{}%
-  \chead{}%
-  \rhead{}%
-  \renewcommand{\headrulewidth}{0pt}%
-  \lfoot{}%
-  \cfoot{{Page} \thepage { of} \pageref{LastPage}}%
-  \rfoot{}%
-
-  \fancypagestyle{firststyle}%
-  {%
-    \lhead{}%
-    \chead{}%
-    \rhead{}%
-    \lfoot{}%
-    \cfoot{}%
-    \rfoot{}%
-    \renewcommand{\headrulewidth}{0pt}%
-    \fancyfoot[L]{\l_footer_leftside_lone_tl {}\\%
-      \l_footer_leftside_ltwo_tl {}\\%
-      \l_footer_leftside_lone_tl {}}%
-    \fancyfoot[R]{\l_footer_rightside_rone_tl {}\\%
-      \l_footer_rightside_rtwo_tl {}\\%
-      \l_footer_rightside_rthree_tl {}%
-      \renewcommand{\footrulewidth}{.1pt}}%
-  }%
-  \thispagestyle{firststyle}
-}
-\ExplSyntaxOff
-
-\pagestyle{fancy}
-%% End of fancy footer setup
-
-
-\definecolor{darkblue}{HTML}{1e2277}
-\usepackage[unicode=true,pdfusetitle,
-bookmarks=true,bookmarksnumbered=false, bookmarksopen=false,
-breaklinks=true, pdfborder={0 0 0},
-pdfborderstyle={}, backref=false,
-colorlinks=true, urlcolor=darkblue] {hyperref}
-
 \makeatother
 
 \usepackage{babel}
 \begin{document}
+%%Fill in values of the arguments here, 
+%% MUST ESCAPE Commas in values! See lthree example of that
 \guidesetup{%
-  firstauthor={last name=Author , first name=First, affiliation=CRMDC,
-    email=lone.edu},
-  secondauthor={lastname=Author, firstname=Second, affiliation=CRMDD, email=g},
+  firstauthor={last name=Author, first name=First, affiliation=CRMDA, email=lone.edu},
+  secondauthor={lastname=Author, firstname=Second, affiliation=CRMDA, email=g},
   thirdauthor={lastname=Author, firstname=Third, affiliation=i, email=g}, 
   url={https://crmda.ku.edu/guides},
   keywords={single-authoring, just one},
@@ -344,12 +99,14 @@ colorlinks=true, urlcolor=darkblue] {hyperref}
 %% Specify fully the left and right sides of footer, 3 lines
 %% If blanks are needed, must insert value " ~ "
 \footersetup{
-  leftside={lone=1425 Jayhawk Blvd., 
-  ltwo=470 Watson Library, 
-  lthree=Lawrence\, KS 66045-7555},
-  rightside={rone=\url{https://crmda.ku.edu},
-  rtwo=\href{mailto:crmda@ku.edu}{crmda@ku.edu},
-  rthree=Phone: 785-864-3353}
+  leftside={
+    lone=1425 Jayhawk Blvd., 
+    ltwo=470 Watson Library, 
+    lthree=Lawrence\, KS 66045-7555},
+  rightside={
+    rone=\url{https://crmda.ku.edu},
+    rtwo=\href{mailto:crmda@ku.edu}{crmda@ku.edu},
+    rthree=Phone: 785-864-3353}
 }
 \guideftr
 
@@ -373,9 +130,6 @@ pdf.options(onefile=FALSE,family="Times",pointsize=10)
 
 Leave the code chunks before this point.
 
-This uses Sweavel. If you don't have Sweavel in your package path,
-it will fail
-
 Don't change margins with Lyx pull down menus. Edit preamble for that.
 
 \section{Write your sections \& subsections here}
@@ -384,10 +138,16 @@ Please leave section \ref{sec:Session-Info} as it is for guide documents.
 
 \section{Test a code chunk}
 
+This chunk tests long names, line wrap
+
 <<norm10>>=
-x <- rnorm(100)
+Nisthesamplesamplesize <- 100
+Misformuorthemean <- 10123
+Sisforsigma <- 234234
+x <- rnorm(Nisthesamplesamplesize, mean = Misformuorthemean, s = Sisforsigma)
 head(x)
 mean(x)
+dataFrame <- data.frame(x1 = rnorm(100, m = 13, s = 23), x2 = rnorm(100, m = 13, s = 23), x3 = rnorm(100, m = 13, s = 23))
 @
 
 \section{Don't use LyX to change geometry or margins. That is written into
