@@ -50,9 +50,6 @@ footskip=1.5\baselineskip,
 
 \usepackage{dcolumn}
 \usepackage{booktabs}
-\usepackage{multicol}
-\usepackage{graphicx}
-
 
 \input{theme/reportPreambleHeader.tex}
 \input{theme/preambleFooter.tex}
