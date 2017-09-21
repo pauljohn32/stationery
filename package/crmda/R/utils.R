@@ -7,9 +7,10 @@
 ##'     theme information.
 ##' @param pkg Package name, default "crmda"
 ##' @return TRUE if succeeded
-##' @author Paul Johnson
+##' @author Paul Johnson<pauljohn@@ku.edu>
+##' @export
 ##' @examples
-##' getFiles(c("jayhawk.pdf", "CRMDAlogo.pdf"))
+##' ## getFiles(c("jayhawk.pdf", "CRMDAlogo.pdf"))
 getFiles <- function(fn, dn = "theme", pkg = "crmda"){
     fc <- function(x, dn){
         if(!dir.exists(dn)) stop(paste("getFiles fc dir", dn, "does not exist"))
