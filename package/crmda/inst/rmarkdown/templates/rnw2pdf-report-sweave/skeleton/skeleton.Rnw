@@ -121,6 +121,10 @@ footskip=1.5\baselineskip,
 \guideftr
 
 \selectlanguage{american}%
+<<include=FALSE,echo=FALSE, results=hide>>=
+if(!dir.exists("tmpout"))dir.create("tmpout", recursive = TRUE)
+@
+
 % Please leave this code: In document Latex options:
 \fvset{listparameters={\setlength{\topsep}{0em}}}
 \SweaveOpts{prefix.string=tmpout/t, split=TRUE, ae=FALSE, height=5, width=6}
