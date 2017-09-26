@@ -65,6 +65,7 @@ footskip=1.5\baselineskip,
 \input{theme/preambleFloatCenter.tex}
 %% Load Hyperref, don't let LyX do this
 \input{theme/preambleHyperref.tex}
+\input{theme/guidePreambleKnitr.tex}
 \end_preamble
 \use_default_options false
 \begin_modules
@@ -72,7 +73,7 @@ logicalmkup
 knitr
 \end_modules
 \maintain_unincluded_children false
-\language english
+\language american
 \language_package default
 \inputencoding utf8
 \fontencoding global
@@ -156,18 +157,22 @@ status open
 
 \begin_layout Plain Layout
 
-%% Fill in values of the arguments here.
- 
+%% Fill in values of the arguments here, 
+\end_layout
+
+\begin_layout Plain Layout
+
+%% If blanks are needed, must insert value " ~ "
+\end_layout
+
+\begin_layout Plain Layout
+
+%% If comma needed inside value, wrap in {}.
 \end_layout
 
 \begin_layout Plain Layout
 
 %% Delete secondauthor and thirdauthor if not needed
-\end_layout
-
-\begin_layout Plain Layout
-
-%% MUST ESCAPE Commas in values! See lthree example of that
 \end_layout
 
 \begin_layout Plain Layout
@@ -179,62 +184,77 @@ guidesetup{%
 
 \begin_layout Plain Layout
 
-  firstauthor={lastname=Author, 
+  firstauthor={
 \end_layout
 
 \begin_layout Plain Layout
 
-               firstname=First, 
+    lastname=Author, 
 \end_layout
 
 \begin_layout Plain Layout
 
-               affiliation=CRMDA,
+    firstname=First, 
 \end_layout
 
 \begin_layout Plain Layout
 
-               email=lone.edu},
+    affiliation=CRMDA,
 \end_layout
 
 \begin_layout Plain Layout
 
-  secondauthor={lastname=Author, 
+    email=lone.edu},
 \end_layout
 
 \begin_layout Plain Layout
 
-               firstname=Second, 
+  secondauthor={
 \end_layout
 
 \begin_layout Plain Layout
 
-               affiliation=CRMDA, 
+    lastname=Author, 
 \end_layout
 
 \begin_layout Plain Layout
 
-               email=second@ku.edu}, 
+    firstname=Second, 
 \end_layout
 
 \begin_layout Plain Layout
 
- thirdauthor={lastname=Author,
+    affiliation=CRMDA, 
 \end_layout
 
 \begin_layout Plain Layout
 
-               firstname=Third, 
+    email=second@ku.edu}, 
 \end_layout
 
 \begin_layout Plain Layout
 
-               affiliation=Dept of Statistics,
+ thirdauthor={
 \end_layout
 
 \begin_layout Plain Layout
 
-               email=third@ku.edu}, 
+    lastname=Author,
+\end_layout
+
+\begin_layout Plain Layout
+
+    firstname=Third, 
+\end_layout
+
+\begin_layout Plain Layout
+
+    affiliation=Dept of Statistics,
+\end_layout
+
+\begin_layout Plain Layout
+
+    email=third@ku.edu}, 
 \end_layout
 
 \begin_layout Plain Layout
@@ -295,6 +315,11 @@ guidehdr
 
 \begin_layout Plain Layout
 
+%% If comma needed inside value, wrap in {}.
+\end_layout
+
+\begin_layout Plain Layout
+
 
 \backslash
 footersetup{
@@ -312,12 +337,12 @@ footersetup{
 
 \begin_layout Plain Layout
 
-    ltwo=470 Watson Library, 
+    ltwo={Watson Library, Suite 470}, 
 \end_layout
 
 \begin_layout Plain Layout
 
-    lthree=Lawrence, KS 66045-7555},
+    lthree={Lawrence, KS 66045-7594}},
 \end_layout
 
 \begin_layout Plain Layout
@@ -354,6 +379,50 @@ href{mailto:crmda@ku.edu}{crmda@ku.edu},
 
 \backslash
 guideftr
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<knitropts, echo=FALSE>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+## Chunk output 
+\end_layout
+
+\begin_layout Plain Layout
+
+library(knitr)
+\end_layout
+
+\begin_layout Plain Layout
+
+if(!dir.exists("tmpout")) dir.create("tmpout", showWarnings=FALSE)
+\end_layout
+
+\begin_layout Plain Layout
+
+opts_chunk$set(fig.path="tmpout/t-", split=TRUE, 
+\end_layout
+
+\begin_layout Plain Layout
+
+               ae=FALSE, fig.height=3, fig.width=5, comment=NA)
+\end_layout
+
+\begin_layout Plain Layout
+
+@
 \end_layout
 
 \end_inset
@@ -413,7 +482,12 @@ texfiles <- c("guidePreambleHeader.tex",
 
 \begin_layout Plain Layout
 
-              "preambleHyperref.tex")
+              "preambleHyperref.tex",
+\end_layout
+
+\begin_layout Plain Layout
+
+              "guidePreambleKnitr.tex")
 \end_layout
 
 \begin_layout Plain Layout
@@ -428,50 +502,6 @@ getFiles(logos, pkg = "crmda")
 \begin_layout Plain Layout
 
 getFiles(texfiles, pkg = "crmda")
-\end_layout
-
-\begin_layout Plain Layout
-
-@
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-<<knitropts, echo=FALSE>>=
-\end_layout
-
-\begin_layout Plain Layout
-
-## Chunk output 
-\end_layout
-
-\begin_layout Plain Layout
-
-library(knitr)
-\end_layout
-
-\begin_layout Plain Layout
-
-if(!dir.exists("tmpout")) dir.create("tmpout", showWarnings=FALSE)
-\end_layout
-
-\begin_layout Plain Layout
-
-opts_chunk$set(fig.path="tmpout/t-", split=TRUE, 
-\end_layout
-
-\begin_layout Plain Layout
-
-               ae=FALSE, fig.height=3, fig.width=5, comment=NA)
 \end_layout
 
 \begin_layout Plain Layout

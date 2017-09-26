@@ -1,11 +1,11 @@
 %% LyX 2.2.2 created this file.  For more info, see http://www.lyx.org/.
 %% Do not edit unless you really know what you are doing.
-\documentclass[11pt,letterpaper,english]{scrartcl}
+\documentclass[11pt,letterpaper,american]{extarticle}
 \usepackage{lmodern}
 \renewcommand{\sfdefault}{lmss}
 \renewcommand{\ttdefault}{lmtt}
 \usepackage[T1]{fontenc}
-\usepackage[latin9]{inputenc}
+\usepackage[utf8]{inputenc}
 \setlength{\parskip}{\medskipamount}
 \setlength{\parindent}{0pt}
 
@@ -32,12 +32,11 @@ footskip=1.5\baselineskip,
 \usepackage{listings}
 \usepackage{graphicx}
 \usepackage{xcolor}
-\usepackage[yyyymmdd,hhmmss]{datetime}
+
 
 \def\Sweavesize{\scriptsize} 
 \def\Rcolor{\color{black}} 
 \def\Rbackground{\color[gray]{0.95}}
-
 
 \usepackage{listings}
 \usepackage{upquote, fancyvrb, relsize, ae}
@@ -77,19 +76,32 @@ footskip=1.5\baselineskip,
 \input{theme/preambleFloatCenter.tex}
 %% Load Hyperref, don't let LyX do this
 \input{theme/preambleHyperref.tex}
+\input{theme/guidePreambleKnitr.tex}
 
 \makeatother
 
 \usepackage{babel}
 \begin{document}
-%%Fill in values of the arguments here. 
+%% Fill in values of the arguments here, 
+%% If blanks are needed, must insert value " ~ "
+%% If comma needed inside value, wrap in {}.
 %% Delete secondauthor and thirdauthor if not needed
-%% MUST ESCAPE Commas in values! See lthree example of that
 \guidesetup{%
-  firstauthor={last name=Author , first name=First, affiliation=CRMDA,
+  firstauthor={
+    lastname=Author, 
+    firstname=First, 
+    affiliation=CRMDA,
     email=lone.edu},
-  secondauthor={lastname=Author, firstname=Second, affiliation=CRMDA, email=g},
-  thirdauthor={lastname=Author, firstname=Third, affiliation=i, email=g}, 
+  secondauthor={
+    lastname=Author, 
+    firstname=Second, 
+    affiliation=CRMDA, 
+    email=second@ku.edu}, 
+ thirdauthor={
+    lastname=Author,
+    firstname=Third, 
+    affiliation=Dept of Statistics,
+    email=third@ku.edu}, 
   url={https://crmda.ku.edu/guides},
   keywords={single-authoring, just one},
   title={Another Very Long Title: With a Possibly Long Subtitle},
@@ -101,11 +113,12 @@ footskip=1.5\baselineskip,
 
 %% Specify fully the left and right sides of footer, 3 lines
 %% If blanks are needed, must insert value " ~ "
+%% If comma needed inside value, wrap in {}.
 \footersetup{
   leftside={
     lone=1425 Jayhawk Blvd., 
-    ltwo=470 Watson Library, 
-    lthree=Lawrence\, KS 66045-7555},
+    ltwo={Watson Library, Suite 470}, 
+    lthree={Lawrence, KS 66045-7594}},
   rightside={
     rone=\url{https://crmda.ku.edu},
     rtwo=\href{mailto:crmda@ku.edu}{crmda@ku.edu},
@@ -113,17 +126,31 @@ footskip=1.5\baselineskip,
 }
 \guideftr
 
-<<echo=F>>=
-##unlink("tmpout", recursive=T)
-if(!dir.exists("tmpout")) dir.create("tmpout", showWarnings=FALSE)
-@
-
-<<include=FALSE>>=
+<<knitropts, echo=FALSE>>=
+## Chunk output 
 library(knitr)
-opts_chunk$set(fig.path="tmpout/t-", split=TRUE, ae=FALSE, fig.height=3, fig.width=5, comment=NA)
+if(!dir.exists("tmpout")) dir.create("tmpout", showWarnings=FALSE)
+opts_chunk$set(fig.path="tmpout/t-", split=TRUE, 
+               ae=FALSE, fig.height=3, fig.width=5, comment=NA)
 @
 
-<<Roptions, echo=F>>=
+<<texcopy, include=FALSE>>=
+library(kutils)
+## If theme directory does not have required images or TeX files
+## we need to retrieve them and put them in "theme" directory. 
+logos <- c(logoleft = "jayhawk.pdf", 
+           logoright = "CRMDAlogo-vert.pdf")
+texfiles <- c("guidePreambleHeader.tex", 
+              "preambleFooter.tex", 
+              "preambleFloatCenter.tex",  
+              "preambleHyperref.tex",
+              "guidePreambleKnitr.tex")
+
+getFiles(logos, pkg = "crmda")
+getFiles(texfiles, pkg = "crmda")
+@
+
+<<Roptions, echo=FALSE>>=
 opts.orig <- options()
 options(width=100, prompt=" ", continue="  ")
 options(useFancyQuotes = FALSE) 
