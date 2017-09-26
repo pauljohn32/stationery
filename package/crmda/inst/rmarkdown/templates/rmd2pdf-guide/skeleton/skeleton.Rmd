@@ -19,18 +19,20 @@ addr:
     r1: "Phone: 785-864-3353"
     r2: "Web: http://crmda.ku.edu"
     r3: "Email: crmda@ku.edu"
-logoleft: "theme/jayhawk.pdf"
-logoright: "theme/CRMDAlogo-vert.pdf"
+logoleft: theme/jayhawk.pdf
+logoright: theme/CRMDAlogo-vert.pdf
 output: 
   pdf_document:
     citation_package: natbib
     fig_caption: yes
+    latex_engine: pdflatex
     highlight: haddock
     pandoc_args: [
         --listings
     ]
-    template: "theme/guide-boilerplate.tex"
+    template:  theme/guide-boilerplate.tex
 fontsize: 11pt
+bibliography: mlm.bib
 header-includes:
 - \usepackage{xcolor}
 ---
@@ -42,6 +44,19 @@ if (!dir.exists(tmpdir)) dir.create(tmpdir, recursive = TRUE)
 knitr::opts_chunk$set(echo=TRUE, comment=NA, fig.path=paste0(tmpdir, "/p-"))
 options(width = 70)
 ```
+
+```{r themecopy, include = FALSE}
+library(kutils)
+## If theme directory does not have required images or TeX files
+## we need to retrieve them and put them in "theme" directory. 
+logos <- c(logoleft = "jayhawk.pdf", 
+           logoright = "CRMDAlogo-vert.pdf")
+files <- c("guide-boilerplate.tex")
+getFiles(logos, pkg = "crmda")
+getFiles(files, pkg = "crmda")
+```
+
+
 
 \begin{abstract}
 This is the abstract.
@@ -72,6 +87,22 @@ library(xtable)
 print(xtable(head(data.frame(x, y))), comment=FALSE)
 ```
 
+# Bibliographical citation test is appropriate. 
+
+The leaders in the field [@diggle_analysis_2013] are sure that I'm
+correct about most everything.  Diggle and colleagues
+[-@diggle_analysis_2013, 37] also seem confident that they did not
+agree to the preceeding. Note that to get the full parenthesized 
+statement with names and dates, we insert hard brackets `[`,
+an `@` sign, the bibtex tag, and acloser `]`. If we don't want
+their names, we insert a `-` sign. It is also possible to
+refer to a group of projects [@hsiao_analysis_2014;
+@fitzmaurice_applied_2011; @mccullagh_nelder_1983].
+
+The style of the bibliography will not match what we generally
+want. Is close, the Chicago author-year format.
+
+
 [//]: (All guides must have this as the final stanza)
 
 # R Session Info
@@ -85,3 +116,5 @@ if(!is.null(warnings())){
     warnings()
 }
 ```
+
+# References

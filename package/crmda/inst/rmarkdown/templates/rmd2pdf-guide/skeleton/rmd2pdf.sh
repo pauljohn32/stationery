@@ -37,7 +37,7 @@ defaults="toc=TRUE, output_dir=\"$pwd\", clean=TRUE, keep_tex=FALSE, quiet=TRUE,
 ## edit the one in the theme folder and change to
 ## defaults="toc=TRUE, output_dir=\"$pwd\", clean=TRUE, keep_tex=FALSE, quiet=TRUE, template=\"theme/guide-boilerplate.tex\""
 ## If there is trouble compiling, change clean to FALSE, keep_tex to TRUE, and quiet to FALSE:
-defaults="toc=TRUE, output_dir=\"$pwd\", clean=FALSE, keep_tex=TRUE, quiet=FALSE, type = \"guide\"" 
+# defaults="toc=TRUE, output_dir=\"$pwd\", clean=FALSE, keep_tex=TRUE, quiet=FALSE, type = \"guide\"" 
 ## Or with your theme edits
 ##defaults="toc=TRUE, output_dir=\"$pwd\", clean=FALSE, keep_tex=TRUE, quiet=FALSE, type="guide", template=\"theme/guide-boilerplate.tex\""
 
