@@ -1,24 +1,19 @@
 %% LyX 2.2.2 created this file.  For more info, see http://www.lyx.org/.
 %% Do not edit unless you really know what you are doing.
-\documentclass[11pt,letterpaper,english]{scrartcl}
+\documentclass[11pt,letterpaper,english,american]{extarticle}
 \usepackage{lmodern}
 \renewcommand{\sfdefault}{lmss}
 \renewcommand{\ttdefault}{lmtt}
 \usepackage[T1]{fontenc}
-\usepackage[latin9]{inputenc}
+\usepackage[utf8]{inputenc}
 \setlength{\parskip}{\medskipamount}
 \setlength{\parindent}{0pt}
-\usepackage{array}
-\usepackage{graphicx}
-\usepackage{setspace}
 
 \makeatletter
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
 \special{papersize=\the\paperwidth,\the\paperheight}
 
-%% Because html converters don't know tabularnewline
-\providecommand{\tabularnewline}{\\}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
 <<echo=F>>=
@@ -29,10 +24,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
 % Don't remove next commented line, its needed to fool Sweave
 %\usepackage{Sweave}
-\usepackage{kureport}
 
-\usepackage[includehead,includefoot]{geometry}
-\geometry{
+\usepackage[includehead,includefoot,
 lmargin=1in,
 rmargin=1in,
 tmargin=0.75in,
@@ -41,13 +34,14 @@ headheight=0pt,
 headsep=0pt,
 marginparwidth=0pt,
 footskip=1.5\baselineskip,
-}
+]{geometry}
 
 \usepackage{multicol}
 \usepackage{listings}
 \usepackage{graphicx}
-\usepackage{color}
-\usepackage[yyyymmdd,hhmmss]{datetime}
+\usepackage{xcolor}
+\usepackage{dcolumn}
+\usepackage{booktabs}
 
 % May be customized for this document
 \lstdefinestyle{custom}{
@@ -71,132 +65,86 @@ footskip=1.5\baselineskip,
 }
 
 
-\usepackage{fancyhdr}
-\usepackage{lastpage}
-\usepackage{babel}
-% Now fancy header/footer settings
-\lhead{}
-\chead{}
-\rhead{}
-\renewcommand{\headrulewidth}{0pt}
-\lfoot{}
-\cfoot{{Page} \thepage { of} \pageref{LastPage}}
-\rfoot{}
 
-\fancypagestyle{firststyle}
-{
-\lfoot{}
-%\cfoot{{Page} \thepage { of} \pageref{LastPage}}
-\cfoot{}
-\rfoot{}
-\renewcommand{\headrulewidth}{0pt}
-\fancyfoot[L]{1425 Jayhawk Blvd.\\470 Watson Library\\ Lawrence, KS 66045-7555}
-\fancyfoot[R]{Phone: 785-864-3353\\ Website: crmda.ku.edu\\ Email: crmda@ku.edu}
-\renewcommand{\footrulewidth}{.1pt}
-}
+\input{theme/reportPreambleHeader.tex}
+\input{theme/preambleFooter.tex}
+\input{theme/preambleFloatCenter.tex}
+%% Load Hyperref, don't let LyX do this
+\input{theme/preambleHyperref.tex}
+\input{theme/reportPreambleSweavel.tex}
 
-\pagestyle{fancy}
-
-
-%graphics and such inside floats are centered by default
-\renewenvironment{figure}[1][]{%
- \ifthenelse{\equal{#1}{}}{%
-   \@float{figure}
- }{%
-   \@float{figure}[#1]%
- }%
- \centering
-}{%
- \end@float
-}
-\renewenvironment{table}[1][]{%
- \ifthenelse{\equal{#1}{}}{%
-   \@float{table}
- }{%
-   \@float{table}[#1]%
- }%
-
- \centering
-%  \setlength{\@tempdima}{\abovecaptionskip}%
-%  \setlength{\abovecaptionskip}{\belowcaptionskip}%
-% \setlength{\belowcaptionskip}{\@tempdima}%
-}{%
- \end@float
-}
-
-\thispagestyle{firststyle}
-
-\usepackage{dcolumn}
-\usepackage{booktabs}
-\usepackage{multicol}
-\usepackage{graphicx}
-
-
-
-%% PJ 20161110
-%% I want to use listings in the document and I want nice/same as knitr.
-%% Does knitr provide all of these settings for other listing uses outside
-%% weaved part?
 \usepackage{fancyvrb}
 \fvset{listparameters={\setlength{\topsep}{0em}}}
-
-%\def\Sweavesize{\normalsize} 
-%\def\Rcolor{\color{black}} 
-%\def\Rbackground{\color[gray]{0.95}}
-%\providecommand{\Rcolor}{\color[rgb]{0, 0.5, 0.5}}
-%%\providecommand{\Routcolor}{\color[rgb]{0.461, 0.039, 0.102}}
-%\providecommand{\Routcolor}{\color[rgb]{1.0, 0.0, 0.0}}
-%\providecommand{\Rcommentcolor}{\color[rgb]{0.101, 0.043, 0.432}}
-
-%\providecommand{\Rbackground}{\color[gray]{0.95}}
-%\providecommand{\Routbackground}{\color[gray]{0.80}}
-% Can specify \color[gray]{1} for white background or just \color{white}
 
 \makeatother
 
 \usepackage{babel}
 \begin{document}
-\begin{minipage}[t]{1\columnwidth}%
-\begin{center}
-\begin{tabular}[t]{>{\raggedright}p{4in}>{\centering}p{2.25in}}
-\hline 
-\medskip{}
+\selectlanguage{english}%
+%% Fill in values of the arguments here, 
+%% If blanks are needed, must insert value " ~ "
+%% If comma needed inside value, wrap in {}.
+%% Delete secondauthor and thirdauthor if not needed
+\reportsetup{%
+  firstauthor={
+    lastname=Author,
+    firstname=First, 
+    affiliation=CRMDA,
+    email=first@ku.edu},
+ secondauthor={
+    lastname=Author, 
+    firstname=Second, 
+    affiliation=CRMDA, 
+    email=second@ku.edu},
+  thirdauthor={
+    lastname=Author, 
+    firstname=Third, 
+    affiliation=i, 
+    email=third@ku.edu}, 
+  title={Another Very Long Title: With a Possibly Long Subtitle},
+  rightlogo={theme/CRMDAlogo.pdf},
+}
+\reporthdr
 
-\textsc{\Large{}Title of this Document: A Subtitle that may Flow onto
-Additional Space if Necessary}{\Large \par}
+%% Specify fully the left and right sides of footer, 3 lines
+%% If blanks are needed, must insert value " ~ "
+\footersetup{
+  leftside={
+    lone=1425 Jayhawk Blvd., 
+    ltwo={Watson Library, Suite 470}, 
+    lthree={Lawrence, KS 66045-7594}},
+  rightside={
+    rone=\url{https://crmda.ku.edu},
+    rtwo=\href{mailto:crmda@ku.edu}{crmda@ku.edu},
+    rthree=Phone: 785-864-3353}
+}
+\guideftr
 
-\medskip{}
- & \medskip{}
-
-\includegraphics[width=2in]{theme/CRMDAlogo}\tabularnewline
-\hline 
-\multicolumn{2}{>{\raggedright}p{5in}}{\medskip{}
-Author One, Title, CRMDA <email@ku.edu>
-
-Author Two, Title, CRMDA <email@ku.edu>
-
-\begin{singlespace}
-\raggedright{}\textbf{\today}
-\end{singlespace}
-}\tabularnewline
-\hline 
-\end{tabular}
-\par\end{center}
-\medskip{}
-%
-\end{minipage}
-
-% Please leave this chunk
-<<echo=F>>=
-if(!dir.exists("tmpout"))dir.create("tmpout", recursive = TRUE)
-@
-
+\selectlanguage{american}%
 % Please leave this code: In document Latex options:
 \fvset{listparameters={\setlength{\topsep}{0em}}}
 \SweaveOpts{prefix.string=tmpout/t, split=TRUE, ae=FALSE, height=5, width=6}
 
+\selectlanguage{english}%
+<<texcopy, include=FALSE,echo=FALSE>>=
+library(kutils)
+## If theme directory does not have required images or TeX files
+## we need to retrieve them and put them in "theme" directory. 
+logos <- c(logoleft = "jayhawk.pdf", 
+            logoright = "CRMDAlogo-vert.pdf")
+texfiles <- c("reportPreambleHeader.tex", 
+              "preambleFooter.tex", 
+              "preambleFloatCenter.tex",  
+              "preambleHyperref.tex",
+              "reportPreambleSweavel.tex")
+getFiles(logos, pkg = "crmda")
+getFiles(texfiles, pkg = "crmda")
+@
+
+\selectlanguage{american}%
 % Please leave this chunk
 <<Roptions, echo=F, include=F>>=
+if(!dir.exists("tmpout"))dir.create("tmpout", recursive = TRUE)
 opts.orig <- options()
 options(device = pdf)
 options(width=160, prompt=" ", continue="  ")
@@ -223,12 +171,14 @@ if you want more detailed information about what to do.
 Test a code chunk.
 
 <<>>=
+## Create 100 random standard normal observations
 x <- rnorm(100)
 head(x, 10)
 mean(x)
 @
 
-Please leave these chunks:
+Session Information is usually not written into a report, but an output
+file is created by the following pieces.
 
 <<RoptionsRestore, echo=F, include=F>>=
 ## Don't delete this. It puts the interactive session options

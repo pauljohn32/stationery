@@ -141,23 +141,29 @@ sweave
 
 \begin_layout Standard
 \noindent
+
+\lang english
 \begin_inset ERT
 status open
 
 \begin_layout Plain Layout
 
-%%Fill in values of the arguments here.
- 
+%% Fill in values of the arguments here, 
+\end_layout
+
+\begin_layout Plain Layout
+
+%% If blanks are needed, must insert value " ~ "
+\end_layout
+
+\begin_layout Plain Layout
+
+%% If comma needed inside value, wrap in {}.
 \end_layout
 
 \begin_layout Plain Layout
 
 %% Delete secondauthor and thirdauthor if not needed
-\end_layout
-
-\begin_layout Plain Layout
-
-%% MUST ESCAPE Commas in values! See lthree example of that
 \end_layout
 
 \begin_layout Plain Layout
@@ -169,7 +175,22 @@ reportsetup{%
 
 \begin_layout Plain Layout
 
-  firstauthor={last name=Author , first name=First, affiliation=CRMDA,
+  firstauthor={
+\end_layout
+
+\begin_layout Plain Layout
+
+    lastname=Author,
+\end_layout
+
+\begin_layout Plain Layout
+
+    firstname=First, 
+\end_layout
+
+\begin_layout Plain Layout
+
+    affiliation=CRMDA,
 \end_layout
 
 \begin_layout Plain Layout
@@ -179,14 +200,52 @@ reportsetup{%
 
 \begin_layout Plain Layout
 
-  secondauthor={lastname=Author, firstname=Second, affiliation=CRMDA, email=seco
-nd@ku.edu},
+ secondauthor={
 \end_layout
 
 \begin_layout Plain Layout
 
-  thirdauthor={lastname=Author, firstname=Third, affiliation=Institute of
- Knowledge, email=third@ku.edu}, 
+    lastname=Author, 
+\end_layout
+
+\begin_layout Plain Layout
+
+    firstname=Second, 
+\end_layout
+
+\begin_layout Plain Layout
+
+    affiliation=CRMDA, 
+\end_layout
+
+\begin_layout Plain Layout
+
+    email=second@ku.edu},
+\end_layout
+
+\begin_layout Plain Layout
+
+  thirdauthor={
+\end_layout
+
+\begin_layout Plain Layout
+
+    lastname=Author, 
+\end_layout
+
+\begin_layout Plain Layout
+
+    firstname=Third, 
+\end_layout
+
+\begin_layout Plain Layout
+
+    affiliation=i, 
+\end_layout
+
+\begin_layout Plain Layout
+
+    email=third@ku.edu}, 
 \end_layout
 
 \begin_layout Plain Layout
@@ -209,10 +268,6 @@ nd@ku.edu},
 
 \backslash
 reporthdr
-\end_layout
-
-\begin_layout Plain Layout
-
 \end_layout
 
 \begin_layout Plain Layout
@@ -303,35 +358,6 @@ status open
 
 \begin_layout Plain Layout
 
-% Please leave this chunk
-\end_layout
-
-\begin_layout Plain Layout
-
-<<echo=F>>=
-\end_layout
-
-\begin_layout Plain Layout
-
-if(!dir.exists("tmpout"))dir.create("tmpout", recursive = TRUE)
-\end_layout
-
-\begin_layout Plain Layout
-
-@
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
 % Please leave this code: In document Latex options:
 \end_layout
 
@@ -359,6 +385,88 @@ SweaveOpts{prefix.string=tmpout/t, split=TRUE, ae=FALSE, height=5, width=6}
 \end_layout
 
 \begin_layout Standard
+
+\lang english
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<texcopy, include=FALSE,echo=FALSE>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+library(kutils)
+\end_layout
+
+\begin_layout Plain Layout
+
+## If theme directory does not have required images or TeX files
+\end_layout
+
+\begin_layout Plain Layout
+
+## we need to retrieve them and put them in "theme" directory.
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+logos <- c(logoleft = "jayhawk.pdf", 
+\end_layout
+
+\begin_layout Plain Layout
+
+            logoright = "CRMDAlogo-vert.pdf")
+\end_layout
+
+\begin_layout Plain Layout
+
+texfiles <- c("reportPreambleHeader.tex", 
+\end_layout
+
+\begin_layout Plain Layout
+
+              "preambleFooter.tex", 
+\end_layout
+
+\begin_layout Plain Layout
+
+              "preambleFloatCenter.tex",  
+\end_layout
+
+\begin_layout Plain Layout
+
+              "preambleHyperref.tex",
+\end_layout
+
+\begin_layout Plain Layout
+
+              "reportPreambleSweavel.tex")
+\end_layout
+
+\begin_layout Plain Layout
+
+getFiles(logos, pkg = "crmda")
+\end_layout
+
+\begin_layout Plain Layout
+
+getFiles(texfiles, pkg = "crmda")
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 \begin_inset ERT
 status open
 
@@ -370,6 +478,11 @@ status open
 \begin_layout Plain Layout
 
 <<Roptions, echo=F, include=F>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+if(!dir.exists("tmpout"))dir.create("tmpout", recursive = TRUE)
 \end_layout
 
 \begin_layout Plain Layout
@@ -493,7 +606,8 @@ mean(x)
 \end_layout
 
 \begin_layout Standard
-Please leave these chunks:
+Session Information is usually not written into a report, but an output
+ file is created by the following pieces.
 \end_layout
 
 \begin_layout Standard
