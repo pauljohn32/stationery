@@ -390,7 +390,7 @@ status open
 
 \begin_layout Plain Layout
 
-<<echo=FALSE>>=
+<<include=FALSE, echo=FALSE>>=
 \end_layout
 
 \begin_layout Plain Layout

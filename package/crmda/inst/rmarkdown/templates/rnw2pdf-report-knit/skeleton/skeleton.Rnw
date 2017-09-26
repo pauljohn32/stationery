@@ -148,7 +148,7 @@ footskip=1.5\baselineskip,
 }
 \guideftr
 
-<<echo=FALSE>>=
+<<include=FALSE, echo=FALSE>>=
 if(!dir.exists("tmpout"))dir.create("tmpout", recursive = TRUE)
 @
 

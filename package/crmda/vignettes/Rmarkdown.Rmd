@@ -655,6 +655,44 @@ from the MathJax server in order to display the document.
 If the reader is offline, or the MathJax server fails. Users will see
 markup, rather than equations, when the network fails.
 
+# # Bibliographical citation test is appropriate. 
+
+The leaders in the field [@diggle_analysis_2013] are sure that I'm
+correct about most everything.  Diggle and colleagues
+[-@diggle_analysis_2013, 37] also seem confident that they did not
+agree to the preceeding. Note that to get the full parenthesized 
+statement with names and dates, we insert hard brackets `[`,
+an `@` sign, the bibtex tag, and acloser `]`. If we don't want
+their names, we insert a `-` sign. It is also possible to
+refer to a group of projects [@hsiao_analysis_2014;
+@fitzmaurice_applied_2011; @mccullagh_nelder_1983].
+
+It is a little bit frustrating that the Rmarkdown idea requires the
+references to be in the very last header of the document. I would
+rather place them myself, where I want them. They want us to insert
+
+```
+# References
+``` 
+
+to get automatic placement. The very bad thing I notice is that even
+if you put that in the second-to-last header, the citations will
+appear at the very last part of the document, but the word
+`References` will appear where you put it.
+
+The style of the bibliography will not match what we generally
+want. Is close, the Chicago author-year format. We need a "CSL" file
+to alter the style of the output. See 
+[authoring_bibliographies_and_citations](http://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html).
+
+Unfortunately, it appears this is difficult to get the references in
+the way we want them in PDF output. This is another reason that I
+think we should use LaTeX documents rather than Markdown when we
+intend to output PDF.
+
+
+
+
 # Conclusion
 
 For the sake of clarity, then, I state the following:
