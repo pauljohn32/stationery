@@ -23,10 +23,10 @@ output:
     toc: true
     toc_depth: 3
     highlight: haddock
-    css: "`r system.file('theme/kutils.css', package = 'crmda')`"
-    template: "`r system.file('theme/guide-boilerplate.html', package = 'crmda')`"
-logoleft: "`r system.file('theme/jayhawk.png', package = 'crmda')`"
-logoright: "`r system.file('theme/CRMDAlogo-vert.png', package = 'crmda')`"
+    css: theme/kutils.css
+    template: theme/guide-boilerplate.html
+logoleft: theme/jayhawk.png
+logoright: theme/CRMDAlogo-vert.png
 ---
 
 ```{r setup, include=FALSE}
@@ -37,6 +37,17 @@ knitr::opts_chunk$set(echo=TRUE, comment=NA, fig.path=paste0(outdir, "/p-"))
 options(width = 70)
 ```
 
+```{r themecopy, include = FALSE}
+library(kutils)
+## If theme directory does not have required images or TeX files
+## we need to retrieve them and put them in "theme" directory. 
+logos <- c(logoleft = "jayhawk.png", 
+           logoright = "CRMDAlogo-vert.png")
+files <- c("kutils.css", 
+           "guide-boilerplate.html")
+getFiles(logos, pkg = "crmda")
+getFiles(files, pkg = "crmda")
+```
 
 # About this framework
 
