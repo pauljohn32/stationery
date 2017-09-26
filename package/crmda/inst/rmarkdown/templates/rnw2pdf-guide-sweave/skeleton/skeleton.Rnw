@@ -125,9 +125,17 @@ footskip=1.5\baselineskip,
 }
 \guideftr
 
+<<include=FALSE,echo=FALSE,results=hide>>=
+if(!dir.exists("tmpout")) dir.create("tmpout", showWarnings=FALSE)
+@
+
 % In document Latex options:
 \fvset{listparameters={\setlength{\topsep}{0em}}}
 \SweaveOpts{prefix.string=tmpout/t, split=TRUE, ae=FALSE, height=3, width=5}
+
+<<include=FALSE>>=
+if(!dir.exists("tmpout")) dir.create("tmpout", showWarnings=FALSE)
+@
 
 \selectlanguage{english}%
 <<texcopy, include=FALSE,echo=FALSE>>=
@@ -139,14 +147,14 @@ logos <- c(logoleft = "jayhawk.pdf",
 texfiles <- c("guidePreambleHeader.tex", 
               "preambleFooter.tex", 
               "preambleFloatCenter.tex",  
-              "preambleHyperref.tex")
+              "preambleHyperref.tex", 
+              "guidePreambleSweavel.tex")
 getFiles(logos, pkg = "crmda")
 getFiles(texfiles, pkg = "crmda")
 @
 
 \selectlanguage{american}%
-<<Roptions, echo=F, echo=F>>=
-if(!dir.exists("tmpout")) dir.create("tmpout", showWarnings=FALSE)
+<<Roptions, echo=FALSE, echo=FALSE>>=
 opts.orig <- options()
 options(width=100, prompt=" ", continue="  ")
 options(useFancyQuotes = FALSE) 
