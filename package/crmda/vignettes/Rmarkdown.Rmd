@@ -17,6 +17,7 @@ output:
     ]
     template: theme/report-boilerplate.tex
 fontsize: 12pt
+bibliography: theme/mlm.bib
 vignette: >
     %\VignetteIndexEntry{crmda}
     %\VignetteEngine{knitr::rmarkdown}
