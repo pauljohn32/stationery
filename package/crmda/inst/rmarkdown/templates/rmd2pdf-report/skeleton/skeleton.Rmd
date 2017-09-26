@@ -42,6 +42,19 @@ knitr::opts_chunk$set(echo=TRUE, comment=NA, fig.path=paste0(tmpdir, "/p-"))
 options(width = 70)
 ```
 
+
+```{r themecopy, include = FALSE}
+library(kutils)
+## If theme directory does not have required images or TeX files
+## we need to retrieve them and put them in "theme" directory. 
+logos <- c(logoright = "CRMDAlogo.pdf")
+files <- c("report-boilerplate.tex")
+getFiles(logos, pkg = "crmda")
+getFiles(files, pkg = "crmda")
+```
+
+
+
 \begin{abstract}
 Please include abstract here
 \end{abstract}
