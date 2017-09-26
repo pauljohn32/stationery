@@ -1,6 +1,6 @@
 %% LyX 2.2.2 created this file.  For more info, see http://www.lyx.org/.
 %% Do not edit unless you really know what you are doing.
-\documentclass[11pt,letterpaper,american]{extarticle}
+\documentclass[11pt,letterpaper,english,american]{extarticle}
 \usepackage{lmodern}
 \renewcommand{\sfdefault}{lmss}
 \renewcommand{\ttdefault}{lmtt}
@@ -81,12 +81,26 @@ footskip=1.5\baselineskip,
 
 \usepackage{babel}
 \begin{document}
-%%Fill in values of the arguments here, 
-%% MUST ESCAPE Commas in values! See lthree example of that
+%% Fill in values of the arguments here, 
+%% If blanks are needed, must insert value " ~ "
+%% If comma needed inside value, wrap in {}.
+%% Delete secondauthor and thirdauthor if not needed
 \guidesetup{%
-  firstauthor={last name=Author, first name=First, affiliation=CRMDA, email=lone.edu},
-  secondauthor={lastname=Author, firstname=Second, affiliation=CRMDA, email=g},
-  thirdauthor={lastname=Author, firstname=Third, affiliation=i, email=g}, 
+  firstauthor={
+    lastname=Author, 
+    firstname=First, 
+    affiliation=CRMDA,
+    email=lone.edu},
+  secondauthor={
+    lastname=Author, 
+    firstname=Second, 
+    affiliation=CRMDA, 
+    email=second@ku.edu}, 
+ thirdauthor={
+    lastname=Author,
+    firstname=Third, 
+    affiliation=Dept of Statistics,
+    email=third@ku.edu},
   url={https://crmda.ku.edu/guides},
   keywords={single-authoring, just one},
   title={Another Very Long Title: With a Possibly Long Subtitle},
@@ -98,11 +112,12 @@ footskip=1.5\baselineskip,
 
 %% Specify fully the left and right sides of footer, 3 lines
 %% If blanks are needed, must insert value " ~ "
+%% If comma needed inside value, wrap in {}.
 \footersetup{
   leftside={
     lone=1425 Jayhawk Blvd., 
-    ltwo=470 Watson Library, 
-    lthree=Lawrence\, KS 66045-7555},
+    ltwo={Watson Library, Suite 470}, 
+    lthree={Lawrence, KS 66045-7594}},
   rightside={
     rone=\url{https://crmda.ku.edu},
     rtwo=\href{mailto:crmda@ku.edu}{crmda@ku.edu},
@@ -110,16 +125,28 @@ footskip=1.5\baselineskip,
 }
 \guideftr
 
-<<echo=F>>=
-##unlink("tmpout", recursive=T)
-if(!dir.exists("tmpout")) dir.create("tmpout", showWarnings=FALSE)
-@
-
 % In document Latex options:
 \fvset{listparameters={\setlength{\topsep}{0em}}}
-\SweaveOpts{prefix.string=tmpout/t,split=T,ae=F,height=3,width=5}
+\SweaveOpts{prefix.string=tmpout/t, split=TRUE, ae=FALSE, height=3, width=5}
 
-<<Roptions, echo=F>>=
+\selectlanguage{english}%
+<<texcopy, include=FALSE,echo=FALSE>>=
+library(kutils)
+## If theme directory does not have required images or TeX files
+## we need to retrieve them and put them in "theme" directory. 
+logos <- c(logoleft = "jayhawk.pdf", 
+            logoright = "CRMDAlogo-vert.pdf")
+texfiles <- c("guidePreambleHeader.tex", 
+              "preambleFooter.tex", 
+              "preambleFloatCenter.tex",  
+              "preambleHyperref.tex")
+getFiles(logos, pkg = "crmda")
+getFiles(texfiles, pkg = "crmda")
+@
+
+\selectlanguage{american}%
+<<Roptions, echo=F, echo=F>>=
+if(!dir.exists("tmpout")) dir.create("tmpout", showWarnings=FALSE)
 opts.orig <- options()
 options(width=100, prompt=" ", continue="  ")
 options(useFancyQuotes = FALSE) 
@@ -148,6 +175,10 @@ x <- rnorm(Nisthesamplesamplesize, mean = Misformuorthemean, s = Sisforsigma)
 head(x)
 mean(x)
 dataFrame <- data.frame(x1 = rnorm(100, m = 13, s = 23), x2 = rnorm(100, m = 13, s = 23), x3 = rnorm(100, m = 13, s = 23))
+@
+
+<<hide10, include=FALSE>>=
+var(x)
 @
 
 \section{Don't use LyX to change geometry or margins. That is written into
