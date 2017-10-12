@@ -1,3 +1,8 @@
+2017-10-12  Paul Johnson  <pauljohn@delllap-16>
+
+	* examples/test_writeups.R: insert inst/examples, test_writeups.R
+	creates a directory structure for all document types
+
 2017-09-21  Paul Johnson  <pauljohn@delllap-16>
 
 	* ../R/utils.R (getFiles): convenience to use in LaTeX or Rmd
