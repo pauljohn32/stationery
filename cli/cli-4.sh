@@ -11,11 +11,12 @@ while getopts "$optspec" optchar; do
     case "${optchar}" in
         -)
             case "${OPTARG}" in
-                loglevel)
-                    val="${!OPTIND}"; OPTIND=$(( $OPTIND + 1 ))
-                    echo "Parsing option: '--${OPTARG}', value: '${val}'" >&2;
-                    ;;
                 loglevel=*)
+                    val=${OPTARG#*=}
+                    opt=${OPTARG%=$val}
+                    echo "Parsing option: '--${opt}', value: '${val}'" >&2
+                    ;;
+                toc=*)
                     val=${OPTARG#*=}
                     opt=${OPTARG%=$val}
                     echo "Parsing option: '--${opt}', value: '${val}'" >&2
@@ -27,7 +28,7 @@ while getopts "$optspec" optchar; do
                     ;;
             esac;;
         h)
-            echo "usage: $0 [-v] [--loglevel[=]<value>]" >&2
+            echo "usage: $0 [-v] [--loglevel[=]<value>] [--toc[=]<TRUE,FALSE>]" >&2
             exit 2
             ;;
         v)
