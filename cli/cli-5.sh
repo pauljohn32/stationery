@@ -49,7 +49,7 @@ die() {
 
 printparse(){
 	if [ ${VERBOSE} -gt 0 ]; then
-		printf 'Parse: --%s%s%s\n' "$1" "$2" "$3" >&2;
+		printf 'Parse: %s%s%s\n' "$1" "$2" "$3" >&2;
 	fi
 }
 
@@ -75,25 +75,21 @@ while getopts "$optspec" OPTCHAR; do
 				loglevel) #argument has no equal sign
 					opt=${OPTARG}
 					val="${!OPTIND}"
-					## check value exists in ${!OPTIND}
-					echo "OPTIND is {$OPTIND} {!OPTIND} is _${!OPTIND}_"
+					## check value. If negative, assume user forgot value
+					showme "OPTIND is {$OPTIND} {!OPTIND} has value \"${!OPTIND}\""
 					if [[ "$val" == -* ]]; then
-						die "ERROR: $opt value must be supplied"
+						die "ERROR: $opt value must not have dash at beginning"
 					fi
-					if [ -n "${!OPTIND}" ]; then
-							## OPTIND=$(( $OPTIND + 1 )) # CAUTION! no effect?
-						printparse ${OPTARG} " " ${val}
-						loglevel="${val}"
-						shift
-					else
-						die "ERROR: $opt value must be supplied"
-				    fi
-				    ;;
+					## OPTIND=$(( $OPTIND + 1 )) # CAUTION! no effect?
+					printparse "--${OPTARG}" "  " "${val}"
+					loglevel="${val}"
+					shift
+					;;
                 loglevel=*) #argument has equal sign
 					opt=${OPTARG%=*}
 					val=${OPTARG#*=}
 					if [ "${OPTARG#*=}" ]; then
-						printparse ${opt} "=" ${val}
+						printparse "--${opt}" "=" "${val}"
 						loglevel="${val}"
 						## shift CAUTION don't shift this, fails othewise
 					else
@@ -102,23 +98,23 @@ while getopts "$optspec" OPTCHAR; do
                     ;;
 				toc) #argument has no equal sign
 					opt=${OPTARG}
-					showme "OPTIND is {$OPTIND} {!OPTIND} is ${!OPTIND}"
 					val="${!OPTIND}"
-					if [ -n "$val" ]; then
-						## OPTIND=$(( $OPTIND + 1 )) #??
-						printparse ${opt} " " ${val}
-						toc="${val}"
-						shift
-					else
-						die "ERROR: $opt value must be supplied"
-				    fi
-				    ;;
+					## check value. If negative, assume user forgot value
+					showme "OPTIND is {$OPTIND} {!OPTIND} has value \"${!OPTIND}\""
+					if [[ "$val" == -* ]]; then
+						die "ERROR: $opt value must not have dash at beginning"
+					fi
+					## OPTIND=$(( $OPTIND + 1 )) #??
+					printparse "--${opt}" " " "${val}"
+					toc="${val}"
+					shift
+					;;
 				toc=*) #argument has equal sign
                     opt=${OPTARG%=*}
 					val=${OPTARG#*=}
 					if [ "${OPTARG#*=}" ]; then
 						toc=${val}
-						printparse $opt " -> " $toc
+						printparse "--$opt" " -> " "$toc"
 						##shift ## NO! dont shift this
 					else
                 		die "ERROR: value for $opt undefined"
@@ -142,9 +138,11 @@ while getopts "$optspec" OPTCHAR; do
             ;;
 		l)
 			loglevel=${OPTARG}
+			printparse "-l" " "  "${loglevel}"
 			;;
 		t)
 			toc=${OPTARG}
+			printparse "-t" " "  "${toc}"
 			;;
 		v)
             VERBOSE=1
