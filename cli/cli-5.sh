@@ -48,20 +48,31 @@ die() {
 }
 
 printparse(){
-	printf 'Parsing option: --%s%s%s\n' "$1" "$2" "$3" >&2;
+	if [ ${VERBOSE} -gt 0 ]; then
+		printf 'Parse: --%s%s%s\n' "$1" "$2" "$3" >&2;
+	fi
 }
 
+showme(){
+	if [ ${VERBOSE} -gt 0 ]; then
+		printf 'VERBOSE: %s\n' "$1" >&2;
+	fi
+}
+
+
+VERBOSE=0
 loglevel=0
 toc="TRUE"
 
-optspec=":l:t:hv-:"
+optspec=":vhl:t:-:"
 while getopts "$optspec" OPTCHAR; do
-	echo "OPTARG:  ${OPTARG[*]}"
-	echo "OPTIND:  ${OPTIND[*]}"
+
+	showme "OPTARG:  ${OPTARG[*]}"
+	showme "OPTIND:  ${OPTIND[*]}"
     case "${OPTCHAR}" in
         -)
             case "${OPTARG}" in
-				loglevel)
+				loglevel) #argument has no equal sign
 					opt=${OPTARG}
 					val="${!OPTIND}"
 					## check value exists in ${!OPTIND}
@@ -78,7 +89,7 @@ while getopts "$optspec" OPTCHAR; do
 						die "ERROR: $opt value must be supplied"
 				    fi
 				    ;;
-                loglevel=?*)
+                loglevel=*) #argument has equal sign
 					opt=${OPTARG%=*}
 					val=${OPTARG#*=}
 					if [ "${OPTARG#*=}" ]; then
@@ -89,14 +100,9 @@ while getopts "$optspec" OPTCHAR; do
 						die "ERROR: $opt value must be supplied"
 					fi
                     ;;
-				loglevel=)
+				toc) #argument has no equal sign
 					opt=${OPTARG}
-			     	die "ERROR: $opt value must be supplied"
-				;;
-				
-				toc)
-					opt=${OPTARG}
-					echo "OPTIND is {$OPTIND} {!OPTIND} is ${!OPTIND}"
+					showme "OPTIND is {$OPTIND} {!OPTIND} is ${!OPTIND}"
 					val="${!OPTIND}"
 					if [ -n "$val" ]; then
 						## OPTIND=$(( $OPTIND + 1 )) #??
@@ -107,7 +113,7 @@ while getopts "$optspec" OPTCHAR; do
 						die "ERROR: $opt value must be supplied"
 				    fi
 				    ;;
-				toc=?*)
+				toc=*) #argument has equal sign
                     opt=${OPTARG%=*}
 					val=${OPTARG#*=}
 					if [ "${OPTARG#*=}" ]; then
@@ -118,10 +124,7 @@ while getopts "$optspec" OPTCHAR; do
                 		die "ERROR: value for $opt undefined"
 					fi
                     ;;
-				toc=)
-					opt=${OPTARG}
-			     	die "ERROR: $opt value must be supplied"
-				;;
+
 				help)
 					echo "usage: $0 [-v] [--loglevel[=]<value>] [--toc[=]<TRUE,FALSE>]" >&2
 					exit 2
@@ -143,10 +146,10 @@ while getopts "$optspec" OPTCHAR; do
 		t)
 			toc=${OPTARG}
 			;;
-		
-        v)
-            echo "Parsing option: '-${OPTCHAR}'" >&2
-            ;;
+		v)
+            VERBOSE=1
+			;;
+
         *)
             if [ "$OPTERR" != 1 ] || [ "${optspec:0:1}" = ":" ]; then
                 echo "Non-option argument: '-${OPTARG}'" >&2
@@ -157,6 +160,10 @@ done
 
 
 ## Test that
+
+## In newest version, flag -v means VERBOSE printout
+## ./cli-5.sh  -v --loglevel=44 --toc  TRUE
+## ./cli-5.sh  -v --loglevel=44 --toc  TRUE
 ## ./cli-5.sh --loglevel 7
 ## ./cli-5.sh --loglevel=8
 ## ./cli-5.sh -l9
