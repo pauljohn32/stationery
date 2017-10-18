@@ -1,9 +1,23 @@
 ## Paul Johnson
 ## 20171013
 
+Files
+
+cli-5.sh: working version of named parameter parsing, deals with user
+omission of values.
+
+cli-6.sh: imports all -- arguments, but they need not be named in
+the program. What dangers await?
+
+cli-1 -- cli-4.sh: test files copied from web examples, mostly
+in this thread:
+
 https://stackoverflow.com/questions/402377/using-getopts-in-bash-shell-script-to-get-long-and-short-command-line-options
 
-I want a script that allows arguments that will run anywhere. 
+I want a script that allows arguments. I don't want it to
+be restricted to Linux, at least should work on Mac OSX. I want
+it to accept POSIX style arguments, -t, -t 1, and GNU
+style arguments -t1, --toc=1. 
 
 Conclusions:
 
