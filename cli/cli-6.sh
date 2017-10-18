@@ -44,13 +44,10 @@ showme(){
 }
 
 
-VERBOSE=0
-loglevel=0
-toc="TRUE"
+VERBOSE=1
 
 ## index for imported values in optary and valary arrays
 idx=0
-
 ## Need v first so VERBOSE is set early
 optspec=":vh-:"
 while getopts "$optspec" OPTCHAR; do
@@ -63,8 +60,8 @@ while getopts "$optspec" OPTCHAR; do
 				showme "There is an equal sign in ${OPTARG}"
 				opt=${OPTARG%=*}
 				val=${OPTARG#*=}
-				showme "val is _${val}_"
-				if [[ -z $val ]]; then
+				printparse "--${opt}" "=" "\"${val}\""
+			   	if [[ -z $val ]]; then
 					die "ERROR: $opt is empty."
 				fi
 				optary[${idx}]=${opt}
@@ -74,7 +71,7 @@ while getopts "$optspec" OPTCHAR; do
 	            showme "There is no equal sign in ${OPTARG}"
 				opt=${OPTARG}
 				val="${!OPTIND}"; OPTIND=$(( $OPTIND + 1 ))
-				printparse "${OPTARG}" " " "${val}"
+				printparse "--${OPTARG}" " " "\"${val}\""
 		  		if [[ "$val" == -* ]]; then
 					die "ERROR: $opt value must be supplied"
 				fi
@@ -83,30 +80,36 @@ while getopts "$optspec" OPTCHAR; do
 				idx=$(($idx + 1))
 			fi
 			;;
-		h)
-			echo "usage: $0 [-v] [--anyOptYouQant[=]<anyValueYouWant>]" >&2
-			exit 2
-			;;
+	    h)
+		 	echo "usage: $0 [-v] [--anyOptYouQant[=]<valueIsRequired>] [--another[=]<value>]" >&2
+	    	exit 2
+		 	;;
         v)
-            VERBOSE=1
-            ;;
+			## if -v flag is present, it means TRUE
+             VERBOSE=1
+             ;;
         *)
-            if [ "$OPTERR" != 1 ] || [ "${optspec:0:1}" = ":" ]; then
-                echo "Non-option argument: '-${OPTARG}'" >&2
+             if [ "$OPTERR" != 1 ] || [ "${optspec:0:1}" = ":" ]; then
+                 die "Undefined argument: '-${OPTARG}'"
              fi
              ;;
-		  esac
+	esac
 done
 
 
 ## Test that
-./cli-6.sh --friend=paul --toc=TRUE --school=Kansas
+## ./cli-6.sh -v --friend=paul --toc=TRUE --school=Kansas
+## ./cli-6.sh --friend=paul --toc=TRUE --school=Kansas
+## ./cli-6.sh -k --friend=paul
+##
+## ./cli-6.sh -v --friend=paul --toc TRUE --school Kansas
 
 echo "
 After Parsing values, ordinary getopts POSIX opts
 "
 echo "VERBOSE  $VERBOSE" 
 
-echo 'Arrays of opts and values\n'
+echo 'Arrays of opts and values'
 echo "optary:  ${optary[*]}"
 echo "valary:  ${valary[*]}"
+

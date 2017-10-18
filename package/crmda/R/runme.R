@@ -91,6 +91,7 @@ rmd2html <- function(fn = NULL, wd = NULL, verbose = FALSE,
     html_args <- list(template = template, 
                       css = css,
                       toc = TRUE)
+    
     html_argz <- modifyList(html_args, dots_for_html_document)
     if(verbose) {print(paste("dots_for_html")); lapply(html_argz, print)}
     
@@ -347,6 +348,6 @@ rnw2pdf <- function(fn = NULL, wd = NULL, engine = "knitr", verbose = FALSE,
 ##' @author Paul Johnson <pauljohn@@ku.edu>
 ##' @importFrom rmarkdown html_document
 crmda_guide <- function(toc = FALSE, verbose = FALSE){
-    css <- system.file("rmarkdown/templates/rmd2html-guide/skeleton/theme/kutils.css", package = "crmda") 
+    css <- system.file("theme/kutils.css", package = "crmda") 
     rmarkdown::html_document(toc = toc, css = css, quiet = !verbose)
 }
