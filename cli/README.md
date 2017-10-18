@@ -14,6 +14,11 @@ in this thread:
 
 https://stackoverflow.com/questions/402377/using-getopts-in-bash-shell-script-to-get-long-and-short-command-line-options
 
+But I should have studied this one harder, before:
+
+https://stackoverflow.com/questions/192249/how-do-i-parse-command-line-arguments-in-bash
+
+
 I want a script that allows arguments. I don't want it to
 be restricted to Linux, at least should work on Mac OSX. I want
 it to accept POSIX style arguments, -t, -t 1, and GNU
