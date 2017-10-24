@@ -74,6 +74,25 @@ or the shell script that is provided with the `skeleton.Rmd` file:
 $ ./rmd2html.sh skeleton.Rmd
 ```
 
+The compiler is going to ignore many of the settings in your
+yaml header because we are using a document template. If you want
+to regulate these things (see `?rmd2html`), insert arguments
+
+
+```
+crmda::rmd2html("skeleton.Rmd", toc = TRUE, toc_depth = 1, keep_md = TRUE)
+```
+
+The command line script allows the same arguments, however THERE MUST
+NOT BE SPACES betwen the option name, the equal sign, and the value of 
+the option:
+
+```
+$ ./rmd2html.sh --toc=TRUE --toc_depth=1 keep_md=TRUE skeleton.Rmd
+```
+
+A full list of arguments is provided in `?rmd2html`.
+
 
 # Top Level Heading
 
