@@ -1,4 +1,4 @@
-%% LyX 2.2.2 created this file.  For more info, see http://www.lyx.org/.
+%% LyX 2.2.3 created this file.  For more info, see http://www.lyx.org/.
 %% Do not edit unless you really know what you are doing.
 \documentclass[11pt,letterpaper,american,english]{scrartcl}
 \usepackage{lmodern}
@@ -160,7 +160,7 @@ opts_chunk$set(fig.path='tmpout/t-', split=TRUE, ae=FALSE, comment=NA,
 
 \selectlanguage{american}%
 <<texcopy, include=FALSE>>=
-library(kutils)
+library(crmda)
 ## If theme directory does not have required images or TeX files
 ## we need to retrieve them and put them in "theme" directory. 
 logos <- c(logoright = "CRMDAlogo-vert.pdf")
