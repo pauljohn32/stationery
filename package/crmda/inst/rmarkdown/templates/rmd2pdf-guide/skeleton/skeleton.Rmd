@@ -9,7 +9,7 @@ author:
   affiliation: CRMDA
   description: Title
   email: email1@ku.edu
-- name:  Firstname2 Middlename2 Lastname2
+- name:  Firstname2 Lastname2
   affiliation: Dept. of Chemistry
   email: email2@ku.edu
 addr:

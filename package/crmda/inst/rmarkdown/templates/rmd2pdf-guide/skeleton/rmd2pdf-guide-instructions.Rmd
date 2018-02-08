@@ -1,0 +1,164 @@
+---
+title: "Using the rmd2pdf-guide"
+subtitle: "All the News that is Fit to Print"
+guideurl: http://crmda.ku.edu/guides
+author:
+- name: Paul Johnson 
+  affiliation: CRMDA
+  description: Director
+  email: crmda@ku.edu
+- name:  Brent Kaplan 
+  affiliation: CRMDA
+  description: GRA
+  email: crmda@ku.edu
+output: 
+  pdf_document:
+    citation_package: natbib
+    keep_tex: true
+    fig_caption: true
+    latex_engine: pdflatex
+    template:  "`r system.file('theme/guide-boilerplate.tex', package = 'crmda')`"
+    pandoc_args: [
+      "--listings"
+    ]
+addr:
+    l1: 1425 Jayhawk Blvd
+    l2: Watson Library, Suite 470
+    l3: Lawrence, KS 66045-7594
+    r1: "Phone: 785-864-3353"
+    r2: "Web: http://crmda.ku.edu"
+    r3: "Email: crmda@ku.edu"
+logoleft: theme/jayhawk.pdf
+logoright: theme/CRMDAlogo-vert.pdf
+bibliography: mlm.bib
+fontsize: 11pt
+header-includes:
+- \usepackage{xcolor}
+---
+
+```{r setup, include=FALSE}
+##This Invisible Chunk is required in all CRMDA documents
+tmpdir <- paste0("tmpout")
+if (!dir.exists(tmpdir)) dir.create(tmpdir, recursive = TRUE)
+knitr::opts_chunk$set(echo=TRUE, comment=NA, fig.path=paste0(tmpdir, "/p-"))
+options(width = 70)
+```
+
+
+# Nuts and Bolts
+
+## Minor header edits only
+
+The header has a place to insert a title, subtitle, email
+addresses. Do not change the `pdf_document` settings unless you want
+to get serious.
+
+## To compile this document
+
+To compile, either start R and use the function `rmd2pdf` or use the
+shell script that is in the same directory as the `Rmd` file.
+
+Compiling the document will also produce an R file that is a "tangled"
+version of the code chunks in the document.
+
+## Document customization: essentials
+
+The function `rmd2pdf` (same as the script) supplies settings,
+including a \LaTeX template called "report-boilerplate.tex".  That
+boilerplate is, by default, found in the package itself, NOT in the
+theme folder that is provided with this document.  If you do
+want to edit the theme boilerplate, edit
+theme/report-boilerplate.tex. To make sure the compiler
+uses that document is the next challenge.  If you use our
+compiler script or the R function rmd2pdf, it is necessary to supply
+the template argument with the function call. 
+
+That is, it is not sufficient to insert in the YAML header
+
+```
+template: theme/report-boilerplate.tex
+```
+
+In addition, if you insert \LaTeX features that require packages
+that are not currently in the report-boilerplate.tex, then those
+packages can be inserted into the preamble by YAML header markup like
+so:
+
+```
+header-includes:
+-  \usepackage{xcolor}
+-  \usepackage{amsmath}
+-  \usepackage{amssymb}
+-  \usepackage{fancybox}
+```
+
+That example has the package `amssymb` because some non-standard math
+symbols were needed.
+
+In August, 2017, we update that name of that argument to match the
+defaults in rmarkdown's template. Previously we had `preamble`.
+
+# For math, much \LaTeX\ Syntax is allowed
+
+This is explained in the `crmda` package vignette `Rmarkdown`.
+
+Use `\[` and `\[` for display equations:
+
+\[
+\Sigma_{gt}=\Lambda_{gt}\Psi_{gt}\Lambda'_{gt}+\Theta_{gt}
+\]
+
+Note that the preamble may need new packages if you
+insert more \LaTeX\ functionality.
+
+Because the backend is PDF and LaTeX will compile the document,
+numbered equations and cross references will succeed. Use
+`\begin{equation}` and `\end{equation}`:
+
+\begin{equation}
+\Sigma_{gt}=\Lambda_{gt}\Psi_{gt}\Lambda'_{gt}+\Theta_{gt}\label{eq:sem}
+\end{equation}
+
+That is equation (\ref{eq:sem}).
+
+# `R` code chunks
+
+As explained in the `crmda` vignette `code_chunks`, many 
+options are avaiable for code chunks.
+
+# Bibliographical citation test is appropriate. 
+
+Issues with bibliographies in Markdown documents are discussed
+in the vignette "Rmarkdown". 
+
+Here we check some of the features.
+
+The leaders in the field [@diggle_analysis_2013] are sure that I'm
+correct about most everything.  Diggle and colleagues
+[-@diggle_analysis_2013, 37] also seem confident that they did not
+agree to the preceeding. Note that to get the full parenthesized 
+statement with names and dates, we insert hard brackets `[`,
+an `@` sign, the bibtex tag, and acloser `]`. If we don't want
+their names, we insert a `-` sign. It is also possible to
+refer to a group of projects [@hsiao_analysis_2014;
+@fitzmaurice_applied_2011; @mccullagh_nelder_1983].
+
+Unfortunately, it appears this is difficult to get the references
+in the way we want them. This is another reason that I think
+we should use LaTeX documents rather than Markdown when we intend to
+output PDF.
+
+
+# Session Info
+
+This is a required element in a guide
+
+```{r session}
+sessionInfo()
+if (!is.null(warnings())){
+    print("Warnings:")
+    warnings()
+}
+```
+
+# References
