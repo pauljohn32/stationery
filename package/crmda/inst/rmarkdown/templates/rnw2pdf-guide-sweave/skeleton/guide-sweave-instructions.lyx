@@ -175,271 +175,236 @@ sweave
 
 \begin_layout Standard
 \noindent
-\begin_inset Tabular
-<lyxtabular version="3" rows="1" columns="3">
-<features tabularvalignment="middle">
-<column alignment="center" valignment="top" width="1.6in">
-<column alignment="left" valignment="top" width="3in">
-<column alignment="right" valignment="top" width="2in">
-<row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
 
-\begin_layout Plain Layout
-\begin_inset Box Frameless
-position "c"
-hor_pos "c"
-has_inner_box 1
-inner_pos "c"
-use_parbox 0
-use_makebox 0
-width "1in"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-\noindent
-\align center
-
-\shape smallcaps
-\size giant
-\begin_inset Graphics
-	filename theme/jayhawk.pdf
-	lyxscale 40
-	width 1in
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="left" valignment="top" topline="true" bottomline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Box Frameless
-position "c"
-hor_pos "c"
-has_inner_box 1
-inner_pos "c"
-use_parbox 0
-use_makebox 0
-width "3in"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-\noindent
-\align center
-
-\shape smallcaps
-\size giant
-\begin_inset Box Frameless
-position "t"
-hor_pos "c"
-has_inner_box 1
-inner_pos "t"
-use_parbox 0
-use_makebox 0
-width "100col%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-\noindent
-\align center
-
-\size large
-Title
-\end_layout
-
-\begin_layout Plain Layout
-\noindent
-\begin_inset CommandInset line
-LatexCommand rule
-offset "0.5ex"
-width "100line%"
-height "1pt"
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Box Frameless
-position "t"
-hor_pos "c"
-has_inner_box 1
-inner_pos "t"
-use_parbox 0
-use_makebox 0
-width "100col%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-\noindent
-\align center
-Author(s)
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset VSpace bigskip
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="right" valignment="top" topline="true" bottomline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Box Frameless
-position "c"
-hor_pos "c"
-has_inner_box 1
-inner_pos "c"
-use_parbox 0
-use_makebox 0
-width "2in"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-\noindent
-\align center
-
-\shape smallcaps
-\size giant
-\begin_inset Graphics
-	filename theme/CRMDA_logo.pdf
-	lyxscale 40
-	width 1.75in
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\noindent
-\align center
-\begin_inset Flex URL
+\lang american
+\begin_inset ERT
 status open
 
 \begin_layout Plain Layout
 
-http://crmda.ku.edu
+%% Fill in values of the arguments here, 
 \end_layout
 
-\end_inset
+\begin_layout Plain Layout
 
-
+%% If blanks are needed, must insert value " ~ "
 \end_layout
 
-\end_inset
+\begin_layout Plain Layout
 
+%% If comma needed inside value, wrap in {}.
+\end_layout
+
+\begin_layout Plain Layout
+
+%% Delete secondauthor and thirdauthor if not needed
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+guidesetup{%
+\end_layout
+
+\begin_layout Plain Layout
+
+  firstauthor={
+\end_layout
+
+\begin_layout Plain Layout
+
+    lastname=Author, 
+\end_layout
+
+\begin_layout Plain Layout
+
+    firstname=First, 
+\end_layout
+
+\begin_layout Plain Layout
+
+    affiliation=CRMDA,
+\end_layout
+
+\begin_layout Plain Layout
+
+    email=lone.edu},
+\end_layout
+
+\begin_layout Plain Layout
+
+  secondauthor={
+\end_layout
+
+\begin_layout Plain Layout
+
+    lastname=Author, 
+\end_layout
+
+\begin_layout Plain Layout
+
+    firstname=Second, 
+\end_layout
+
+\begin_layout Plain Layout
+
+    affiliation=CRMDA, 
+\end_layout
+
+\begin_layout Plain Layout
+
+    email=second@ku.edu}, 
+\end_layout
+
+\begin_layout Plain Layout
+
+ thirdauthor={
+\end_layout
+
+\begin_layout Plain Layout
+
+    lastname=Author,
+\end_layout
+
+\begin_layout Plain Layout
+
+    firstname=Third, 
+\end_layout
+
+\begin_layout Plain Layout
+
+    affiliation=Dept of Statistics,
+\end_layout
+
+\begin_layout Plain Layout
+
+    email=third@ku.edu},
+\end_layout
+
+\begin_layout Plain Layout
+
+  url={https://crmda.ku.edu/guides},
+\end_layout
+
+\begin_layout Plain Layout
+
+  keywords={single-authoring, just one},
+\end_layout
+
+\begin_layout Plain Layout
+
+  title={Another Very Long Title: With a Possibly Long Subtitle},
+\end_layout
+
+\begin_layout Plain Layout
+
+  leftlogo={theme/jayhawk.pdf},
+\end_layout
+
+\begin_layout Plain Layout
+
+  rightlogo={theme/CRMDAlogo-vert.pdf},
+\end_layout
+
+\begin_layout Plain Layout
+
+  number=48,
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+guidehdr
+\end_layout
+
+\begin_layout Plain Layout
 
 \end_layout
 
 \begin_layout Plain Layout
-\begin_inset Box Frameless
-position "c"
-hor_pos "c"
-has_inner_box 1
-inner_pos "c"
-use_parbox 0
-use_makebox 0
-width "2in"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
+
+%% Specify fully the left and right sides of footer, 3 lines
+\end_layout
 
 \begin_layout Plain Layout
-\noindent
-\align center
 
-\shape smallcaps
-Guide No:
-\shape default
- XXX
+%% If blanks are needed, must insert value " ~ "
 \end_layout
 
-\end_inset
+\begin_layout Plain Layout
 
-
+%% If comma needed inside value, wrap in {}.
 \end_layout
 
-\end_inset
-</cell>
-</row>
-</lyxtabular>
+\begin_layout Plain Layout
+
+
+\backslash
+footersetup{
+\end_layout
+
+\begin_layout Plain Layout
+
+  leftside={
+\end_layout
+
+\begin_layout Plain Layout
+
+    lone=1425 Jayhawk Blvd., 
+\end_layout
+
+\begin_layout Plain Layout
+
+    ltwo={Watson Library, Suite 470}, 
+\end_layout
+
+\begin_layout Plain Layout
+
+    lthree={Lawrence, KS 66045-7594}},
+\end_layout
+
+\begin_layout Plain Layout
+
+  rightside={
+\end_layout
+
+\begin_layout Plain Layout
+
+    rone=
+\backslash
+url{https://crmda.ku.edu},
+\end_layout
+
+\begin_layout Plain Layout
+
+    rtwo=
+\backslash
+href{mailto:crmda@ku.edu}{crmda@ku.edu},
+\end_layout
+
+\begin_layout Plain Layout
+
+    rthree=Phone: 785-864-3353}
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+guideftr
+\end_layout
 
 \end_inset
 
@@ -447,17 +412,14 @@ Guide No:
 \end_layout
 
 \begin_layout Standard
+
+\lang american
 \begin_inset ERT
 status open
 
 \begin_layout Plain Layout
 
-<<echo=F>>=
-\end_layout
-
-\begin_layout Plain Layout
-
-##unlink("tmpout", recursive=T)
+<<include=FALSE,echo=FALSE,results=hide>>=
 \end_layout
 
 \begin_layout Plain Layout
@@ -476,6 +438,8 @@ if(!dir.exists("tmpout")) dir.create("tmpout", showWarnings=FALSE)
 \end_layout
 
 \begin_layout Standard
+
+\lang american
 \begin_inset ERT
 status open
 
@@ -499,7 +463,33 @@ topsep}{0em}}}
 
 
 \backslash
-SweaveOpts{prefix.string=tmpout/t,split=T,ae=F,height=3,width=5}
+SweaveOpts{prefix.string=tmpout/t, split=TRUE, ae=FALSE, height=3, width=5}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\lang american
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<include=FALSE>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+if(!dir.exists("tmpout")) dir.create("tmpout", showWarnings=FALSE)
+\end_layout
+
+\begin_layout Plain Layout
+
+@
 \end_layout
 
 \end_inset
@@ -513,7 +503,89 @@ status open
 
 \begin_layout Plain Layout
 
-<<Roptions, echo=F>>=
+<<texcopy, include=FALSE,echo=FALSE>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+library(crmda)
+\end_layout
+
+\begin_layout Plain Layout
+
+## If theme directory does not have required images or TeX files
+\end_layout
+
+\begin_layout Plain Layout
+
+## we need to retrieve them and put them in "theme" directory.
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+logos <- c(logoleft = "jayhawk.pdf", 
+\end_layout
+
+\begin_layout Plain Layout
+
+            logoright = "CRMDAlogo-vert.pdf")
+\end_layout
+
+\begin_layout Plain Layout
+
+texfiles <- c("guidePreambleHeader.tex", 
+\end_layout
+
+\begin_layout Plain Layout
+
+              "preambleFooter.tex", 
+\end_layout
+
+\begin_layout Plain Layout
+
+              "preambleFloatCenter.tex",  
+\end_layout
+
+\begin_layout Plain Layout
+
+              "preambleHyperref.tex", 
+\end_layout
+
+\begin_layout Plain Layout
+
+              "guidePreambleSweavel.tex")
+\end_layout
+
+\begin_layout Plain Layout
+
+getFiles(logos, pkg = "crmda")
+\end_layout
+
+\begin_layout Plain Layout
+
+getFiles(texfiles, pkg = "crmda")
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\lang american
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<Roptions, echo=FALSE, echo=FALSE>>=
 \end_layout
 
 \begin_layout Plain Layout
@@ -553,6 +625,10 @@ pdf.options(onefile=FALSE,family="Times",pointsize=10)
 
 \end_inset
 
+
+\end_layout
+
+\begin_layout Standard
 
 \end_layout
 
