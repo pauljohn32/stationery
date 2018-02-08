@@ -38,7 +38,7 @@ options(width = 70)
 ```
 
 ```{r themecopy, include = FALSE}
-library(kutils)
+library(crmda)
 ## If theme directory does not have required images or TeX files
 ## we need to retrieve them and put them in "theme" directory. 
 logos <- c(logoleft = "jayhawk.png", 
