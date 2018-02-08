@@ -4,8 +4,11 @@
 \begin_header
 \save_transient_properties true
 \origin unavailable
-\textclass scrartcl
+\textclass article
 \begin_preamble
+% Following comment is required. Do not delete it.
+%\usepackage{Sweave}
+
 \usepackage[includehead,includefoot]{geometry}
 \geometry{
 lmargin=1in,
@@ -21,83 +24,42 @@ footskip=1.5\baselineskip,
 \usepackage{multicol}
 \usepackage{listings}
 \usepackage{graphicx}
-\usepackage{color}
-\usepackage[yyyymmdd,hhmmss]{datetime}
-\lstset{tabsize=2, breaklines=true, 
-  breakatwhitespace=true,
-  %language=R,
-  captionpos=b,
-  frame=single,
-  framerule=0.2pt,
-  framesep=1pt,
+\usepackage{xcolor}
+
+\input{theme/guidePreambleHeader.tex}
+\input{theme/preambleFooter.tex}
+\input{theme/preambleFloatCenter.tex}
+\input{theme/preambleHyperref.tex}
+\input{theme/guidePreambleSweavel.tex}
+
+
+\lstdefinestyle{custom}{
+  language=R,
+  escapechar=`,
+  fancyvrb=false,%
+  tabsize=2,%
+  breaklines=true,
+  breakatwhitespace=true,%
+  captionpos=b,%
+  frame=single,%
+  framerule=0.2pt,%
+  framesep=1pt,%
+  showstringspaces=false,%
+  basicstyle=\normalsize\ttfamily,%
+  columns=fixed%,
+  \lst@ifdisplaystyle\scriptsize\fi,%
+  identifierstyle=,%
+  keywords=\bfseries,%
+  keywordstyle=\color[rgb]{0, 0.5, 0.5},
+  escapeinside={(*}{*)},
+  literate={~}{{$$\sim$$}}1 {==}{{=\,=}}2,
+  alsoother={$$},
+  alsoletter={.<-},%
+  otherkeywords={!,!=,~,$$,*,\&,\%/\%,\%*\%,\%\%,<-,<<-,/},
+  backgroundcolor=\Rbackground,
   numbers=left,
-  numberstyle=\tiny,
-  numbersep=5pt,
-  showstringspaces=false,
-  basicstyle=\footnotesize,
-  identifierstyle=,
-  keywordstyle=\bfseries,
-  commentstyle=\color{darkgreen},
-  stringstyle=,
-  backgroundcolor=\color[gray]{0.935}
-}
-\usepackage{fancyhdr}
-\usepackage{lastpage}
-\usepackage{babel}
-% Now fancy header/footer settings
-\lhead{}
-\chead{}
-\rhead{}
-\renewcommand{\headrulewidth}{0pt}
-\lfoot{}
-\cfoot{{Page} \thepage { of} \pageref{LastPage}}
-\rfoot{}
-
-\fancypagestyle{firststyle}
-{
-\lfoot{}
-%\cfoot{{Page} \thepage { of} \pageref{LastPage}}
-\cfoot{}
-\rfoot{}
-\renewcommand{\headrulewidth}{0pt}
-\fancyfoot[L]{1425 Jayhawk Blvd.\\470 Watson Library\\ Lawrence, KS 66045-7555}
-\fancyfoot[R]{Phone: 785-864-3353\\ Website: crmda.ku.edu\\ Email: crmda@ku.edu}
-\renewcommand{\footrulewidth}{.1pt}
-}
-
-\pagestyle{fancy}
-
-
-%graphics and such inside floats are centered by default
-\renewenvironment{figure}[1][]{%
- \ifthenelse{\equal{#1}{}}{%
-   \@float{figure}
- }{%
-   \@float{figure}[#1]%
- }%
- \centering
-}{%
- \end@float
-}
-\renewenvironment{table}[1][]{%
- \ifthenelse{\equal{#1}{}}{%
-   \@float{table}
- }{%
-   \@float{table}[#1]%
- }%
-
- \centering
-%  \setlength{\@tempdima}{\abovecaptionskip}%
-%  \setlength{\abovecaptionskip}{\belowcaptionskip}%
-% \setlength{\belowcaptionskip}{\@tempdima}%
-}{%
- \end@float
-}
-
-\thispagestyle{firststyle}
-\usepackage{lipsum}
-
-\usepackage{Sweavel}
+  numberstyle={\tiny}
+}%
 \end_preamble
 \use_default_options false
 \begin_modules
@@ -214,12 +176,12 @@ guidesetup{%
 
 \begin_layout Plain Layout
 
-    lastname=Author, 
+    lastname=Johnson, 
 \end_layout
 
 \begin_layout Plain Layout
 
-    firstname=First, 
+    firstname=Paul, 
 \end_layout
 
 \begin_layout Plain Layout
@@ -229,7 +191,7 @@ guidesetup{%
 
 \begin_layout Plain Layout
 
-    email=lone.edu},
+    email=pauljohn.edu},
 \end_layout
 
 \begin_layout Plain Layout
@@ -239,12 +201,12 @@ guidesetup{%
 
 \begin_layout Plain Layout
 
-    lastname=Author, 
+    lastname=Sullivan, 
 \end_layout
 
 \begin_layout Plain Layout
 
-    firstname=Second, 
+    firstname=Meghan, 
 \end_layout
 
 \begin_layout Plain Layout
@@ -259,31 +221,6 @@ guidesetup{%
 
 \begin_layout Plain Layout
 
- thirdauthor={
-\end_layout
-
-\begin_layout Plain Layout
-
-    lastname=Author,
-\end_layout
-
-\begin_layout Plain Layout
-
-    firstname=Third, 
-\end_layout
-
-\begin_layout Plain Layout
-
-    affiliation=Dept of Statistics,
-\end_layout
-
-\begin_layout Plain Layout
-
-    email=third@ku.edu},
-\end_layout
-
-\begin_layout Plain Layout
-
   url={https://crmda.ku.edu/guides},
 \end_layout
 
@@ -294,7 +231,7 @@ guidesetup{%
 
 \begin_layout Plain Layout
 
-  title={Another Very Long Title: With a Possibly Long Subtitle},
+  title={Guide Sweave Instructions},
 \end_layout
 
 \begin_layout Plain Layout
@@ -700,8 +637,13 @@ library(rockchalk)
 
 \begin_layout Plain Layout
 
-outreg(list("My Poisson"= m1), varLabels = c("x" = "A Normal Predictor"),
+or <- outreg(list("My Poisson"= m1), varLabels = c("x" = "A Normal Predictor"),
  tight = FALSE)
+\end_layout
+
+\begin_layout Plain Layout
+
+cat(or)
 \end_layout
 
 \begin_layout Plain Layout
@@ -853,54 +795,6 @@ There is, however, a fancy footer, it has the page-out-of-page thingie.
 \begin_layout Standard
 Now I'm going to fill up the rest of this with some Latin to see if margins
  come out correctly.
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-lipsum
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-lipsum
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-lipsum
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard
