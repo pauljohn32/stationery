@@ -4,7 +4,7 @@
 \begin_header
 \save_transient_properties true
 \origin unavailable
-\textclass scrartcl
+\textclass extarticle
 \begin_preamble
 % Following comment is required. Do not delete it.
 %\usepackage{Sweave}
@@ -67,7 +67,7 @@ logicalmkup
 sweave
 \end_modules
 \maintain_unincluded_children false
-\language english
+\language american
 \language_package default
 \inputencoding iso8859-15
 \fontencoding global
@@ -137,8 +137,6 @@ sweave
 
 \begin_layout Standard
 \noindent
-
-\lang american
 \begin_inset ERT
 status open
 
@@ -374,8 +372,6 @@ guideftr
 \end_layout
 
 \begin_layout Standard
-
-\lang american
 \begin_inset ERT
 status open
 
@@ -400,8 +396,6 @@ if(!dir.exists("tmpout")) dir.create("tmpout", showWarnings=FALSE)
 \end_layout
 
 \begin_layout Standard
-
-\lang american
 \begin_inset ERT
 status open
 
@@ -434,8 +428,6 @@ SweaveOpts{prefix.string=tmpout/t, split=TRUE, ae=FALSE, height=3, width=5}
 \end_layout
 
 \begin_layout Standard
-
-\lang american
 \begin_inset ERT
 status open
 
@@ -540,8 +532,6 @@ getFiles(texfiles, pkg = "crmda")
 \end_layout
 
 \begin_layout Standard
-
-\lang american
 \begin_inset ERT
 status open
 
@@ -590,28 +580,43 @@ pdf.options(onefile=FALSE,family="Times",pointsize=10)
 
 \end_layout
 
-\begin_layout Standard
+\begin_layout Abstract
+\noindent
+Abstract here.
+ This is not indented.
+\end_layout
 
-\lang american
+\begin_layout Standard
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Introduction
+\end_layout
+
+\begin_layout Standard
+I put in some input here!
+\end_layout
+
+\begin_layout Standard
 Leave the code chunks before this point.
 \end_layout
 
 \begin_layout Standard
-
-\lang american
 Don't change margins with Lyx pull down menus.
  Edit preamble for that.
 \end_layout
 
 \begin_layout Section
-
-\lang american
 Write your sections & subsections here
 \end_layout
 
 \begin_layout Standard
-
-\lang american
 Please leave section 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -624,20 +629,14 @@ reference "sec:Session-Info"
 \end_layout
 
 \begin_layout Section
-
-\lang american
 Test a code chunk
 \end_layout
 
 \begin_layout Standard
-
-\lang american
 This chunk tests long names, line wrap
 \end_layout
 
 \begin_layout Standard
-
-\lang american
 \begin_inset ERT
 status open
 
@@ -693,8 +692,6 @@ dataFrame <- data.frame(x1 = rnorm(100, m = 13, s = 23), x2 = rnorm(100,
 \end_layout
 
 \begin_layout Standard
-
-\lang american
 \begin_inset ERT
 status open
 
@@ -719,15 +716,11 @@ var(x)
 \end_layout
 
 \begin_layout Section
-
-\lang american
 Don't use LyX to change geometry or margins.
  That is written into the preamble
 \end_layout
 
 \begin_layout Section
-
-\lang american
 Session Info
 \begin_inset CommandInset label
 LatexCommand label
@@ -739,8 +732,6 @@ name "sec:Session-Info"
 \end_layout
 
 \begin_layout Standard
-
-\lang american
 \begin_inset ERT
 status open
 
@@ -780,8 +771,6 @@ if(!is.null(warnings())){
 \end_layout
 
 \begin_layout Standard
-
-\lang american
 \begin_inset ERT
 status open
 

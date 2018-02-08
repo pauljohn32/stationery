@@ -564,6 +564,14 @@ pdf.options(onefile=FALSE, family="Times", pointsize=10)
 
 \end_layout
 
+\begin_layout Abstract
+\noindent
+This is an abstract.
+ Please include a terse, yet descriptive statement here of less than 200
+ words.
+ It should avoid colloquialisms and polysylabic profundities.
+\end_layout
+
 \begin_layout Standard
 Do put your title & name in the top block.
 \end_layout

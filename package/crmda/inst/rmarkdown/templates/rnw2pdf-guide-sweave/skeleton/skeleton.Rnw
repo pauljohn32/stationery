@@ -1,11 +1,11 @@
-%% LyX 2.2.2 created this file.  For more info, see http://www.lyx.org/.
+%% LyX 2.2.3 created this file.  For more info, see http://www.lyx.org/.
 %% Do not edit unless you really know what you are doing.
-\documentclass[11pt,letterpaper,english,american]{extarticle}
+\documentclass[11pt,letterpaper,american]{extarticle}
 \usepackage{lmodern}
 \renewcommand{\sfdefault}{lmss}
 \renewcommand{\ttdefault}{lmtt}
 \usepackage[T1]{fontenc}
-\usepackage[utf8]{inputenc}
+\usepackage[latin9]{inputenc}
 \setlength{\parskip}{\medskipamount}
 \setlength{\parindent}{0pt}
 
@@ -137,9 +137,8 @@ if(!dir.exists("tmpout")) dir.create("tmpout", showWarnings=FALSE)
 if(!dir.exists("tmpout")) dir.create("tmpout", showWarnings=FALSE)
 @
 
-\selectlanguage{english}%
 <<texcopy, include=FALSE,echo=FALSE>>=
-library(kutils)
+library(crmda)
 ## If theme directory does not have required images or TeX files
 ## we need to retrieve them and put them in "theme" directory. 
 logos <- c(logoleft = "jayhawk.pdf", 
@@ -153,7 +152,6 @@ getFiles(logos, pkg = "crmda")
 getFiles(texfiles, pkg = "crmda")
 @
 
-\selectlanguage{american}%
 <<Roptions, echo=FALSE, echo=FALSE>>=
 opts.orig <- options()
 options(width=100, prompt=" ", continue="  ")
@@ -162,6 +160,14 @@ set.seed(12345)
 options(SweaveHooks=list(fig=function() par(ps=10)))
 pdf.options(onefile=FALSE,family="Times",pointsize=10)
 @
+\begin{abstract}
+\noindent Abstract here. This is not indented.
+\end{abstract}
+\tableofcontents{}
+
+\section{Introduction}
+
+I put in some input here!
 
 Leave the code chunks before this point.
 
