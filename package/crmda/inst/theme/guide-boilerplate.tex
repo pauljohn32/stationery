@@ -155,11 +155,12 @@ footskip=2.5\baselineskip,
 \usepackage{babel}
 \begin{document}
 
-\begin{tabular}{|>{\centering}p{1.3in}>{\raggedright}p{3.5in}>{\raggedleft}p{2in}|}
+\setlength{\tabcolsep}{1pt}
+\begin{tabular}{@{}|>{\centering}p{1.3in}>{\raggedright}p{3.5in}>{\raggedleft}p{1.7in}|}
 \hline 
 \begin{minipage}[c]{1in}%
   \begin{center}
-    $if(logoleft)$\includegraphics[width=1in]{$logoleft$}$endif$
+    $if(logoleft)$\includegraphics[width=1.15in]{$logoleft$}$endif$
     \par
   \end{center}%
 \end{minipage} & %
@@ -194,11 +195,11 @@ $endfor$
 \end{minipage} & %
 \begin{minipage}[c]{2in}%
 \begin{center}
-$if(logoright)$\includegraphics[width=1.5in]{$logoright$}$endif$
+$if(logoright)$\includegraphics[width=1.25in]{$logoright$}$endif$
 \par\end{center}
 \end{minipage}
 
-\begin{minipage}[c]{2in}%
+\begin{minipage}[c]{1.7in}%
   \begin{center}
     \medskip
     \today\par
