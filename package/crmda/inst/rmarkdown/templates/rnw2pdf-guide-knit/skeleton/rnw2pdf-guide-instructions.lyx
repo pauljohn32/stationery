@@ -21,12 +21,11 @@ footskip=1.5\baselineskip,
 \usepackage{listings}
 \usepackage{graphicx}
 \usepackage{xcolor}
-\usepackage[yyyymmdd,hhmmss]{datetime}
+
 
 \def\Sweavesize{\scriptsize} 
 \def\Rcolor{\color{black}} 
 \def\Rbackground{\color[gray]{0.95}}
-
 
 \usepackage{listings}
 \usepackage{upquote, fancyvrb, relsize, ae}
@@ -66,6 +65,7 @@ footskip=1.5\baselineskip,
 \input{theme/preambleFloatCenter.tex}
 %% Load Hyperref, don't let LyX do this
 \input{theme/preambleHyperref.tex}
+\input{theme/guidePreambleKnitr.tex}
 \end_preamble
 \use_default_options false
 \begin_modules
@@ -143,23 +143,29 @@ knitr
 
 \begin_layout Standard
 \noindent
+
+\lang american
 \begin_inset ERT
 status open
 
 \begin_layout Plain Layout
 
-%%Fill in values of the arguments here.
- 
+%% Fill in values of the arguments here, 
+\end_layout
+
+\begin_layout Plain Layout
+
+%% If blanks are needed, must insert value " ~ "
+\end_layout
+
+\begin_layout Plain Layout
+
+%% If comma needed inside value, wrap in {}.
 \end_layout
 
 \begin_layout Plain Layout
 
 %% Delete secondauthor and thirdauthor if not needed
-\end_layout
-
-\begin_layout Plain Layout
-
-%% MUST ESCAPE Commas in values! See lthree example of that
 \end_layout
 
 \begin_layout Plain Layout
@@ -171,12 +177,77 @@ guidesetup{%
 
 \begin_layout Plain Layout
 
-  firstauthor={lastname=Johnson , firstname=Paul, affiliation=CRMDA,
+  firstauthor={
 \end_layout
 
 \begin_layout Plain Layout
 
-    email=pauljohn@ku.edu},
+    lastname=Author, 
+\end_layout
+
+\begin_layout Plain Layout
+
+    firstname=First, 
+\end_layout
+
+\begin_layout Plain Layout
+
+    affiliation=CRMDA,
+\end_layout
+
+\begin_layout Plain Layout
+
+    email=lone.edu},
+\end_layout
+
+\begin_layout Plain Layout
+
+  secondauthor={
+\end_layout
+
+\begin_layout Plain Layout
+
+    lastname=Author, 
+\end_layout
+
+\begin_layout Plain Layout
+
+    firstname=Second, 
+\end_layout
+
+\begin_layout Plain Layout
+
+    affiliation=CRMDA, 
+\end_layout
+
+\begin_layout Plain Layout
+
+    email=second@ku.edu}, 
+\end_layout
+
+\begin_layout Plain Layout
+
+ thirdauthor={
+\end_layout
+
+\begin_layout Plain Layout
+
+    lastname=Author,
+\end_layout
+
+\begin_layout Plain Layout
+
+    firstname=Third, 
+\end_layout
+
+\begin_layout Plain Layout
+
+    affiliation=Dept of Statistics,
+\end_layout
+
+\begin_layout Plain Layout
+
+    email=third@ku.edu}, 
 \end_layout
 
 \begin_layout Plain Layout
@@ -186,12 +257,12 @@ guidesetup{%
 
 \begin_layout Plain Layout
 
-  keywords={LaTeX, Noweb, knit},
+  keywords={single-authoring, just one},
 \end_layout
 
 \begin_layout Plain Layout
 
-  title={Using rnw2pdf-guide-knit Documents},
+  title={Another Very Long Title: With a Possibly Long Subtitle},
 \end_layout
 
 \begin_layout Plain Layout
@@ -237,6 +308,11 @@ guidehdr
 
 \begin_layout Plain Layout
 
+%% If comma needed inside value, wrap in {}.
+\end_layout
+
+\begin_layout Plain Layout
+
 
 \backslash
 footersetup{
@@ -254,14 +330,12 @@ footersetup{
 
 \begin_layout Plain Layout
 
-    ltwo=470 Watson Library, 
+    ltwo={Watson Library, Suite 470}, 
 \end_layout
 
 \begin_layout Plain Layout
 
-    lthree=Lawrence
-\backslash
-, KS 66045-7555},
+    lthree={Lawrence, KS 66045-7594}},
 \end_layout
 
 \begin_layout Plain Layout
@@ -306,78 +380,19 @@ guideftr
 \end_layout
 
 \begin_layout Standard
+
+\lang american
 \begin_inset ERT
 status open
 
 \begin_layout Plain Layout
 
-<<echo=F>>=
+<<knitropts, echo=FALSE>>=
 \end_layout
 
 \begin_layout Plain Layout
 
-##unlink("tmpout", recursive=T)
-\end_layout
-
-\begin_layout Plain Layout
-
-if(!dir.exists("tmpout")) dir.create("tmpout", showWarnings=FALSE)
-\end_layout
-
-\begin_layout Plain Layout
-
-@
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-% In document Latex options:
-\end_layout
-
-\begin_layout Plain Layout
-
-% THE FOLLOWING LINE CAUSES AN ERROR AND DOCUMENT DOES NOT COMPILE
-\end_layout
-
-\begin_layout Plain Layout
-
-% 
-\backslash
-fvset{listparameters={
-\backslash
-setlength{
-\backslash
-topsep}{0em}}}
-\end_layout
-
-\begin_layout Plain Layout
-
-% 
-\backslash
-SweaveOpts{prefix.string=tmpout/t,split=T,ae=F,height=3,width=5}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-<<include=FALSE>>=
+## Chunk output 
 \end_layout
 
 \begin_layout Plain Layout
@@ -387,8 +402,17 @@ library(knitr)
 
 \begin_layout Plain Layout
 
-opts_chunk$set(fig.path="tmpout/t-", split=TRUE, ae=FALSE, fig.height=3, fig.width=
-5, comment=NA)
+if(!dir.exists("tmpout")) dir.create("tmpout", showWarnings=FALSE)
+\end_layout
+
+\begin_layout Plain Layout
+
+opts_chunk$set(fig.path="tmpout/t-", split=TRUE, 
+\end_layout
+
+\begin_layout Plain Layout
+
+               ae=FALSE, fig.height=3, fig.width=5, comment=NA)
 \end_layout
 
 \begin_layout Plain Layout
@@ -402,6 +426,94 @@ opts_chunk$set(fig.path="tmpout/t-", split=TRUE, ae=FALSE, fig.height=3, fig.wid
 \end_layout
 
 \begin_layout Standard
+
+\lang american
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<texcopy, include=FALSE>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+library(crmda)
+\end_layout
+
+\begin_layout Plain Layout
+
+## If theme directory does not have required images or TeX files
+\end_layout
+
+\begin_layout Plain Layout
+
+## we need to retrieve them and put them in "theme" directory.
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+logos <- c(logoleft = "jayhawk.pdf", 
+\end_layout
+
+\begin_layout Plain Layout
+
+           logoright = "CRMDAlogo-vert.pdf")
+\end_layout
+
+\begin_layout Plain Layout
+
+texfiles <- c("guidePreambleHeader.tex", 
+\end_layout
+
+\begin_layout Plain Layout
+
+              "preambleFooter.tex", 
+\end_layout
+
+\begin_layout Plain Layout
+
+              "preambleFloatCenter.tex",  
+\end_layout
+
+\begin_layout Plain Layout
+
+              "preambleHyperref.tex",
+\end_layout
+
+\begin_layout Plain Layout
+
+              "guidePreambleKnitr.tex")
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+getFiles(logos, pkg = "crmda")
+\end_layout
+
+\begin_layout Plain Layout
+
+getFiles(texfiles, pkg = "crmda")
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\lang american
 \begin_inset ERT
 status open
 
@@ -417,7 +529,7 @@ opts.orig <- options()
 
 \begin_layout Plain Layout
 
-options(width=60, prompt=" ", continue="  ")
+options(width=100, prompt=" ", continue="  ")
 \end_layout
 
 \begin_layout Plain Layout
@@ -557,8 +669,13 @@ library(rockchalk)
 
 \begin_layout Plain Layout
 
-outreg(list("My Poisson"= m1), varLabels = c("x" = "A Normal Predictor"),
+or <- outreg(list("My Poisson"= m1), varLabels = c("x" = "A Normal Predictor"),
  tight = FALSE)
+\end_layout
+
+\begin_layout Plain Layout
+
+cat(or)
 \end_layout
 
 \begin_layout Plain Layout
