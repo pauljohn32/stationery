@@ -1,4 +1,4 @@
-%% LyX 2.2.2 created this file.  For more info, see http://www.lyx.org/.
+%% LyX 2.2.3 created this file.  For more info, see http://www.lyx.org/.
 %% Do not edit unless you really know what you are doing.
 \documentclass[11pt,letterpaper,english,american]{extarticle}
 \usepackage{lmodern}
@@ -131,7 +131,7 @@ if(!dir.exists("tmpout"))dir.create("tmpout", recursive = TRUE)
 
 \selectlanguage{english}%
 <<texcopy, include=FALSE,echo=FALSE>>=
-library(kutils)
+library(crmda)
 ## If theme directory does not have required images or TeX files
 ## we need to retrieve them and put them in "theme" directory. 
 logos <- c(logoleft = "jayhawk.pdf", 
