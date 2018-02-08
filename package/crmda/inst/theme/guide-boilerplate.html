@@ -406,9 +406,10 @@ $endif$
 
 <div class="row" style="display:flex; align-items: center; border: 2px solid black; border-radius: 5px;">
 <div class="col-sm-3" style="text-align: left;">
+$if(logoleft)$
 <img src=$logoleft$ alt="left side logo" style="width:150; height:100;">
+$endif$
 </div>
-
 <div class="col-sm-6" style="text-align: center;">
 $if(title)$
 <h2 class="title toc-ignore" style="border: none;">$title$$if(subtitle)$: $subtitle$$endif$</h2>
@@ -439,7 +440,9 @@ $if(keywords)$
 $endif$
 </div>
 <div class="col-sm-3">
+  $if(logoright)$
   <img src=$logoright$ alt="right side logo" style="width:323px; text-align:right;">
+  $endif$
   $if(date)$
   <br />
   <p style="text-align: center;">
