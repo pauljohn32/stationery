@@ -204,7 +204,7 @@ guidesetup{%
 
 \begin_layout Plain Layout
 
-    email=lone.edu},
+    email=first@ku.edu},
 \end_layout
 
 \begin_layout Plain Layout
@@ -249,7 +249,7 @@ guidesetup{%
 
 \begin_layout Plain Layout
 
-    affiliation=Dept of Statistics,
+    affiliation=i,
 \end_layout
 
 \begin_layout Plain Layout
@@ -269,7 +269,7 @@ guidesetup{%
 
 \begin_layout Plain Layout
 
-  title={Another Very Long Title: With a Possibly Long Subtitle},
+  title={A Title for Skeleton Template: rnw2pdf-guide-knit},
 \end_layout
 
 \begin_layout Plain Layout
@@ -352,14 +352,14 @@ footersetup{
 
 \begin_layout Plain Layout
 
-    rone=
+    rone=Web: 
 \backslash
 url{https://crmda.ku.edu},
 \end_layout
 
 \begin_layout Plain Layout
 
-    rtwo=
+    rtwo=Email: 
 \backslash
 href{mailto:crmda@ku.edu}{crmda@ku.edu},
 \end_layout
@@ -558,8 +558,44 @@ pdf.options(onefile=FALSE,family="Times",pointsize=10)
 
 \end_layout
 
+\begin_layout Abstract
+\noindent
+This is an abstract.
+ Please include a terse, yet descriptive statement here of less than 200
+ words.
+ It should avoid colloquialisms and polysyllabic profundities.
+\end_layout
+
 \begin_layout Standard
-Leave the chunks before this
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Nuts and Bolts
+\end_layout
+
+\begin_layout Standard
+Do put your title & name in the top block.
+\end_layout
+
+\begin_layout Standard
+Don't change the 3 code chunks above or the last chunk below.
+\end_layout
+
+\begin_layout Standard
+Don't change margins, geometry, or hyperlink options with Lyx pull down
+ menus or the document won't compile.
+ Edit preamble for that.
+\end_layout
+
+\begin_layout Standard
+We have separate instructions for the crmda package in vignettes if you
+ want more detailed information about what to do.
 \end_layout
 
 \begin_layout Section
@@ -567,12 +603,28 @@ Write Sections & Subsections here
 \end_layout
 
 \begin_layout Standard
-The next thing should be the last section.
- Please leave the last section as it is for guide documents.
+Please leave section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Session-Info"
+
+\end_inset
+
+ as it is for guide documents.
+ 
 \end_layout
 
 \begin_layout Section
-Test a Code Chunk
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+R
+\end_layout
+
+\end_inset
+
+ Code Chunks
 \end_layout
 
 \begin_layout Standard
@@ -616,22 +668,14 @@ mean(x)
 \end_layout
 
 \begin_layout Section
-LyX Caution
-\end_layout
-
-\begin_layout Standard
-Don't use LyX to change geometry or margins or hyperlink settings.
- 
-\end_layout
-
-\begin_layout Standard
-The geometry and hyperlink values are set into the preamble.
- Don't use LyX menus to adjust them, or else document will not compile (contradi
-ctory settings will result)
-\end_layout
-
-\begin_layout Section
 Session Info
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Session-Info"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
