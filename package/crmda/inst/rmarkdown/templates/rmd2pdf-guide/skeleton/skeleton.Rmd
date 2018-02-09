@@ -1,24 +1,26 @@
 ---
-title: "Title of this Document"
-subtitle: "A Subtitle that may Flow onto Additional Space if Necessary"
+title: "A Title for Skeleton Template"
+subtitle: "rmd2pdf-guide"
 guidenum: XX
-guideurl: http://crmda.ku.edu/guides
+guideurl: https://crmda.ku.edu/guides
 keywords: Rmarkdown, R, documents
 author:
-- name: Firstname1 Lastname1
+- name: First Author
   affiliation: CRMDA
-  description: Title
-  email: email1@ku.edu
-- name:  Firstname2 Lastname2
-  affiliation: Dept. of Chemistry
-  email: email2@ku.edu
+  email: first@ku.edu
+- name:  Second Author
+  affiliation: CRMDA
+  email: second@ku.edu
+- name:  Third Author
+  affiliation: i
+  email: third@ku.edu
 addr:
-    l1: 1425 Jayhawk Blvd
+    l1: 1425 Jayhawk Blvd.
     l2: Watson Library, Suite 470
     l3: Lawrence, KS 66045-7594
-    r1: "Phone: 785-864-3353"
-    r2: "Web: http://crmda.ku.edu"
-    r3: "Email: crmda@ku.edu"
+    r1: "Web: http://crmda.ku.edu"
+    r2: "Email: crmda@ku.edu"
+    r3: "Phone: 785-864-3353"
 logoleft: theme/jayhawk.pdf
 logoright: theme/CRMDAlogo-vert.pdf
 output: 
@@ -46,7 +48,7 @@ options(width = 70)
 ```
 
 ```{r themecopy, include = FALSE}
-library(kutils)
+library(crmda)
 ## If theme directory does not have required images or TeX files
 ## we need to retrieve them and put them in "theme" directory. 
 logos <- c(logoleft = "jayhawk.pdf", 
@@ -59,7 +61,8 @@ getFiles(files, pkg = "crmda")
 
 
 \begin{abstract}
-This is the abstract.
+\noindent
+This is an abstract. Please include a terse, yet descriptive statement here of less than 200 words. It should avoid colloquialisms and polysyllabic profundities.
 \end{abstract}
 
 
