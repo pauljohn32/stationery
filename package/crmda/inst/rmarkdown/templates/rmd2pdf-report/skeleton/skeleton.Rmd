@@ -1,22 +1,23 @@
 ---
-title: "Title of this Document"
-subtitle: "A Subtitle that may Flow onto Additional Space if Necessary"
+title: "A Title for Skeleton Template"
+subtitle: "rmd2pdf-report"
 author:
-- name: Author One
-  affiliation: Institute
-  description: Title
-  email: email@ku.edu
-- name:  Author Two 
-  affiliation: Institute
-  description: Title
-  email: email@ku.edu
+- name: __First Author__
+  affiliation: CRMDA
+  email: first@ku.edu
+- name:  __Second Author__
+  affiliation: CRMDA
+  email: second@ku.edu
+- name:  __Third Author__
+  affiliation: i
+  email: third@ku.edu
 addr:
-    l1: 1425 Jayhawk Blvd
+    l1: 1425 Jayhawk Blvd.
     l2: Watson Library, Suite 470
     l3: Lawrence, KS 66045-7594
-    r1: "Phone: 785-864-3353"
-    r2: "Web: http://crmda.ku.edu"
-    r3: "Email: crmda@ku.edu"
+    r1: "Web: http://crmda.ku.edu"
+    r2: "Email: crmda@ku.edu" 
+    r3: "Phone: 785-864-3353"
 logo: theme/CRMDAlogo.pdf
 output: 
   pdf_document:
@@ -53,28 +54,33 @@ getFiles(logos, pkg = "crmda")
 getFiles(files, pkg = "crmda")
 ```
 
-
-
 \begin{abstract}
-Please include abstract here
+\noindent 
+This is an abstract. Please include a terse, yet descriptive
+statement here of less than 200 words. It should avoid colloquialisms
+and polysyllabic profundities.
 \end{abstract}
 
 
-# Nuts and Bolts
+# Nuts and Bolts {-}
 
-## Make minimal changes to the top part.
+## Make minimal changes to the top part. {-}
 
 Fill in your name, title, email, tags.  Please don't change the
 pdf_document settings unless you know what you are doing.
 
+Write your content in here.
 
-# LaTeX Syntax is allowed
+We have separate instructions for the crmda package in vignettes if you want more detailed information about what to do.
+
+# LaTeX Syntax is allowed {-}
 
 \[
 \Sigma_{gt}=\Lambda_{gt}\Psi_{gt}\Lambda'_{gt}+\Theta_{gt}
 \]
 
-# `R` code chunks 
+# `R` Code Chunks {-}
+Test a code chunk.
 
 ```{r ex-1, results='asis', echo=TRUE}
 set.seed(1234)
@@ -84,7 +90,14 @@ library(xtable)
 print(xtable(head(data.frame(x, y))), comment=FALSE)
 ```
 
-# Session Info
+```{r ex-2, echo=TRUE}
+summary(x)
+summary(y)
+```
+
+# Session Info {-}
+
+Session Information is usually not written into a report, but an output file is created by the following pieces.
 
 ```{r session, include=F}
 zz <- gsub("Rmd", "Rout", knitr::current_input())

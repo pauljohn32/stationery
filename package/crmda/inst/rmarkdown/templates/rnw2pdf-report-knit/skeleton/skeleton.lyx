@@ -4,7 +4,7 @@
 \begin_header
 \save_transient_properties true
 \origin unavailable
-\textclass scrartcl
+\textclass extarticle
 \begin_preamble
 \usepackage[includehead,includefoot,
 margin=1in,
@@ -100,7 +100,7 @@ logicalmkup
 knitr
 \end_modules
 \maintain_unincluded_children false
-\language english
+\language american
 \language_package default
 \inputencoding iso8859-15
 \fontencoding global
@@ -282,7 +282,7 @@ reportsetup{%
 
 \begin_layout Plain Layout
 
-  title={Another Very Long Title: With a Possibly Long Subtitle},
+  title={A Title for Skeleton Template: rnw2pdf-report-knit},
 \end_layout
 
 \begin_layout Plain Layout
@@ -350,14 +350,14 @@ footersetup{
 
 \begin_layout Plain Layout
 
-    rone=
+    rone=Web: 
 \backslash
 url{https://crmda.ku.edu},
 \end_layout
 
 \begin_layout Plain Layout
 
-    rtwo=
+    rtwo=Email: 
 \backslash
 href{mailto:crmda@ku.edu}{crmda@ku.edu},
 \end_layout
@@ -443,8 +443,6 @@ opts_chunk$set(fig.path='tmpout/t-', split=TRUE, ae=FALSE, comment=NA,
 \end_layout
 
 \begin_layout Standard
-
-\lang american
 \begin_inset ERT
 status open
 
@@ -540,7 +538,7 @@ options(device = pdf)
 
 \begin_layout Plain Layout
 
-options(width=160, prompt=" ", continue="  ")
+options(width=90, prompt=" ", continue="  ")
 \end_layout
 
 \begin_layout Plain Layout
@@ -568,16 +566,59 @@ pdf.options(onefile=FALSE, family="Times", pointsize=10)
 
 \end_layout
 
+\begin_layout Abstract
+\noindent
+This is an abstract.
+ Please include a terse, yet descriptive statement here of less than 200
+ words.
+ It should avoid colloquialisms and polysyllabic profundities.
+\end_layout
+
+\begin_layout Section*
+Nuts and Bolts
+\end_layout
+
+\begin_layout Subsection*
+Make minimal changes to the top part
+\end_layout
+
 \begin_layout Standard
 Do put your title & name in the top block.
 \end_layout
 
 \begin_layout Standard
-Don't change the 3 code chunks above or the last chunk below.
+Don't change the 4 code chunks above or the last chunk below.
 \end_layout
 
 \begin_layout Standard
 Write your content in here.
+\end_layout
+
+\begin_layout Standard
+Don't change document margins with LyX menus.
+ You need to edit the preamble for that.
+\end_layout
+
+\begin_layout Standard
+We have separate instructions for the crmda package in vignettes if you
+ want more detailed information about what to do.
+\end_layout
+
+\begin_layout Subsection*
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+R
+\end_layout
+
+\end_inset
+
+ Code Chunks
+\end_layout
+
+\begin_layout Standard
+Test a code chunk.
 \end_layout
 
 \begin_layout Standard
@@ -591,13 +632,22 @@ status open
 
 \begin_layout Plain Layout
 
-dat <- data.frame(x1 = rnorm(100), x2 = rnorm(100), x3 = rpois(100, lambda
- = 10))
+## Create 100 random standard normal observations
 \end_layout
 
 \begin_layout Plain Layout
 
-summary(dat)
+x <- rnorm(100)
+\end_layout
+
+\begin_layout Plain Layout
+
+head(x, 10)
+\end_layout
+
+\begin_layout Plain Layout
+
+summary(x)
 \end_layout
 
 \begin_layout Plain Layout
@@ -610,21 +660,57 @@ summary(dat)
 
 \end_layout
 
-\begin_layout Standard
-Don't change document margins with LyX menus.
- You need to edit the preamble for that.
+\begin_layout Subsection*
+Session Info
 \end_layout
 
 \begin_layout Standard
-Please see the 
-\begin_inset Quotes eld
+Session Information is usually not written into a report, but an output
+ file is created by the following pieces.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<sessioninfo, include=F>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+zz <- "skeleton.Rout"
+\end_layout
+
+\begin_layout Plain Layout
+
+capture.output(sessionInfo(), file = zz, append = FALSE)
+\end_layout
+
+\begin_layout Plain Layout
+
+if (!is.null(warnings())){
+\end_layout
+
+\begin_layout Plain Layout
+
+    capture.output(warnings(), file = zz, append =  TRUE)
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
 \end_inset
 
-report-knit-example
-\begin_inset Quotes erd
-\end_inset
 
- document if you want more detailed information about what to do.
 \end_layout
 
 \begin_layout Standard
