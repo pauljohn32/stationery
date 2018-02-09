@@ -189,7 +189,7 @@ guidesetup{%
 
 \begin_layout Plain Layout
 
-    email=lone.edu},
+    email=first@ku.edu},
 \end_layout
 
 \begin_layout Plain Layout
@@ -234,7 +234,7 @@ guidesetup{%
 
 \begin_layout Plain Layout
 
-    affiliation=Dept of Statistics,
+    affiliation=i,
 \end_layout
 
 \begin_layout Plain Layout
@@ -254,7 +254,7 @@ guidesetup{%
 
 \begin_layout Plain Layout
 
-  title={Another Very Long Title: With a Possibly Long Subtitle},
+  title={A Title for Skeleton Template: rnw2pdf-guide-sweave},
 \end_layout
 
 \begin_layout Plain Layout
@@ -337,14 +337,14 @@ footersetup{
 
 \begin_layout Plain Layout
 
-    rone=
+    rone=Web: 
 \backslash
 url{https://crmda.ku.edu},
 \end_layout
 
 \begin_layout Plain Layout
 
-    rtwo=
+    rtwo=Email: 
 \backslash
 href{mailto:crmda@ku.edu}{crmda@ku.edu},
 \end_layout
@@ -582,8 +582,10 @@ pdf.options(onefile=FALSE,family="Times",pointsize=10)
 
 \begin_layout Abstract
 \noindent
-Abstract here.
- This is not indented.
+This is an abstract.
+ Please include a terse, yet descriptive statement here of less than 200
+ words.
+ It should avoid colloquialisms and polysyllabic profundities.
 \end_layout
 
 \begin_layout Standard
@@ -596,24 +598,29 @@ LatexCommand tableofcontents
 \end_layout
 
 \begin_layout Section
-Introduction
+Nuts and Bolts
 \end_layout
 
 \begin_layout Standard
-I put in some input here!
+Do put your title & name in the top block.
 \end_layout
 
 \begin_layout Standard
-Leave the code chunks before this point.
+Don't change the 5 code chunks above or the last chunk below.
 \end_layout
 
 \begin_layout Standard
-Don't change margins with Lyx pull down menus.
+Don't change margins or geometry with Lyx pull down menus.
  Edit preamble for that.
 \end_layout
 
+\begin_layout Standard
+We have separate instructions for the crmda package in vignettes if you
+ want more detailed information about what to do.
+\end_layout
+
 \begin_layout Section
-Write your sections & subsections here
+Write Sections & Subsections here
 \end_layout
 
 \begin_layout Standard
@@ -629,7 +636,16 @@ reference "sec:Session-Info"
 \end_layout
 
 \begin_layout Section
-Test a code chunk
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+R
+\end_layout
+
+\end_inset
+
+ Code Chunks
 \end_layout
 
 \begin_layout Standard
@@ -713,11 +729,6 @@ var(x)
 \end_inset
 
 
-\end_layout
-
-\begin_layout Section
-Don't use LyX to change geometry or margins.
- That is written into the preamble
 \end_layout
 
 \begin_layout Section
