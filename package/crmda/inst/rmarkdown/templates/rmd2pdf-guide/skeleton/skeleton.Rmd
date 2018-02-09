@@ -1,7 +1,7 @@
 ---
 title: "A Title for Skeleton Template"
 subtitle: "rmd2pdf-guide"
-guidenum: XX
+guidenum: 48
 guideurl: https://crmda.ku.edu/guides
 keywords: Rmarkdown, R, documents
 author:
@@ -58,29 +58,31 @@ getFiles(logos, pkg = "crmda")
 getFiles(files, pkg = "crmda")
 ```
 
-
-
 \begin{abstract}
 \noindent
 This is an abstract. Please include a terse, yet descriptive statement here of less than 200 words. It should avoid colloquialisms and polysyllabic profundities.
 \end{abstract}
 
 
-# Nuts and Bolts
+# Nuts and Bolts {-}
 
-## Make minimal changes to the top part.
+## Make minimal changes to the top part. {-}
 
 Fill in your name, title, email, tags.  Please don't change the
 pdf_document settings unless you know what you are doing.
 
+Write your content in here.
 
-# LaTeX Syntax is allowed
+We have separate instructions for the crmda package in vignettes if you want more detailed information about what to do.
+
+# LaTeX Syntax is allowed {-}
 
 \[
 \Sigma_{gt}=\Lambda_{gt}\Psi_{gt}\Lambda'_{gt}+\Theta_{gt}
 \]
 
-# `R` code chunks 
+# `R` code chunks {-}
+Test a code chunk.
 
 ```{r ex-1, results='asis', echo=TRUE}
 set.seed(1234)
@@ -88,6 +90,11 @@ x <- rnorm(100, 0, 1)
 y <- rnorm(100, 0, 1)
 library(xtable)
 print(xtable(head(data.frame(x, y))), comment=FALSE)
+```
+
+```{r ex-2, echo=TRUE}
+summary(x)
+summary(y)
 ```
 
 # Bibliographical citation test is appropriate. 
@@ -108,7 +115,10 @@ want. Is close, the Chicago author-year format.
 
 [//]: (All guides must have this as the final stanza)
 
-# R Session Info
+# Session Info
+
+Session Information is usually not written into a report, but an output file is created by the following pieces.
+
 ```{r sessionInfo, echo = FALSE}
 sessionInfo()
 ```
