@@ -1,4 +1,4 @@
-\documentclass[$if(fontsize)$$fontsize$$endif$,english,letterpaper]{scrartcl}
+\documentclass[11pt,letterpaper,american]{extarticle}
 \usepackage{lmodern}
 \renewcommand{\sfdefault}{lmss}
 \renewcommand{\ttdefault}{lmtt}
@@ -44,7 +44,7 @@ $endfor$
 lmargin=1in,
 rmargin=1in,
 tmargin=0.75in,
-bmargin=1.0in,
+bmargin=1in,
 headheight=0pt,
 headsep=0pt,
 marginparwidth=0pt,
@@ -157,18 +157,18 @@ footskip=2.5\baselineskip,
 \begin{document}
 
 \setlength{\tabcolsep}{1pt}
-\begin{tabular}{@{}|>{\centering}p{1.3in}>{\raggedright}p{3.5in}>{\raggedleft}p{1.7in}|}
+\begin{tabular}{@{}|>{\centering}p{1.5in}>{\raggedright}p{3.5in}>{\raggedleft}p{1.5in}|}
 \hline 
-\begin{minipage}[c]{1in}%
+\begin{minipage}[c]{1.5in}%
   \begin{center}
-    $if(logoleft)$\includegraphics[width=1in]{$logoleft$}$endif$
+    $if(logoleft)$\includegraphics[width=1.25in]{$logoleft$}$endif$
     \par
     \bigskip
-    $if(guidenum)$\textbf{Guide No}: $guidenum$.\\$endif$
-    \par
+    $if(guidenum)${\small{}\textbf{Guide No}: $guidenum$}.\\$endif$
   \end{center}%
 \end{minipage} & %
-\begin{minipage}[c]{3.5in}%
+\begin{minipage}[c][1\totalheight][b]{3.5in}%
+  \bigskip
   \begin{center}
      \begin{minipage}[t]{1\columnwidth}%
       \begin{center}
@@ -198,19 +198,18 @@ $endfor$
 \smallskip
 \end{minipage} & %
 
-\begin{minipage}[c]{2in}%
+\begin{minipage}[c]{1.5in}%
 \begin{center}
 $if(logoright)$\includegraphics[width=1.25in]{$logoright$}$endif$
-    \par
-    \bigskip
-    \crmda\today
+   \par
+   \bigskip
+   \crmda\today
 \par\end{center}
 \end{minipage} \tabularnewline
 \hline 
 \end{tabular}
 
 \medskip{}
-
 
 $body$
 
