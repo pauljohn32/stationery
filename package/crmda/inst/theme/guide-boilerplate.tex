@@ -11,7 +11,8 @@
 \usepackage{setspace}
 \usepackage{multicol}
 \usepackage{xcolor}
-\usepackage[yyyymmdd,hhmmss]{datetime}
+\usepackage{datetime}
+\newdateformat{crmda}{\small{}\textbf{\shortmonthname[\THEMONTH] \THEDAY, \THEYEAR}}
 \usepackage{lastpage}
 \usepackage{babel}
 
@@ -162,6 +163,9 @@ footskip=2.5\baselineskip,
   \begin{center}
     $if(logoleft)$\includegraphics[width=1in]{$logoleft$}$endif$
     \par
+    \bigskip
+    $if(guidenum)$\textbf{Guide No}: $guidenum$.\\$endif$
+    \par
   \end{center}%
 \end{minipage} & %
 \begin{minipage}[c]{3.5in}%
@@ -187,24 +191,21 @@ $endfor$
 \end{minipage}
 %\smallskip{}%
 \begin{flushleft}
-  $if(guidenum)$\textbf{Guide No}: $guidenum$.\\$endif$
+  %$if(guidenum)$\textbf{Guide No}: $guidenum$.\\$endif$
   $if(keywords)$\textbf{Keywords}: $keywords$.\\$endif$
   $if(guideurl)$See $guideurl$ for updates.$endif$
   \par\end{flushleft}%
 \smallskip
 \end{minipage} & %
+
 \begin{minipage}[c]{2in}%
 \begin{center}
 $if(logoright)$\includegraphics[width=1.25in]{$logoright$}$endif$
+    \par
+    \bigskip
+    \crmda\today
 \par\end{center}
-\end{minipage}
-
-\begin{minipage}[c]{1.7in}%
-  \begin{center}
-    \medskip
-    \today\par
-  \end{center}%
-\end{minipage}\tabularnewline
+\end{minipage} \tabularnewline
 \hline 
 \end{tabular}
 
