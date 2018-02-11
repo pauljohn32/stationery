@@ -20,8 +20,8 @@ die() {
 
 
 showme(){
-	if [ ${VERBOSE} -gt 0 ]; then
-		printf 'VERBOSE: %s\n' "$1" >&2;
+	if [ ${DEBUG} -gt 0 ]; then
+		printf 'DEBUG: %s\n' "$1" >&2;
 	fi
 }
 
@@ -29,7 +29,7 @@ showme(){
 printarr() {
 	declare -n __p="$1"
 	for k in "${!__p[@]}"
-	do printf "%s=%s\n" "$k" "${__p[$k]}"
+	do printf "     %s=%s\n" "$k" "${__p[$k]}"
 	done
 } 
 
@@ -43,12 +43,20 @@ catarr() {
 
 
 
-## Usage instruction, will compile all if user hits enter.
+## Usage instruction: offers to compile with defaults if user hits enter.
 usage() {
-	echo -e "\nUsage: $0 [filename.Rmd]"
-	echo "No name is specified, so these Rmd files will be compiled:"
+	echo -e "\nUsage: $0 --arg=value [filename.Rmd]".
+	echo -e "Note: Because this document uses a template, the yaml header"
+	echo -e "format settings are ignored. Instead, specify arguments for this script."
+	echo "Current arguments:"
+	printarr parms
+    echo -e "\nThis script reformats and sends request to R as:\n"
+	echo -e "library(crmda); rmd2html(\"filename.Rmd\""$parmstring")\n"
+    echo "Add argument -v for VERBOSE output."
+	echo "Any arguments described in documentation for rmd2html R function are allowed."
+	echo -e "\n""If no filename is specified, these Rmd files will be compiled:"
 	echo -e "\n" $(ls -1 *.Rmd) "\n"
-	echo -e "Hit Enter to process all Rmd files, or \"q\" to quit"
+	echo -e "Hit Enter to continue, or \"q\" to quit"
 	read -p "> " input
 	if [[ $input == "q" ]]; then
    		exit 1
@@ -58,8 +66,10 @@ usage() {
 	fi
 }
 
-
+## VERBOSE is flag users can turn on to get more detailed output
 VERBOSE=0
+## DEBUG if for author of this script, for fixing arg parsing. Not for users
+DEBUG=0
 pwd=`pwd`
 declare -A parms
 parms[toc]=TRUE
@@ -88,16 +98,17 @@ while getopts "$optspec" OPTCHAR; do
 			fi
 			;;
 	    h)
-		 	echo "usage: $0 [-v] [--anyOptYouQant[=]<valueIsRequired>] [--another[=]<value>] <file.Rmd>" >&2
-            echo "Default parameters are: " >&2
+		 	echo "usage: $0 [-v] [--arg1[=]<value>] [--arg2[=]<value>] <file.Rmd>" >&2
+            echo "Current parameters are: " >&2
             printarr parms
 	    	exit 2
 		 	;;
         v)
-			## if -v flag is present, it means TRUE
+			## if -v flag is present
             VERBOSE=1
+			parms["quiet"]="FALSE"
 			## must print default parms here, before more parsing
-			echo "Default parameters are:" >&2
+			echo "Parameters are:" >&2
 			printarr parms
 			;;
         *)
@@ -110,7 +121,7 @@ done
 
 parmstring=""
 catarr parms
-echo "parmstring: $parmstring"
+## echo "parmstring: $parmstring"
 
 ## No shifts inside there, so must throw away arguments
 ## that were processed
@@ -120,6 +131,7 @@ showme "After getopts, N of args left $#"
 showme "Args:  $@"
 
 if [ ${VERBOSE} -gt 0 ]; then
+	echo -e "After parsing command line, the parameters are:"
 	printarr parms
 fi
 
