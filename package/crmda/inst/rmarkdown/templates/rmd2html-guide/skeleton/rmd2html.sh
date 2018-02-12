@@ -3,6 +3,9 @@
 ## Paul Johnson
 ## 2018-02-10
 
+scriptname=`basename $0 .sh`
+
+
 ## Receive one filename, then build it.
 compileOne(){
 	filename=$1
@@ -13,7 +16,7 @@ compileOne(){
 		shopt -s nocasematch
 		if [[ "$exten" == "Rmd" ]]; then
 			echo -e "compile $filename"
-			Rscript -e "library(crmda); rmd2html(\"$filename\", $parmstring); library(knitr); purl(\"$filename\")"
+			Rscript -e "library(crmda); $scriptname(\"$filename\", $parmstring); library(knitr); purl(\"$filename\")"
 		else
 			echo -e "Error: $filename. Extension should be \"Rmd\""
 		fi
@@ -78,9 +81,9 @@ usage() {
 	echo "Current arguments:"
 	printarr parms
     echo -e "\nThis script reformats and sends request to R as:\n"
-	echo -e "library(crmda); rmd2html(\"filename.Rmd\""$parmstring")\n"
+	echo -e "library(crmda); $scriptname(\"filename.Rmd\""$parmstring")\n"
     echo "Add argument -v for VERBOSE output."
-	echo "Any arguments described in documentation for rmd2html R function are allowed."
+	echo "Any arguments described in documentation for $scriptname R function are allowed."
 }
 
 ## VERBOSE is flag users can turn on to get more detailed output
@@ -91,10 +94,9 @@ pwd=`pwd`
 declare -A parms
 parms[toc]=TRUE
 parms[toc_depth]=2
-parms[output_dir]=\"$pwd\" 
 parms[quiet]=TRUE 
 parms[keep_md]=FALSE
-
+parms[output_dir]=\"$pwd\" 
 
 optspec=":vh-:"
 while getopts "$optspec" OPTCHAR; do
@@ -181,7 +183,7 @@ done
 # 		shopt -s nocasematch
 # 		if [[ "$exten" == "Rmd" ]]; then
 # 			echo -e "compile $filename"
-# 			Rscript -e "library(crmda); rmd2html(\"$filename\", $parmstring); library(knitr); purl(\"$filename\")"
+# 			Rscript -e "library(crmda); $scriptname(\"$filename\", $parmstring); library(knitr); purl(\"$filename\")"
 # 		else
 # 			echo -e "Error: $filename. Extension should be \"Rmd\""
 # 		fi
