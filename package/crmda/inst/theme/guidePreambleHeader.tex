@@ -148,3 +148,30 @@ breaklinks=true, pdfborder={0 0 0},
 pdfborderstyle={}, backref=false,
 colorlinks=true, linkcolor=darkblue, urlcolor=darkblue, 
 citecolor=darkblue] {hyperref}
+
+
+%% Was previously in "preambleFloatCenter.tex"
+%%BEGIN: graphics and such inside floats are centered by default
+\renewenvironment{figure}[1][]{%
+ \ifthenelse{\equal{#1}{}}{%
+   \@float{figure}
+ }{%
+   \@float{figure}[#1]%
+ }%
+ \centering
+}{%
+ \end@float
+}
+\renewenvironment{table}[1][]{%
+ \ifthenelse{\equal{#1}{}}{%
+   \@float{table}
+ }{%
+   \@float{table}[#1]%
+ }%
+
+ \centering
+}{%
+ \end@float
+}
+%%END: graphics and such inside floats are centered by default
+
