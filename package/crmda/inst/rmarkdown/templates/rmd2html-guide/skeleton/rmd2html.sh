@@ -1,15 +1,42 @@
 #!/bin/bash
 
 ## Paul Johnson
-## 2017-08-08
+## 2018-02-10
 
+## Receive one filename, then build it.
+compileOne(){
+	filename=$1
+	if [[ -e "$filename" ]]; then
+		fn=$(basename "$filename")
+		exten="${fn##*.}"
+		## check extension, ignore case, allows "rmd" or "RMD"
+		shopt -s nocasematch
+		if [[ "$exten" == "Rmd" ]]; then
+			echo -e "compile $filename"
+			Rscript -e "library(crmda); rmd2html(\"$filename\", $parmstring); library(knitr); purl(\"$filename\")"
+		else
+			echo -e "Error: $filename. Extension should be \"Rmd\""
+		fi
+	else
+ 		echo -e "$filename not found"
+	fi
+}
 
-## all Rmd files in working directory are compiled
+## Scan directory for [Rmd,rmd] files and try to compile them
 compileall() {
-	for fn in *.Rmd
-	do
-		Rscript -e "library(crmda); rmd2html(\"$fn\", $parmstring)"
-	done
+   	echo -e "\n""If no filename is specified, these Rmd files will be compiled:"
+	echo -e "\n" $(ls -1 *.Rmd) "\n"
+	echo -e "Hit Enter to continue, or \"q\" to quit"
+	read -p "> " input
+	if [[ $input == "q" ]]; then
+   		exit 1
+	else
+		echo "Compiling them all"
+		for fn in *.Rmd
+		do
+			compileOne "$fn"
+		done
+	fi
 }
 
 
@@ -18,7 +45,7 @@ die() {
 	exit 1
 }
 
-
+## Only prints if DEBUG is set
 showme(){
 	if [ ${DEBUG} -gt 0 ]; then
 		printf 'DEBUG: %s\n' "$1" >&2;
@@ -43,7 +70,7 @@ catarr() {
 
 
 
-## Usage instruction: offers to compile with defaults if user hits enter.
+## Usage instruction.  
 usage() {
 	echo -e "\nUsage: $0 --arg=value [filename.Rmd]".
 	echo -e "Note: Because this document uses a template, the yaml header"
@@ -54,16 +81,6 @@ usage() {
 	echo -e "library(crmda); rmd2html(\"filename.Rmd\""$parmstring")\n"
     echo "Add argument -v for VERBOSE output."
 	echo "Any arguments described in documentation for rmd2html R function are allowed."
-	echo -e "\n""If no filename is specified, these Rmd files will be compiled:"
-	echo -e "\n" $(ls -1 *.Rmd) "\n"
-	echo -e "Hit Enter to continue, or \"q\" to quit"
-	read -p "> " input
-	if [[ $input == "q" ]]; then
-   		exit 1
-	else
-		echo "Compiling them all"
-		compileall
-	fi
 }
 
 ## VERBOSE is flag users can turn on to get more detailed output
@@ -95,16 +112,19 @@ while getopts "$optspec" OPTCHAR; do
 					die "ERROR: $opt is empty."
 				fi
 				parms[${opt}]=${val}
+			elif [[ ${OPTARG} == "help" ]]; then
+				## Finds "--help" Because no argument after help, then answer here
+				usage
+				exit
 			fi
 			;;
 	    h)
-		 	echo "usage: $0 [-v] [--arg1[=]<value>] [--arg2[=]<value>] <file.Rmd>" >&2
-            echo "Current parameters are: " >&2
-            printarr parms
+            usage
 	    	exit 2
 		 	;;
         v)
 			## if -v flag is present
+			echo -e "\n\nverbose flag\n"
             VERBOSE=1
 			parms["quiet"]="FALSE"
 			## must print default parms here, before more parsing
@@ -137,34 +157,36 @@ fi
 
 ## Retrieve the number of arguments that are left
 nargs=$#
-## If no arguments, or if argument is "--help"
+## If no arguments for file names, print usage, build all. 
 if [[ $nargs -lt 1 ]]; then
 	usage
-elif [ "$1" == "--help" ]; then
-	usage
+	compileall
+# elif
+# 	compileOne "$@"
 fi
 
 
-
-## Process command line file names. Error on files that are not
-## suffixed with Rmd (ignoring case)
 for filename in "$@"; do
-	if [[ -e "$filename" ]]; then
-		fn=$(basename "$filename")
-		exten="${fn##*.}"
-		## check extension, ignore case, allows "rmd" or "RMD"
-		shopt -s nocasematch
-		if [[ "$exten" == "Rmd" ]]; then
-			echo -e "compile $filename"
-			Rscript -e "library(crmda); rmd2html(\"$filename\", $parmstring)"
-		else
-			echo -e "Error: $filename. Extension should be \"Rmd\""
-		fi
-	else
- 		echo -e "$filename not found"
-	fi
+ 	compileOne $filename
 done
-exit 0
 
 
-
+# ## Process command line file names. Error on files that are not
+# ## suffixed with Rmd (ignoring case)
+# for filename in "$@"; do
+# 	if [[ -e "$filename" ]]; then
+# 		fn=$(basename "$filename")
+# 		exten="${fn##*.}"
+# 		## check extension, ignore case, allows "rmd" or "RMD"
+# 		shopt -s nocasematch
+# 		if [[ "$exten" == "Rmd" ]]; then
+# 			echo -e "compile $filename"
+# 			Rscript -e "library(crmda); rmd2html(\"$filename\", $parmstring); library(knitr); purl(\"$filename\")"
+# 		else
+# 			echo -e "Error: $filename. Extension should be \"Rmd\""
+# 		fi
+# 	else
+#  		echo -e "$filename not found"
+# 	fi
+# done
+# exit 0
