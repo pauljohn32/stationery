@@ -55,7 +55,6 @@ footskip=1.5\baselineskip,
 \input{theme/preambleFooter.tex}
 \input{theme/preambleFloatCenter.tex}
 %% Load Hyperref, don't let LyX do this
-\input{theme/preambleHyperref.tex}
 \input{theme/reportPreambleSweavel.tex}
 
 \usepackage{fancyvrb}
@@ -269,83 +268,6 @@ reportsetup{%
 reporthdr
 \end_layout
 
-\begin_layout Plain Layout
-
-\end_layout
-
-\begin_layout Plain Layout
-
-%% Specify fully the left and right sides of footer, 3 lines
-\end_layout
-
-\begin_layout Plain Layout
-
-%% If blanks are needed, must insert value " ~ "
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-footersetup{
-\end_layout
-
-\begin_layout Plain Layout
-
-  leftside={
-\end_layout
-
-\begin_layout Plain Layout
-
-    lone=1425 Jayhawk Blvd., 
-\end_layout
-
-\begin_layout Plain Layout
-
-    ltwo={Watson Library, Suite 470}, 
-\end_layout
-
-\begin_layout Plain Layout
-
-    lthree={Lawrence, KS 66045-7594}},
-\end_layout
-
-\begin_layout Plain Layout
-
-  rightside={
-\end_layout
-
-\begin_layout Plain Layout
-
-    rone=
-\backslash
-url{https://crmda.ku.edu},
-\end_layout
-
-\begin_layout Plain Layout
-
-    rtwo=
-\backslash
-href{mailto:crmda@ku.edu}{crmda@ku.edu},
-\end_layout
-
-\begin_layout Plain Layout
-
-    rthree=Phone: 785-864-3353}
-\end_layout
-
-\begin_layout Plain Layout
-
-}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-guideftr
-\end_layout
-
 \end_inset
 
 
@@ -466,7 +388,7 @@ texfiles <- c("reportPreambleHeader.tex",
 
 \begin_layout Plain Layout
 
-              "preambleHyperref.tex",
+              "addressFooter.tex",
 \end_layout
 
 \begin_layout Plain Layout

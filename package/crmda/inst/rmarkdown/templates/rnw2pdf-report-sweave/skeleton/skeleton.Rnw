@@ -19,6 +19,7 @@
 <<echo=F>>=
   if(exists(".orig.enc")) options(encoding = .orig.enc)
 @
+\providecommand*{\code}[1]{\texttt{#1}}
 
 \@ifundefined{date}{}{\date{}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
@@ -70,7 +71,6 @@ footskip=1.5\baselineskip,
 \input{theme/preambleFooter.tex}
 \input{theme/preambleFloatCenter.tex}
 %% Load Hyperref, don't let LyX do this
-\input{theme/preambleHyperref.tex}
 \input{theme/reportPreambleSweavel.tex}
 
 \usepackage{fancyvrb}
@@ -101,24 +101,10 @@ footskip=1.5\baselineskip,
     firstname=Third, 
     affiliation=i, 
     email=third@ku.edu}, 
-  title={Another Very Long Title: With a Possibly Long Subtitle},
+  title={A Title for Skeleton Template: rnw2pdf-report-sweave},
   rightlogo={theme/CRMDAlogo.pdf},
 }
 \reporthdr
-
-%% Specify fully the left and right sides of footer, 3 lines
-%% If blanks are needed, must insert value " ~ "
-\footersetup{
-  leftside={
-    lone=1425 Jayhawk Blvd., 
-    ltwo={Watson Library, Suite 470}, 
-    lthree={Lawrence, KS 66045-7594}},
-  rightside={
-    rone=\url{https://crmda.ku.edu},
-    rtwo=\href{mailto:crmda@ku.edu}{crmda@ku.edu},
-    rthree=Phone: 785-864-3353}
-}
-\guideftr
 
 \selectlanguage{american}%
 <<include=FALSE,echo=FALSE, results=hide>>=
@@ -139,7 +125,7 @@ logos <- c(logoleft = "jayhawk.pdf",
 texfiles <- c("reportPreambleHeader.tex", 
               "preambleFooter.tex", 
               "preambleFloatCenter.tex",  
-              "preambleHyperref.tex",
+              "addressFooter.tex",
               "reportPreambleSweavel.tex")
 getFiles(logos, pkg = "crmda")
 getFiles(texfiles, pkg = "crmda")
@@ -159,18 +145,29 @@ pjmar <- c(5.1, 5.1, 1.5, 2.1)
 options(SweaveHooks=list(fig=function() par(mar=pjmar, ps=10)))
 pdf.options(onefile=FALSE, family="Times", pointsize=10)
 @
+\begin{abstract}
+\noindent This is an abstract. Please include a terse, yet descriptive
+statement here of less than 200 words. It should avoid colloquialisms
+and polysyllabic profundities.
+\end{abstract}
+
+\section*{Nuts and Bolts}
+
+\subsection*{Make minimal changes to the top part}
 
 Do put your title \& name in the top block.
 
-Don't change the 3 code chunks above or the last chunk below.
+Don't change the 4 code chunks above or the last chunk below.
 
 Write your content in here.
 
 Don't change document margins with LyX menus. You need to edit the
 preamble for that.
 
-We have separate instructions for the crmda package in vignettes.
-if you want more detailed information about what to do.
+We have separate instructions for the crmda package in vignettes if
+you want more detailed information about what to do.
+
+\subsection*{\protect\code{R} Code Chunks}
 
 Test a code chunk.
 
@@ -178,19 +175,13 @@ Test a code chunk.
 ## Create 100 random standard normal observations
 x <- rnorm(100)
 head(x, 10)
-mean(x)
+summary(x)
 @
+
+\subsection*{Session Info}
 
 Session Information is usually not written into a report, but an output
 file is created by the following pieces.
-
-<<RoptionsRestore, echo=F, include=F>>=
-## Don't delete this. It puts the interactive session options
-## back the way they were. If this is compiled within a session
-## it is vital to do this.
-options(opts.orig)
-par(par.orig)
-@
 
 <<sessioninfo, include=F>>=
 zz <- "skeleton.Rout"
@@ -198,5 +189,13 @@ capture.output(sessionInfo(), file = zz, append = FALSE)
 if (!is.null(warnings())){
     capture.output(warnings(), file = zz, append =  TRUE)
 }
+@
+
+<<RoptionsRestore, echo=F, include=F>>=
+## Don't delete this. It puts the interactive session options
+## back the way they were. If this is compiled within a session
+## it is vital to do this.
+options(opts.orig)
+par(par.orig)
 @
 \end{document}

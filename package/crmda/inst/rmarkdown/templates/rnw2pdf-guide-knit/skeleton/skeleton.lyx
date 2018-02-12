@@ -64,7 +64,6 @@ footskip=1.5\baselineskip,
 \input{theme/preambleFooter.tex}
 \input{theme/preambleFloatCenter.tex}
 %% Load Hyperref, don't let LyX do this
-\input{theme/preambleHyperref.tex}
 \input{theme/guidePreambleKnitr.tex}
 \end_preamble
 \use_default_options false
@@ -299,88 +298,6 @@ guidesetup{%
 guidehdr
 \end_layout
 
-\begin_layout Plain Layout
-
-\end_layout
-
-\begin_layout Plain Layout
-
-%% Specify fully the left and right sides of footer, 3 lines
-\end_layout
-
-\begin_layout Plain Layout
-
-%% If blanks are needed, must insert value " ~ "
-\end_layout
-
-\begin_layout Plain Layout
-
-%% If comma needed inside value, wrap in {}.
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-footersetup{
-\end_layout
-
-\begin_layout Plain Layout
-
-  leftside={
-\end_layout
-
-\begin_layout Plain Layout
-
-    lone=1425 Jayhawk Blvd., 
-\end_layout
-
-\begin_layout Plain Layout
-
-    ltwo={Watson Library, Suite 470}, 
-\end_layout
-
-\begin_layout Plain Layout
-
-    lthree={Lawrence, KS 66045-7594}},
-\end_layout
-
-\begin_layout Plain Layout
-
-  rightside={
-\end_layout
-
-\begin_layout Plain Layout
-
-    rone=Web: 
-\backslash
-url{https://crmda.ku.edu},
-\end_layout
-
-\begin_layout Plain Layout
-
-    rtwo=Email: 
-\backslash
-href{mailto:crmda@ku.edu}{crmda@ku.edu},
-\end_layout
-
-\begin_layout Plain Layout
-
-    rthree=Phone: 785-864-3353}
-\end_layout
-
-\begin_layout Plain Layout
-
-}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-guideftr
-\end_layout
-
 \end_inset
 
 
@@ -482,16 +399,12 @@ texfiles <- c("guidePreambleHeader.tex",
 
 \begin_layout Plain Layout
 
-              "preambleHyperref.tex",
+              "guidePreambleKnitr.tex",
 \end_layout
 
 \begin_layout Plain Layout
 
-              "guidePreambleKnitr.tex")
-\end_layout
-
-\begin_layout Plain Layout
-
+              "addressFooter.tex")
 \end_layout
 
 \begin_layout Plain Layout
@@ -530,7 +443,7 @@ opts.orig <- options()
 
 \begin_layout Plain Layout
 
-options(width=100, prompt=" ", continue="  ")
+options(width=75, prompt=" ", continue="  ")
 \end_layout
 
 \begin_layout Plain Layout
