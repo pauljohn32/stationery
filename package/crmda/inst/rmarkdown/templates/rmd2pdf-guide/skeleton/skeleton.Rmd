@@ -97,14 +97,14 @@ summary(x)
 summary(y)
 ```
 
-# Bibliographical citation test is appropriate. 
+# Bibliographical citation test is appropriate. {-}
 
 The leaders in the field [@diggle_analysis_2013] are sure that I'm
 correct about most everything.  Diggle and colleagues
-[-@diggle_analysis_2013, 37] also seem confident that they did not
+[-@diggle_analysis_2013, p. 37] also seem confident that they did not
 agree to the preceeding. Note that to get the full parenthesized 
 statement with names and dates, we insert hard brackets `[`,
-an `@` sign, the bibtex tag, and acloser `]`. If we don't want
+an `@` sign, the bibtex tag, and a closer `]`. If we don't want
 their names, we insert a `-` sign. It is also possible to
 refer to a group of projects [@hsiao_analysis_2014;
 @fitzmaurice_applied_2011; @mccullagh_nelder_1983].
@@ -115,7 +115,7 @@ want. Is close, the Chicago author-year format.
 
 [//]: (All guides must have this as the final stanza)
 
-# Session Info
+# Session Info {-}
 
 Session Information is usually not written into a report, but an output file is created by the following pieces.
 
@@ -130,4 +130,4 @@ if(!is.null(warnings())){
 }
 ```
 
-# References
+# References {-}
