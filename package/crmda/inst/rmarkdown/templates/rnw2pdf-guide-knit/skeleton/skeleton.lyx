@@ -62,8 +62,6 @@ footskip=1.5\baselineskip,
 
 \input{theme/guidePreambleHeader.tex}
 \input{theme/preambleFooter.tex}
-\input{theme/preambleFloatCenter.tex}
-%% Load Hyperref, don't let LyX do this
 \input{theme/guidePreambleKnitr.tex}
 \end_preamble
 \use_default_options false
@@ -389,12 +387,7 @@ texfiles <- c("guidePreambleHeader.tex",
 
 \begin_layout Plain Layout
 
-              "preambleFooter.tex", 
-\end_layout
-
-\begin_layout Plain Layout
-
-              "preambleFloatCenter.tex",  
+              "preambleFooter.tex",
 \end_layout
 
 \begin_layout Plain Layout
@@ -489,15 +482,17 @@ LatexCommand tableofcontents
 \end_layout
 
 \begin_layout Section
-Nuts and Bolts
+Introduction
 \end_layout
 
 \begin_layout Standard
 Do put your title & name in the top block.
+ 
 \end_layout
 
 \begin_layout Standard
-Don't change the 3 code chunks above or the last chunk below.
+The code chunks above this, and the one in the final section, are important.
+ Don't change them unless you know what you are doing.
 \end_layout
 
 \begin_layout Standard
@@ -506,44 +501,45 @@ Don't change margins, geometry, or hyperlink options with Lyx pull down
  Edit preamble for that.
 \end_layout
 
-\begin_layout Standard
-We have separate instructions for the crmda package in vignettes if you
- want more detailed information about what to do.
-\end_layout
-
 \begin_layout Section
-Write Sections & Subsections here
+Check our instructions manuals
 \end_layout
 
-\begin_layout Standard
-Please leave section 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "sec:Session-Info"
-
+\begin_layout Enumerate
+Brief instruction sheet in same folder as this skeleton: 
+\begin_inset Quotes eld
 \end_inset
 
- as it is for guide documents.
+rnw2pdf-guide-knitr
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+The vignettes in the crmda package.
  
 \end_layout
 
 \begin_layout Section
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-R
-\end_layout
-
-\end_inset
-
- Code Chunks
+Write Sections & Subsections
 \end_layout
 
 \begin_layout Standard
-If you choose to use knitr rather than Sweave as the chunk-processor, you
- should study the knitr chunk options.
- There are some truly different features.
+Please do use sections and focused subsections to help readers find what
+ they want.
+\end_layout
+
+\begin_layout Section
+R Code Chunks Work
+\end_layout
+
+\begin_layout Standard
+When using knitr, we have not succeeded in customizing the display of input
+ or output cells.
+ What you see is what they insist on, at least until we figure how to change
+ it.
 \end_layout
 
 \begin_layout Standard
@@ -589,6 +585,12 @@ name "sec:Session-Info"
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+Please leave this section for guide documents.
+ It is important for replication.
+ 
 \end_layout
 
 \begin_layout Standard

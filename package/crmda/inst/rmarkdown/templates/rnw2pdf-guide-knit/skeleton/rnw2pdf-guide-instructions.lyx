@@ -474,6 +474,40 @@ The document preamble has manual settings for margins (geometry) as well
 \end_layout
 
 \begin_layout Section
+What Compiling this Does
+\end_layout
+
+\begin_layout Standard
+The document depends on supplementary files that are copied to the theme
+ folder by the compiler script, rnw2pdf.sh.
+ 
+\end_layout
+
+\begin_layout Standard
+After the first compile, the compiler script will not replace those files,
+ so it is free to edit them to suit your taste.
+\end_layout
+
+\begin_layout Standard
+It is important to adjust the footer/address information to fit your situation.
+ If you want to change the address in the footer, compile the document once
+ so that the file 
+\begin_inset Quotes eld
+\end_inset
+
+theme/addressFooter.tex
+\begin_inset Quotes erd
+\end_inset
+
+ will be copied into your project folder.
+ Then edit addressFooter.tex to fix the address.
+ This is set up so that there will be three rows and 2 columns, it will
+ fail if you delete items there.
+ The most you can do is make the values for the arguments empty if you don't
+ want them.
+\end_layout
+
+\begin_layout Section
 knitr issues/features
 \end_layout
 
@@ -491,8 +525,22 @@ listings
  environments take over the knitr presentation.
 \end_layout
 
+\begin_layout Standard
+We have not yet learned the ins-and-outs of correcting the knitr code and
+ R output chunks to match our desired style.
+ That is one reason to prefer the sweave-based templates we offer.
+\end_layout
+
 \begin_layout Section
 Code Chunks
+\end_layout
+
+\begin_layout Standard
+If you choose to use knitr rather than Sweave as the chunk-processor–and
+ by using this template that is what you did decide–you should study the
+ knitr chunk options.
+ There are some truly different features.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -536,11 +584,6 @@ summary(m1)
 \end_inset
 
 
-\end_layout
-
-\begin_layout Standard
-On page 1, I do not show the page number anymore.
- That's negotiable.
 \end_layout
 
 \begin_layout Standard
@@ -725,36 +768,8 @@ options(opts.orig)
 \end_layout
 
 \begin_layout Standard
-In the process of working on this, I recovered a lot of traumatic memories
- of the problem that minipages do not float vertically as I expect them
- to and I ended up removing the minipages entirely from the header.
+There is a fancy footer, it has the page-out-of-page thingie.
  
-\end_layout
-
-\begin_layout Standard
-Then, after all that, I realized that the object that the authors called
- a header is not actually a \SpecialChar LaTeX
- fancy header at all, it is just an object 
-\begin_inset Quotes eld
-\end_inset
-
-in
-\begin_inset Quotes erd
-\end_inset
-
- the document on page 1.
- I felt ambiguously relieved & aggravated by this.
-\end_layout
-
-\begin_layout Standard
-There is, however, a fancy footer, it has the page-out-of-page thingie.
- Otherwise, we would have nothing encouraging to say about this document's
- fancy usage.
-\end_layout
-
-\begin_layout Standard
-Now I'm going to fill up the rest of this with some Latin to see if margins
- come out correctly.
 \end_layout
 
 \end_body
