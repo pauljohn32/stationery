@@ -1,0 +1,295 @@
+%% LyX 2.2.3 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[11pt,letterpaper,english]{article}
+\usepackage{lmodern}
+\renewcommand{\sfdefault}{lmss}
+\renewcommand{\ttdefault}{lmtt}
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
+\setlength{\parskip}{\medskipamount}
+\setlength{\parindent}{0pt}
+\usepackage[authoryear]{natbib}
+
+\makeatletter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
+\special{papersize=\the\paperwidth,\the\paperheight}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
+<<echo=F>>=
+  if(exists(".orig.enc")) options(encoding = .orig.enc)
+@
+\providecommand*{\code}[1]{\texttt{#1}}
+
+\@ifundefined{date}{}{\date{}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+% Following comment is required. Do not delete it.
+%\usepackage{Sweave}
+
+\usepackage[includehead,includefoot]{geometry}
+\geometry{
+lmargin=1in,
+rmargin=1in,
+tmargin=0.75in,
+bmargin=1.0in,
+headheight=0pt,
+headsep=0pt,
+marginparwidth=0pt,
+footskip=1.5\baselineskip,
+}
+
+\usepackage{multicol}
+\usepackage{listings}
+\usepackage{graphicx}
+\usepackage{xcolor}
+
+\input{theme/guidePreambleHeader.tex}
+\input{theme/preambleFooter.tex}
+\input{theme/guidePreambleSweavel.tex}
+
+
+\lstdefinestyle{custom}{
+  language=R,
+  escapechar=`,
+  fancyvrb=false,%
+  tabsize=2,%
+  breaklines=true,
+  breakatwhitespace=true,%
+  captionpos=b,%
+  frame=single,%
+  framerule=0.2pt,%
+  framesep=1pt,%
+  showstringspaces=false,%
+  basicstyle=\normalsize\ttfamily,%
+  columns=fixed%,
+  \lst@ifdisplaystyle\scriptsize\fi,%
+  identifierstyle=,%
+  keywords=\bfseries,%
+  keywordstyle=\color[rgb]{0, 0.5, 0.5},
+  escapeinside={(*}{*)},
+  literate={~}{{$$\sim$$}}1 {==}{{=\,=}}2,
+  alsoother={$$},
+  alsoletter={.<-},%
+  otherkeywords={!,!=,~,$$,*,\&,\%/\%,\%*\%,\%\%,<-,<<-,/},
+  backgroundcolor=\Rbackground,
+  numbers=left,
+  numberstyle={\tiny}
+}%
+
+\makeatother
+
+\usepackage{babel}
+\begin{document}
+%% Fill in values of the arguments here, 
+%% If blanks are needed, must insert value " ~ "
+%% If comma needed inside value, wrap in {}.
+%% Delete secondauthor and thirdauthor if not needed
+\guidesetup{%
+  firstauthor={
+    lastname=Johnson, 
+    firstname=Paul, 
+    affiliation=CRMDA,
+    email=pauljohn.edu},
+  secondauthor={
+    lastname=Sullivan, 
+    firstname=Meghan, 
+    affiliation=CRMDA, 
+    email=second@ku.edu}, 
+  url={https://crmda.ku.edu/guides},
+  keywords={single-authoring, just one},
+  title={Guide Sweave Instructions},
+  leftlogo={theme/jayhawk.pdf},
+  rightlogo={theme/CRMDAlogo-vert.pdf},
+  number=48,
+}
+\guidehdr
+
+<<include=FALSE,echo=FALSE,results=hide>>=
+if(!dir.exists("tmpout")) dir.create("tmpout", showWarnings=FALSE)
+@
+
+% In document Latex options:
+\fvset{listparameters={\setlength{\topsep}{0em}}}
+\SweaveOpts{prefix.string=tmpout/t, split=TRUE, ae=FALSE, height=3, width=5}
+
+<<include=FALSE>>=
+if(!dir.exists("tmpout")) dir.create("tmpout", showWarnings=FALSE)
+@
+
+<<texcopy, include=FALSE,echo=FALSE>>=
+library(crmda)
+## If theme directory does not have required images or TeX files
+## we need to retrieve them and put them in "theme" directory. 
+logos <- c(logoleft = "jayhawk.pdf", 
+            logoright = "CRMDAlogo-vert.pdf")
+texfiles <- c("guidePreambleHeader.tex", 
+              "preambleFooter.tex", 
+              "guidePreambleSweavel.tex",
+              "addressFooter.tex")
+getFiles(logos, pkg = "crmda")
+getFiles(texfiles, pkg = "crmda")
+@
+
+<<Roptions, echo=FALSE, echo=FALSE>>=
+opts.orig <- options()
+options(width=100, prompt=" ", continue="  ")
+options(useFancyQuotes = FALSE) 
+set.seed(12345)
+options(SweaveHooks=list(fig=function() par(ps=10)))
+pdf.options(onefile=FALSE,family="Times",pointsize=10)
+@
+
+\section{Introduction}
+
+This shows how we use R \citep{RCore} to make guide documents using
+the CRMDA style. 
+
+We suggest you
+\begin{enumerate}
+\item Compile this document \emph{as is }to test your setup
+\item Compare the document with the pdf output so see the impact of the
+settings.
+\end{enumerate}
+Do put your title \& name in the top block.
+
+Don't change the code chunks above or the last chunks below.
+
+Don't change margins or geometry with Lyx pull down menus. Edit preamble
+or config files for that. 
+
+Repeat \textbf{CAUTION}: Dont change the page margins or settings
+for hyperlinks with pull down menus.
+
+\section{Check our documentation}
+\begin{enumerate}
+\item ``rnw2pdf-guide-instructions'' should be available in folder
+\item ``crmda'': the package framework overview
+\item ``code\_chunks'': discusses display of code in LaTeX documents
+\end{enumerate}
+
+\section{Code Chunk Check}
+
+Illustrative R code can be included in the document. The author has
+a good deal of control over how, and at which, the input and output
+are displayed. Correctly formatted LaTeX code can be written by R
+functions and it can appear in the document. The vignette ``code\_chunks''
+has full details. This is a brief highlight.
+
+\subsection{The listings package}
+
+The document preamble includes settings for the LaTeX package listings,
+which is used to display code input and output. Inline references
+to \code{code} can be marked for highlighting (by LaTeX macro ``\textbackslash{}code'')
+that will mimic the color styling of the code displays.
+
+One advantage of using our Sweave-based LaTeX documents is the listings
+class can handle very long lines (allows linewrap) and also lets us
+have fine grained control over the display of code input and output.
+In guide documents, we have ine numbers turned on. is used. Among
+its benefits, we get ``line wrap'' on long lines.
+
+\subsection{Regression example}
+
+Consider a regression.
+
+<<>>=
+dat <- data.frame(x = rnorm(100), y = rpois(100, lambda = 7))
+m1 <- glm(y ~ x, data = dat, family = "poisson")
+summary(m1)
+@
+
+\subsection{Controlling display of chunk input and output}
+
+We now want to conduct a poisson regression, one that treats \code{y}
+as a discrete variable. We will hide the estimation code from the
+reader for the moment. The chunk, which is in the paragraph following
+in the document, runs a regression and saves the LaTeX formatted output
+in an R object named \code{or}. However, this is not shown to the
+reader because the chunk option ``include=F'' is set. But the object
+\code{or} was created.
+
+<<pois10, include=F, results=hide>>=
+library(rockchalk)
+or <- outreg(list("My Poisson"= m1), varLabels = c("x" = "A Normal Predictor"), tight = FALSE)
+@
+
+To display the object \code{or} to the reader, we can display it
+in a chunk using the standard Sweave approach, which depends on ``results=tex''.
+
+<<pois11, results=tex, echo=F>>=
+cat(or)
+@
+
+There are other ways, however, to display the same output code. We
+could, for example, simply use LaTeX to input the saved file from
+the chunk. Another possibility is that we might created a separate
+numbered ``floating table'', as the reader would see in Table \ref{tab:A-Poisson-Regression}.
+There are plenty of other strategies for controlling the display of
+code and output chunks, as we illustrate in the next paragraph.
+
+\begin{table}
+\caption{A Poisson Regression\label{tab:A-Poisson-Regression}}
+
+\input{tmpout/t-pois11.tex}
+\end{table}
+
+The reader has not yet had a chance to see the code chunk that calculated
+the regression. The code chunk that ran the regression was marked
+``include=F, results=hide''. We might want to show the reader what
+commands were run at some later point. There are (at least) 2 ways
+we do this on a regular basis. 
+\begin{enumerate}
+\item The chunk is named ``pois10''. Because we have the R Sweave argument
+split=T in the above, the code file is written separately and we can
+retrieve it with an input statement:
+
+\input{tmpout/t-pois10}
+\item An old-school approach using Sweave itself, is to create another chunk
+and then display it inside double ``<\textcompwordmark{}<>\textcompwordmark{}>''
+brackets. Here we turn off evaluation (set eval=F) to prevent R from
+re-running the code chunk:
+
+<<pois15, echo=T, eval=F, include=T>>=
+<<pois10>>
+@
+\end{enumerate}
+Those two code displays should be identical in the document.
+
+\subsection{Line wrap}
+
+This chunk shows what happens if the R input long. The linewrapping
+prevents code input from running into the margin.
+
+<<norm10>>=
+## Show very long variable names
+Nisthesamplesamplesize <- 100
+Misformuorthemean <- 10123
+Sisforsigma <- 234234
+x <- rnorm(Nisthesamplesamplesize, mean = Misformuorthemean, s = Sisforsigma)
+head(x)
+mean(x)
+dataFrame <- data.frame(x1 = rnorm(100, m = 13, s = 23), x2 = rnorm(100, m = 13, s = 23), x3 = rnorm(100, m = 13, s = 23))
+@
+
+\section{References}
+
+\bibliographystyle{apalike2}
+\bibliography{theme/mlm}
+
+\section{Session Info\label{sec:Session-Info}}
+
+<<session, echo=F>>=
+sessionInfo()
+if(!is.null(warnings())){
+    print("Warnings:")
+    warnings()}
+@
+
+<<opts20, include=F>>=
+## Don't delete this. It puts the interactive session options
+## back the way they were. If this is compiled within a session
+## it is vital to do this.
+options(opts.orig)
+@
+\end{document}

@@ -28,8 +28,6 @@ footskip=1.5\baselineskip,
 
 \input{theme/guidePreambleHeader.tex}
 \input{theme/preambleFooter.tex}
-\input{theme/preambleFloatCenter.tex}
-\input{theme/preambleHyperref.tex}
 \input{theme/guidePreambleSweavel.tex}
 
 \lstdefinestyle{custom}{
@@ -66,7 +64,7 @@ logicalmkup
 sweave
 \end_modules
 \maintain_unincluded_children false
-\language american
+\language english
 \language_package default
 \inputencoding iso8859-15
 \fontencoding global
@@ -100,8 +98,8 @@ sweave
 \use_package stackrel 0
 \use_package stmaryrd 0
 \use_package undertilde 0
-\cite_engine basic
-\cite_engine_type default
+\cite_engine natbib
+\cite_engine_type authoryear
 \biblio_style plain
 \use_bibtopic false
 \use_indices false
@@ -415,17 +413,17 @@ texfiles <- c("guidePreambleHeader.tex",
 
 \begin_layout Plain Layout
 
-              "preambleFloatCenter.tex",  
-\end_layout
-
-\begin_layout Plain Layout
-
               "guidePreambleSweavel.tex",
 \end_layout
 
 \begin_layout Plain Layout
 
-              "addressFooter.tex")
+              "addressFooter.tex",
+\end_layout
+
+\begin_layout Plain Layout
+
+              "mlm.bib")
 \end_layout
 
 \begin_layout Plain Layout
@@ -497,6 +495,121 @@ pdf.options(onefile=FALSE,family="Times",pointsize=10)
 
 \end_layout
 
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+%The listings class used here allows within-document style
+\end_layout
+
+\begin_layout Plain Layout
+
+%changes.
+ R input boxes are governed by 
+\end_layout
+
+\begin_layout Plain Layout
+
+% "Rsize", "Rbackground" and "Rcolor", while R output boxes depend on
+\end_layout
+
+\begin_layout Plain Layout
+
+% "Routsize", "Routbackground", and "Routcolor".
+ Colors
+\end_layout
+
+\begin_layout Plain Layout
+
+% can be specified in many ways, as shown here
+\end_layout
+
+\begin_layout Plain Layout
+
+%
+\backslash
+def
+\backslash
+Rsize{
+\backslash
+huge
+\backslash
+ttfamily}
+\end_layout
+
+\begin_layout Plain Layout
+
+%
+\backslash
+def
+\backslash
+Routsize{
+\backslash
+huge}
+\end_layout
+
+\begin_layout Plain Layout
+
+%
+\backslash
+def
+\backslash
+Rbackground{
+\backslash
+color[gray]{0.90}}
+\end_layout
+
+\begin_layout Plain Layout
+
+%
+\backslash
+def
+\backslash
+Routbackground{
+\backslash
+color[gray]{0.40}}
+\end_layout
+
+\begin_layout Plain Layout
+
+%
+\backslash
+def
+\backslash
+Rcolor{
+\backslash
+color[gray]{0.60}
+\end_layout
+
+\begin_layout Plain Layout
+
+%
+\backslash
+def
+\backslash
+Routcolor{
+\backslash
+color[rgb]{0.9, 0.1, 0.1}]}
+\end_layout
+
+\begin_layout Plain Layout
+
+%
+\backslash
+def
+\backslash
+Rcommentcolor{
+\backslash
+color{green}}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Abstract
 \noindent
 This is an abstract.
@@ -527,50 +640,49 @@ Don't change the 5 code chunks above or the last chunk below.
 \end_layout
 
 \begin_layout Standard
-Don't change margins or geometry with Lyx pull down menus.
- Edit preamble for that.
+Don't change margins or geometry or hyperref with Lyx pull down menus.
+ 
 \end_layout
 
 \begin_layout Standard
-We have separate instructions for the crmda package in vignettes if you
- want more detailed information about what to do.
-\end_layout
-
-\begin_layout Section
-Write Sections & Subsections here
-\end_layout
-
-\begin_layout Standard
-Please leave section 
+Please don't delete the last section 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "sec:Session-Info"
 
 \end_inset
 
- as it is for guide documents.
- 
-\end_layout
+ of this template.
+ It is important.
+ It is safe to delete anything between this section and that one, however.
+ Be aware, however, that at least one item in the bibliography must be cited,
+ or there will be a LaTeX compiler error, 
+\begin_inset Quotes eld
+\end_inset
 
-\begin_layout Section
-\begin_inset Flex Code
-status open
+I found no 
+\backslash
+citation commands---while reading file skeleton.aux
+\begin_inset Quotes erd
+\end_inset
 
-\begin_layout Plain Layout
-R
-\end_layout
+.
+ To avoid that, we are citing the R software itself 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "RCore"
 
 \end_inset
 
- Code Chunks
+.
 \end_layout
 
-\begin_layout Standard
-This chunk tests long names, line wrap
+\begin_layout Section
+Write Sections & Subsections here
 \end_layout
 
-\begin_layout Standard
-
+\begin_layout Section
+R Code Chunks
 \end_layout
 
 \begin_layout Standard
@@ -579,32 +691,12 @@ status open
 
 \begin_layout Plain Layout
 
-<<norm10>>=
+<<>>=
 \end_layout
 
 \begin_layout Plain Layout
 
-Nisthesamplesamplesize <- 100
-\end_layout
-
-\begin_layout Plain Layout
-
-Misformuorthemean <- 10123
-\end_layout
-
-\begin_layout Plain Layout
-
-Sisforsigma <- 234234
-\end_layout
-
-\begin_layout Plain Layout
-
-x <- rnorm(Nisthesamplesamplesize, mean = Misformuorthemean, s = Sisforsigma)
-\end_layout
-
-\begin_layout Plain Layout
-
-head(x)
+x <- rnorm(100)
 \end_layout
 
 \begin_layout Plain Layout
@@ -614,12 +706,6 @@ mean(x)
 
 \begin_layout Plain Layout
 
-dataFrame <- data.frame(x1 = rnorm(100, m = 13, s = 23), x2 = rnorm(100,
- m = 13, s = 23), x3 = rnorm(100, m = 13, s = 23))
-\end_layout
-
-\begin_layout Plain Layout
-
 @
 \end_layout
 
@@ -628,42 +714,19 @@ dataFrame <- data.frame(x1 = rnorm(100, m = 13, s = 23), x2 = rnorm(100,
 
 \end_layout
 
+\begin_layout Section
+References
+\end_layout
+
 \begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-<<hide10, include=FALSE>>=
-\end_layout
-
-\begin_layout Plain Layout
-
-var(x)
-\end_layout
-
-\begin_layout Plain Layout
-
-@
-\end_layout
+\begin_inset CommandInset bibtex
+LatexCommand bibtex
+bibfiles "theme/mlm"
+options "apalike2"
 
 \end_inset
 
 
-\end_layout
-
-\begin_layout Standard
-Inline references to 
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-code
-\end_layout
-
-\end_inset
-
- can be marked for highlighting with boxes that use same color as code displays.
 \end_layout
 
 \begin_layout Section
@@ -675,6 +738,18 @@ name "sec:Session-Info"
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+Please leave this section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Session-Info"
+
+\end_inset
+
+ as it is for guide documents.
+ 
 \end_layout
 
 \begin_layout Standard

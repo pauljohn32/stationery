@@ -28,8 +28,6 @@ footskip=1.5\baselineskip,
 
 \input{theme/guidePreambleHeader.tex}
 \input{theme/preambleFooter.tex}
-\input{theme/preambleFloatCenter.tex}
-\input{theme/preambleHyperref.tex}
 \input{theme/guidePreambleSweavel.tex}
 
 
@@ -101,8 +99,8 @@ sweave
 \use_package stackrel 0
 \use_package stmaryrd 0
 \use_package undertilde 0
-\cite_engine basic
-\cite_engine_type default
+\cite_engine natbib
+\cite_engine_type authoryear
 \biblio_style plain
 \use_bibtopic false
 \use_indices false
@@ -137,8 +135,6 @@ sweave
 
 \begin_layout Standard
 \noindent
-
-\lang american
 \begin_inset ERT
 status open
 
@@ -267,8 +263,6 @@ guidehdr
 \end_layout
 
 \begin_layout Standard
-
-\lang american
 \begin_inset ERT
 status open
 
@@ -293,8 +287,6 @@ if(!dir.exists("tmpout")) dir.create("tmpout", showWarnings=FALSE)
 \end_layout
 
 \begin_layout Standard
-
-\lang american
 \begin_inset ERT
 status open
 
@@ -327,8 +319,6 @@ SweaveOpts{prefix.string=tmpout/t, split=TRUE, ae=FALSE, height=3, width=5}
 \end_layout
 
 \begin_layout Standard
-
-\lang american
 \begin_inset ERT
 status open
 
@@ -399,11 +389,6 @@ texfiles <- c("guidePreambleHeader.tex",
 
 \begin_layout Plain Layout
 
-              "preambleFloatCenter.tex",  
-\end_layout
-
-\begin_layout Plain Layout
-
               "guidePreambleSweavel.tex",
 \end_layout
 
@@ -433,8 +418,6 @@ getFiles(texfiles, pkg = "crmda")
 \end_layout
 
 \begin_layout Standard
-
-\lang american
 \begin_inset ERT
 status open
 
@@ -483,19 +466,173 @@ pdf.options(onefile=FALSE,family="Times",pointsize=10)
 
 \end_layout
 
-\begin_layout Standard
-
+\begin_layout Section
+Introduction
 \end_layout
 
 \begin_layout Standard
-Today, 2016-10-18, I fix the header once and for all! Until the next time.
- The header is now in a minibox.
+This shows how we use R 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "RCore"
+
+\end_inset
+
+ to make guide documents using the CRMDA style.
  
 \end_layout
 
 \begin_layout Standard
-Question: Do we want the title and author information to be contained the
- left half of the header box?
+We suggest you
+\end_layout
+
+\begin_layout Enumerate
+Compile this document 
+\emph on
+as is 
+\emph default
+to test your setup
+\end_layout
+
+\begin_layout Enumerate
+Compare the document with the pdf output so see the impact of the settings.
+\end_layout
+
+\begin_layout Standard
+Do put your title & name in the top block.
+\end_layout
+
+\begin_layout Standard
+Don't change the code chunks above or the last chunks below.
+\end_layout
+
+\begin_layout Standard
+Don't change margins or geometry with Lyx pull down menus.
+ Edit preamble or config files for that.
+ 
+\end_layout
+
+\begin_layout Standard
+Repeat 
+\series bold
+CAUTION
+\series default
+: Dont change the page margins or settings for hyperlinks with pull down
+ menus.
+\end_layout
+
+\begin_layout Section
+Check our documentation
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Quotes eld
+\end_inset
+
+rnw2pdf-guide-instructions
+\begin_inset Quotes erd
+\end_inset
+
+ should be available in folder
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Quotes eld
+\end_inset
+
+crmda
+\begin_inset Quotes erd
+\end_inset
+
+: the package framework overview
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Quotes eld
+\end_inset
+
+code_chunks
+\begin_inset Quotes erd
+\end_inset
+
+: discusses display of code in LaTeX documents
+\end_layout
+
+\begin_layout Section
+Code Chunk Check
+\end_layout
+
+\begin_layout Standard
+Illustrative R code can be included in the document.
+ The author has a good deal of control over how, and at which, the input
+ and output are displayed.
+ Correctly formatted LaTeX code can be written by R functions and it can
+ appear in the document.
+ The vignette 
+\begin_inset Quotes eld
+\end_inset
+
+code_chunks
+\begin_inset Quotes erd
+\end_inset
+
+ has full details.
+ This is a brief highlight.
+\end_layout
+
+\begin_layout Subsection
+The listings package
+\end_layout
+
+\begin_layout Standard
+The document preamble includes settings for the LaTeX package listings,
+ which is used to display code input and output.
+ Inline references to 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+code
+\end_layout
+
+\end_inset
+
+ can be marked for highlighting (by LaTeX macro 
+\begin_inset Quotes eld
+\end_inset
+
+
+\backslash
+code
+\begin_inset Quotes erd
+\end_inset
+
+) that will mimic the color styling of the code displays.
+\end_layout
+
+\begin_layout Standard
+One advantage of using our Sweave-based LaTeX documents is the listings
+ class can handle very long lines (allows linewrap) and also lets us have
+ fine grained control over the display of code input and output.
+ In guide documents, we have ine numbers turned on.
+ is used.
+ Among its benefits, we get 
+\begin_inset Quotes eld
+\end_inset
+
+line wrap
+\begin_inset Quotes erd
+\end_inset
+
+ on long lines.
+\end_layout
+
+\begin_layout Subsection
+Regression example
+\end_layout
+
+\begin_layout Standard
+Consider a regression.
 \end_layout
 
 \begin_layout Standard
@@ -532,11 +669,64 @@ summary(m1)
 
 \end_layout
 
+\begin_layout Subsection
+Controlling display of chunk input and output
+\end_layout
+
 \begin_layout Standard
-There is a lot of margin fiddling in this version.
- We assure that the footer shows with elaborate detail only on page 1.
- On page 1, I do not show the page number anymore.
- That's negotiable.
+We now want to conduct a poisson regression, one that treats 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{y}
+\end_layout
+
+\end_inset
+
+ as a discrete variable.
+ We will hide the estimation code from the reader for the moment.
+ The chunk, which is in the paragraph following in the document, runs a
+ regression and saves the LaTeX formatted output in an R object named 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{or}
+\end_layout
+
+\end_inset
+
+.
+ However, this is not shown to the reader because the chunk option 
+\begin_inset Quotes eld
+\end_inset
+
+include=F
+\begin_inset Quotes erd
+\end_inset
+
+ is set.
+ But the object 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{or}
+\end_layout
+
+\end_inset
+
+ was created.
 \end_layout
 
 \begin_layout Standard
@@ -545,7 +735,7 @@ status open
 
 \begin_layout Plain Layout
 
-<<pois10, results=tex, eval=F>>=
+<<pois10, include=F, results=hide>>=
 \end_layout
 
 \begin_layout Plain Layout
@@ -557,6 +747,51 @@ library(rockchalk)
 
 or <- outreg(list("My Poisson"= m1), varLabels = c("x" = "A Normal Predictor"),
  tight = FALSE)
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+To display the object 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{or}
+\end_layout
+
+\end_inset
+
+ to the reader, we can display it in a chunk using the standard Sweave approach,
+ which depends on 
+\begin_inset Quotes eld
+\end_inset
+
+results=tex
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<pois11, results=tex, echo=F>>=
 \end_layout
 
 \begin_layout Plain Layout
@@ -575,12 +810,147 @@ cat(or)
 \end_layout
 
 \begin_layout Standard
+There are other ways, however, to display the same output code.
+ We could, for example, simply use LaTeX to input the saved file from the
+ chunk.
+ Another possibility is that we might created a separate numbered 
+\begin_inset Quotes eld
+\end_inset
+
+floating table
+\begin_inset Quotes erd
+\end_inset
+
+, as the reader would see in Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:A-Poisson-Regression"
+
+\end_inset
+
+.
+ There are plenty of other strategies for controlling the display of code
+ and output chunks, as we illustrate in the next paragraph.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+A Poisson Regression
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:A-Poisson-Regression"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
 \begin_inset ERT
 status open
 
 \begin_layout Plain Layout
 
-<<pois15, results=tex, echo=F>>=
+
+\backslash
+input{tmpout/t-pois11.tex}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The reader has not yet had a chance to see the code chunk that calculated
+ the regression.
+ The code chunk that ran the regression was marked 
+\begin_inset Quotes eld
+\end_inset
+
+include=F, results=hide
+\begin_inset Quotes erd
+\end_inset
+
+.
+ We might want to show the reader what commands were run at some later point.
+ There are (at least) 2 ways we do this on a regular basis.
+ 
+\end_layout
+
+\begin_layout Enumerate
+The chunk is named 
+\begin_inset Quotes eld
+\end_inset
+
+pois10
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Because we have the R Sweave argument split=T in the above, the code file
+ is written separately and we can retrieve it with an input statement:
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+input{tmpout/t-pois10}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+An old-school approach using Sweave itself, is to create another chunk and
+ then display it inside double 
+\begin_inset Quotes eld
+\end_inset
+
+<<>>
+\begin_inset Quotes erd
+\end_inset
+
+ brackets.
+ Here we turn off evaluation (set eval=F) to prevent R from re-running the
+ code chunk:
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<pois15, echo=T, eval=F, include=T>>=
 \end_layout
 
 \begin_layout Plain Layout
@@ -598,78 +968,73 @@ status open
 
 \end_layout
 
+\end_deeper
 \begin_layout Standard
-
-\series bold
-CAUTION
-\series default
-: the page margins can be adjusted in the geometry section of the preamble,
- but do not use the LyX Menu to change either margins or pagestyle.
+Those two code displays should be identical in the document.
 \end_layout
 
-\begin_layout Standard
-Here's the question: Is this report stationary better than what we had?
- 
+\begin_layout Subsection
+Line wrap
 \end_layout
 
 \begin_layout Standard
-I could not understand how to adjust the bottom margin only on first page,
- so it gets too close to bottom for my comfort.
- However, if I make bottom margin larger page one, then it is way too huge
- on following pages.
- 
+This chunk shows what happens if the R input long.
+ The linewrapping prevents code input from running into the margin.
 \end_layout
 
 \begin_layout Standard
-Lets get a team vote.
-\end_layout
-
-\begin_layout Standard
-I noticed that our report stationary was drawing a line across the top of
- page 2+ and also cutting the top margin down too far.
- I dug into the \SpecialChar LaTeX
-, decided to cut out features until I understood what was
- going on.
- 
-\series bold
-Unfortunately for me, I believed this document was under Git version control
- and started editing away and saved before I realized.
-
-\series default
- It is possible to get old one, but I have to read a book to remember how.
-\end_layout
-
-\begin_layout Standard
-Lets put the regression table in a float
-\end_layout
-
-\begin_layout Standard
-\begin_inset Float table
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-A Poisson Regression
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
 \begin_inset ERT
 status open
 
 \begin_layout Plain Layout
 
+<<norm10>>=
+\end_layout
 
-\backslash
-input{tmpout/t-pois15.tex}
+\begin_layout Plain Layout
+
+## Show very long variable names
+\end_layout
+
+\begin_layout Plain Layout
+
+Nisthesamplesamplesize <- 100
+\end_layout
+
+\begin_layout Plain Layout
+
+Misformuorthemean <- 10123
+\end_layout
+
+\begin_layout Plain Layout
+
+Sisforsigma <- 234234
+\end_layout
+
+\begin_layout Plain Layout
+
+x <- rnorm(Nisthesamplesamplesize, mean = Misformuorthemean, s = Sisforsigma)
+\end_layout
+
+\begin_layout Plain Layout
+
+head(x)
+\end_layout
+
+\begin_layout Plain Layout
+
+mean(x)
+\end_layout
+
+\begin_layout Plain Layout
+
+dataFrame <- data.frame(x1 = rnorm(100, m = 13, s = 23), x2 = rnorm(100,
+ m = 13, s = 23), x3 = rnorm(100, m = 13, s = 23))
+\end_layout
+
+\begin_layout Plain Layout
+
+@
 \end_layout
 
 \end_inset
@@ -677,42 +1042,69 @@ input{tmpout/t-pois15.tex}
 
 \end_layout
 
+\begin_layout Section
+References
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset bibtex
+LatexCommand bibtex
+bibfiles "theme/mlm"
+options "apalike2"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Session Info
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Session-Info"
+
 \end_inset
 
 
 \end_layout
 
 \begin_layout Standard
-In the process of working on this, I recovered a lot of traumatic memories
- of the problem that minipages do not float vertically as I expect them
- to and I ended up removing the minipages entirely from the header.
- 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<session, echo=F>>=
 \end_layout
 
-\begin_layout Standard
-Then, after all that, I realized that the object that the authors called
- a header is not actually a \SpecialChar LaTeX
- fancy header at all, it is just an object 
-\begin_inset Quotes eld
+\begin_layout Plain Layout
+
+sessionInfo()
+\end_layout
+
+\begin_layout Plain Layout
+
+if(!is.null(warnings())){
+\end_layout
+
+\begin_layout Plain Layout
+
+    print("Warnings:")
+\end_layout
+
+\begin_layout Plain Layout
+
+    warnings()}
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
 \end_inset
 
-in
-\begin_inset Quotes erd
-\end_inset
 
- the document on page 1.
- I felt ambiguously relieved & aggravated by this.
-\end_layout
-
-\begin_layout Standard
-There is, however, a fancy footer, it has the page-out-of-page thingie.
- Otherwise, we would have nothing encouraging to say about this document's
- fancy usage.
-\end_layout
-
-\begin_layout Standard
-Now I'm going to fill up the rest of this with some Latin to see if margins
- come out correctly.
 \end_layout
 
 \begin_layout Standard
