@@ -1,6 +1,6 @@
 %% LyX 2.2.3 created this file.  For more info, see http://www.lyx.org/.
 %% Do not edit unless you really know what you are doing.
-\documentclass[11pt,letterpaper,english,american]{extarticle}
+\documentclass[11pt,letterpaper,english]{extarticle}
 \usepackage{lmodern}
 \renewcommand{\sfdefault}{lmss}
 \renewcommand{\ttdefault}{lmtt}
@@ -8,6 +8,7 @@
 \usepackage[utf8]{inputenc}
 \setlength{\parskip}{\medskipamount}
 \setlength{\parindent}{0pt}
+\usepackage[authoryear]{natbib}
 
 \makeatletter
 
@@ -69,18 +70,12 @@ footskip=1.5\baselineskip,
 
 \input{theme/reportPreambleHeader.tex}
 \input{theme/preambleFooter.tex}
-\input{theme/preambleFloatCenter.tex}
-%% Load Hyperref, don't let LyX do this
 \input{theme/reportPreambleSweavel.tex}
-
-\usepackage{fancyvrb}
-\fvset{listparameters={\setlength{\topsep}{0em}}}
 
 \makeatother
 
 \usepackage{babel}
 \begin{document}
-\selectlanguage{english}%
 %% Fill in values of the arguments here, 
 %% If blanks are needed, must insert value " ~ "
 %% If comma needed inside value, wrap in {}.
@@ -106,7 +101,6 @@ footskip=1.5\baselineskip,
 }
 \reporthdr
 
-\selectlanguage{american}%
 <<include=FALSE,echo=FALSE, results=hide>>=
 if(!dir.exists("tmpout"))dir.create("tmpout", recursive = TRUE)
 @
@@ -115,7 +109,6 @@ if(!dir.exists("tmpout"))dir.create("tmpout", recursive = TRUE)
 \fvset{listparameters={\setlength{\topsep}{0em}}}
 \SweaveOpts{prefix.string=tmpout/t, split=TRUE, ae=FALSE, height=5, width=6}
 
-\selectlanguage{english}%
 <<texcopy, include=FALSE,echo=FALSE>>=
 library(crmda)
 ## If theme directory does not have required images or TeX files
@@ -124,14 +117,13 @@ logos <- c(logoleft = "jayhawk.pdf",
             logoright = "CRMDAlogo-vert.pdf")
 texfiles <- c("reportPreambleHeader.tex", 
               "preambleFooter.tex", 
-              "preambleFloatCenter.tex",  
               "addressFooter.tex",
-              "reportPreambleSweavel.tex")
+              "reportPreambleSweavel.tex",
+              "mlm.bib")
 getFiles(logos, pkg = "crmda")
 getFiles(texfiles, pkg = "crmda")
 @
 
-\selectlanguage{american}%
 % Please leave this chunk
 <<Roptions, echo=F, include=F>>=
 if(!dir.exists("tmpout"))dir.create("tmpout", recursive = TRUE)
@@ -153,13 +145,16 @@ and polysyllabic profundities.
 
 \section*{Nuts and Bolts}
 
+This demonstrates how to write a document that interacts with R \citep{RCore}.
+
+The sections in this document are not numbered, just for variety.
+That is easily changed.
+
 \subsection*{Make minimal changes to the top part}
 
-Do put your title \& name in the top block.
-
-Don't change the 4 code chunks above or the last chunk below.
-
-Write your content in here.
+The LaTeX sections above should be treated with caution. Make small
+changes, test whether the document compiles. Do put your title \&
+name in the top block, and of course you need to fix the logo images.
 
 Don't change document margins with LyX menus. You need to edit the
 preamble for that.
@@ -169,14 +164,24 @@ you want more detailed information about what to do.
 
 \subsection*{\protect\code{R} Code Chunks}
 
-Test a code chunk.
+Our report documents ALMOST NEVER show ``raw'' R code to readers
+and very seldom will they display ``raw'' R output. Almost always,
+code chunks will have the flag ``include=F'' set and the document,
+when it reveals results, will, again, almost always, display a LaTeX
+formatted table that is placed inside a floating table or a figure
+that is placed inside a floating figure object.
 
-<<>>=
-## Create 100 random standard normal observations
-x <- rnorm(100)
-head(x, 10)
-summary(x)
-@
+If you don't care to embed the R code inside this document, we suggest
+it is convenient to keep another document with the R code and use
+the R split output facility to create the code chunks in the folder
+``tmpout''. Then this document can include those files \& graphs
+when necessary. That is to say, create 2 LyX files, make them work
+together.
+
+\section*{References}
+
+\bibliographystyle{apalike2}
+\bibliography{theme/mlm}
 
 \subsection*{Session Info}
 

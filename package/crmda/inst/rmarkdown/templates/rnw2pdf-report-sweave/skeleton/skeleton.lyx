@@ -52,12 +52,7 @@ footskip=1.5\baselineskip,
 
 \input{theme/reportPreambleHeader.tex}
 \input{theme/preambleFooter.tex}
-\input{theme/preambleFloatCenter.tex}
-%% Load Hyperref, don't let LyX do this
 \input{theme/reportPreambleSweavel.tex}
-
-\usepackage{fancyvrb}
-\fvset{listparameters={\setlength{\topsep}{0em}}}
 \end_preamble
 \use_default_options false
 \begin_modules
@@ -65,7 +60,7 @@ logicalmkup
 sweave
 \end_modules
 \maintain_unincluded_children false
-\language american
+\language english
 \language_package default
 \inputencoding utf8
 \fontencoding global
@@ -99,8 +94,8 @@ sweave
 \use_package stackrel 0
 \use_package stmaryrd 0
 \use_package undertilde 0
-\cite_engine basic
-\cite_engine_type default
+\cite_engine natbib
+\cite_engine_type authoryear
 \biblio_style plain
 \use_bibtopic false
 \use_indices false
@@ -140,8 +135,6 @@ sweave
 
 \begin_layout Standard
 \noindent
-
-\lang english
 \begin_inset ERT
 status open
 
@@ -331,8 +324,6 @@ SweaveOpts{prefix.string=tmpout/t, split=TRUE, ae=FALSE, height=5, width=6}
 \end_layout
 
 \begin_layout Standard
-
-\lang english
 \begin_inset ERT
 status open
 
@@ -379,17 +370,17 @@ texfiles <- c("reportPreambleHeader.tex",
 
 \begin_layout Plain Layout
 
-              "preambleFloatCenter.tex",  
-\end_layout
-
-\begin_layout Plain Layout
-
               "addressFooter.tex",
 \end_layout
 
 \begin_layout Plain Layout
 
-              "reportPreambleSweavel.tex")
+              "reportPreambleSweavel.tex",
+\end_layout
+
+\begin_layout Plain Layout
+
+              "mlm.bib")
 \end_layout
 
 \begin_layout Plain Layout
@@ -498,20 +489,31 @@ This is an abstract.
 Nuts and Bolts
 \end_layout
 
+\begin_layout Standard
+This demonstrates how to write a document that interacts with R 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "RCore"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The sections in this document are not numbered, just for variety.
+ That is easily changed.
+\end_layout
+
 \begin_layout Subsection*
 Make minimal changes to the top part
 \end_layout
 
 \begin_layout Standard
-Do put your title & name in the top block.
-\end_layout
-
-\begin_layout Standard
-Don't change the 4 code chunks above or the last chunk below.
-\end_layout
-
-\begin_layout Standard
-Write your content in here.
+The LaTeX sections above should be treated with caution.
+ Make small changes, test whether the document compiles.
+ Do put your title & name in the top block, and of course you need to fix
+ the logo images.
 \end_layout
 
 \begin_layout Standard
@@ -538,42 +540,61 @@ R
 \end_layout
 
 \begin_layout Standard
-Test a code chunk.
+Our report documents ALMOST NEVER show 
+\begin_inset Quotes eld
+\end_inset
+
+raw
+\begin_inset Quotes erd
+\end_inset
+
+ R code to readers and very seldom will they display 
+\begin_inset Quotes eld
+\end_inset
+
+raw
+\begin_inset Quotes erd
+\end_inset
+
+ R output.
+ Almost always, code chunks will have the flag 
+\begin_inset Quotes eld
+\end_inset
+
+include=F
+\begin_inset Quotes erd
+\end_inset
+
+ set and the document, when it reveals results, will, again, almost always,
+ display a LaTeX formatted table that is placed inside a floating table
+ or a figure that is placed inside a floating figure object.
 \end_layout
 
 \begin_layout Standard
-\begin_inset ERT
-status open
+If you don't care to embed the R code inside this document, we suggest it
+ is convenient to keep another document with the R code and use the R split
+ output facility to create the code chunks in the folder 
+\begin_inset Quotes eld
+\end_inset
 
-\begin_layout Plain Layout
+tmpout
+\begin_inset Quotes erd
+\end_inset
 
-<<>>=
+.
+ Then this document can include those files & graphs when necessary.
+ That is to say, create 2 LyX files, make them work together.
 \end_layout
 
-\begin_layout Plain Layout
-
-## Create 100 random standard normal observations
+\begin_layout Section*
+References
 \end_layout
 
-\begin_layout Plain Layout
-
-x <- rnorm(100)
-\end_layout
-
-\begin_layout Plain Layout
-
-head(x, 10)
-\end_layout
-
-\begin_layout Plain Layout
-
-summary(x)
-\end_layout
-
-\begin_layout Plain Layout
-
-@
-\end_layout
+\begin_layout Standard
+\begin_inset CommandInset bibtex
+LatexCommand bibtex
+bibfiles "theme/mlm"
+options "apalike2"
 
 \end_inset
 

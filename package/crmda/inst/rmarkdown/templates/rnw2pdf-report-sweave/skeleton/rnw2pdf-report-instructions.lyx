@@ -303,8 +303,6 @@ if(!dir.exists("tmpout"))dir.create("tmpout", recursive = TRUE)
 \end_layout
 
 \begin_layout Standard
-
-\lang american
 \begin_inset ERT
 status open
 
@@ -506,6 +504,50 @@ knitr
  (in the companion folder rnw2pdf-report-knitr).
 \end_layout
 
+\begin_layout Subsection*
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+R
+\end_layout
+
+\end_inset
+
+ Code Chunks
+\end_layout
+
+\begin_layout Standard
+Our report documents ALMOST NEVER show 
+\begin_inset Quotes eld
+\end_inset
+
+raw
+\begin_inset Quotes erd
+\end_inset
+
+ R code to readers and very seldom will they display 
+\begin_inset Quotes eld
+\end_inset
+
+raw
+\begin_inset Quotes erd
+\end_inset
+
+ R output.
+ Almost always, code chunks will have the flag 
+\begin_inset Quotes eld
+\end_inset
+
+include=F
+\begin_inset Quotes erd
+\end_inset
+
+ set and the document, when it reveals results, will, again, almost always,
+ display a LaTeX formatted table that is placed inside a floating table
+ or a figure that is placed inside a floating figure object.
+\end_layout
+
 \begin_layout Section*
 Sweave the chunks
 \end_layout
@@ -621,17 +663,14 @@ inline false
 status open
 
 \begin_layout Plain Layout
-
  <<chunkfig, eval=F, include=F, echo=F, fig=T>>=
 \end_layout
 
 \begin_layout Plain Layout
-
  # R code for figure here
 \end_layout
 
 \begin_layout Plain Layout
-
  @
 \end_layout
 
@@ -713,7 +752,6 @@ status open
 
 \begin_layout Plain Layout
 
-
 \backslash
 includegraphics[width=5in]{tmpout/t-chunkfig}
 \end_layout
@@ -755,17 +793,14 @@ inline false
 status open
 
 \begin_layout Plain Layout
-
  <<chunktable, include=F, results=tex>>=
 \end_layout
 
 \begin_layout Plain Layout
-
  # R code here
 \end_layout
 
 \begin_layout Plain Layout
-
  @
 \end_layout
 
@@ -794,7 +829,6 @@ inline false
 status open
 
 \begin_layout Plain Layout
-
  
 \backslash
 input{tmpout/t-chunktable.tex}
@@ -1010,17 +1044,14 @@ inline false
 status open
 
 \begin_layout Plain Layout
-
 x <- rnorm(100)
 \end_layout
 
 \begin_layout Plain Layout
-
 y <- rpois(100, lambda = 2)
 \end_layout
 
 \begin_layout Plain Layout
-
 plot(y ~ x)
 \end_layout
 
@@ -1910,10 +1941,6 @@ cat(cfa1)
 wide false
 sideways false
 status open
-
-\begin_layout Plain Layout
-
-\end_layout
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
