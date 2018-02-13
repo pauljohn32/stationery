@@ -79,7 +79,8 @@ if(!file.exists("tmpout")) dir.create("tmpout", showWarnings=F)
 \SweaveOpts{prefix.string=tmpout/t,split=T,ae=F,height=4.5,width=7}
 
 <<Roptions, echo=F>>=
-options(width=70, prompt = " ", continue = "  ")
+opts.orig <- options()
+options(width=100, prompt = " ", continue = "  ")
 options(useFancyQuotes = FALSE)
 set.seed(12345)
 op <- par() 
@@ -166,6 +167,13 @@ mean(x)
 
 <<sess10>>=
 sessionInfo()
+@
+
+<<opts20, include=F>>=
+## Don't delete this. It puts the interactive session options
+## back the way they were. If this is compiled within a session
+## it is vital to do this.
+options(opts.orig)
 @
 
 \end{frame}
