@@ -29,7 +29,6 @@ output:
     pandoc_args: [
       "--listings"
     ]
-    template: theme/report-boilerplate.tex
 fontsize: 12pt
 header-includes:
 - \usepackage{xcolor}
@@ -80,20 +79,17 @@ We have separate instructions for the crmda package in vignettes if you want mor
 \]
 
 # `R` Code Chunks {-}
-Test a code chunk.
 
-```{r ex-1, results='asis', echo=TRUE}
-set.seed(1234)
-x <- rnorm(100, 0, 1)
-y <- rnorm(100, 0, 1)
-library(xtable)
-print(xtable(head(data.frame(x, y))), comment=FALSE)
-```
+In Reports, raw code chunks displaying input are never shown to
+reader and chunks that display raw output are almost never displayed.
+Instead, one must use an R package that generates valid \LaTeX
+output or a graph. This is discussed in the companion document,
+"report-instructions.Rmd". 
 
-```{r ex-2, echo=TRUE}
-summary(x)
-summary(y)
-```
+If a LaTeX table file has been created from another document,
+we do not recommend "cutting and pasting" into this document.
+Instead, use "\textbackslash{}input{filename}". 
+
 
 # Session Info {-}
 
