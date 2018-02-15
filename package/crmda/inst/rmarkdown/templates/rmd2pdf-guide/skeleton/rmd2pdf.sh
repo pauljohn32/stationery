@@ -83,6 +83,12 @@ usage() {
 	echo -e "library(crmda); $scriptname(\"filename.Rmd\""$parmstring")\n"
     echo "Add argument -v for VERBOSE output."
 	echo "Any arguments described in documentation for $scriptname R function are allowed."
+    echo "CAUTION"
+    echo "Arguments that are quoted strings, such as --type=\"report\""
+    echo "or --template=\"guide-boilerplate.tex\" need special care when entered from command line."
+    echo "It is necessary to 'protect' (escape) the quotation marks."
+    echo "We suggest command line usage that wraps them inside single quotes, such as:"
+    echo "--type='\"guide\"' --template='\"guide-boilerplate.tex\"'"
 }
 
 ## VERBOSE is flag users can turn on to get more detailed output
@@ -145,7 +151,6 @@ done
 
 parmstring=""
 catarr parms
-## echo "parmstring: $parmstring"
 
 ## No shifts inside there, so must throw away arguments
 ## that were processed

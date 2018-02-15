@@ -1,5 +1,5 @@
 ---
-title: "A Title for Skeleton Template"
+title: "A Title for Template"
 subtitle: "rmd2pdf-guide"
 guidenum: 48
 guideurl: https://crmda.ku.edu/guides
@@ -34,7 +34,7 @@ output:
     ]
     template:  theme/guide-boilerplate.tex
 fontsize: 11pt
-bibliography: mlm.bib
+bibliography: theme/mlm.bib
 header-includes:
 - \usepackage{xcolor}
 ---
@@ -53,7 +53,7 @@ library(crmda)
 ## we need to retrieve them and put them in "theme" directory. 
 logos <- c(logoleft = "jayhawk.pdf", 
            logoright = "CRMDAlogo-vert.pdf")
-files <- c("guide-boilerplate.tex")
+files <- c("guide-boilerplate.tex", "mlm.bib")
 getFiles(logos, pkg = "crmda")
 getFiles(files, pkg = "crmda")
 ```
@@ -66,14 +66,19 @@ This is an abstract. Please include a terse, yet descriptive statement here of l
 
 # Nuts and Bolts {-}
 
+If you DO NOT want section numbers, insert {-} to prevent the 
+compiler from inserting them.
+
 ## Make minimal changes to the top part. {-}
 
 Fill in your name, title, email, tags.  Please don't change the
 pdf_document settings unless you know what you are doing.
 
-Write your content in here.
+## See documentation
 
-We have separate instructions for the crmda package in vignettes if you want more detailed information about what to do.
+We have separate instructions in package vignettes. There is a longish
+essay on markdown formatting. There is also a companion
+"guide-instructions" file in the same directory where this skeleton is supplied.
 
 # LaTeX Syntax is allowed {-}
 
@@ -82,42 +87,16 @@ We have separate instructions for the crmda package in vignettes if you want mor
 \]
 
 # `R` code chunks {-}
-Test a code chunk.
 
-```{r ex-1, results='asis', echo=TRUE}
-set.seed(1234)
-x <- rnorm(100, 0, 1)
-y <- rnorm(100, 0, 1)
-library(xtable)
-print(xtable(head(data.frame(x, y))), comment=FALSE)
-```
-
-```{r ex-2, echo=TRUE}
-summary(x)
-summary(y)
-```
-
-# Bibliographical citation test is appropriate. {-}
-
-The leaders in the field [@diggle_analysis_2013] are sure that I'm
-correct about most everything.  Diggle and colleagues
-[-@diggle_analysis_2013, p. 37] also seem confident that they did not
-agree to the preceeding. Note that to get the full parenthesized 
-statement with names and dates, we insert hard brackets `[`,
-an `@` sign, the bibtex tag, and a closer `]`. If we don't want
-their names, we insert a `-` sign. It is also possible to
-refer to a group of projects [@hsiao_analysis_2014;
-@fitzmaurice_applied_2011; @mccullagh_nelder_1983].
-
-The style of the bibliography will not match what we generally
-want. Is close, the Chicago author-year format.
+Chunks are allowed. Guide documents have numbered listings.
 
 
 [//]: (All guides must have this as the final stanza)
 
 # Session Info {-}
 
-Session Information is usually not written into a report, but an output file is created by the following pieces.
+Session Information is usually not written into a report, but in a
+guide file we regularly will include it as follows.
 
 ```{r sessionInfo, echo = FALSE}
 sessionInfo()
