@@ -217,11 +217,8 @@ possible to refer to a group of projects [@hsiao_analysis_2014;
 @fitzmaurice_applied_2011; @mccullagh_nelder_1983].
 
 The style of the bibliography will not match what we generally
-want. Is close, the Chicago author-year format.
-
-Unfortunately, it appears this is difficult to get the references in
-the way we want them. This is another reason that I think we should
-use LaTeX documents rather than Markdown when we intend to output PDF.
+want. It is close to what we want. The default is 
+based on the Chicago author-year format.
 
 
 # Session Info

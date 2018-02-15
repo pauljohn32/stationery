@@ -74,7 +74,7 @@ compiler from inserting them.
 Fill in your name, title, email, tags.  Please don't change the
 pdf_document settings unless you know what you are doing.
 
-## See documentation
+## See documentation {-}
 
 We have separate instructions in package vignettes. There is a longish
 essay on markdown formatting. There is also a companion
@@ -88,7 +88,9 @@ essay on markdown formatting. There is also a companion
 
 # `R` code chunks {-}
 
-Chunks are allowed. Guide documents have numbered listings.
+This document includes R[@RCore] code chunks. Because it is a guide, 
+we expect we will need to display both R input and output.
+Guide documents have numbered listings, as you see below.
 
 
 [//]: (All guides must have this as the final stanza)
