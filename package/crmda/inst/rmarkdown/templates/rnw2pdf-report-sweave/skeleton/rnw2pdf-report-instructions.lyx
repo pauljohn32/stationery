@@ -518,6 +518,14 @@ R
 \end_layout
 
 \begin_layout Standard
+In our report style, the author will not generally insert visible code chunks,
+ so almost always the chunk will have the flag `include=FALSE` or, if the
+ chunk is included, the code will not be echoed, but perhaps a 
+\backslash
+LaTeX mark-up table or a figure may be placed into the document.
+\end_layout
+
+\begin_layout Standard
 Our report documents ALMOST NEVER show 
 \begin_inset Quotes eld
 \end_inset
@@ -546,6 +554,28 @@ include=F
  set and the document, when it reveals results, will, again, almost always,
  display a LaTeX formatted table that is placed inside a floating table
  or a figure that is placed inside a floating figure object.
+\end_layout
+
+\begin_layout Standard
+It is a matter of style and author preference to decide how to include output
+ within the report document.
+ One approach is to use the chunk flag `asis` and then make sure that the
+ R output is going to be fully correct 
+\backslash
+LaTeX markup.
+ 
+\end_layout
+
+\begin_layout Standard
+On the other hand, one might write the output files and then manually insert
+ them into the document.
+ In our documents, we almost always have the global parameter `split=TRUE`,
+ so that the code input and output chunks are saved in a directory we call
+ `tmpout`.
+ Another 
+\backslash
+LaTeX document can insert those chunks.
+ We will demonstrate that here.
 \end_layout
 
 \begin_layout Section*
@@ -663,14 +693,17 @@ inline false
 status open
 
 \begin_layout Plain Layout
+
  <<chunkfig, eval=F, include=F, echo=F, fig=T>>=
 \end_layout
 
 \begin_layout Plain Layout
+
  # R code for figure here
 \end_layout
 
 \begin_layout Plain Layout
+
  @
 \end_layout
 
@@ -752,6 +785,7 @@ status open
 
 \begin_layout Plain Layout
 
+
 \backslash
 includegraphics[width=5in]{tmpout/t-chunkfig}
 \end_layout
@@ -793,14 +827,17 @@ inline false
 status open
 
 \begin_layout Plain Layout
+
  <<chunktable, include=F, results=tex>>=
 \end_layout
 
 \begin_layout Plain Layout
+
  # R code here
 \end_layout
 
 \begin_layout Plain Layout
+
  @
 \end_layout
 
@@ -829,6 +866,7 @@ inline false
 status open
 
 \begin_layout Plain Layout
+
  
 \backslash
 input{tmpout/t-chunktable.tex}
@@ -1044,14 +1082,17 @@ inline false
 status open
 
 \begin_layout Plain Layout
+
 x <- rnorm(100)
 \end_layout
 
 \begin_layout Plain Layout
+
 y <- rpois(100, lambda = 2)
 \end_layout
 
 \begin_layout Plain Layout
+
 plot(y ~ x)
 \end_layout
 
