@@ -243,7 +243,7 @@ set.seed(12345)
 
 \begin_layout Plain Layout
 
-op <- par() 
+par.orig <- par(no.readonly = TRUE) 
 \end_layout
 
 \begin_layout Plain Layout
@@ -817,6 +817,11 @@ status open
 \begin_layout Plain Layout
 
 options(opts.orig)
+\end_layout
+
+\begin_layout Plain Layout
+
+options(par.orig)
 \end_layout
 
 \begin_layout Plain Layout
