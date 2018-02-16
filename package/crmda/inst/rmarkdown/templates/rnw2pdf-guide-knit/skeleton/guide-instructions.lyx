@@ -22,8 +22,6 @@ footskip=1.5\baselineskip,
 \usepackage{graphicx}
 \usepackage{xcolor}
 
-
-\def\Sweavesize{\scriptsize} 
 \def\Rcolor{\color{black}} 
 \def\Rbackground{\color[gray]{0.95}}
 
@@ -56,9 +54,7 @@ footskip=1.5\baselineskip,
   numbers=left,
   numberstyle={\tiny}
 }%
-
 \lstset{style=custom}
-
 
 \input{theme/guidePreambleHeader.tex}
 \input{theme/preambleFooter.tex}
@@ -113,8 +109,8 @@ knitr
 \use_package stackrel 0
 \use_package stmaryrd 0
 \use_package undertilde 0
-\cite_engine basic
-\cite_engine_type default
+\cite_engine natbib
+\cite_engine_type authoryear
 \biblio_style plain
 \use_bibtopic false
 \use_indices false
@@ -201,7 +197,7 @@ guidesetup{%
 
 \begin_layout Plain Layout
 
-    email=first@ku.edu},
+    email=lone.edu},
 \end_layout
 
 \begin_layout Plain Layout
@@ -246,7 +242,7 @@ guidesetup{%
 
 \begin_layout Plain Layout
 
-    affiliation=i,
+    affiliation=Dept of Statistics,
 \end_layout
 
 \begin_layout Plain Layout
@@ -266,7 +262,7 @@ guidesetup{%
 
 \begin_layout Plain Layout
 
-  title={A Title for Skeleton Template: rnw2pdf-guide-knit},
+  title={Another Very Long Title: With a Possibly Long Subtitle},
 \end_layout
 
 \begin_layout Plain Layout
@@ -387,7 +383,7 @@ texfiles <- c("guidePreambleHeader.tex",
 
 \begin_layout Plain Layout
 
-              "preambleFooter.tex",
+              "preambleFooter.tex", 
 \end_layout
 
 \begin_layout Plain Layout
@@ -397,7 +393,7 @@ texfiles <- c("guidePreambleHeader.tex",
 
 \begin_layout Plain Layout
 
-              "addressFooter.tex")
+              "addressFooter.tex", "mlm.bib")
 \end_layout
 
 \begin_layout Plain Layout
@@ -470,9 +466,10 @@ This is an abstract.
  Please include a terse, yet descriptive statement here of less than 200
  words.
  It should avoid colloquialisms and polysyllabic profundities.
+ An abstract is required.
 \end_layout
 
-\begin_layout Standard
+\begin_layout Abstract
 \begin_inset CommandInset toc
 LatexCommand tableofcontents
 
@@ -482,64 +479,202 @@ LatexCommand tableofcontents
 \end_layout
 
 \begin_layout Section
-Introduction
+LyX: Cautions
 \end_layout
 
 \begin_layout Standard
-Do put your title & name in the top block.
+The document preamble has manual settings for margins (geometry) as well
+ as hyperlinks (PDF hyperref).
+ Don't use the LyX pull down menu to revise them.
+ It is necessary to edit settings in the preamble manually.
  
 \end_layout
 
-\begin_layout Standard
-The code chunks above this, and the one in the final section, are important.
- Don't change them unless you know what you are doing.
-\end_layout
-
-\begin_layout Standard
-Don't change margins, geometry, or hyperlink options with Lyx pull down
- menus or the document won't compile.
- Edit preamble for that.
-\end_layout
-
 \begin_layout Section
-Check our instructions manuals
+What to edit
 \end_layout
 
-\begin_layout Enumerate
-Brief instruction sheet in same folder as this skeleton: 
+\begin_layout Section*
+Title and author information
+\end_layout
+
+\begin_layout Standard
+The first block in the document has the title and author information.
+\end_layout
+
+\begin_layout Subsection*
+Footer information
+\end_layout
+
+\begin_layout Standard
+The footer in this document uses data that is provided in a file named 
 \begin_inset Quotes eld
 \end_inset
 
-rnw2pdf-guide-knitr
+addressFooter.tex
 \begin_inset Quotes erd
 \end_inset
 
-
+.
+ After the document is compiled for the first time, that document should
+ be available in the theme folder.
 \end_layout
 
-\begin_layout Enumerate
-The vignettes in the crmda package.
+\begin_layout Subsection*
+About the theme folder
+\end_layout
+
+\begin_layout Standard
+The theme folder should be empty when the initProject() function is run.
  
 \end_layout
 
-\begin_layout Section
-Write Sections & Subsections
+\begin_layout Standard
+There is an R code chunk above called 
+\begin_inset Quotes eld
+\end_inset
+
+texcopy
+\begin_inset Quotes erd
+\end_inset
+
+.
+ It will copy configuration files from the package into the theme folder.
+ After running this for the first time, those files will not be automatically
+ replaced by the scripts.
+ 
 \end_layout
 
 \begin_layout Standard
-Please do use sections and focused subsections to help readers find what
- they want.
-\end_layout
-
-\begin_layout Section
-R Code Chunks Work
+That means authors are free to edit them to fit their needs.
 \end_layout
 
 \begin_layout Standard
-When using knitr, we have not succeeded in customizing the display of input
- or output cells.
- What you see is what they insist on, at least until we figure how to change
- it.
+If the author makes an error in editing a theme file, it is safe to delete
+ the erroneous file and run the compile script again.
+ That will copy a fresh version of the theme file into the directory.
+\end_layout
+
+\begin_layout Section
+Compile as usual, or with rnw2pdf
+\end_layout
+
+\begin_layout Standard
+If you are editing these files in LyX, it is sufficient to simply compile
+ as usual.
+ That will handle the chore of converting a sequence of document types to
+ arrive at PDF.
+\end_layout
+
+\begin_layout Standard
+If not using LyX, then the author is probably editing the Rnw file.
+ The Rnw file we provide is produced by LyX, it is an intermediate step
+ in the document production sequence.
+ A two step compilation procedure is necessary.
+ First, one must convert the 
+\begin_inset Quotes eld
+\end_inset
+
+Rnw
+\begin_inset Quotes erd
+\end_inset
+
+ file to 
+\begin_inset Quotes eld
+\end_inset
+
+pdf
+\begin_inset Quotes erd
+\end_inset
+
+ (with knit), and then the knitted tex file is compiled into pdf by pdflatex
+ (or one of the other LaTeX compilers).
+ 
+\end_layout
+
+\begin_layout Standard
+We provide a shell script that can handle this, 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{rnw2pdf.sh}
+\end_layout
+
+\end_inset
+
+ script (which is included with the skeleton file).
+ It is also possible to use our R function 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{rnw2pdf}
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section
+knitr issues/features
+\end_layout
+
+\begin_layout Standard
+The original R 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "RCore"
+
+\end_inset
+
+ approach to combining code, output within the document is called Sweave.
+ The knitr approach is an alternative package.
+ knitr is helpful especially because it can be used with R markdown to produce
+ HTML web pages.
+ 
+\end_layout
+
+\begin_layout Standard
+Styling of knitr code chunks is different than Sweave.
+ It appears we lose line-wrap entirely.
+ I can't figure how to make Sweavel 
+\begin_inset Quotes eld
+\end_inset
+
+listings
+\begin_inset Quotes erd
+\end_inset
+
+ environments take over the knitr presentation.
+\end_layout
+
+\begin_layout Standard
+We have not yet learned the ins-and-outs of correcting the knitr code and
+ R output chunks to match our desired style.
+ That is one reason to prefer the sweave-based templates we offer.
+\end_layout
+
+\begin_layout Section
+Code Chunks
+\end_layout
+
+\begin_layout Standard
+If you choose to use knitr rather than Sweave as the chunk-processor–and
+ by using this template that is what you did decide–you should study the
+ knitr chunk options.
+ These are discussed in some detail in the vignette on code chunks.
+\end_layout
+
+\begin_layout Standard
+Here is an example of a data frame being created and a glm is estimated:
 \end_layout
 
 \begin_layout Standard
@@ -548,22 +683,27 @@ status open
 
 \begin_layout Plain Layout
 
-<<norm10>>=
+<<>>=
 \end_layout
 
 \begin_layout Plain Layout
 
-x <- rnorm(100)
+set.seed(234234)
 \end_layout
 
 \begin_layout Plain Layout
 
-head(x)
+dat <- data.frame(x = rnorm(100), y = rpois(100, lambda = 7))
 \end_layout
 
 \begin_layout Plain Layout
 
-mean(x)
+m1 <- glm(y ~ x, data = dat, family = "poisson")
+\end_layout
+
+\begin_layout Plain Layout
+
+summary(m1)
 \end_layout
 
 \begin_layout Plain Layout
@@ -576,55 +716,132 @@ mean(x)
 
 \end_layout
 
-\begin_layout Section
-Session Info
+\begin_layout Standard
+Some code that might be used to create a regression table using outreg from
+ the rockchalk package is the following.
+ As you see, the output 
+\begin_inset Quotes eld
+\end_inset
+
+splats
+\begin_inset Quotes erd
+\end_inset
+
+ into the document, it is not in a floating figure or table.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<pois10, results='asis', eval=FALSE>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+library(rockchalk)
+\end_layout
+
+\begin_layout Plain Layout
+
+or <- outreg(list("My Poisson"= m1), varLabels = c("x" = "A Normal Predictor"),
+ tight = FALSE)
+\end_layout
+
+\begin_layout Plain Layout
+
+cat(or)
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<pois15, results='asis', echo=FALSE>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+<<pois10>>
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+It is possible, however, to input the same chunk into a table, as we have
+ done in Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:A-Poisson-Regression"
+
+\end_inset
+
+.
+ That is the typically-preferred format for presentation of tables in guides.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+A Poisson Regression
 \begin_inset CommandInset label
 LatexCommand label
-name "sec:Session-Info"
+name "tab:A-Poisson-Regression"
 
 \end_inset
 
 
 \end_layout
 
-\begin_layout Standard
-Please leave this section for guide documents.
- It is important for replication.
- 
+\end_inset
+
+
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset ERT
 status open
 
 \begin_layout Plain Layout
 
-<<session, echo=F>>=
+
+\backslash
+input{tmpout/t-pois15.tex}
 \end_layout
 
-\begin_layout Plain Layout
+\end_inset
 
-sessionInfo()
-\end_layout
 
-\begin_layout Plain Layout
-
-if(!is.null(warnings())){
-\end_layout
-
-\begin_layout Plain Layout
-
-    print("Warnings:")
-\end_layout
-
-\begin_layout Plain Layout
-
-    warnings()}
-\end_layout
-
-\begin_layout Plain Layout
-
-@
 \end_layout
 
 \end_inset
@@ -667,6 +884,21 @@ options(opts.orig)
 
 @
 \end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+References
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset bibtex
+LatexCommand bibtex
+bibfiles "theme/mlm"
+options "apalike2"
 
 \end_inset
 

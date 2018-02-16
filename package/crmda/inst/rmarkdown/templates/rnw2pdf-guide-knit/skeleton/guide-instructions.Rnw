@@ -1,0 +1,264 @@
+%% LyX 2.2.3 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[11pt,letterpaper,english]{extarticle}
+\usepackage{lmodern}
+\renewcommand{\sfdefault}{lmss}
+\renewcommand{\ttdefault}{lmtt}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\setlength{\parskip}{\medskipamount}
+\setlength{\parindent}{0pt}
+\usepackage[authoryear]{natbib}
+
+\makeatletter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
+\special{papersize=\the\paperwidth,\the\paperheight}
+
+
+\@ifundefined{date}{}{\date{}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+\usepackage[includehead, includefoot,
+lmargin=1in,
+rmargin=1in,
+tmargin=0.75in,
+bmargin=1.0in,
+headheight=0pt,
+headsep=0pt,
+marginparwidth=0pt,
+footskip=1.5\baselineskip,
+]{geometry}
+
+\usepackage{multicol}
+\usepackage{listings}
+\usepackage{graphicx}
+\usepackage{xcolor}
+
+\def\Rcolor{\color{black}} 
+\def\Rbackground{\color[gray]{0.95}}
+
+\usepackage{listings}
+\usepackage{upquote, fancyvrb, relsize, ae}
+\lstdefinestyle{custom}{
+  language=R,
+  escapechar=`,
+  fancyvrb=false,%
+  tabsize=2,%
+  breaklines=true,
+  breakatwhitespace=true,%
+  captionpos=b,%
+  frame=single,%
+  framerule=0.2pt,%
+  framesep=1pt,%
+  showstringspaces=false,%
+  basicstyle=\normalsize\ttfamily,%
+  columns=fixed%,
+  \lst@ifdisplaystyle\scriptsize\fi,%
+  identifierstyle=,%
+  keywords=\bfseries,%
+  keywordstyle=\color[rgb]{0, 0.5, 0.5},
+  escapeinside={(*}{*)},
+  literate={~}{{$$\sim$$}}1 {==}{{=\,=}}2,
+  alsoother={$$},
+  alsoletter={.<-},%
+  otherkeywords={!,!=,~,$$,*,\&,\%/\%,\%*\%,\%\%,<-,<<-,/},
+  backgroundcolor=\Rbackground,
+  numbers=left,
+  numberstyle={\tiny}
+}%
+\lstset{style=custom}
+
+\input{theme/guidePreambleHeader.tex}
+\input{theme/preambleFooter.tex}
+\input{theme/guidePreambleKnitr.tex}
+
+\makeatother
+
+\usepackage{babel}
+\begin{document}
+%% Fill in values of the arguments here, 
+%% If blanks are needed, must insert value " ~ "
+%% If comma needed inside value, wrap in {}.
+%% Delete secondauthor and thirdauthor if not needed
+\guidesetup{%
+  firstauthor={
+    lastname=Author, 
+    firstname=First, 
+    affiliation=CRMDA,
+    email=lone.edu},
+  secondauthor={
+    lastname=Author, 
+    firstname=Second, 
+    affiliation=CRMDA, 
+    email=second@ku.edu}, 
+ thirdauthor={
+    lastname=Author,
+    firstname=Third, 
+    affiliation=Dept of Statistics,
+    email=third@ku.edu}, 
+  url={https://crmda.ku.edu/guides},
+  keywords={single-authoring, just one},
+  title={Another Very Long Title: With a Possibly Long Subtitle},
+  leftlogo={theme/jayhawk.pdf},
+  rightlogo={theme/CRMDAlogo-vert.pdf},
+  number=48,
+}
+\guidehdr
+
+<<knitropts, echo=FALSE>>=
+## Chunk output 
+library(knitr)
+if(!dir.exists("tmpout")) dir.create("tmpout", showWarnings=FALSE)
+opts_chunk$set(fig.path="tmpout/t-", split=TRUE, 
+               ae=FALSE, fig.height=3, fig.width=5, comment=NA)
+@
+
+<<texcopy, include=FALSE>>=
+library(crmda)
+## If theme directory does not have required images or TeX files
+## we need to retrieve them and put them in "theme" directory. 
+logos <- c(logoleft = "jayhawk.pdf", 
+           logoright = "CRMDAlogo-vert.pdf")
+texfiles <- c("guidePreambleHeader.tex", 
+              "preambleFooter.tex", 
+              "guidePreambleKnitr.tex",
+              "addressFooter.tex", "mlm.bib")
+getFiles(logos, pkg = "crmda")
+getFiles(texfiles, pkg = "crmda")
+@
+
+<<Roptions, echo=FALSE>>=
+opts.orig <- options()
+options(width=75, prompt=" ", continue="  ")
+options(useFancyQuotes = FALSE) 
+set.seed(12345)
+pdf.options(onefile=FALSE,family="Times",pointsize=10)
+@
+\begin{abstract}
+\noindent This is an abstract. Please include a terse, yet descriptive
+statement here of less than 200 words. It should avoid colloquialisms
+and polysyllabic profundities. An abstract is required.
+
+\tableofcontents{}
+\end{abstract}
+
+\section{LyX: Cautions}
+
+The document preamble has manual settings for margins (geometry) as
+well as hyperlinks (PDF hyperref). Don't use the LyX pull down menu
+to revise them. It is necessary to edit settings in the preamble manually. 
+
+\section{What to edit}
+
+\section*{Title and author information}
+
+The first block in the document has the title and author information.
+
+\subsection*{Footer information}
+
+The footer in this document uses data that is provided in a file named
+``addressFooter.tex''. After the document is compiled for the first
+time, that document should be available in the theme folder.
+
+\subsection*{About the theme folder}
+
+The theme folder should be empty when the initProject() function is
+run. 
+
+There is an R code chunk above called ``texcopy''. It will copy
+configuration files from the package into the theme folder. After
+running this for the first time, those files will not be automatically
+replaced by the scripts. 
+
+That means authors are free to edit them to fit their needs.
+
+If the author makes an error in editing a theme file, it is safe to
+delete the erroneous file and run the compile script again. That will
+copy a fresh version of the theme file into the directory.
+
+\section{Compile as usual, or with rnw2pdf}
+
+If you are editing these files in LyX, it is sufficient to simply
+compile as usual. That will handle the chore of converting a sequence
+of document types to arrive at PDF.
+
+If not using LyX, then the author is probably editing the Rnw file.
+The Rnw file we provide is produced by LyX, it is an intermediate
+step in the document production sequence. A two step compilation procedure
+is necessary. First, one must convert the ``Rnw'' file to ``pdf''
+(with knit), and then the knitted tex file is compiled into pdf by
+pdflatex (or one of the other LaTeX compilers). 
+
+We provide a shell script that can handle this, \code{rnw2pdf.sh}
+script (which is included with the skeleton file). It is also possible
+to use our R function \code{rnw2pdf}.
+
+\section{knitr issues/features}
+
+The original R \citep{RCore} approach to combining code, output within
+the document is called Sweave. The knitr approach is an alternative
+package. knitr is helpful especially because it can be used with R
+markdown to produce HTML web pages. 
+
+Styling of knitr code chunks is different than Sweave. It appears
+we lose line-wrap entirely. I can't figure how to make Sweavel ``listings''
+environments take over the knitr presentation.
+
+We have not yet learned the ins-and-outs of correcting the knitr code
+and R output chunks to match our desired style. That is one reason
+to prefer the sweave-based templates we offer.
+
+\section{Code Chunks}
+
+If you choose to use knitr rather than Sweave as the chunk-processor–and
+by using this template that is what you did decide–you should study
+the knitr chunk options. These are discussed in some detail in the
+vignette on code chunks.
+
+Here is an example of a data frame being created and a glm is estimated:
+
+<<>>=
+set.seed(234234)
+dat <- data.frame(x = rnorm(100), y = rpois(100, lambda = 7))
+m1 <- glm(y ~ x, data = dat, family = "poisson")
+summary(m1)
+@
+
+Some code that might be used to create a regression table using outreg
+from the rockchalk package is the following. As you see, the output
+``splats'' into the document, it is not in a floating figure or
+table.
+
+<<pois10, results='asis', eval=FALSE>>=
+library(rockchalk)
+or <- outreg(list("My Poisson"= m1), varLabels = c("x" = "A Normal Predictor"), tight = FALSE)
+cat(or)
+@
+
+<<pois15, results='asis', echo=FALSE>>=
+<<pois10>>
+@
+
+It is possible, however, to input the same chunk into a table, as
+we have done in Table \ref{tab:A-Poisson-Regression}. That is the
+typically-preferred format for presentation of tables in guides.
+
+\begin{table}[h]
+\caption{A Poisson Regression\label{tab:A-Poisson-Regression}}
+
+\input{tmpout/t-pois15.tex}
+\end{table}
+
+<<opts20, include=F>>=
+## Don't delete this. It puts the interactive session options
+## back the way they were. If this is compiled within a session
+## it is vital to do this.
+options(opts.orig)
+@
+
+\section{References}
+
+\bibliographystyle{apalike2}
+\bibliography{theme/mlm}
+
+\end{document}
