@@ -158,18 +158,69 @@ Do put your title \& name in the top block.
 
 Don't change the code chunks above or the last chunks below.
 
-Don't change margins or geometry with Lyx pull down menus. Edit preamble
-or config files for that. 
+\section{LyX: Cautions}
 
-Repeat \textbf{CAUTION}: Dont change the page margins or settings
-for hyperlinks with pull down menus.
+The document preamble has manual settings for margins (geometry) as
+well as hyperlinks (PDF hyperref). Don't use the LyX pull down menu
+to revise them. It is necessary to edit settings in the preamble manually. 
+
+Don't change margins or geometry with Lyx pull down menus. Edit preamble
+or config files for that. Repeat \textbf{CAUTION}: Dont change the
+page margins or settings for hyperlinks with pull down menus.
+
+\section{What to edit}
+
+\section*{Title and author information}
+
+The first block in the document has the title and author information.
+
+\subsection*{Footer information}
+
+The footer in this document uses data that is provided in a file named
+``addressFooter.tex''. After the document is compiled for the first
+time, that document should be available in the theme folder.
+
+\subsection*{About the theme folder}
+
+The theme folder should be empty when the initProject() function is
+run. 
+
+There is an R code chunk above called ``texcopy''. It will copy
+configuration files from the package into the theme folder. After
+running this for the first time, those files will not be automatically
+replaced by the scripts. 
+
+That means authors are free to edit them to fit their needs.
+
+If the author makes an error in editing a theme file, it is safe to
+delete the erroneous file and run the compile script again. That will
+copy a fresh version of the theme file into the directory.
 
 \section{Check our documentation}
+
+There are several vignettes distributed with this package. Please
+review them.
 \begin{enumerate}
-\item ``rnw2pdf-guide-instructions'' should be available in folder
 \item ``crmda'': the package framework overview
 \item ``code\_chunks'': discusses display of code in LaTeX documents
 \end{enumerate}
+
+\section{Compile as usual, or with rnw2pdf}
+
+If you are editing these files in LyX, it is sufficient to simply
+compile as usual. That will handle the chore of converting a sequence
+of document types to arrive at PDF.
+
+If not using LyX, then the author is probably editing the Rnw file.
+The Rnw file we provide is produced by LyX, it is an intermediate
+step in the document production sequence. A two step compilation procedure
+is necessary. First, one must convert the ``Rnw'' file to ``pdf''
+(with knit), and then the knitted tex file is compiled into pdf by
+pdflatex (or one of the other LaTeX compilers). 
+
+We provide a shell script that can handle this, \code{rnw2pdf.sh}
+script (which is included with the skeleton file). It is also possible
+to use our R function \code{rnw2pdf}.
 
 \section{Code Chunk Check}
 
@@ -203,7 +254,7 @@ settings \textquotedbl{}Rsize\textquotedbl{}, \textquotedbl{}Rbackground\textquo
 and \textquotedbl{}Rcolor\textquotedbl{}. Output displays depend on
 \textquotedbl{}Routsize\textquotedbl{}, \textquotedbl{}Routbackground\textquotedbl{},
 and \textquotedbl{}Routcolor\textquotedbl{}. 
-\item The fong can be adjusted by declarations like this
+\item The font can be adjusted by declarations like this
 
 \inputencoding{latin9}\begin{lstlisting}
 \def\Rsize{\huge\ttfamily}

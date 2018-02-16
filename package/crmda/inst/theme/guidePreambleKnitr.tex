@@ -1,4 +1,6 @@
 
+%% 20180215: this does not cooperate with knitr, but someday we hope
+%% it might.
 %% This controls display of code chunks
 \usepackage{ae,fancyvrb,relsize,ae}
 \providecommand{\Sweavesize}{\normalsize}
@@ -81,3 +83,12 @@
 \lstnewenvironment{Sinput}{\lstset{style=Rinput}}{}
 \lstnewenvironment{Scode}{\lstset{style=Rinput}}{}
 \lstnewenvironment{Soutput}{\lstset{style=Routput}}{}
+
+
+\usepackage{xcolor}
+\definecolor{light-gray}{gray}{0.90}
+\usepackage{realboxes}
+\providecommand*{\code}[1]{\texttt{#1}}
+\renewcommand{\code}[1]{
+\Colorbox{light-gray}{#1}
+}

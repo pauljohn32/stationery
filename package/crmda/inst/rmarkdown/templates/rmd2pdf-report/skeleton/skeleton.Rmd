@@ -36,6 +36,7 @@ header-includes:
 
 ```{r setup, include=FALSE}
 ##This Invisible Chunk is required in all CRMDA documents
+opts.orig <- options()
 tmpdir <- paste0("tmpout")
 if (!dir.exists(tmpdir)) dir.create(tmpdir, recursive = TRUE)
 knitr::opts_chunk$set(echo=TRUE, comment=NA, fig.path=paste0(tmpdir, "/p-"))
@@ -101,4 +102,11 @@ capture.output(sessionInfo(), file = zz, append = FALSE)
 if (!is.null(warnings())){
     capture.output(warnings(), file = zz, append = TRUE)
 }
+```
+
+```{r session20, include=F}
+## Don't delete this. It puts the interactive session options
+## back the way they were. If this is compiled within a session
+## it is vital to do this.
+options(opts.orig)
 ```

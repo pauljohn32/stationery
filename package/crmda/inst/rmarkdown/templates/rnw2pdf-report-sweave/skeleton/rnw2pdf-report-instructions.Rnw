@@ -1,6 +1,6 @@
 %% LyX 2.2.3 created this file.  For more info, see http://www.lyx.org/.
 %% Do not edit unless you really know what you are doing.
-\documentclass[11pt,letterpaper,american,english]{scrartcl}
+\documentclass[11pt,letterpaper,english]{scrartcl}
 \usepackage{lmodern}
 \renewcommand{\sfdefault}{lmss}
 \renewcommand{\ttdefault}{lmtt}
@@ -9,6 +9,7 @@
 \setlength{\parskip}{\medskipamount}
 \setlength{\parindent}{0pt}
 \usepackage{url}
+\usepackage[authoryear]{natbib}
 
 \makeatletter
 
@@ -20,16 +21,6 @@
 <<echo=F>>=
   if(exists(".orig.enc")) options(encoding = .orig.enc)
 @
-\newenvironment{lyxcode}
-{\par\begin{list}{}{
-\setlength{\rightmargin}{\leftmargin}
-\setlength{\listparindent}{0pt}% needed for AMS classes
-\raggedright
-\setlength{\itemsep}{0pt}
-\setlength{\parsep}{0pt}
-\normalfont\ttfamily}%
- \item[]}
-{\end{list}}
 \providecommand*{\code}[1]{\texttt{#1}}
 
 \@ifundefined{date}{}{\date{}}
@@ -92,8 +83,6 @@ footskip=1.5\baselineskip,
 
 \usepackage{babel}
 \usepackage{listings}
-\addto\captionsamerican{\renewcommand{\lstlistingname}{Listing}}
-\addto\captionsenglish{\renewcommand{\lstlistingname}{Listing}}
 \renewcommand{\lstlistingname}{Listing}
 
 \begin{document}
@@ -127,12 +116,10 @@ footskip=1.5\baselineskip,
 if(!dir.exists("tmpout"))dir.create("tmpout", recursive = TRUE)
 @
 
-\selectlanguage{american}%
 % Please leave this code: In document Latex options:
 \fvset{listparameters={\setlength{\topsep}{0em}}}
 \SweaveOpts{prefix.string=tmpout/t, split=TRUE, ae=FALSE, height=5, width=6}
 
-\selectlanguage{english}%
 <<texcopy, include=FALSE,echo=FALSE>>=
 library(crmda)
 ## If theme directory does not have required images or TeX files
@@ -161,31 +148,130 @@ options(SweaveHooks=list(fig=function() par(mar=pjmar, ps=10)))
 pdf.options(onefile=FALSE, family="Times", pointsize=10)
 @
 
+\section{Introduction}
+
 This is a LaTeX ``noweb'' report generated with the Sweave engine.
-We compare it to the very similar document produced with ``knitr''
-(in the companion folder rnw2pdf-report-knitr).
+We can compare it to the very similar document produced with ``knitr''
+(in the companion folder rnw2pdf-report-knitr). 
 
-\section*{Sweave the chunks}
+We suggest you
+\begin{enumerate}
+\item Compile this document \emph{as is }to test your setup
+\item Compare the document with the pdf output so see the impact of the
+settings.
+\end{enumerate}
+Do put your title \& name in the top block.
 
-The syntax for chunks in Sweave is like this. 
-\begin{lyxcode}
-<\textcompwordmark{}<chunkname,~fig=T,~eval=T,~include=F,~echo=T>\textcompwordmark{}>=
+Don't change the code chunks above or the last chunks below.
 
-\#~R~code~here
+For what it is worth, we have found that the knitr framework is not
+so easy to customize and manage as Sweave and, if you are planning
+to produce a PDF document, it seems likely that the
 
-@
+\section{LyX: Cautions}
 
-\end{lyxcode}
+The document preamble has manual settings for margins (geometry) as
+well as hyperlinks (PDF hyperref). Don't use the LyX pull down menu
+to revise them. It is necessary to edit settings in the preamble manually. 
 
-\section{LyX user Caution}
+Don't change margins or geometry with Lyx pull down menus. Edit preamble
+or config files for that. Repeat \textbf{CAUTION}: Dont change the
+page margins or settings for hyperlinks with pull down menus.
 
-\textbf{CAUTION}: This template document has some special features
-in the preamble. Most importantly, it has margins that are set. The
-LyX graphical menu (Document -> Settings -> margins) will break these
-defaults. So don't change the page margins or the pagestyle. Other
-than that, I don't know of any settings that are fatal.
-\begin{lyxcode}
-\end{lyxcode}
+\section{What to edit}
+
+\section*{Title and author information}
+
+The first block in the document has the title and author information.
+
+\subsection*{Footer information}
+
+The footer in this document uses data that is provided in a file named
+``addressFooter.tex''. After the document is compiled for the first
+time, that document should be available in the theme folder.
+
+\subsection*{About the theme folder}
+
+The theme folder should be empty when the initProject() function is
+run. 
+
+There is an R code chunk above called ``texcopy''. It will copy
+configuration files from the package into the theme folder. After
+running this for the first time, those files will not be automatically
+replaced by the scripts. 
+
+That means authors are free to edit them to fit their needs.
+
+If the author makes an error in editing a theme file, it is safe to
+delete the erroneous file and run the compile script again. That will
+copy a fresh version of the theme file into the directory.
+
+\section{Check our documentation}
+
+There are several vignettes distributed with this package. Please
+review them.
+\begin{enumerate}
+\item ``crmda'': the package framework overview
+\item ``code\_chunks'': discusses display of code in LaTeX documents
+\end{enumerate}
+
+\section{Compile as usual, or with rnw2pdf}
+
+If you are editing these files in LyX, it is sufficient to simply
+compile as usual. That will handle the chore of converting a sequence
+of document types to arrive at PDF.
+
+If not using LyX, then the author is probably editing the Rnw file.
+The Rnw file we provide is produced by LyX, it is an intermediate
+step in the document production sequence. A two step compilation procedure
+is necessary. First, one must convert the ``Rnw'' file to ``pdf''
+(with knit), and then the knitted tex file is compiled into pdf by
+pdflatex (or one of the other LaTeX compilers). 
+
+We provide a shell script that can handle this, \code{rnw2pdf.sh}
+script (which is included with the skeleton file). It is also possible
+to use our R function \code{rnw2pdf}.
+
+\section{Code Chunk Check}
+
+What is the difference between a guide and a report? Simply put, a
+report document does not reveal source code and it should not distract
+the reader with code or ``raw'' output. A report document might
+just as well be typed by hand, if we could be sure all the numbers
+would be typed correctly and they could easily revised. In our report
+style, the author will not generally insert visible code chunks, so
+almost always the chunk will have the flag `include=FALSE` or, if
+the chunk is included, the code will not be echoed, but perhaps a
+\textbackslash{}LaTeX mark-up table or a figure may be placed into
+the document.
+
+Our report documents ALMOST NEVER show ``raw'' R code to readers
+and very seldom will they display ``raw'' R output. Almost always,
+code chunks will have the flag ``include=F'' set and the document,
+when it reveals results, will, again, almost always, display a LaTeX
+formatted table that is placed inside a floating table or a figure
+that is placed inside a floating figure object.
+
+It is a matter of style and author preference to decide how to include
+output within the report document. One approach is to use the chunk
+flags that directly display LaTeX output in the document. One must
+take special care to assure that the table is fully presentable. The
+alternative is to write the nearly presentable table on disk and then
+edit by hand to finalize the formats (usually we need to fix column
+and row names). 
+
+\subsection*{\protect\code{R} Code Chunks}
+
+We use R \citet{RCore} to do statistical analysis. We'd like to be
+as close as possible to the ``reproducible document'' idea. If R
+functions can produce perfectly presentable LaTeX output, then we
+use it. 
+
+On the other hand, one might write the output files and then manually
+insert them into the document. In our documents, we almost always
+have the global parameter `split=TRUE`, so that the code input and
+output chunks are saved in a directory we call `tmpout`. Another LaTeX
+document can insert those chunks. We will demonstrate that here.
 
 \subsubsection*{One document-weaving tip: save something for later.}
 
@@ -195,10 +281,9 @@ I don't use that so often anymore, instead what I do very often is
 a trick I learned from Duncan Murdoch in the r-help email list. 
 
 Make sure that the document options are set with \code{split=T}.
-This works in Sweave or knitr documents. This causes each chunk's
-input and output to be saved to a separate file. This includes graphs
-and tables. So when I run a function that generates a graph, I get
-a pdf output file in the \code{tmpout} folder. 
+This works in LaTeX documents using Sweave or knitr to handle the
+code chunks. This causes each chunk's input and output to be saved
+to a separate file. This includes graphs and tables. 
 
 If I make a figure, the chunk will look like this
 
@@ -245,116 +330,38 @@ Why do this? Why separate chunk output creation from inclusion in
 a document? The simple answer is that I might want to use that chunk
 in a different document. If I save a copy in the separate folder,
 then it is very convenient to come along later and make a separate
-slide show document displaying the same tables and/or figures.
+slide show document displaying the same tables and/or figures. Or
+I might need to edit the chunk output before inserting it in the document.
+ 
 
 The automatic ``stick this output in where the chunk is placed''
 approach works great with lecture notes and guides because these things
 are easy to update and re-run.
 
-I do not find the automatic insertion quite so helpful in the preparation
-of reports. Here is the main issue. The ``automatic'' ``self-documenting''
-report is almost never exactly correct. It requires some ``finger
-painting''. Perhaps that would not be true in the perfect world,
-if we were perfect programmers, but I don't live in a perfect world.
-In that case, I am willing to settle for a very good second best alternative.
-I have learned to export result files from R which can be included
-in documents easily, so the documents are easily updated and revised.
-They may not be completely automatic because I leave open the possibility
-that I might need to adjust a figure's size or a part of a table's
-markup.
+\subsection*{Make Nice Looking Tables}
 
-\section*{Guides versus Reports}
-
-What is the difference between a guide and a report? Simply put, a
-report document does not reveal source code and it should not distract
-the reader with code or ``raw'' program output. A report document
-might just as well be typed by hand, if we could be sure all the numbers
-would be typed correctly and they could easily revised. 
-
-<<m1, include=F>>=
-dat <- data.frame(x = rnorm(100), y = rnorm(100))
-m1 <- lm(y ~ x, data = dat)
-summary(m1)
-@
-
-In a report, we do not usually have R output in the raw form, or even
-in the beautified form from Sweavel or some other ``fancy'' table
-formatting framework:
-
-\input{tmpout/t-m1.tex}
-
-The knitr settings we prefer also use the LaTeX listings class to
-beautify these chunk outputs, but we hav found that controlling the
-style can be more difficult. The preambles of our LaTeX documents
-have fairly elaborate configurations for the \code{listings} displays.
-
-In a report, we do not want R code or output, we want a professional-looking
-table. 
-
-\subsection*{Listings, not Verbatim}
-
-The Sweave default system uses the LaTeX Verbatim class to offer input
-and output chunks in the document. A better approach, pioneered by
-Frank Harrell (Vanderbilt) uses the LaTeX class listings. Harrell
-prepared a replacement for R's Sweave.sty and called it Sweavel.sty.
-
-We are using the listings class to display input and output chunks
-in this document. In the preamble, we have some special settings that
-control the color of text, the background, and so forth. The listings
-class has an elaborate settings framework. 
-
-At one time, I had difficulty in generating visually appealing listings
-output that would match the color \& style of R chunk output from
-Sweavel. The problem is solved, as we see now. The following is a
-listings display. It is not Sweaved, it is simply a LaTeX listings
-environment colored by the settings in the preamble
-
-\begin{lstlisting}
-x <- rnorm(100)
-y <- rpois(100, lambda = 2)
-plot(y ~ x)
-\end{lstlisting}
-
-The following code chunk in R appears to be the same. 
-
-<<listingcompare, eval=F,echo=T>>=
-x <- rnorm(100)
-y <- rpois(100, lambda = 2)
-plot(y ~ x)
-@
-
-Those match very closely. At the moment, the same is not true in knitr
-documents, we are trying to work that out.
-
-\section*{Make Nice Looking Tables}
-
-In the preparation of a report, we then need to do some work to find
-a high quality table-manufacturing function. We don't want to see
-an R summary (ugly as it is):
+The aim in R code is to generate ``final'' tables that are in LaTeX
+format and they are as close as possible to the final, presentable
+tables that a client can review in a report. We don't want the report
+reader to see ugly output:
 
 <<Rsummary, echo=F>>=
+dat <- data.frame(x = rnorm(100), y = rnorm(100))
 summary(dat)
 @
 
 In R, there are many (many!) packages and functions that can be used
 to generate acceptable LaTeX output. The bewildering diversity of
-these things is a problem. I became interested in this in 2002 or
-2003, and later developed an R function called \code{outreg} that
-is now in the \code{rockchalk} R package. There are a host of other
-packages that are intended to either 1) manufacture a specific kind
-of table (regression tables) or 2) manufacture a reasonable LaTeX
-table from a rectangular data object that is generated with R functions
-like table.
+these things is a problem. There are a host of packages that generate
+results that are nearly presentable, perhaps requiring only a minor
+adjustment of labels.
 
-\subsection*{Summary statistics tables}
-
-We don't have a great summary stats table maker now, but if I were
-doing one, I'd probably start with the rockchalk::summarize function
-and beautify that. 
+\subsubsection*{Summary statistics tables}
 
 \subsubsection*{xtable}
 
-It is easy enough to use the \code{xtable} package to get this done.
+Here is an example that uses rockchalk::summarize to gather summary
+statistics, which are then reformatted as a LaTeX table by xtable.
 Here's an xtable that displays most of the rows in the output from
 \code{rockchalk::summarizeNumerics}:
 
@@ -380,49 +387,34 @@ tab3.x <- xtable::xtable(tab1$numerics)
 print(tab3.x, floating = FALSE)
 @
 
-Row names and column names need to be beautified, that's for sure.
-I suppose the point here is not that I can throw together an adequate
-table in 10 minutes. But rather that if we are making a report, we
-need some kind of good looking table. 
-
-One quirk in the \code{xtable} package is that the \code{xtable}
-function itself creates a object to hold material for a table, but
-the hard work is done by the method \code{print.xtable}, which has
-a ton of arguments and details to consider. The hyper-elaborate nature
-of the arguments is off-putting, even for a patient person. I expect
-that if we made automatic table generation a full time job for a few
-of the GRAs, we'd get to the bottom of all of those arguments.
+The key issue is that the table is not perfectly ready for inclusion
+in a report. The row and column names might need beautification. That
+is why, realistically, it is generally easier to write those tables
+into tex files and revise them by hand, and then use LaTeX ``\textbackslash{}input\{\}''
+to include them in the document where appropriate.
 
 \subsubsection*{knitr::kable}
 
-I used \code{xtable} for the first example. xtable is, so far as
-I know, the oldest package for that purpose. 
-
-Today, there are plenty of other functions available. The following
-is a result from \code{kable} in the \code{knitr} package:
+The following is a result from \code{kable} in the \code{knitr}
+package:
 
 <<tab4, echo=F,results=tex>>=
 tab4.x <- knitr::kable(tab1$numerics, format = "latex")
 cat(tab4.x)
 @
 
-Like \code{xtable}, the \code{kable} function can be used to generate
-tables that are headed for LaTeX or HTML documents.
+The \code{kable} function is offered as a simple, usually robust
+table writer that will not deal with much ``fancy'' formatting.
+.
 
-One of the interesting design decisions in creating a table-making
-function is whether we ought to enclose the tabular object within
-a ``floating'' automatically numbered table. A floating table would
-be expected in a LaTeX document.
-
-The \code{kable} function makes the same decision that I made in
-\code{outreg}, which is that if the user specifies a title for the
-table, then it must mean that the user wants to have the table set
-as a floating object. The same code that made the previous table is
-changed just slightly to produce a floating object (Look around in
-this document for a table named ``In \code{kable}, I added the caption
-argument and got this unexpected float''. I found this frustrating
-because the \code{kable} function does not include documentation
-for insertion of a label that can be used for cross referencing.
+The \code{kable} function assumes that if the user specifies a title
+for the table, then it must mean that the user wants to have the table
+set as a floating table object. The same code that made the previous
+table is changed just slightly to produce a floating object. Look
+around in this document for a table named ``In \code{kable}, I added
+the caption argument and got this unexpected float''. (I found this
+frustrating because the \code{kable} function does not include documentation
+for insertion of a label that can be used for cross referencing.)
 
 <<tab5, echo=F,results=tex>>=
 tab5.x <- knitr::kable(tab1$numerics, format = "latex", caption = "In kable, I added the caption argument and got this unexpected float")
@@ -436,7 +428,6 @@ do it manually, as we can see in Table \ref{tab:kable-output}
 \caption{kable output in a float I created manually\label{tab:kable-output}}
 
 \input{tmpout/t-tab4.tex}
-
 \end{table}
 
 \subsection*{Regression output}
@@ -450,6 +441,7 @@ without inserting it into a float, we obtain the following
 
 <<outreg1, echo=F, results=tex>>=
 library(rockchalk)
+m1 <- lm(y ~ x, data = dat)
 vl <- c("x" = "Excellent Predictor")
 or <- outreg(list("First Model" = m1), varLabels = vl, tight = FALSE)
 cat(or)
@@ -474,17 +466,14 @@ There are many other regression-table-making functions available today.
 I made some lecture notes about it for the R summer workshops that
 we offer at KU (\url{http://pj.freefaculty.org/guides/Rcourse/regression-tables-1}). 
 
-\subsubsection*{Structural equation models}
+\subsection*{Structural equation models}
 
 In the good looking table department, we also need to display structural
-equation models. This is a partly solved problem. This has been a
-long term objective in CRMDA. 
+equation models. This has been a long term objective in CRMDA and
+it is, for the most part, a solved problem. 
 
 In the \code{kutils} package, we made a function \code{semTable}
-that is intended to help. Please see Table \ref{tab:A-Confirmatory-Factor}.
-In the preamble of this document, I have some boilerplate code that
-causes content in floating tables and figures to be centered automatically.
-This looks nice!
+that is intended to help. Please see Table \ref{tab:A-Confirmatory-Factor}. 
 
 <<include=F>>=
 library(kutils)
@@ -501,12 +490,24 @@ cat(cfa1)
 @
 
 \begin{table}
-
 \caption{A Confirmatory Factor Analysis Table\label{tab:A-Confirmatory-Factor}}
 
 \input{tmpout/t-cfa1.tex}
-
 \end{table}
+
+\section{Session Information}
+
+Leave the code chunks below. But the visible words and section name
+should be removed. Session Information is usually not written into
+a report, but an output file is created by the following pieces.
+
+<<session, include=F>>=
+zz <- "report-instructions.Rout"
+capture.output(sessionInfo(), file = zz, append = FALSE)
+if (!is.null(warnings())){
+    capture.output(warnings(), file = zz, append = TRUE)
+}
+@
 
 <<RoptionsRestore, echo=F, include=F>>=
 ## Don't delete this. It puts the interactive session options
@@ -515,4 +516,8 @@ cat(cfa1)
 options(opts.orig)
 par(par.orig)
 @
+
+\bibliographystyle{apalike2}
+\bibliography{theme/mlm}
+
 \end{document}

@@ -506,14 +506,22 @@ Do put your title & name in the top block.
 Don't change the code chunks above or the last chunks below.
 \end_layout
 
+\begin_layout Section
+LyX: Cautions
+\end_layout
+
 \begin_layout Standard
-Don't change margins or geometry with Lyx pull down menus.
- Edit preamble or config files for that.
+The document preamble has manual settings for margins (geometry) as well
+ as hyperlinks (PDF hyperref).
+ Don't use the LyX pull down menu to revise them.
+ It is necessary to edit settings in the preamble manually.
  
 \end_layout
 
 \begin_layout Standard
-Repeat 
+Don't change margins or geometry with Lyx pull down menus.
+ Edit preamble or config files for that.
+ Repeat 
 \series bold
 CAUTION
 \series default
@@ -522,18 +530,77 @@ CAUTION
 \end_layout
 
 \begin_layout Section
-Check our documentation
+What to edit
 \end_layout
 
-\begin_layout Enumerate
+\begin_layout Section*
+Title and author information
+\end_layout
+
+\begin_layout Standard
+The first block in the document has the title and author information.
+\end_layout
+
+\begin_layout Subsection*
+Footer information
+\end_layout
+
+\begin_layout Standard
+The footer in this document uses data that is provided in a file named 
 \begin_inset Quotes eld
 \end_inset
 
-rnw2pdf-guide-instructions
+addressFooter.tex
 \begin_inset Quotes erd
 \end_inset
 
- should be available in folder
+.
+ After the document is compiled for the first time, that document should
+ be available in the theme folder.
+\end_layout
+
+\begin_layout Subsection*
+About the theme folder
+\end_layout
+
+\begin_layout Standard
+The theme folder should be empty when the initProject() function is run.
+ 
+\end_layout
+
+\begin_layout Standard
+There is an R code chunk above called 
+\begin_inset Quotes eld
+\end_inset
+
+texcopy
+\begin_inset Quotes erd
+\end_inset
+
+.
+ It will copy configuration files from the package into the theme folder.
+ After running this for the first time, those files will not be automatically
+ replaced by the scripts.
+ 
+\end_layout
+
+\begin_layout Standard
+That means authors are free to edit them to fit their needs.
+\end_layout
+
+\begin_layout Standard
+If the author makes an error in editing a theme file, it is safe to delete
+ the erroneous file and run the compile script again.
+ That will copy a fresh version of the theme file into the directory.
+\end_layout
+
+\begin_layout Section
+Check our documentation
+\end_layout
+
+\begin_layout Standard
+There are several vignettes distributed with this package.
+ Please review them.
 \end_layout
 
 \begin_layout Enumerate
@@ -556,6 +623,74 @@ code_chunks
 \end_inset
 
 : discusses display of code in LaTeX documents
+\end_layout
+
+\begin_layout Section
+Compile as usual, or with rnw2pdf
+\end_layout
+
+\begin_layout Standard
+If you are editing these files in LyX, it is sufficient to simply compile
+ as usual.
+ That will handle the chore of converting a sequence of document types to
+ arrive at PDF.
+\end_layout
+
+\begin_layout Standard
+If not using LyX, then the author is probably editing the Rnw file.
+ The Rnw file we provide is produced by LyX, it is an intermediate step
+ in the document production sequence.
+ A two step compilation procedure is necessary.
+ First, one must convert the 
+\begin_inset Quotes eld
+\end_inset
+
+Rnw
+\begin_inset Quotes erd
+\end_inset
+
+ file to 
+\begin_inset Quotes eld
+\end_inset
+
+pdf
+\begin_inset Quotes erd
+\end_inset
+
+ (with knit), and then the knitted tex file is compiled into pdf by pdflatex
+ (or one of the other LaTeX compilers).
+ 
+\end_layout
+
+\begin_layout Standard
+We provide a shell script that can handle this, 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{rnw2pdf.sh}
+\end_layout
+
+\end_inset
+
+ script (which is included with the skeleton file).
+ It is also possible to use our R function 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{rnw2pdf}
+\end_layout
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Section
@@ -644,7 +779,7 @@ The font size and colors of R input chunks are controlled by LaTeX settings
 \end_layout
 
 \begin_layout Enumerate
-The fong can be adjusted by declarations like this
+The font can be adjusted by declarations like this
 \end_layout
 
 \begin_deeper

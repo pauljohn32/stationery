@@ -142,6 +142,21 @@ and polysyllabic profundities. An abstract is required.
 \tableofcontents{}
 \end{abstract}
 
+\section{Introduction}
+
+This shows how we use R \citep{RCore} to make guide documents using
+the CRMDA style. 
+
+We suggest you
+\begin{enumerate}
+\item Compile this document \emph{as is }to test your setup
+\item Compare the document with the pdf output so see the impact of the
+settings.
+\end{enumerate}
+Do put your title \& name in the top block.
+
+Don't change the code chunks above or the last chunks below.
+
 \section{LyX: Cautions}
 
 The document preamble has manual settings for margins (geometry) as
@@ -176,6 +191,15 @@ If the author makes an error in editing a theme file, it is safe to
 delete the erroneous file and run the compile script again. That will
 copy a fresh version of the theme file into the directory.
 
+\section{Check our documentation}
+
+There are several vignettes distributed with this package. Please
+review them.
+\begin{enumerate}
+\item ``crmda'': the package framework overview
+\item ``code\_chunks'': discusses display of code in LaTeX documents
+\end{enumerate}
+
 \section{Compile as usual, or with rnw2pdf}
 
 If you are editing these files in LyX, it is sufficient to simply
@@ -193,7 +217,9 @@ We provide a shell script that can handle this, \code{rnw2pdf.sh}
 script (which is included with the skeleton file). It is also possible
 to use our R function \code{rnw2pdf}.
 
-\section{knitr issues/features}
+\section{Code Chunk Check}
+
+\subsection{knitr issues/features}
 
 The original R \citep{RCore} approach to combining code, output within
 the document is called Sweave. The knitr approach is an alternative
@@ -208,7 +234,7 @@ We have not yet learned the ins-and-outs of correcting the knitr code
 and R output chunks to match our desired style. That is one reason
 to prefer the sweave-based templates we offer.
 
-\section{Code Chunks}
+\subsection{Code Chunks}
 
 If you choose to use knitr rather than Sweave as the chunk-processor–and
 by using this template that is what you did decide–you should study
@@ -261,4 +287,22 @@ options(opts.orig)
 \bibliographystyle{apalike2}
 \bibliography{theme/mlm}
 
+\section{Session Info\label{sec:Session-Info}}
+
+Please leave this section for guide documents. It is important for
+replication. 
+
+<<session10, echo=F>>=
+sessionInfo()
+if(!is.null(warnings())){
+    print("Warnings:")
+    warnings()}
+@
+
+<<session20, include=F>>=
+## Don't delete this. It puts the interactive session options
+## back the way they were. If this is compiled within a session
+## it is vital to do this.
+options(opts.orig)
+@
 \end{document}

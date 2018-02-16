@@ -505,6 +505,11 @@ The sections in this document are not numbered, just for variety.
  That is easily changed.
 \end_layout
 
+\begin_layout Standard
+Please see the guide document which is distributed in the same folder as
+ this template.
+\end_layout
+
 \begin_layout Subsection*
 Make minimal changes to the top part
 \end_layout
@@ -602,12 +607,22 @@ options "apalike2"
 \end_layout
 
 \begin_layout Subsection*
+\begin_inset Note Note
+status open
+
+\begin_layout Subsection*
 Session Info
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 Session Information is usually not written into a report, but an output
  file is created by the following pieces.
+ Please leave the next 2 chunks
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard

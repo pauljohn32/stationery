@@ -479,6 +479,46 @@ LatexCommand tableofcontents
 \end_layout
 
 \begin_layout Section
+Introduction
+\end_layout
+
+\begin_layout Standard
+This shows how we use R 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "RCore"
+
+\end_inset
+
+ to make guide documents using the CRMDA style.
+ 
+\end_layout
+
+\begin_layout Standard
+We suggest you
+\end_layout
+
+\begin_layout Enumerate
+Compile this document 
+\emph on
+as is 
+\emph default
+to test your setup
+\end_layout
+
+\begin_layout Enumerate
+Compare the document with the pdf output so see the impact of the settings.
+\end_layout
+
+\begin_layout Standard
+Do put your title & name in the top block.
+\end_layout
+
+\begin_layout Standard
+Don't change the code chunks above or the last chunks below.
+\end_layout
+
+\begin_layout Section
 LyX: Cautions
 \end_layout
 
@@ -556,6 +596,37 @@ If the author makes an error in editing a theme file, it is safe to delete
 \end_layout
 
 \begin_layout Section
+Check our documentation
+\end_layout
+
+\begin_layout Standard
+There are several vignettes distributed with this package.
+ Please review them.
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Quotes eld
+\end_inset
+
+crmda
+\begin_inset Quotes erd
+\end_inset
+
+: the package framework overview
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Quotes eld
+\end_inset
+
+code_chunks
+\begin_inset Quotes erd
+\end_inset
+
+: discusses display of code in LaTeX documents
+\end_layout
+
+\begin_layout Section
 Compile as usual, or with rnw2pdf
 \end_layout
 
@@ -624,6 +695,10 @@ code{rnw2pdf}
 \end_layout
 
 \begin_layout Section
+Code Chunk Check
+\end_layout
+
+\begin_layout Subsection
 knitr issues/features
 \end_layout
 
@@ -662,7 +737,7 @@ We have not yet learned the ins-and-outs of correcting the knitr code and
  That is one reason to prefer the sweave-based templates we offer.
 \end_layout
 
-\begin_layout Section
+\begin_layout Subsection
 Code Chunks
 \end_layout
 
@@ -899,6 +974,103 @@ References
 LatexCommand bibtex
 bibfiles "theme/mlm"
 options "apalike2"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Session Info
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Session-Info"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Please leave this section for guide documents.
+ It is important for replication.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<session10, echo=F>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+sessionInfo()
+\end_layout
+
+\begin_layout Plain Layout
+
+if(!is.null(warnings())){
+\end_layout
+
+\begin_layout Plain Layout
+
+    print("Warnings:")
+\end_layout
+
+\begin_layout Plain Layout
+
+    warnings()}
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<session20, include=F>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+## Don't delete this.
+ It puts the interactive session options
+\end_layout
+
+\begin_layout Plain Layout
+
+## back the way they were.
+ If this is compiled within a session
+\end_layout
+
+\begin_layout Plain Layout
+
+## it is vital to do this.
+\end_layout
+
+\begin_layout Plain Layout
+
+options(opts.orig)
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
 
 \end_inset
 

@@ -165,6 +165,8 @@ and polysyllabic profundities.
 
 \section{Nuts and Bolts}
 
+Please see the guide document in the same folder as this document.
+
 Do put your title \& name in the top block.
 
 Don't change the 5 code chunks above or the last chunk below.

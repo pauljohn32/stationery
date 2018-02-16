@@ -100,8 +100,8 @@ sweave
 \use_package stackrel 0
 \use_package stmaryrd 0
 \use_package undertilde 0
-\cite_engine basic
-\cite_engine_type default
+\cite_engine natbib
+\cite_engine_type authoryear
 \biblio_style plain
 \use_bibtopic false
 \use_indices false
@@ -483,6 +483,10 @@ pdf.options(onefile=FALSE, family="Times", pointsize=10)
 
 \end_layout
 
+\begin_layout Section
+Introduction
+\end_layout
+
 \begin_layout Standard
 This is a LaTeX 
 \begin_inset Quotes eld
@@ -493,7 +497,7 @@ noweb
 \end_inset
 
  report generated with the Sweave engine.
- We compare it to the very similar document produced with 
+ We can compare it to the very similar document produced with 
 \begin_inset Quotes eld
 \end_inset
 
@@ -502,25 +506,247 @@ knitr
 \end_inset
 
  (in the companion folder rnw2pdf-report-knitr).
+ 
+\end_layout
+
+\begin_layout Standard
+We suggest you
+\end_layout
+
+\begin_layout Enumerate
+Compile this document 
+\emph on
+as is 
+\emph default
+to test your setup
+\end_layout
+
+\begin_layout Enumerate
+Compare the document with the pdf output so see the impact of the settings.
+\end_layout
+
+\begin_layout Standard
+Do put your title & name in the top block.
+\end_layout
+
+\begin_layout Standard
+Don't change the code chunks above or the last chunks below.
+\end_layout
+
+\begin_layout Standard
+For what it is worth, we have found that the knitr framework is not so easy
+ to customize and manage as Sweave and, if you are planning to produce a
+ PDF document, it seems likely that the
+\end_layout
+
+\begin_layout Section
+LyX: Cautions
+\end_layout
+
+\begin_layout Standard
+The document preamble has manual settings for margins (geometry) as well
+ as hyperlinks (PDF hyperref).
+ Don't use the LyX pull down menu to revise them.
+ It is necessary to edit settings in the preamble manually.
+ 
+\end_layout
+
+\begin_layout Standard
+Don't change margins or geometry with Lyx pull down menus.
+ Edit preamble or config files for that.
+ Repeat 
+\series bold
+CAUTION
+\series default
+: Dont change the page margins or settings for hyperlinks with pull down
+ menus.
+\end_layout
+
+\begin_layout Section
+What to edit
+\end_layout
+
+\begin_layout Section*
+Title and author information
+\end_layout
+
+\begin_layout Standard
+The first block in the document has the title and author information.
 \end_layout
 
 \begin_layout Subsection*
-\begin_inset Flex Code
+Footer information
+\end_layout
+
+\begin_layout Standard
+The footer in this document uses data that is provided in a file named 
+\begin_inset Quotes eld
+\end_inset
+
+addressFooter.tex
+\begin_inset Quotes erd
+\end_inset
+
+.
+ After the document is compiled for the first time, that document should
+ be available in the theme folder.
+\end_layout
+
+\begin_layout Subsection*
+About the theme folder
+\end_layout
+
+\begin_layout Standard
+The theme folder should be empty when the initProject() function is run.
+ 
+\end_layout
+
+\begin_layout Standard
+There is an R code chunk above called 
+\begin_inset Quotes eld
+\end_inset
+
+texcopy
+\begin_inset Quotes erd
+\end_inset
+
+.
+ It will copy configuration files from the package into the theme folder.
+ After running this for the first time, those files will not be automatically
+ replaced by the scripts.
+ 
+\end_layout
+
+\begin_layout Standard
+That means authors are free to edit them to fit their needs.
+\end_layout
+
+\begin_layout Standard
+If the author makes an error in editing a theme file, it is safe to delete
+ the erroneous file and run the compile script again.
+ That will copy a fresh version of the theme file into the directory.
+\end_layout
+
+\begin_layout Section
+Check our documentation
+\end_layout
+
+\begin_layout Standard
+There are several vignettes distributed with this package.
+ Please review them.
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Quotes eld
+\end_inset
+
+crmda
+\begin_inset Quotes erd
+\end_inset
+
+: the package framework overview
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Quotes eld
+\end_inset
+
+code_chunks
+\begin_inset Quotes erd
+\end_inset
+
+: discusses display of code in LaTeX documents
+\end_layout
+
+\begin_layout Section
+Compile as usual, or with rnw2pdf
+\end_layout
+
+\begin_layout Standard
+If you are editing these files in LyX, it is sufficient to simply compile
+ as usual.
+ That will handle the chore of converting a sequence of document types to
+ arrive at PDF.
+\end_layout
+
+\begin_layout Standard
+If not using LyX, then the author is probably editing the Rnw file.
+ The Rnw file we provide is produced by LyX, it is an intermediate step
+ in the document production sequence.
+ A two step compilation procedure is necessary.
+ First, one must convert the 
+\begin_inset Quotes eld
+\end_inset
+
+Rnw
+\begin_inset Quotes erd
+\end_inset
+
+ file to 
+\begin_inset Quotes eld
+\end_inset
+
+pdf
+\begin_inset Quotes erd
+\end_inset
+
+ (with knit), and then the knitted tex file is compiled into pdf by pdflatex
+ (or one of the other LaTeX compilers).
+ 
+\end_layout
+
+\begin_layout Standard
+We provide a shell script that can handle this, 
+\begin_inset ERT
 status open
 
 \begin_layout Plain Layout
-R
+
+
+\backslash
+code{rnw2pdf.sh}
 \end_layout
 
 \end_inset
 
- Code Chunks
+ script (which is included with the skeleton file).
+ It is also possible to use our R function 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{rnw2pdf}
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section
+Code Chunk Check
 \end_layout
 
 \begin_layout Standard
-In our report style, the author will not generally insert visible code chunks,
- so almost always the chunk will have the flag `include=FALSE` or, if the
- chunk is included, the code will not be echoed, but perhaps a 
+What is the difference between a guide and a report? Simply put, a report
+ document does not reveal source code and it should not distract the reader
+ with code or 
+\begin_inset Quotes eld
+\end_inset
+
+raw
+\begin_inset Quotes erd
+\end_inset
+
+ output.
+ A report document might just as well be typed by hand, if we could be sure
+ all the numbers would be typed correctly and they could easily revised.
+ In our report style, the author will not generally insert visible code
+ chunks, so almost always the chunk will have the flag `include=FALSE` or,
+ if the chunk is included, the code will not be echoed, but perhaps a 
 \backslash
 LaTeX mark-up table or a figure may be placed into the document.
 \end_layout
@@ -559,10 +785,48 @@ include=F
 \begin_layout Standard
 It is a matter of style and author preference to decide how to include output
  within the report document.
- One approach is to use the chunk flag `asis` and then make sure that the
- R output is going to be fully correct 
-\backslash
-LaTeX markup.
+ One approach is to use the chunk flags that directly display LaTeX output
+ in the document.
+ One must take special care to assure that the table is fully presentable.
+ The alternative is to write the nearly presentable table on disk and then
+ edit by hand to finalize the formats (usually we need to fix column and
+ row names).
+ 
+\end_layout
+
+\begin_layout Subsection*
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+R
+\end_layout
+
+\end_inset
+
+ Code Chunks
+\end_layout
+
+\begin_layout Standard
+We use R 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "RCore"
+
+\end_inset
+
+ to do statistical analysis.
+ We'd like to be as close as possible to the 
+\begin_inset Quotes eld
+\end_inset
+
+reproducible document
+\begin_inset Quotes erd
+\end_inset
+
+ idea.
+ If R functions can produce perfectly presentable LaTeX output, then we
+ use it.
  
 \end_layout
 
@@ -572,56 +836,8 @@ On the other hand, one might write the output files and then manually insert
  In our documents, we almost always have the global parameter `split=TRUE`,
  so that the code input and output chunks are saved in a directory we call
  `tmpout`.
- Another 
-\backslash
-LaTeX document can insert those chunks.
+ Another LaTeX document can insert those chunks.
  We will demonstrate that here.
-\end_layout
-
-\begin_layout Section*
-Sweave the chunks
-\end_layout
-
-\begin_layout Standard
-The syntax for chunks in Sweave is like this.
- 
-\end_layout
-
-\begin_layout LyX-Code
-<<chunkname, fig=T, eval=T, include=F, echo=T>>=
-\end_layout
-
-\begin_layout LyX-Code
-# R code here
-\end_layout
-
-\begin_layout LyX-Code
-@
-\end_layout
-
-\begin_layout LyX-Code
-
-\end_layout
-
-\begin_layout Section
-LyX user Caution
-\end_layout
-
-\begin_layout Standard
-
-\series bold
-CAUTION
-\series default
-: This template document has some special features in the preamble.
- Most importantly, it has margins that are set.
- The LyX graphical menu (Document -> Settings -> margins) will break these
- defaults.
- So don't change the page margins or the pagestyle.
- Other than that, I don't know of any settings that are fatal.
-\end_layout
-
-\begin_layout LyX-Code
-
 \end_layout
 
 \begin_layout Subsubsection*
@@ -664,21 +880,10 @@ split=T
 \end_inset
 
 .
- This works in Sweave or knitr documents.
+ This works in LaTeX documents using Sweave or knitr to handle the code
+ chunks.
  This causes each chunk's input and output to be saved to a separate file.
  This includes graphs and tables.
- So when I run a function that generates a graph, I get a pdf output file
- in the 
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-tmpout
-\end_layout
-
-\end_inset
-
- folder.
  
 \end_layout
 
@@ -884,6 +1089,8 @@ Why do this? Why separate chunk output creation from inclusion in a document?
  If I save a copy in the separate folder, then it is very convenient to
  come along later and make a separate slide show document displaying the
  same tables and/or figures.
+ Or I might need to edit the chunk output before inserting it in the document.
+  
 \end_layout
 
 \begin_layout Standard
@@ -899,261 +1106,22 @@ stick this output in where the chunk is placed
  are easy to update and re-run.
 \end_layout
 
-\begin_layout Standard
-I do not find the automatic insertion quite so helpful in the preparation
- of reports.
- Here is the main issue.
- The 
-\begin_inset Quotes eld
-\end_inset
-
-automatic
-\begin_inset Quotes erd
-\end_inset
-
- 
-\begin_inset Quotes eld
-\end_inset
-
-self-documenting
-\begin_inset Quotes erd
-\end_inset
-
- report is almost never exactly correct.
- It requires some 
-\begin_inset Quotes eld
-\end_inset
-
-finger painting
-\begin_inset Quotes erd
-\end_inset
-
-.
- Perhaps that would not be true in the perfect world, if we were perfect
- programmers, but I don't live in a perfect world.
- In that case, I am willing to settle for a very good second best alternative.
- I have learned to export result files from R which can be included in documents
- easily, so the documents are easily updated and revised.
- They may not be completely automatic because I leave open the possibility
- that I might need to adjust a figure's size or a part of a table's markup.
-\end_layout
-
-\begin_layout Section*
-Guides versus Reports
-\end_layout
-
-\begin_layout Standard
-What is the difference between a guide and a report? Simply put, a report
- document does not reveal source code and it should not distract the reader
- with code or 
-\begin_inset Quotes eld
-\end_inset
-
-raw
-\begin_inset Quotes erd
-\end_inset
-
- program output.
- A report document might just as well be typed by hand, if we could be sure
- all the numbers would be typed correctly and they could easily revised.
- 
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-<<m1, include=F>>=
-\end_layout
-
-\begin_layout Plain Layout
-
-dat <- data.frame(x = rnorm(100), y = rnorm(100))
-\end_layout
-
-\begin_layout Plain Layout
-
-m1 <- lm(y ~ x, data = dat)
-\end_layout
-
-\begin_layout Plain Layout
-
-summary(m1)
-\end_layout
-
-\begin_layout Plain Layout
-
-@
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-In a report, we do not usually have R output in the raw form, or even in
- the beautified form from Sweavel or some other 
-\begin_inset Quotes eld
-\end_inset
-
-fancy
-\begin_inset Quotes erd
-\end_inset
-
- table formatting framework:
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-input{tmpout/t-m1.tex}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-The knitr settings we prefer also use the LaTeX listings class to beautify
- these chunk outputs, but we hav found that controlling the style can be
- more difficult.
- The preambles of our LaTeX documents have fairly elaborate configurations
- for the 
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-listings
-\end_layout
-
-\end_inset
-
- displays.
-\end_layout
-
-\begin_layout Standard
-In a report, we do not want R code or output, we want a professional-looking
- table.
- 
-\end_layout
-
 \begin_layout Subsection*
-Listings, not Verbatim
-\end_layout
-
-\begin_layout Standard
-The Sweave default system uses the LaTeX Verbatim class to offer input and
- output chunks in the document.
- A better approach, pioneered by Frank Harrell (Vanderbilt) uses the LaTeX
- class listings.
- Harrell prepared a replacement for R's Sweave.sty and called it Sweavel.sty.
-\end_layout
-
-\begin_layout Standard
-We are using the listings class to display input and output chunks in this
- document.
- In the preamble, we have some special settings that control the color of
- text, the background, and so forth.
- The listings class has an elaborate settings framework.
- 
-\end_layout
-
-\begin_layout Standard
-At one time, I had difficulty in generating visually appealing listings
- output that would match the color & style of R chunk output from Sweavel.
- The problem is solved, as we see now.
- The following is a listings display.
- It is not Sweaved, it is simply a LaTeX listings environment colored by
- the settings in the preamble
-\end_layout
-
-\begin_layout Standard
-\begin_inset listings
-inline false
-status open
-
-\begin_layout Plain Layout
-
-x <- rnorm(100)
-\end_layout
-
-\begin_layout Plain Layout
-
-y <- rpois(100, lambda = 2)
-\end_layout
-
-\begin_layout Plain Layout
-
-plot(y ~ x)
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-The following code chunk in R appears to be the same.
- 
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-<<listingcompare, eval=F,echo=T>>=
-\end_layout
-
-\begin_layout Plain Layout
-
-x <- rnorm(100)
-\end_layout
-
-\begin_layout Plain Layout
-
-y <- rpois(100, lambda = 2)
-\end_layout
-
-\begin_layout Plain Layout
-
-plot(y ~ x)
-\end_layout
-
-\begin_layout Plain Layout
-
-@
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Those match very closely.
- At the moment, the same is not true in knitr documents, we are trying to
- work that out.
-\end_layout
-
-\begin_layout Section*
 Make Nice Looking Tables
 \end_layout
 
 \begin_layout Standard
-In the preparation of a report, we then need to do some work to find a high
- quality table-manufacturing function.
- We don't want to see an R summary (ugly as it is):
+The aim in R code is to generate 
+\begin_inset Quotes eld
+\end_inset
+
+final
+\begin_inset Quotes erd
+\end_inset
+
+ tables that are in LaTeX format and they are as close as possible to the
+ final, presentable tables that a client can review in a report.
+ We don't want the report reader to see ugly output:
 \end_layout
 
 \begin_layout Standard
@@ -1163,6 +1131,11 @@ status open
 \begin_layout Plain Layout
 
 <<Rsummary, echo=F>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+dat <- data.frame(x = rnorm(100), y = rnorm(100))
 \end_layout
 
 \begin_layout Plain Layout
@@ -1184,43 +1157,12 @@ summary(dat)
 In R, there are many (many!) packages and functions that can be used to
  generate acceptable LaTeX output.
  The bewildering diversity of these things is a problem.
- I became interested in this in 2002 or 2003, and later developed an R function
- called 
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-outreg
+ There are a host of packages that generate results that are nearly presentable,
+ perhaps requiring only a minor adjustment of labels.
 \end_layout
 
-\end_inset
-
- that is now in the 
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-rockchalk
-\end_layout
-
-\end_inset
-
- R package.
- There are a host of other packages that are intended to either 1) manufacture
- a specific kind of table (regression tables) or 2) manufacture a reasonable
- LaTeX table from a rectangular data object that is generated with R functions
- like table.
-\end_layout
-
-\begin_layout Subsection*
+\begin_layout Subsubsection*
 Summary statistics tables
-\end_layout
-
-\begin_layout Standard
-We don't have a great summary stats table maker now, but if I were doing
- one, I'd probably start with the rockchalk::summarize function and beautify
- that.
- 
 \end_layout
 
 \begin_layout Subsubsection*
@@ -1228,17 +1170,8 @@ xtable
 \end_layout
 
 \begin_layout Standard
-It is easy enough to use the 
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-xtable
-\end_layout
-
-\end_inset
-
- package to get this done.
+Here is an example that uses rockchalk::summarize to gather summary statistics,
+ which are then reformatted as a LaTeX table by xtable.
  Here's an xtable that displays most of the rows in the output from 
 \begin_inset Flex Code
 status open
@@ -1347,51 +1280,21 @@ print(tab3.x, floating = FALSE)
 \end_layout
 
 \begin_layout Standard
-Row names and column names need to be beautified, that's for sure.
- I suppose the point here is not that I can throw together an adequate table
- in 10 minutes.
- But rather that if we are making a report, we need some kind of good looking
- table.
- 
-\end_layout
-
-\begin_layout Standard
-One quirk in the 
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-xtable
-\end_layout
-
+The key issue is that the table is not perfectly ready for inclusion in
+ a report.
+ The row and column names might need beautification.
+ That is why, realistically, it is generally easier to write those tables
+ into tex files and revise them by hand, and then use LaTeX 
+\begin_inset Quotes eld
 \end_inset
 
- package is that the 
-\begin_inset Flex Code
-status open
 
-\begin_layout Plain Layout
-xtable
-\end_layout
-
+\backslash
+input{}
+\begin_inset Quotes erd
 \end_inset
 
- function itself creates a object to hold material for a table, but the
- hard work is done by the method 
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-print.xtable
-\end_layout
-
-\end_inset
-
-, which has a ton of arguments and details to consider.
- The hyper-elaborate nature of the arguments is off-putting, even for a
- patient person.
- I expect that if we made automatic table generation a full time job for
- a few of the GRAs, we'd get to the bottom of all of those arguments.
+ to include them in the document where appropriate.
 \end_layout
 
 \begin_layout Subsubsection*
@@ -1399,24 +1302,7 @@ knitr::kable
 \end_layout
 
 \begin_layout Standard
-I used 
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-xtable
-\end_layout
-
-\end_inset
-
- for the first example.
- xtable is, so far as I know, the oldest package for that purpose.
- 
-\end_layout
-
-\begin_layout Standard
-Today, there are plenty of other functions available.
- The following is a result from 
+The following is a result from 
 \begin_inset Flex Code
 status open
 
@@ -1469,17 +1355,7 @@ cat(tab4.x)
 \end_layout
 
 \begin_layout Standard
-Like 
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-xtable
-\end_layout
-
-\end_inset
-
-, the 
+The 
 \begin_inset Flex Code
 status open
 
@@ -1489,22 +1365,17 @@ kable
 
 \end_inset
 
- function can be used to generate tables that are headed for LaTeX or HTML
- documents.
-\end_layout
-
-\begin_layout Standard
-One of the interesting design decisions in creating a table-making function
- is whether we ought to enclose the tabular object within a 
+ function is offered as a simple, usually robust table writer that will
+ not deal with much 
 \begin_inset Quotes eld
 \end_inset
 
-floating
+fancy
 \begin_inset Quotes erd
 \end_inset
 
- automatically numbered table.
- A floating table would be expected in a LaTeX document.
+ formatting.
+ .
 \end_layout
 
 \begin_layout Standard
@@ -1518,21 +1389,12 @@ kable
 
 \end_inset
 
- function makes the same decision that I made in 
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-outreg
-\end_layout
-
-\end_inset
-
-, which is that if the user specifies a title for the table, then it must
- mean that the user wants to have the table set as a floating object.
+ function assumes that if the user specifies a title for the table, then
+ it must mean that the user wants to have the table set as a floating table
+ object.
  The same code that made the previous table is changed just slightly to
- produce a floating object (Look around in this document for a table named
- 
+ produce a floating object.
+ Look around in this document for a table named 
 \begin_inset Quotes eld
 \end_inset
 
@@ -1551,7 +1413,7 @@ kable
 \end_inset
 
 .
- I found this frustrating because the 
+ (I found this frustrating because the 
 \begin_inset Flex Code
 status open
 
@@ -1562,7 +1424,7 @@ kable
 \end_inset
 
  function does not include documentation for insertion of a label that can
- be used for cross referencing.
+ be used for cross referencing.)
 \end_layout
 
 \begin_layout Standard
@@ -1649,10 +1511,6 @@ input{tmpout/t-tab4.tex}
 
 \end_layout
 
-\begin_layout Plain Layout
-
-\end_layout
-
 \end_inset
 
 
@@ -1705,6 +1563,11 @@ status open
 \begin_layout Plain Layout
 
 library(rockchalk)
+\end_layout
+
+\begin_layout Plain Layout
+
+m1 <- lm(y ~ x, data = dat)
 \end_layout
 
 \begin_layout Plain Layout
@@ -1851,15 +1714,15 @@ http://pj.freefaculty.org/guides/Rcourse/regression-tables-1
  
 \end_layout
 
-\begin_layout Subsubsection*
+\begin_layout Subsection*
 Structural equation models
 \end_layout
 
 \begin_layout Standard
 In the good looking table department, we also need to display structural
  equation models.
- This is a partly solved problem.
- This has been a long term objective in CRMDA.
+ This has been a long term objective in CRMDA and it is, for the most part,
+ a solved problem.
  
 \end_layout
 
@@ -1893,9 +1756,7 @@ reference "tab:A-Confirmatory-Factor"
 \end_inset
 
 .
- In the preamble of this document, I have some boilerplate code that causes
- content in floating tables and figures to be centered automatically.
- This looks nice!
+ 
 \end_layout
 
 \begin_layout Standard
@@ -2018,8 +1879,59 @@ input{tmpout/t-cfa1.tex}
 
 \end_layout
 
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Session Information
+\end_layout
+
+\begin_layout Standard
+Leave the code chunks below.
+ But the visible words and section name should be removed.
+ Session Information is usually not written into a report, but an output
+ file is created by the following pieces.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
 \begin_layout Plain Layout
 
+<<session, include=F>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+zz <- "report-instructions.Rout"
+\end_layout
+
+\begin_layout Plain Layout
+
+capture.output(sessionInfo(), file = zz, append = FALSE)
+\end_layout
+
+\begin_layout Plain Layout
+
+if (!is.null(warnings())){
+\end_layout
+
+\begin_layout Plain Layout
+
+    capture.output(warnings(), file = zz, append = TRUE)
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+@
 \end_layout
 
 \end_inset
@@ -2067,6 +1979,17 @@ par(par.orig)
 
 @
 \end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset bibtex
+LatexCommand bibtex
+bibfiles "theme/mlm"
+options "apalike2"
 
 \end_inset
 
