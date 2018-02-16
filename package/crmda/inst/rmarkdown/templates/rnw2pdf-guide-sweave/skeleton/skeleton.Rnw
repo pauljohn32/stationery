@@ -5,7 +5,7 @@
 \renewcommand{\sfdefault}{lmss}
 \renewcommand{\ttdefault}{lmtt}
 \usepackage[T1]{fontenc}
-\usepackage[latin9]{inputenc}
+\usepackage[utf8]{inputenc}
 \setlength{\parskip}{\medskipamount}
 \setlength{\parindent}{0pt}
 \usepackage[authoryear]{natbib}
@@ -181,17 +181,21 @@ itself \citet{RCore}.
 
 \section{Write Sections \& Subsections here}
 
+We hope guide authors will choose carefully thought out titles for
+sections and that material will be grouped meaningfully into sections. 
+
 \section{R Code Chunks}
+
+Guides will generally include code chunks. Here we test the display
+of just a small chunk.
 
 <<>>=
 x <- rnorm(100)
 mean(x)
 @
 
-\section{References}
-
 \bibliographystyle{apalike2}
-\bibliography{theme/mlm}
+\addcontentsline{toc}{section}{\refname}\bibliography{theme/mlm}
 
 \section{Session Info\label{sec:Session-Info}}
 

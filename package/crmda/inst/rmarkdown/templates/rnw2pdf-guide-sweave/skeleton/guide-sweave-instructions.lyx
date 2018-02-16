@@ -67,7 +67,7 @@ sweave
 \maintain_unincluded_children false
 \language english
 \language_package default
-\inputencoding iso8859-15
+\inputencoding utf8
 \fontencoding global
 \font_roman "lmodern" "default"
 \font_sans "lmss" "default"
@@ -627,8 +627,331 @@ line wrap
  on long lines.
 \end_layout
 
+\begin_layout Standard
+The listings class used here allows within-document style changes.
+ We expect that report documents will not be customized by most authors,
+ but guide documents are less formal.
+ In order to make output fit within the indicated space, it may be necessary
+ to fiddle with the font size, for example.
+ Here are the highlights: 
+\end_layout
+
+\begin_layout Enumerate
+The font size and colors of R input chunks are controlled by LaTeX settings
+ "Rsize", "Rbackground" and "Rcolor".
+ Output displays depend on "Routsize", "Routbackground", and "Routcolor".
+ 
+\end_layout
+
+\begin_layout Enumerate
+The fong can be adjusted by declarations like this
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+def
+\backslash
+Rsize{
+\backslash
+huge
+\backslash
+ttfamily}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+def
+\backslash
+Routsize{
+\backslash
+huge}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+These can be placed at the very beginning of the document to control all
+ following chunks, but they can be placed immediately before any chunk to
+ adjust just that one chunk.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Colors can be specified in many ways
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+def
+\backslash
+Rbackground{
+\backslash
+color[gray]{0.90}}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+def
+\backslash
+Routbackground{
+\backslash
+color[gray]{0.40}}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+def
+\backslash
+Rcolor{
+\backslash
+color[gray]{0.60}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+def
+\backslash
+Routcolor{
+\backslash
+color[rgb]{0.9, 0.1, 0.1}]}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+def
+\backslash
+Rcommentcolor{
+\backslash
+color{green}}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+To demonstrate this customization, compare these two chunks.
+ The first uses the defaults:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<rnorm1>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+x <- rnorm(100)
+\end_layout
+
+\begin_layout Plain Layout
+
+mean(x)
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+While the second offers a shockingly beautiful offering (emphasis on shockingly).
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+def
+\backslash
+Rbackground{
+\backslash
+color[rgb]{0.4, 0.7, 0.6}}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+def
+\backslash
+Routbackground{
+\backslash
+color[rgb]{0.6, 0.5, 0.8}}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+def
+\backslash
+Routcolor{
+\backslash
+color{blue}}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+def
+\backslash
+Routsize{
+\backslash
+huge}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+input{tmpout/t-rnorm1.tex}
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Note we use a LaTeX group here–the squiggly braces–to confine the beautifying
+ impact of the change to the immediately following output.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+def
+\backslash
+Rbackground{
+\backslash
+color[rgb]{0.4, 0.7, 0.6}}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+def
+\backslash
+Routbackground{
+\backslash
+color[rgb]{0.6, 0.5, 0.8}}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+def
+\backslash
+Routcolor{
+\backslash
+color{blue}}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+def
+\backslash
+Routsize{
+\backslash
+huge}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+input{tmpout/t-rnorm1.tex}
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Otherwise, at least in this document type, the change applies to all following
+ chunks.
+\end_layout
+
 \begin_layout Subsection
-Regression example
+Raw R input and output
 \end_layout
 
 \begin_layout Standard
@@ -674,59 +997,37 @@ Controlling display of chunk input and output
 \end_layout
 
 \begin_layout Standard
-We now want to conduct a poisson regression, one that treats 
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-code{y}
-\end_layout
-
-\end_inset
-
- as a discrete variable.
- We will hide the estimation code from the reader for the moment.
- The chunk, which is in the paragraph following in the document, runs a
- regression and saves the LaTeX formatted output in an R object named 
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-code{or}
-\end_layout
-
-\end_inset
-
-.
- However, this is not shown to the reader because the chunk option 
+The chunk option 
 \begin_inset Quotes eld
 \end_inset
 
-include=F
+include
 \begin_inset Quotes erd
 \end_inset
 
- is set.
- But the object 
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-code{or}
-\end_layout
-
+ can be used to regulate whether the input and output appear immediately
+ in the document.
+ When combined with 
+\begin_inset Quotes eld
 \end_inset
 
- was created.
+echo
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+results
+\begin_inset Quotes erd
+\end_inset
+
+, we can have a great deal of control.
+\end_layout
+
+\begin_layout Standard
+In this chunk, we create a regression table object, but we hide everything:
 \end_layout
 
 \begin_layout Standard
@@ -773,8 +1074,26 @@ code{or}
 
 \end_inset
 
- to the reader, we can display it in a chunk using the standard Sweave approach,
- which depends on 
+ to the reader, we have two options.
+ 
+\end_layout
+
+\begin_layout Standard
+The standard Sweave approach is to include another chunk, and then cause
+ the LaTeX markup for the object 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{or}
+\end_layout
+
+\end_inset
+
+ to be woven directly into the document (depends on 
 \begin_inset Quotes eld
 \end_inset
 
@@ -782,7 +1101,7 @@ results=tex
 \begin_inset Quotes erd
 \end_inset
 
-.
+).
 \end_layout
 
 \begin_layout Standard
@@ -810,31 +1129,42 @@ cat(or)
 \end_layout
 
 \begin_layout Standard
-There are other ways, however, to display the same output code.
- We could, for example, simply use LaTeX to input the saved file from the
- chunk.
- Another possibility is that we might created a separate numbered 
+That chunk might be placed in a LaTeX floating table object, of course.
+\end_layout
+
+\begin_layout Standard
+A second option, which is more convenient, is to simply use LaTeX to input
+ the saved file.
+ When the code chunk 
 \begin_inset Quotes eld
 \end_inset
 
-floating table
+pois11
 \begin_inset Quotes erd
 \end_inset
 
-, as the reader would see in Table 
+ is excuted, it creates a file named 
+\begin_inset Quotes eld
+\end_inset
+
+tmpout/t-pois11.tex
+\begin_inset Quotes erd
+\end_inset
+
+.
+ In Table 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "tab:A-Poisson-Regression"
 
 \end_inset
 
-.
- There are plenty of other strategies for controlling the display of code
- and output chunks, as we illustrate in the next paragraph.
+ we demonstrate how that can be included in a numbered floating table.
 \end_layout
 
 \begin_layout Standard
 \begin_inset Float table
+placement b
 wide false
 sideways false
 status open
@@ -891,8 +1221,7 @@ include=F, results=hide
 \end_inset
 
 .
- We might want to show the reader what commands were run at some later point.
- There are (at least) 2 ways we do this on a regular basis.
+ To show that code, there are (at least) 2 ways.
  
 \end_layout
 
@@ -929,7 +1258,7 @@ input{tmpout/t-pois10}
 
 \end_deeper
 \begin_layout Enumerate
-An old-school approach using Sweave itself, is to create another chunk and
+An standard approach using Sweave itself, is to create another chunk and
  then display it inside double 
 \begin_inset Quotes eld
 \end_inset

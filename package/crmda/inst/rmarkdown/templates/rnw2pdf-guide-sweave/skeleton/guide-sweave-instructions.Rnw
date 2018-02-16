@@ -5,7 +5,7 @@
 \renewcommand{\sfdefault}{lmss}
 \renewcommand{\ttdefault}{lmtt}
 \usepackage[T1]{fontenc}
-\usepackage[latin9]{inputenc}
+\usepackage[utf8]{inputenc}
 \setlength{\parskip}{\medskipamount}
 \setlength{\parindent}{0pt}
 \usepackage[authoryear]{natbib}
@@ -80,6 +80,9 @@ footskip=1.5\baselineskip,
 \makeatother
 
 \usepackage{babel}
+\usepackage{listings}
+\renewcommand{\lstlistingname}{\inputencoding{latin9}Listing}
+
 \begin{document}
 %% Fill in values of the arguments here, 
 %% If blanks are needed, must insert value " ~ "
@@ -189,7 +192,73 @@ have fine grained control over the display of code input and output.
 In guide documents, we have ine numbers turned on. is used. Among
 its benefits, we get ``line wrap'' on long lines.
 
-\subsection{Regression example}
+The listings class used here allows within-document style changes.
+We expect that report documents will not be customized by most authors,
+but guide documents are less formal. In order to make output fit within
+the indicated space, it may be necessary to fiddle with the font size,
+for example. Here are the highlights: 
+\begin{enumerate}
+\item The font size and colors of R input chunks are controlled by LaTeX
+settings \textquotedbl{}Rsize\textquotedbl{}, \textquotedbl{}Rbackground\textquotedbl{}
+and \textquotedbl{}Rcolor\textquotedbl{}. Output displays depend on
+\textquotedbl{}Routsize\textquotedbl{}, \textquotedbl{}Routbackground\textquotedbl{},
+and \textquotedbl{}Routcolor\textquotedbl{}. 
+\item The fong can be adjusted by declarations like this
+
+\inputencoding{latin9}\begin{lstlisting}
+\def\Rsize{\huge\ttfamily}
+\def\Routsize{\huge}
+\end{lstlisting}
+\inputencoding{utf8}
+These can be placed at the very beginning of the document to control
+all following chunks, but they can be placed immediately before any
+chunk to adjust just that one chunk.
+\item Colors can be specified in many ways
+
+\inputencoding{latin9}\begin{lstlisting}
+\def\Rbackground{\color[gray]{0.90}}
+\def\Routbackground{\color[gray]{0.40}}
+\def\Rcolor{\color[gray]{0.60}
+\def\Routcolor{\color[rgb]{0.9, 0.1, 0.1}]}
+\def\Rcommentcolor{\color{green}}
+\end{lstlisting}
+\inputencoding{utf8}\end{enumerate}
+To demonstrate this customization, compare these two chunks. The first
+uses the defaults:
+
+<<rnorm1>>=
+x <- rnorm(100)
+mean(x)
+@
+
+While the second offers a shockingly beautiful offering (emphasis
+on shockingly).
+
+{
+\def\Rbackground{\color[rgb]{0.4, 0.7, 0.6}}
+\def\Routbackground{\color[rgb]{0.6, 0.5, 0.8}}
+\def\Routcolor{\color{blue}}
+\def\Routsize{\huge}
+\input{tmpout/t-rnorm1.tex}
+}
+
+Note we use a LaTeX group here–the squiggly braces–to confine the
+beautifying impact of the change to the immediately following output. 
+
+\inputencoding{latin9}\begin{lstlisting}
+{
+\def\Rbackground{\color[rgb]{0.4, 0.7, 0.6}}
+\def\Routbackground{\color[rgb]{0.6, 0.5, 0.8}}
+\def\Routcolor{\color{blue}}
+\def\Routsize{\huge}
+\input{tmpout/t-rnorm1.tex}
+}
+\end{lstlisting}
+\inputencoding{utf8}
+Otherwise, at least in this document type, the change applies to all
+following chunks.
+
+\subsection{Raw R input and output}
 
 Consider a regression.
 
@@ -201,34 +270,35 @@ summary(m1)
 
 \subsection{Controlling display of chunk input and output}
 
-We now want to conduct a poisson regression, one that treats \code{y}
-as a discrete variable. We will hide the estimation code from the
-reader for the moment. The chunk, which is in the paragraph following
-in the document, runs a regression and saves the LaTeX formatted output
-in an R object named \code{or}. However, this is not shown to the
-reader because the chunk option ``include=F'' is set. But the object
-\code{or} was created.
+The chunk option ``include'' can be used to regulate whether the
+input and output appear immediately in the document. When combined
+with ``echo'' and ``results'', we can have a great deal of control.
+
+In this chunk, we create a regression table object, but we hide everything:
 
 <<pois10, include=F, results=hide>>=
 library(rockchalk)
 or <- outreg(list("My Poisson"= m1), varLabels = c("x" = "A Normal Predictor"), tight = FALSE)
 @
 
-To display the object \code{or} to the reader, we can display it
-in a chunk using the standard Sweave approach, which depends on ``results=tex''.
+To display the object \code{or} to the reader, we have two options. 
+
+The standard Sweave approach is to include another chunk, and then
+cause the LaTeX markup for the object \code{or} to be woven directly
+into the document (depends on ``results=tex'').
 
 <<pois11, results=tex, echo=F>>=
 cat(or)
 @
 
-There are other ways, however, to display the same output code. We
-could, for example, simply use LaTeX to input the saved file from
-the chunk. Another possibility is that we might created a separate
-numbered ``floating table'', as the reader would see in Table \ref{tab:A-Poisson-Regression}.
-There are plenty of other strategies for controlling the display of
-code and output chunks, as we illustrate in the next paragraph.
+That chunk might be placed in a LaTeX floating table object, of course.
 
-\begin{table}
+A second option, which is more convenient, is to simply use LaTeX
+to input the saved file. When the code chunk ``pois11'' is excuted,
+it creates a file named ``tmpout/t-pois11.tex''. In Table \ref{tab:A-Poisson-Regression}
+we demonstrate how that can be included in a numbered floating table.
+
+\begin{table}[b]
 \caption{A Poisson Regression\label{tab:A-Poisson-Regression}}
 
 \input{tmpout/t-pois11.tex}
@@ -236,16 +306,15 @@ code and output chunks, as we illustrate in the next paragraph.
 
 The reader has not yet had a chance to see the code chunk that calculated
 the regression. The code chunk that ran the regression was marked
-``include=F, results=hide''. We might want to show the reader what
-commands were run at some later point. There are (at least) 2 ways
-we do this on a regular basis. 
+``include=F, results=hide''. To show that code, there are (at least)
+2 ways. 
 \begin{enumerate}
 \item The chunk is named ``pois10''. Because we have the R Sweave argument
 split=T in the above, the code file is written separately and we can
 retrieve it with an input statement:
 
 \input{tmpout/t-pois10}
-\item An old-school approach using Sweave itself, is to create another chunk
+\item An standard approach using Sweave itself, is to create another chunk
 and then display it inside double ``<\textcompwordmark{}<>\textcompwordmark{}>''
 brackets. Here we turn off evaluation (set eval=F) to prevent R from
 re-running the code chunk:

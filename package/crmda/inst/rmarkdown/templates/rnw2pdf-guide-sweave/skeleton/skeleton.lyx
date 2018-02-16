@@ -66,7 +66,7 @@ sweave
 \maintain_unincluded_children false
 \language english
 \language_package default
-\inputencoding iso8859-15
+\inputencoding utf8
 \fontencoding global
 \font_roman "lmodern" "default"
 \font_sans "lmss" "default"
@@ -681,8 +681,19 @@ key "RCore"
 Write Sections & Subsections here
 \end_layout
 
+\begin_layout Standard
+We hope guide authors will choose carefully thought out titles for sections
+ and that material will be grouped meaningfully into sections.
+ 
+\end_layout
+
 \begin_layout Section
 R Code Chunks
+\end_layout
+
+\begin_layout Standard
+Guides will generally include code chunks.
+ Here we test the display of just a small chunk.
 \end_layout
 
 \begin_layout Standard
@@ -714,15 +725,11 @@ mean(x)
 
 \end_layout
 
-\begin_layout Section
-References
-\end_layout
-
 \begin_layout Standard
 \begin_inset CommandInset bibtex
 LatexCommand bibtex
 bibfiles "theme/mlm"
-options "apalike2"
+options "bibtotoc,apalike2"
 
 \end_inset
 
