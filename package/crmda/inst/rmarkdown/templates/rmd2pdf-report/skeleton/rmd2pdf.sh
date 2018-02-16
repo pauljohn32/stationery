@@ -15,6 +15,7 @@ compileOne(){
 		shopt -s nocasematch
 		if [[ "$exten" == "Rmd" ]]; then
 			echo -e "compile $filename"
+			echo -e "parmstring $parmstring"
 			Rscript -e "library(crmda); $scriptname(\"$filename\", $parmstring); library(knitr); purl(\"$filename\")"
 		else
 			echo -e "Error: $filename. Extension should be \"Rmd\""
@@ -83,6 +84,12 @@ usage() {
 	echo -e "library(crmda); $scriptname(\"filename.Rmd\""$parmstring")\n"
     echo "Add argument -v for VERBOSE output."
 	echo "Any arguments described in documentation for $scriptname R function are allowed."
+	echo "CAUTION"
+	echo "Arguments that are quoted strings, such as --type=\"report\""
+    echo "or --template=\"report-boilerplate.tex\" need special care when enterd from command line." 
+    echo "It is necessary to 'protect' (escape) the quotation marks." 
+    echo "We suggest command line usage that wraps them inside single quotes, such as:"
+	echo "--type='\"report\"' --template='\"report-boilerplate.tex\"'"
 }
 
 ## VERBOSE is flag users can turn on to get more detailed output
@@ -94,10 +101,11 @@ declare -A parms
 parms[toc]=TRUE
 parms[toc_depth]=2
 parms[clean]=TRUE
-parms[quiet]=TRUE 
+parms[quiet]=TRUE
+parms[verbose]=FALSE
 parms[keep_md]=FALSE
 parms[type]=\"report\"
-parms[template]=\"theme/guide-boilerplate.tex\"
+parms[template]=\"theme/report-boilerplate.tex\"
 parms[output_dir]=\"$pwd\"
 
 optspec=":vh-:"
@@ -145,7 +153,6 @@ done
 
 parmstring=""
 catarr parms
-## echo "parmstring: $parmstring"
 
 ## No shifts inside there, so must throw away arguments
 ## that were processed
