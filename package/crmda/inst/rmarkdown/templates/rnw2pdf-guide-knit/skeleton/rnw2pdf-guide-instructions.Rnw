@@ -1,0 +1,208 @@
+%% LyX 2.2.3 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[11pt,letterpaper,american]{extarticle}
+\usepackage{lmodern}
+\renewcommand{\sfdefault}{lmss}
+\renewcommand{\ttdefault}{lmtt}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\setlength{\parskip}{\medskipamount}
+\setlength{\parindent}{0pt}
+
+\makeatletter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
+\special{papersize=\the\paperwidth,\the\paperheight}
+
+
+\@ifundefined{date}{}{\date{}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+\usepackage[includehead, includefoot,
+lmargin=1in,
+rmargin=1in,
+tmargin=0.75in,
+bmargin=1.0in,
+headheight=0pt,
+headsep=0pt,
+marginparwidth=0pt,
+footskip=1.5\baselineskip,
+]{geometry}
+
+\usepackage{multicol}
+\usepackage{listings}
+\usepackage{graphicx}
+\usepackage{xcolor}
+
+
+\def\Sweavesize{\scriptsize} 
+\def\Rcolor{\color{black}} 
+\def\Rbackground{\color[gray]{0.95}}
+
+\usepackage{listings}
+\usepackage{upquote, fancyvrb, relsize, ae}
+\lstdefinestyle{custom}{
+  language=R,
+  escapechar=`,
+  fancyvrb=false,%
+  tabsize=2,%
+  breaklines=true,
+  breakatwhitespace=true,%
+  captionpos=b,%
+  frame=single,%
+  framerule=0.2pt,%
+  framesep=1pt,%
+  showstringspaces=false,%
+  basicstyle=\normalsize\ttfamily,%
+  columns=fixed%,
+  \lst@ifdisplaystyle\scriptsize\fi,%
+  identifierstyle=,%
+  keywords=\bfseries,%
+  keywordstyle=\color[rgb]{0, 0.5, 0.5},
+  escapeinside={(*}{*)},
+  literate={~}{{$$\sim$$}}1 {==}{{=\,=}}2,
+  alsoother={$$},
+  alsoletter={.<-},%
+  otherkeywords={!,!=,~,$$,*,\&,\%/\%,\%*\%,\%\%,<-,<<-,/},
+  backgroundcolor=\Rbackground,
+  numbers=left,
+  numberstyle={\tiny}
+}%
+
+\lstset{style=custom}
+
+
+\input{theme/guidePreambleHeader.tex}
+\input{theme/preambleFooter.tex}
+\input{theme/preambleFloatCenter.tex}
+\input{theme/guidePreambleKnitr.tex}
+
+\makeatother
+
+\usepackage{babel}
+\begin{document}
+%% Fill in values of the arguments here, 
+%% If blanks are needed, must insert value " ~ "
+%% If comma needed inside value, wrap in {}.
+%% Delete secondauthor and thirdauthor if not needed
+\guidesetup{%
+  firstauthor={
+    lastname=Author, 
+    firstname=First, 
+    affiliation=CRMDA,
+    email=lone.edu},
+  secondauthor={
+    lastname=Author, 
+    firstname=Second, 
+    affiliation=CRMDA, 
+    email=second@ku.edu}, 
+ thirdauthor={
+    lastname=Author,
+    firstname=Third, 
+    affiliation=Dept of Statistics,
+    email=third@ku.edu}, 
+  url={https://crmda.ku.edu/guides},
+  keywords={single-authoring, just one},
+  title={Another Very Long Title: With a Possibly Long Subtitle},
+  leftlogo={theme/jayhawk.pdf},
+  rightlogo={theme/CRMDAlogo-vert.pdf},
+  number=48,
+}
+\guidehdr
+
+<<knitropts, echo=FALSE>>=
+## Chunk output 
+library(knitr)
+if(!dir.exists("tmpout")) dir.create("tmpout", showWarnings=FALSE)
+opts_chunk$set(fig.path="tmpout/t-", split=TRUE, 
+               ae=FALSE, fig.height=3, fig.width=5, comment=NA)
+@
+
+<<texcopy, include=FALSE>>=
+library(crmda)
+## If theme directory does not have required images or TeX files
+## we need to retrieve them and put them in "theme" directory. 
+logos <- c(logoleft = "jayhawk.pdf", 
+           logoright = "CRMDAlogo-vert.pdf")
+texfiles <- c("guidePreambleHeader.tex", 
+              "preambleFooter.tex", 
+              "preambleFloatCenter.tex",  
+              "guidePreambleKnitr.tex",
+              "addressFooter.tex")
+getFiles(logos, pkg = "crmda")
+getFiles(texfiles, pkg = "crmda")
+@
+
+<<Roptions, echo=FALSE>>=
+opts.orig <- options()
+options(width=75, prompt=" ", continue="  ")
+options(useFancyQuotes = FALSE) 
+set.seed(12345)
+pdf.options(onefile=FALSE,family="Times",pointsize=10)
+@
+
+\section{LyX: Cautions}
+
+The document preamble has manual settings for margins (geometry) as
+well as hyperlinks (PDF hyperref). Don't use the LyX pull down menu
+to revise them. It is necessary to edit settings in the preamble manually. 
+
+\section{knitr issues/features}
+
+Styling of knitr code chunks is different than Sweave. It appears
+we lose line-wrap entirely. I can't figure how to make Sweavel ``listings''
+environments take over the knitr presentation.
+
+We have not yet learned the ins-and-outs of correcting the knitr code
+and R output chunks to match our desired style. That is one reason
+to prefer the sweave-based templates we offer.
+
+\section{Code Chunks}
+
+Here is an example of a data frame being created and a glm is estimated:
+
+<<>>=
+set.seed(234234)
+dat <- data.frame(x = rnorm(100), y = rpois(100, lambda = 7))
+m1 <- glm(y ~ x, data = dat, family = "poisson")
+summary(m1)
+@
+
+On page 1, I do not show the page number anymore. That's negotiable.
+
+Some code that might be used to create a regression table using outreg
+from the rockchalk package is the following. As you see, the output
+``splats'' into the document, it is not in a floating figure or
+table.
+
+<<pois10, results='asis', eval=FALSE>>=
+library(rockchalk)
+or <- outreg(list("My Poisson"= m1), varLabels = c("x" = "A Normal Predictor"), tight = FALSE)
+cat(or)
+@
+
+<<pois15, results='asis', echo=FALSE>>=
+<<pois10>>
+@
+
+\textbf{CAUTION}: the page margins can be adjusted in the geometry
+section of the preamble, but do not use the LyX Menu to change either
+margins or pagestyle.
+
+Lets see in Table \ref{tab:A-Poisson-Regression}, the regression
+table looks awesome.
+
+\begin{table}[h]
+\caption{A Poisson Regression\label{tab:A-Poisson-Regression}}
+
+\input{tmpout/t-pois15.tex}
+\end{table}
+
+<<opts20, include=F>>=
+## Don't delete this. It puts the interactive session options
+## back the way they were. If this is compiled within a session
+## it is vital to do this.
+options(opts.orig)
+@
+
+There is a fancy footer, it has the page-out-of-page thingie. 
+\end{document}
