@@ -16,16 +16,6 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
-\newenvironment{lyxcode}
-{\par\begin{list}{}{
-\setlength{\rightmargin}{\leftmargin}
-\setlength{\listparindent}{0pt}% needed for AMS classes
-\raggedright
-\setlength{\itemsep}{0pt}
-\setlength{\parsep}{0pt}
-\normalfont\ttfamily}%
- \item[]}
-{\end{list}}
 \providecommand*{\code}[1]{\texttt{#1}}
 
 \@ifundefined{date}{}{\date{}}
@@ -186,6 +176,8 @@ set.seed(12345)
 pdf.options(onefile=FALSE, family="Times", pointsize=10)
 @
 
+\section{Introduction}
+
 This is a LaTeX ``noweb'' report generated with the knitr engine.
 We had a working document using Sweave and the listings class (via
 the Sweavel LaTeX package). This is migrated from that to use knitr.
@@ -193,19 +185,102 @@ Some elements are still not well integrated, it is very tough for
 me to be sure which argument in the preamble are actually relevant
 to knitr and which are relevant to listings by itself.
 
-The syntax for knitr code chunks is only slightly different than the
-syntax for Sweave chunks. Many of the options are identical. The syntax
-for a code chunk in both cases is like so
-\begin{lyxcode}
-$<<$chunkname, eval=TorF, include=TorF, echo=TorF$>>=$
+This shows how we use R \cite{RCore} to make report documents using
+the CRMDA style. 
 
-\# R code here
+We suggest you
+\begin{enumerate}
+\item Compile this document \emph{as is }to test your setup
+\item Compare the document with the pdf output so see the impact of the
+settings.
+\end{enumerate}
+Do put your title \& name in the top block.
 
+Don't change the code chunks above or the last chunks below.
+
+For what it is worth, we have found that the knitr framework is not
+so easy to customize and manage as Sweave and, if you are planning
+to produce a PDF document, it seems likely that the
+
+\section{LyX: Cautions}
+
+The document preamble has manual settings for margins (geometry) as
+well as hyperlinks (PDF hyperref). Don't use the LyX pull down menu
+to revise them. It is necessary to edit settings in the preamble manually. 
+
+Don't change margins or geometry with Lyx pull down menus. Edit preamble
+or config files for that. Repeat \textbf{CAUTION}: Dont change the
+page margins or settings for hyperlinks with pull down menus.
+
+\section{What to edit}
+
+\section*{Title and author information}
+
+The first block in the document has the title and author information.
+
+\subsection*{Footer information}
+
+The footer in this document uses data that is provided in a file named
+``addressFooter.tex''. After the document is compiled for the first
+time, that document should be available in the theme folder.
+
+\subsection*{About the theme folder}
+
+The theme folder should be empty when the initProject() function is
+run. 
+
+There is an R code chunk above called ``texcopy''. It will copy
+configuration files from the package into the theme folder. After
+running this for the first time, those files will not be automatically
+replaced by the scripts. 
+
+That means authors are free to edit them to fit their needs.
+
+If the author makes an error in editing a theme file, it is safe to
+delete the erroneous file and run the compile script again. That will
+copy a fresh version of the theme file into the directory.
+
+\section{Check our documentation}
+
+There are several vignettes distributed with this package. Please
+review them.
+\begin{enumerate}
+\item ``crmda'': the package framework overview
+\item ``code\_chunks'': discusses display of code in LaTeX documents
+\end{enumerate}
+
+\section{Compile as usual, or with rnw2pdf}
+
+If you are editing these files in LyX, it is sufficient to simply
+compile as usual. That will handle the chore of converting a sequence
+of document types to arrive at PDF.
+
+If not using LyX, then the author is probably editing the Rnw file.
+The Rnw file we provide is produced by LyX, it is an intermediate
+step in the document production sequence. A two step compilation procedure
+is necessary. First, one must convert the ``Rnw'' file to ``pdf''
+(with knit), and then the knitted tex file is compiled into pdf by
+pdflatex (or one of the other LaTeX compilers). 
+
+We provide a shell script that can handle this, \code{rnw2pdf.sh}
+script (which is included with the skeleton file). It is also possible
+to use our R function \code{rnw2pdf}.
+
+\section{Code Chunk Check}
+
+The syntax for knitr code chunks is slightly different than the syntax
+for Sweave chunks. Many of the options are identical. The syntax for
+a code chunk in both cases is like so
+
+\begin{lstlisting}
+<<chunkname, eval=T, include=T, echo=T>>=
+# R code here
 @
-\end{lyxcode}
-where by ``\code{TorF}'' I mean you can choose either T or F. These
-arguments are allowed in either knitr or Sweave, they are the ones
-I use most often. Briefly:
+\end{lstlisting}
+
+where ``\code{T}'' stands for TRUE and it can be changed to ``\code{F}''
+for FALSE. These are explained in the vignette ``code\_chunks''.
+Briefly:
 \begin{description}
 \item [{1.~echo:}] when the chunk is processed, the R code will be displayed
 along with the output
@@ -220,17 +295,8 @@ document processing. One benefit of knitr is that, at least in theory,
 it can be used to write about other kinds of programs. I've used it
 to write about the BASH shell, for example. 
 
-\textbf{CAUTION}: This template document has some special features
-in the preamble. Most importantly, it has margins that are set. The
-LyX graphical menu (Document -> Settings -> margins) will break these
-defaults. So don't change the page margins or the pagestyle. Other
-than that, I don't know of any settings that are fatal.
+\subsection*{Reports and the Non-use of Code Chunks}
 
-Over the years, I have benefitted a great deal from the ``automatic
-document with integrated results'' from Sweave. I have found this
-most beneficial in the preparation of course notes and slides. 
-
-I do not find it quite so beneficial in the preparation of reports.
 Here is the main issue. The ``automatic'' ``self-documenting''
 report is almost never exactly correct. It requires some ``finger
 painting''. Perhaps that would not be true in the perfect world,
@@ -279,34 +345,6 @@ or <- outreg(list("First Model" = m1), varLabels = vl, tight = FALSE)
 cat(or)
 @
 
-There is an unsolved style problem. This is more relevant to guide
-documents, which do show R code, than it is to reports, which generally
-do not. I have not been able to exactly match the visual appearance
-of R code and output from knitr with the output of the LaTeX listings
-class. I wish that listings objects that are not produced from knitted
-chunks would look same. The following is output from LaTeX Listings.
-Note: 
-
-\begin{lstlisting}
-x <- rnorm(100)
-y <- rpois(100, lambda = 2)
-plot(y ~ x)
-\end{lstlisting}
-
-Ah, I see it is not the same because I did not get my listing settings
-in my preamble exactly the same as what knitr uses. How to fix? I
-wish I could adjust the knitr settings so I don't hate the output,
-then I want to change the listings settings so they are similar.
-
-Maybe I can get a GRA to fix.
-
-If I put in another chunk, maybe I will see a pattern in the LaTeX
-code.
-
-<<>>=
-summary(dat)
-@
-
 In the kutils package, we made a function semTable that is intended
 to help with nice looking. Usually, we want a bigger table in a floating
 element. Please see Table \ref{tab:A-Confirmatory-Factor}. In the
@@ -337,6 +375,20 @@ cat(cfa1)
 
 \input{tmpout/t-cfa3.tex}
 \end{table}
+
+\section{Session Information}
+
+Leave the code chunks below. But the visible words and section name
+should be removed. Session Information is usually not written into
+a report, but an output file is created by the following pieces.
+
+<<session, include=F>>=
+zz <- gsub("Rnw", "Rout", knitr::current_input())
+capture.output(sessionInfo(), file = zz, append = FALSE)
+if (!is.null(warnings())){
+    capture.output(warnings(), file = zz, append = TRUE)
+}
+@
 
 <<RoptionsRestore, echo=F, include=F>>=
 ## Don't delete this. It puts the interactive session options

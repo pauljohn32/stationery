@@ -174,7 +174,10 @@ statement here of less than 200 words. It should avoid colloquialisms
 and polysyllabic profundities.
 \end{abstract}
 
-\section*{Nuts and Bolts}
+\section{Introduction}
+
+Please see the guide document that is included in the same folder
+as this skeleton.
 
 \subsection*{Make minimal changes to the top part}
 
@@ -190,7 +193,7 @@ preamble for that.
 We have separate instructions for the crmda package in vignettes if
 you want more detailed information about what to do.
 
-\subsection*{\protect\code{R} Code Chunks}
+\section{\protect\code{R} Code Chunks}
 
 Test a code chunk.
 
@@ -201,13 +204,8 @@ head(x, 10)
 summary(x)
 @
 
-\subsection*{Session Info}
-
-Session Information is usually not written into a report, but an output
-file is created by the following pieces.
-
 <<sessioninfo, include=F>>=
-zz <- "skeleton.Rout"
+zz <- paste0(knitr::current_input(), ".Rout")
 capture.output(sessionInfo(), file = zz, append = FALSE)
 if (!is.null(warnings())){
     capture.output(warnings(), file = zz, append =  TRUE)

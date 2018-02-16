@@ -490,6 +490,10 @@ pdf.options(onefile=FALSE, family="Times", pointsize=10)
 
 \end_layout
 
+\begin_layout Section
+Introduction
+\end_layout
+
 \begin_layout Standard
 This is a LaTeX 
 \begin_inset Quotes eld
@@ -509,34 +513,258 @@ noweb
 \end_layout
 
 \begin_layout Standard
-The syntax for knitr code chunks is only slightly different than the syntax
- for Sweave chunks.
- Many of the options are identical.
- The syntax for a code chunk in both cases is like so
+This shows how we use R 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "RCore"
+
+\end_inset
+
+ to make report documents using the CRMDA style.
+ 
 \end_layout
 
-\begin_layout LyX-Code
+\begin_layout Standard
+We suggest you
+\end_layout
+
+\begin_layout Enumerate
+Compile this document 
+\emph on
+as is 
+\emph default
+to test your setup
+\end_layout
+
+\begin_layout Enumerate
+Compare the document with the pdf output so see the impact of the settings.
+\end_layout
+
+\begin_layout Standard
+Do put your title & name in the top block.
+\end_layout
+
+\begin_layout Standard
+Don't change the code chunks above or the last chunks below.
+\end_layout
+
+\begin_layout Standard
+For what it is worth, we have found that the knitr framework is not so easy
+ to customize and manage as Sweave and, if you are planning to produce a
+ PDF document, it seems likely that the
+\end_layout
+
+\begin_layout Section
+LyX: Cautions
+\end_layout
+
+\begin_layout Standard
+The document preamble has manual settings for margins (geometry) as well
+ as hyperlinks (PDF hyperref).
+ Don't use the LyX pull down menu to revise them.
+ It is necessary to edit settings in the preamble manually.
+ 
+\end_layout
+
+\begin_layout Standard
+Don't change margins or geometry with Lyx pull down menus.
+ Edit preamble or config files for that.
+ Repeat 
+\series bold
+CAUTION
+\series default
+: Dont change the page margins or settings for hyperlinks with pull down
+ menus.
+\end_layout
+
+\begin_layout Section
+What to edit
+\end_layout
+
+\begin_layout Section*
+Title and author information
+\end_layout
+
+\begin_layout Standard
+The first block in the document has the title and author information.
+\end_layout
+
+\begin_layout Subsection*
+Footer information
+\end_layout
+
+\begin_layout Standard
+The footer in this document uses data that is provided in a file named 
+\begin_inset Quotes eld
+\end_inset
+
+addressFooter.tex
+\begin_inset Quotes erd
+\end_inset
+
+.
+ After the document is compiled for the first time, that document should
+ be available in the theme folder.
+\end_layout
+
+\begin_layout Subsection*
+About the theme folder
+\end_layout
+
+\begin_layout Standard
+The theme folder should be empty when the initProject() function is run.
+ 
+\end_layout
+
+\begin_layout Standard
+There is an R code chunk above called 
+\begin_inset Quotes eld
+\end_inset
+
+texcopy
+\begin_inset Quotes erd
+\end_inset
+
+.
+ It will copy configuration files from the package into the theme folder.
+ After running this for the first time, those files will not be automatically
+ replaced by the scripts.
+ 
+\end_layout
+
+\begin_layout Standard
+That means authors are free to edit them to fit their needs.
+\end_layout
+
+\begin_layout Standard
+If the author makes an error in editing a theme file, it is safe to delete
+ the erroneous file and run the compile script again.
+ That will copy a fresh version of the theme file into the directory.
+\end_layout
+
+\begin_layout Section
+Check our documentation
+\end_layout
+
+\begin_layout Standard
+There are several vignettes distributed with this package.
+ Please review them.
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Quotes eld
+\end_inset
+
+crmda
+\begin_inset Quotes erd
+\end_inset
+
+: the package framework overview
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Quotes eld
+\end_inset
+
+code_chunks
+\begin_inset Quotes erd
+\end_inset
+
+: discusses display of code in LaTeX documents
+\end_layout
+
+\begin_layout Section
+Compile as usual, or with rnw2pdf
+\end_layout
+
+\begin_layout Standard
+If you are editing these files in LyX, it is sufficient to simply compile
+ as usual.
+ That will handle the chore of converting a sequence of document types to
+ arrive at PDF.
+\end_layout
+
+\begin_layout Standard
+If not using LyX, then the author is probably editing the Rnw file.
+ The Rnw file we provide is produced by LyX, it is an intermediate step
+ in the document production sequence.
+ A two step compilation procedure is necessary.
+ First, one must convert the 
+\begin_inset Quotes eld
+\end_inset
+
+Rnw
+\begin_inset Quotes erd
+\end_inset
+
+ file to 
+\begin_inset Quotes eld
+\end_inset
+
+pdf
+\begin_inset Quotes erd
+\end_inset
+
+ (with knit), and then the knitted tex file is compiled into pdf by pdflatex
+ (or one of the other LaTeX compilers).
+ 
+\end_layout
+
+\begin_layout Standard
+We provide a shell script that can handle this, 
 \begin_inset ERT
 status open
 
 \begin_layout Plain Layout
 
-$<<$chunkname, eval=TorF, include=TorF, echo=TorF$>>=$
+
+\backslash
+code{rnw2pdf.sh}
 \end_layout
 
-\begin_layout Plain Layout
+\end_inset
 
-\end_layout
+ script (which is included with the skeleton file).
+ It is also possible to use our R function 
+\begin_inset ERT
+status open
 
 \begin_layout Plain Layout
 
 
 \backslash
-# R code here
+code{rnw2pdf}
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section
+Code Chunk Check
+\end_layout
+
+\begin_layout Standard
+The syntax for knitr code chunks is slightly different than the syntax for
+ Sweave chunks.
+ Many of the options are identical.
+ The syntax for a code chunk in both cases is like so
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+<<chunkname, eval=T, include=T, echo=T>>=
 \end_layout
 
 \begin_layout Plain Layout
 
+# R code here
 \end_layout
 
 \begin_layout Plain Layout
@@ -550,7 +778,7 @@ $<<$chunkname, eval=TorF, include=TorF, echo=TorF$>>=$
 \end_layout
 
 \begin_layout Standard
-where by 
+where 
 \begin_inset Quotes eld
 \end_inset
 
@@ -559,7 +787,7 @@ where by
 status open
 
 \begin_layout Plain Layout
-TorF
+T
 \end_layout
 
 \end_inset
@@ -568,9 +796,34 @@ TorF
 \begin_inset Quotes erd
 \end_inset
 
- I mean you can choose either T or F.
- These arguments are allowed in either knitr or Sweave, they are the ones
- I use most often.
+ stands for TRUE and it can be changed to 
+\begin_inset Quotes eld
+\end_inset
+
+
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+F
+\end_layout
+
+\end_inset
+
+
+\begin_inset Quotes erd
+\end_inset
+
+ for FALSE.
+ These are explained in the vignette 
+\begin_inset Quotes eld
+\end_inset
+
+code_chunks
+\begin_inset Quotes erd
+\end_inset
+
+.
  Briefly:
 \end_layout
 
@@ -611,37 +864,12 @@ The difference with knitr is partly due to a larger set of legal flags but
  
 \end_layout
 
-\begin_layout Standard
-
-\series bold
-CAUTION
-\series default
-: This template document has some special features in the preamble.
- Most importantly, it has margins that are set.
- The LyX graphical menu (Document -> Settings -> margins) will break these
- defaults.
- So don't change the page margins or the pagestyle.
- Other than that, I don't know of any settings that are fatal.
+\begin_layout Subsection*
+Reports and the Non-use of Code Chunks
 \end_layout
 
 \begin_layout Standard
-Over the years, I have benefitted a great deal from the 
-\begin_inset Quotes eld
-\end_inset
-
-automatic document with integrated results
-\begin_inset Quotes erd
-\end_inset
-
- from Sweave.
- I have found this most beneficial in the preparation of course notes and
- slides.
- 
-\end_layout
-
-\begin_layout Standard
-I do not find it quite so beneficial in the preparation of reports.
- Here is the main issue.
+Here is the main issue.
  The 
 \begin_inset Quotes eld
 \end_inset
@@ -818,82 +1046,6 @@ cat(or)
 \end_layout
 
 \begin_layout Standard
-There is an unsolved style problem.
- This is more relevant to guide documents, which do show R code, than it
- is to reports, which generally do not.
- I have not been able to exactly match the visual appearance of R code and
- output from knitr with the output of the LaTeX listings class.
- I wish that listings objects that are not produced from knitted chunks
- would look same.
- The following is output from LaTeX Listings.
- Note: 
-\end_layout
-
-\begin_layout Standard
-\begin_inset listings
-inline false
-status open
-
-\begin_layout Plain Layout
-
-x <- rnorm(100)
-\end_layout
-
-\begin_layout Plain Layout
-
-y <- rpois(100, lambda = 2)
-\end_layout
-
-\begin_layout Plain Layout
-
-plot(y ~ x)
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Ah, I see it is not the same because I did not get my listing settings in
- my preamble exactly the same as what knitr uses.
- How to fix? I wish I could adjust the knitr settings so I don't hate the
- output, then I want to change the listings settings so they are similar.
-\end_layout
-
-\begin_layout Standard
-Maybe I can get a GRA to fix.
-\end_layout
-
-\begin_layout Standard
-If I put in another chunk, maybe I will see a pattern in the LaTeX code.
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-<<>>=
-\end_layout
-
-\begin_layout Plain Layout
-
-summary(dat)
-\end_layout
-
-\begin_layout Plain Layout
-
-@
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
 In the kutils package, we made a function semTable that is intended to help
  with nice looking.
  Usually, we want a bigger table in a floating element.
@@ -1051,6 +1203,61 @@ input{tmpout/t-cfa3.tex}
 \end_inset
 
 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Session Information
+\end_layout
+
+\begin_layout Standard
+Leave the code chunks below.
+ But the visible words and section name should be removed.
+ Session Information is usually not written into a report, but an output
+ file is created by the following pieces.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<session, include=F>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+zz <- gsub("Rnw", "Rout", knitr::current_input())
+\end_layout
+
+\begin_layout Plain Layout
+
+capture.output(sessionInfo(), file = zz, append = FALSE)
+\end_layout
+
+\begin_layout Plain Layout
+
+if (!is.null(warnings())){
+\end_layout
+
+\begin_layout Plain Layout
+
+    capture.output(warnings(), file = zz, append = TRUE)
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+@
 \end_layout
 
 \end_inset
