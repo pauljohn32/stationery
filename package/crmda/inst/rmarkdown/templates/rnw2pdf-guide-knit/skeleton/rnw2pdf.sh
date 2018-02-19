@@ -5,14 +5,25 @@
 
 scriptname=`basename $0 .sh`
 
+## Default argument settings
+pwd=`pwd`
+declare -A parms
+parms[engine]=\"knitr\"
+parms[tangle]=TRUE
+parms[verbose]=FALSE
+## VERBOSE is flag users can turn on to get more detailed output
+VERBOSE=0
+## DEBUG if for author of this script, for fixing arg parsing. Not for users
+DEBUG=0
+
 ## Receive one filename, then build it.
 compileOne(){
 	filename=$1
 	if [[ -e "$filename" ]]; then
 		fn=$(basename "$filename")
 		exten="${fn##*.}"
-		echo -e "extension is $exten"
-		## check extension, ignore case, allows "rmd" or "RMD"
+		showme "extension is $exten"
+		## check extension, ignore case
 		shopt -s nocasematch
 		if [[ ("$exten" -eq "Rnw") || ( "$exten" -eq "lyx") ]]; then
 			echo -e "compile $filename"
@@ -25,24 +36,24 @@ compileOne(){
 	fi
 }
 
-## Scan directory for [Rmd,rmd] files and try to compile them
+## Scan directory for [Rnw] files and try to compile them
 compileall() {
-   	echo -e "\n""If no filename is specified, these Rmd files will be compiled:"
-	echo -e "\n" $(ls -1 *.Rmd) "\n"
+   	echo -e "\n""If no filename is specified, these files will be compiled:"
+	find . -type f \( -iname "*.Rnw" -or -iname "*.lyx" \)
 	echo -e "Hit Enter to continue, or \"q\" to quit"
 	read -p "> " input
 	if [[ $input == "q" ]]; then
    		exit 1
 	else
 		echo "Compiling them all"
-		for fn in *.Rmd
+		for fn in *{.Rnw,.rnw,.lyx} 
 		do
-			compileOne "$fn"
+		 	compileOne "$fn"
 		done
 	fi
 }
 
-
+## Gracefully quit with error message
 die() {
 	printf '%s\n' "$1" >&2
 	exit 1
@@ -75,26 +86,15 @@ catarr() {
 
 ## Usage instruction.  
 usage() {
-	echo -e "\nUsage: $0 --arg=value [filename.Rmd]".
-	echo -e "Note: Because this document uses a template, the yaml header"
-	echo -e "format settings are ignored. Instead, specify arguments for this script."
+	echo -e "\nUsage: $0 --arg=value <filename.Rnw>".
 	echo "Current arguments:"
 	printarr parms
-    echo -e "\nThis script reformats and sends request to R as:\n"
-	echo -e "library(crmda); $scriptname(\"filename.Rmd\""$parmstring")\n"
+    echo -e "\nThis script reformats and sends request to R:\n"
+	echo -e "library(crmda); $scriptname(\"filename.Rnw\""$parmstring")\n"
     echo "Add argument -v for VERBOSE output."
 	echo "Any arguments described in documentation for $scriptname R function are allowed."
 }
 
-## VERBOSE is flag users can turn on to get more detailed output
-VERBOSE=0
-## DEBUG if for author of this script, for fixing arg parsing. Not for users
-DEBUG=0
-pwd=`pwd`
-declare -A parms
-parms[engine]=\"knitr\"
-parms[tangle]=TRUE
-parms[verbose]=FALSE
 
 
 optspec=":vh-:"
