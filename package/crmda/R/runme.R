@@ -11,12 +11,15 @@
 ##' @param wd A working directory name of the Rmd file. If not
 ##'     specified, then the current working directory from R will be
 ##'     used.
-##' @param purl Default TRUE
+##' @param purl Default TRUE, synonym for tangle. Set either one, or
+##'     set both same, result is same.
 ##' @param tangle Default TRUE, synonym for purl
 ##' @param verbose The opposite of render(quiet = TRUE). Shows compile
 ##'     commentary and pandoc command. Can be informative!
-##' @param template An html template file, defaults as guide-boilerplate.html in this packge.
-##' @param css Cascading style sheet, defaults as kutils.css in this package
+##' @param template An html template file, defaults as
+##'     guide-boilerplate.html in this packge.
+##' @param css Cascading style sheet, defaults as kutils.css in this
+##'     package
 ##' @param ... Arguments that will be passed to render and
 ##'     html_document. The defaults set within the
 ##'     \code{rmarkdown::render} and \code{rmarkdown::html_documents}
@@ -54,8 +57,7 @@
 ##' setwd(wd.orig)
 rmd2html <- function(fn = NULL, wd = NULL, verbose = FALSE, purl = TRUE, tangle = purl, 
                      template = system.file("theme", "guide-boilerplate.html", package = "crmda"),
-                     css = system.file("theme", "kutils.css", package = "crmda"), tangle = TRUE, 
-                     ...) {
+                     css = system.file("theme", "kutils.css", package = "crmda"), ...) {
     if (!missing(tangle) && is.logical(tangle)) purl <- tangle
     if (!is.null(wd)){
         wd.orig <- getwd()
