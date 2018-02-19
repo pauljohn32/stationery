@@ -11,7 +11,7 @@
 ##' 1) rmd2html-guide  2) rmd2pdf-report
 ##' 3) rnw2pdf-guide-sweave  4) rnw2pdf-report-sweave  
 ##' 5) rmd2pdf-guide   6) rnw2pdf-guide-knit
-##' 7) rnw2pdf-report-knit
+##' 7) rnw2pdf-report-knit 7) rnw2pdf-slides-sweave
 ##' \cr
 ##' \cr
 ##' ##' The names represent the "from" format (rmd or rnw), the "to"
@@ -71,7 +71,8 @@
 ##' @param type One of these: \code{c("rmd2html-guide",
 ##'     "rmd2pdf-report", "rnw2pdf-guide-knit",
 ##'     "rnw2pdf-guide-sweave", "rmd2pdf-guide",
-##'     "rnw2pdf-report-knit", "rnw2pdf-report-sweave")}
+##'     "rnw2pdf-report-knit", "rnw2pdf-report-sweave",
+##'     "rnw2pdf-slides-sweave")}
 ##' @param dir Type "." for current working directory.  Default is a
 ##'     new directory named "writeup"
 ##' @importFrom kutils initProject
@@ -93,7 +94,7 @@
 ##' doctype <- c("rmd2html-guide", "rmd2pdf-report",
 ##'           "rnw2pdf-guide-knit", "rnw2pdf-guide-sweave",
 ##'           "rmd2pdf-guide", "rnw2pdf-report-knit",
-##'           "rnw2pdf-report-sweave")
+##'           "rnw2pdf-report-sweave", "rnw2pdf-slides-sweave")
 ##' folders <- vapply(doctype, initWriteup, dir = "todaytest", character(1))
 ##' folders
 ##' list.files("todaytest", recursive = TRUE)
@@ -103,7 +104,7 @@ initWriteup <- function(type = NULL,
                         dir = "writeup")
 {
     wd <- getwd()
-
+    on.exit(setwd(wd))
     dir <- file.path(dir, type)
     ## Only create dir if dir NULL
     if (!dir.exists(dir)){

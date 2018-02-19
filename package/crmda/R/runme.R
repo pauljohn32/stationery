@@ -349,7 +349,7 @@ rnw2pdf <- function(fn = NULL, wd = NULL, engine = "knitr", purl = TRUE,
             }
             if(verbose){
                 if (tolower(engine) == "knitr"){
-                    cmd <- paste("lyx -e knit ", x, if(!verbose) sysnull)
+                    cmd <- paste("lyx -e knitr ", x, if(!verbose) sysnull)
                     if (isWindoze) shell(cmd) else system(cmd)
                 } else {
                     cmd <- paste("lyx -e sweave ", x, if(!verbose) sysnull)
