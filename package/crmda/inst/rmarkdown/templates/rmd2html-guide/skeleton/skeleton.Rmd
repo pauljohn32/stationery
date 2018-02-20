@@ -25,8 +25,8 @@ output:
     highlight: haddock
     css: theme/kutils.css
     template: theme/guide-boilerplate.html
-logoleft: theme/jayhawk.png
-logoright: theme/CRMDAlogo-vert.png
+logoleft: theme/logoleft.png
+logoright: theme/logo-vert.png
 ---
 
 ```{r setup, include=FALSE}
@@ -41,8 +41,8 @@ options(width = 70)
 library(crmda)
 ## If theme directory does not have required images or TeX files
 ## we need to retrieve them and put them in "theme" directory. 
-logos <- c(logoleft = "jayhawk.png", 
-           logoright = "CRMDAlogo-vert.png")
+logos <- c(logoleft = "logoleft.png", 
+           logoright = "logo-vert.png")
 files <- c("kutils.css", 
            "guide-boilerplate.html")
 getFiles(logos, pkg = "crmda")

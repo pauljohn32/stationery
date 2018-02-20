@@ -18,7 +18,7 @@ addr:
     r1: "Web: http://crmda.ku.edu"
     r2: "Email: crmda@ku.edu" 
     r3: "Phone: 785-864-3353"
-logo: theme/CRMDAlogo.pdf
+logo: theme/logo.pdf
 output: 
   pdf_document:
     keep_tex: false
@@ -48,7 +48,7 @@ options(width = 70)
 library(crmda)
 ## If theme directory does not have required images or TeX files
 ## we need to retrieve them and put them in "theme" directory. 
-logos <- c(logoright = "CRMDAlogo.pdf")
+logos <- c(logoright = "logo.pdf")
 files <- c("report-boilerplate.tex")
 getFiles(logos, pkg = "crmda")
 getFiles(files, pkg = "crmda")

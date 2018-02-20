@@ -21,8 +21,8 @@ addr:
     r1: "Web: http://crmda.ku.edu"
     r2: "Email: crmda@ku.edu"
     r3: "Phone: 785-864-3353"
-logoleft: theme/jayhawk.pdf
-logoright: theme/CRMDAlogo-vert.pdf
+logoleft: theme/logoleft.pdf
+logoright: theme/logo-vert.pdf
 output: 
   pdf_document:
     citation_package: natbib
@@ -51,8 +51,8 @@ options(width = 70)
 library(crmda)
 ## If theme directory does not have required images or TeX files
 ## we need to retrieve them and put them in "theme" directory. 
-logos <- c(logoleft = "jayhawk.pdf", 
-           logoright = "CRMDAlogo-vert.pdf")
+logos <- c(logoleft = "logoleft.pdf", 
+           logoright = "logo-vert.pdf")
 files <- c("guide-boilerplate.tex", "mlm.bib")
 getFiles(logos, pkg = "crmda")
 getFiles(files, pkg = "crmda")

@@ -317,7 +317,7 @@ library(crmda)
 
 \begin_layout Plain Layout
 
-logos <- c(logo = "CRMDAlogo.pdf",
+logos <- c(logo = "logo.pdf",
 \end_layout
 
 \begin_layout Plain Layout

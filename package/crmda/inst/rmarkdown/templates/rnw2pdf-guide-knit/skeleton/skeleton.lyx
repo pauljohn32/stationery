@@ -271,12 +271,12 @@ guidesetup{%
 
 \begin_layout Plain Layout
 
-  leftlogo={theme/jayhawk.pdf},
+  leftlogo={theme/logoleft.pdf},
 \end_layout
 
 \begin_layout Plain Layout
 
-  rightlogo={theme/CRMDAlogo-vert.pdf},
+  rightlogo={theme/logo-vert.pdf},
 \end_layout
 
 \begin_layout Plain Layout
@@ -372,12 +372,12 @@ library(crmda)
 
 \begin_layout Plain Layout
 
-logos <- c(logoleft = "jayhawk.pdf", 
+logos <- c(logoleft = "logoleft.pdf", 
 \end_layout
 
 \begin_layout Plain Layout
 
-           logoright = "CRMDAlogo-vert.pdf")
+           logoright = "logo-vert.pdf")
 \end_layout
 
 \begin_layout Plain Layout

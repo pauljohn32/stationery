@@ -27,8 +27,9 @@ compileOne(){
 		## check extension, ignore case
 		shopt -s nocasematch
 		if [[ ("$exten" -eq "Rnw") || ( "$exten" -eq "lyx") ]]; then
-			echo -e "compile $filename"
-			Rscript -e "library(crmda); $scriptname(\"$filename\", $parmstring)"
+			cmd="library(crmda); $scriptname(\"$filename\"$parmstring)"
+			if [[ ${VERBOSE} -gt 0 ]]; then echo -e "Running: $cmd"; fi
+			Rscript -e ${cmd}
 		else
 			echo -e "Error: $filename. Extension should be \"Rnw\" or \"lyx\""
 		fi

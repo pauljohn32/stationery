@@ -132,7 +132,7 @@ footskip=1.5\baselineskip,
     affiliation=i, 
     email=third@ku.edu}, 
   title={A Title for Skeleton Template: rnw2pdf-report-knit},
-  rightlogo={theme/CRMDAlogo.pdf},
+  rightlogo={theme/logo.pdf},
 }
 \reporthdr
 
@@ -150,7 +150,7 @@ opts_chunk$set(fig.path='tmpout/t-', split=TRUE, ae=FALSE, comment=NA,
 library(crmda)
 ## If theme directory does not have required images or TeX files
 ## we need to retrieve them and put them in "theme" directory. 
-logos <- c(logoright = "CRMDAlogo.pdf")
+logos <- c(logoright = "logo.pdf")
 texfiles <- c("reportPreambleHeader.tex", 
               "preambleFooter.tex", 
               "preambleFloatCenter.tex",  

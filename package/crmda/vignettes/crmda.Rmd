@@ -34,8 +34,8 @@ header-includes:
 -  \usepackage{fancybox}
 -  \usepackage{calc}
 -  \usepackage{subfig}
-logoleft: theme/jayhawk.pdf
-logoright: theme/CRMDAlogo.pdf
+logoleft: theme/logoleft.pdf
+logoright: theme/logo-vert.pdf
 fontsize: 12pt
 keywords: guides, report, pandoc, sweave, knitr
 ---

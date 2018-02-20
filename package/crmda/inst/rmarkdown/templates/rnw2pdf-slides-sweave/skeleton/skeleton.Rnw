@@ -64,7 +64,7 @@
 %\usepackage{handoutWithNotes}
 %\pgfpagesuselayout{3 on 1 with notes}[letterpaper, border shrink=5mm]
 
-\titlegraphic{\includegraphics[width=6cm]{theme/CRMDAlogo}}
+\titlegraphic{\includegraphics[width=6cm]{theme/logo}}
 
 \makeatother
 
@@ -94,8 +94,8 @@ pdf.options(onefile=F,family="Times",pointsize=12)
 library(crmda)
 ## If theme directory does not have required images or TeX files
 ## we need to retrieve them and put them in "theme" directory. 
-logos <- c(logo = "CRMDAlogo.pdf",
-            logomini = "KUlogo.pdf")
+logos <- c(logo = "logo.pdf",
+            logomini = "logomini.pdf")
 texfiles <- c("guidePreambleSweavel.tex", "mlm.bib")
 getFiles(logos, pkg = "crmda")
 getFiles(texfiles, pkg = "crmda")
@@ -110,7 +110,7 @@ getFiles(texfiles, pkg = "crmda")
 \date{2018}
 
 \makebeamertitle
-\logo{\includegraphics[width=5mm]{theme/KUlogo}}
+\logo{\includegraphics[width=5mm]{theme/logomini}}
 
 \AtBeginSection[]{
   \frame<beamer>{ 

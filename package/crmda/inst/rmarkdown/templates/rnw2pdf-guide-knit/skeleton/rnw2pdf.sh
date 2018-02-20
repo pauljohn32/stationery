@@ -10,8 +10,9 @@ pwd=`pwd`
 declare -A parms
 parms[engine]=\"knitr\"
 parms[verbose]=FALSE
+parms[clean]=TRUE
 parms[tangle]=TRUE
-## VERBOSE is BASH flag, will cause more script output,
+## VERBOSE is local variable, will cause more script output,
 ## and set parms[verbose]=TRUE
 VERBOSE=0
 ## DEBUG if for author of this script, for fixing arg parsing. Not for users
@@ -78,6 +79,7 @@ printarr() {
 
 ## builds $parmstring by concatenating key=value pairs
 catarr() {
+	parmstring=""
 	declare -n __p="$1"
 	for k in "${!__p[@]}"
 	do parmstring+=", $k=${__p[$k]}"
@@ -88,12 +90,14 @@ catarr() {
 
 ## Usage instruction.  
 usage() {
-	echo -e "\nUsage: $0 --arg=value <filename.Rnw>".
+	echo -e "\nUsage: $0 --arg="value" filename.[Rnw,lyx]".
 	echo "Current arguments:"
 	printarr parms
+	catarr parms
+	showme "${parmstring}"
     echo -e "\nThis script reformats and sends request to R:\n"
 	echo -e "library(crmda); $scriptname(\"filename.Rnw\""$parmstring")\n"
-    echo "Add argument -v for VERBOSE output."
+    echo "Add argument -v for VERBOSE output from this script."
 	echo "Any arguments described in documentation for $scriptname R function are allowed."
 }
 
@@ -145,7 +149,6 @@ done
 
 parmstring=""
 catarr parms
-## echo "parmstring: $parmstring"
 
 ## No shifts inside there, so must throw away arguments
 ## that were processed

@@ -112,7 +112,7 @@ pdf.options(onefile=F,family="Times",pointsize=12)
 library(crmda)
 ## If theme directory does not have required images or TeX files
 ## we need to retrieve them and put them in "theme" directory. 
-logos <- c(logo = "CRMDAlogo.pdf",
+logos <- c(logo = "logo.pdf",
             logomini = "KUlogo.png")
 texfiles <- c("guidePreambleSweavel.tex", "mlm.bib")
 getFiles(logos, pkg = "crmda")

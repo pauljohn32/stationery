@@ -99,8 +99,8 @@ footskip=1.5\baselineskip,
   url={https://crmda.ku.edu/guides},
   keywords={single-authoring, just one},
   title={Another Very Long Title: With a Possibly Long Subtitle},
-  leftlogo={theme/jayhawk.pdf},
-  rightlogo={theme/CRMDAlogo-vert.pdf},
+  leftlogo={theme/logoleft.pdf},
+  rightlogo={theme/logo-vert.pdf},
   number=48,
 }
 \guidehdr
@@ -117,8 +117,8 @@ opts_chunk$set(fig.path="tmpout/t-", split=TRUE,
 library(crmda)
 ## If theme directory does not have required images or TeX files
 ## we need to retrieve them and put them in "theme" directory. 
-logos <- c(logoleft = "jayhawk.pdf", 
-           logoright = "CRMDAlogo-vert.pdf")
+logos <- c(logoleft = "logoleft.pdf", 
+           logoright = "logo-vert.pdf")
 texfiles <- c("guidePreambleHeader.tex", 
               "preambleFooter.tex", 
               "guidePreambleKnitr.tex",

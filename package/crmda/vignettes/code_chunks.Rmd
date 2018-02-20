@@ -31,7 +31,7 @@ addr:
     r1: "Phone: 785-864-3353"
     r2: "Web: http://crmda.ku.edu"
     r3: "Email: crmda@ku.edu"
-logo: theme/CRMDAlogo.pdf
+logo: theme/logo.pdf
 keywords: guides, report, pandoc, sweave, knitr
 vignette: >
     %\VignetteIndexEntry{code_chunks}

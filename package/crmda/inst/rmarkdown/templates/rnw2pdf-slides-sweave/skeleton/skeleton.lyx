@@ -54,7 +54,7 @@
 %\usepackage{handoutWithNotes}
 %\pgfpagesuselayout{3 on 1 with notes}[letterpaper, border shrink=5mm]
 
-\titlegraphic{\includegraphics[width=6cm]{theme/CRMDAlogo}}
+\titlegraphic{\includegraphics[width=6cm]{theme/logo}}
 \end_preamble
 \options aspectratio=1609
 \use_default_options false
@@ -303,12 +303,12 @@ library(crmda)
 
 \begin_layout Plain Layout
 
-logos <- c(logo = "CRMDAlogo.pdf",
+logos <- c(logo = "logo.pdf",
 \end_layout
 
 \begin_layout Plain Layout
 
-            logomini = "KUlogo.pdf")
+            logomini = "logomini.pdf")
 \end_layout
 
 \begin_layout Plain Layout
@@ -406,7 +406,7 @@ status open
 \backslash
 logo{
 \backslash
-includegraphics[width=5mm]{theme/KUlogo}}
+includegraphics[width=5mm]{theme/logomini}}
 \end_layout
 
 \end_inset

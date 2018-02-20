@@ -286,7 +286,7 @@ reportsetup{%
 
 \begin_layout Plain Layout
 
-  rightlogo={theme/CRMDAlogo.pdf},
+  rightlogo={theme/logo.pdf},
 \end_layout
 
 \begin_layout Plain Layout
@@ -393,7 +393,7 @@ library(crmda)
 
 \begin_layout Plain Layout
 
-logos <- c(logoright = "CRMDAlogo.pdf")
+logos <- c(logoright = "logo.pdf")
 \end_layout
 
 \begin_layout Plain Layout
