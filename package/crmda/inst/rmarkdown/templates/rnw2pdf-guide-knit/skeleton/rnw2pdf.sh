@@ -9,9 +9,10 @@ scriptname=`basename $0 .sh`
 pwd=`pwd`
 declare -A parms
 parms[engine]=\"knitr\"
-parms[tangle]=TRUE
 parms[verbose]=FALSE
-## VERBOSE is flag users can turn on to get more detailed output
+parms[tangle]=TRUE
+## VERBOSE is BASH flag, will cause more script output,
+## and set parms[verbose]=TRUE
 VERBOSE=0
 ## DEBUG if for author of this script, for fixing arg parsing. Not for users
 DEBUG=0
@@ -26,8 +27,9 @@ compileOne(){
 		## check extension, ignore case
 		shopt -s nocasematch
 		if [[ ("$exten" -eq "Rnw") || ( "$exten" -eq "lyx") ]]; then
-			echo -e "compile $filename"
-			Rscript -e "library(crmda); $scriptname(\"$filename\", $parmstring)"
+			cmd="library(crmda); $scriptname(\"$filename\"$parmstring)"
+			if [[ VERBOSE ]]; then echo -e "Running: $cmd"; fi
+			Rscript -e ${cmd}
 		else
 			echo -e "Error: $filename. Extension should be \"Rnw\" or \"lyx\""
 		fi
@@ -127,7 +129,8 @@ while getopts "$optspec" OPTCHAR; do
 			## if -v flag is present
 			echo -e "\n\nverbose flag\n"
             VERBOSE=1
-			parms["quiet"]="FALSE"
+			parms["quiet"]=FALSE
+			parms["verbose"]=TRUE
 			## must print default parms here, before more parsing
 			echo "Parameters are:" >&2
 			printarr parms
