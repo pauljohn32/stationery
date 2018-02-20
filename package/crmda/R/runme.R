@@ -300,6 +300,10 @@ rnw2pdf <- function(fn = NULL, wd = NULL, engine = "knitr", purl = TRUE,
                     encoding = getOption("encoding"),
                     ...) {
     if(!missing(tangle) && is.logical(tangle)) purl <- tangle
+    if(tangle != purl) {
+        MESSG <- "rnw2pdf: tangle and purl have the same effect. Just set 1 of them"
+        stop(MESSG)
+    }
     if (!is.null(wd)) {
         wd.orig <- getwd()
         setwd(wd)
@@ -384,6 +388,7 @@ rnw2pdf <- function(fn = NULL, wd = NULL, engine = "knitr", purl = TRUE,
                 }
                 tools::texi2pdf(gsub("\\.Rnw$", ".tex", x, ignore.case = TRUE),
                                 texi2dvi = "texi2pdf", clean = clean, quiet = !verbose)
+                if(clean) unlink(gsub("\\.Rnw$", ".tex", x, ignore.case = TRUE))
                 fnpdf <- gsub("\\.Rnw$", ".pdf", x, ignore.case = TRUE)
             }
         }
