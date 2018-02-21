@@ -1,0 +1,2901 @@
+#LyX 2.2 created this file. For more info see http://www.lyx.org/
+\lyxformat 508
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass extarticle
+\begin_preamble
+% \VignetteIndexEntry{stationery}
+% \VignetteEngine{Sweave}
+% \VignetteBuilder{stationery::rnw2pdf}
+
+\usepackage[includehead,includefoot,
+lmargin=1in,
+rmargin=1in,
+tmargin=0.75in,
+bmargin=1.0in,
+headheight=0pt,
+headsep=0pt,
+marginparwidth=0pt,
+footskip=1.5\baselineskip,
+]{geometry}
+
+\usepackage{multicol}
+\usepackage{listings}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{dcolumn}
+\usepackage{booktabs}
+
+
+\input{theme/reportPreambleHeader.tex}
+\input{theme/preambleFooter.tex}
+\input{theme/reportPreambleSweavel.tex}
+
+\lstset{tabsize=2, breaklines=true, style=Rinput, breakatwhitespace=true}
+\end_preamble
+\use_default_options false
+\begin_modules
+logicalmkup
+sweave
+\end_modules
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding utf8
+\fontencoding global
+\font_roman "lmodern" "default"
+\font_sans "lmss" "default"
+\font_typewriter "lmtt" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 11
+\spacing single
+\use_hyperref false
+\papersize letterpaper
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 0
+\use_package esint 1
+\use_package mathdots 0
+\use_package mathtools 0
+\use_package mhchem 0
+\use_package stackrel 0
+\use_package stmaryrd 0
+\use_package undertilde 0
+\cite_engine natbib
+\cite_engine_type authoryear
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date true
+\justification true
+\use_refstyle 0
+\branch R
+\selected 0
+\filename_suffix 0
+\color #faf0e6
+\end_branch
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 1in
+\topmargin 1in
+\rightmargin 1in
+\bottommargin 1in
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation skip
+\defskip medskip
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+\noindent
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+reportsetup{%
+\end_layout
+
+\begin_layout Plain Layout
+
+  firstauthor={
+\end_layout
+
+\begin_layout Plain Layout
+
+    lastname=Johnson,
+\end_layout
+
+\begin_layout Plain Layout
+
+    firstname=Paul E., 
+\end_layout
+
+\begin_layout Plain Layout
+
+    affiliation=Director{,} CRMDA,
+\end_layout
+
+\begin_layout Plain Layout
+
+    email=pauljohn@ku.edu},
+\end_layout
+
+\begin_layout Plain Layout
+
+  title={Stationery: Guides, Slides, and Reports},
+\end_layout
+
+\begin_layout Plain Layout
+
+  rightlogo={theme/logo.pdf},
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+reporthdr
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<include=FALSE,echo=FALSE, results=hide>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+if(!dir.exists("tmpout"))dir.create("tmpout", recursive = TRUE)
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+% Please leave this code: In document Latex options:
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+fvset{listparameters={
+\backslash
+setlength{
+\backslash
+topsep}{0em}}}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+SweaveOpts{prefix.string=tmpout/t, split=FALSE, ae=FALSE, height=5, width=6}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<texcopy, include=FALSE,echo=FALSE>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+library(crmda)
+\end_layout
+
+\begin_layout Plain Layout
+
+## If theme directory does not have required images or TeX files
+\end_layout
+
+\begin_layout Plain Layout
+
+## we need to retrieve them and put them in "theme" directory.
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+logos <- c(logoright = "logo.pdf")
+\end_layout
+
+\begin_layout Plain Layout
+
+texfiles <- c("reportPreambleHeader.tex", 
+\end_layout
+
+\begin_layout Plain Layout
+
+              "preambleFooter.tex", 
+\end_layout
+
+\begin_layout Plain Layout
+
+              "addressFooter.tex",
+\end_layout
+
+\begin_layout Plain Layout
+
+              "reportPreambleSweavel.tex",
+\end_layout
+
+\begin_layout Plain Layout
+
+              "mlm.bib")
+\end_layout
+
+\begin_layout Plain Layout
+
+getFiles(logos, pkg = "crmda")
+\end_layout
+
+\begin_layout Plain Layout
+
+getFiles(texfiles, pkg = "crmda")
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+% Please leave this chunk
+\end_layout
+
+\begin_layout Plain Layout
+
+<<Roptions, echo=F, include=F>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+if(!dir.exists("tmpout"))dir.create("tmpout", recursive = TRUE)
+\end_layout
+
+\begin_layout Plain Layout
+
+opts.orig <- options()
+\end_layout
+
+\begin_layout Plain Layout
+
+options(device = pdf)
+\end_layout
+
+\begin_layout Plain Layout
+
+options(width=160, prompt=" ", continue="  ")
+\end_layout
+
+\begin_layout Plain Layout
+
+options(useFancyQuotes = FALSE) 
+\end_layout
+
+\begin_layout Plain Layout
+
+set.seed(12345)
+\end_layout
+
+\begin_layout Plain Layout
+
+par.orig <- par(no.readonly=TRUE) 
+\end_layout
+
+\begin_layout Plain Layout
+
+pjmar <- c(5.1, 5.1, 1.5, 2.1) 
+\end_layout
+
+\begin_layout Plain Layout
+
+options(SweaveHooks=list(fig=function() par(mar=pjmar, ps=10)))
+\end_layout
+
+\begin_layout Plain Layout
+
+pdf.options(onefile=FALSE, family="Times", pointsize=10)
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Abstract
+This document discusses the CRMDA package templates and how to use them.
+ It compares some strengths and weaknesses of the `noweb`/LaTeX format versus
+ `Rmarkdown`.
+ It also mentions two code-chunk processing engines, `Sweave` and `knitr`.
+ 
+\end_layout
+
+\begin_layout Section
+Introduction
+\end_layout
+
+\begin_layout Standard
+Researchers who have used word processors are understandably bewildered
+ by recent talk about reproducible research documents (??).
+ 
+\begin_inset Quotes eld
+\end_inset
+
+I have no idea what that means,
+\begin_inset Quotes erd
+\end_inset
+
+ exclaimed an administrator who recently asked us what we were working on.
+ An entire article, lecture, or book can be generated in one single execution
+ that conducts analysis, saves graphics, and assembles them together in
+ a single output document.
+ 
+\end_layout
+
+\begin_layout Standard
+The whole idea is, one must expect, entirely unfamiliar to most graduate
+ students in social science, not to mention their professors.
+ It comes as a rude shock, then that the general idea of 
+\begin_inset Quotes eld
+\end_inset
+
+code embedded within documents
+\begin_inset Quotes erd
+\end_inset
+
+ is immediately followed by another cold slap: There are several competing
+ formats in which one can prepare these documents.
+ Furthermore, it seems likely that no sooner will we begin to understand
+ the strong (and weak) points of one approach than we are confronted with
+ yet another proposed framework.
+\end_layout
+
+\begin_layout Standard
+I've been using the editor LyX to weave together R code with reports and
+ slides since the turn of the century.
+ In the Center for Research Methods and Data Analysis at the University
+ of Kansas, I've shown the graduate students how to do the same king of
+ work.
+ We have developed a set of template document styles for usage in technical
+ reports, in guides for students and other learners, and also slides for
+ use in classes and workshops.
+ 
+\end_layout
+
+\begin_layout Standard
+The development work on these templates was carried out in an R package
+ we called 
+\begin_inset Quotes eld
+\end_inset
+
+crmda
+\begin_inset Quotes erd
+\end_inset
+
+.
+ It was not feasible to distribute crmda because because our address and
+ logos were too deeply embedded in the document templates to allow workers
+ in other institutions to make use of them.
+ Recently, we have taken a second look at the templates and revised them
+ so that there are no institutional identifiers that are deeply embedded.
+ That is to say, it is obvious how a user can replace the name of the author,
+ the institutional address information, the logos, and do forth.
+ These new templates are packages along with full working example document
+ in this new package named 
+\begin_inset Quotes eld
+\end_inset
+
+stationery
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section
+What Do You Get with stationery?
+\end_layout
+
+\begin_layout Standard
+Second, there are R functions that can create skeleton documents in many
+ formats and these functions can also be used to compile the documents.
+ These functions are needed only to pull together some loose ends.
+ We have integrated ideas and terminology from several of the R packages
+ on which we depend.
+\end_layout
+
+\begin_layout Standard
+Each document type is delivered in a fully working format that can be immediatel
+y compiled into a presentable document.
+ Each one is delivered with a brief guide document that points to some of
+ the highlights that need to be considered.
+ Each one includes a compiler script as well, so that if one is partial
+ to using the terminal to interact with documents, then this will offer
+ a dependable way to compile documents (and debug problems with them).
+\end_layout
+
+\begin_layout Standard
+Second, there are 4 vignettes, the first of which is the present document.
+\end_layout
+
+\begin_layout Enumerate
+d
+\end_layout
+
+\begin_layout Enumerate
+c
+\end_layout
+
+\begin_layout Enumerate
+Rmarkdown
+\end_layout
+
+\begin_layout Enumerate
+HTML Special Features
+\end_layout
+
+\begin_layout Section
+`stationery` package document templates
+\end_layout
+
+\begin_layout Standard
+The `stationery` package provides templates for several types of documents
+ using various frontends (formats in which documents are prepared) and backends
+ (output formats like PDF or HTML).
+ 
+\end_layout
+
+\begin_layout Standard
+There is more terminology to be aware of.
+ LaTeX documents in which R code is embedded are referred to as 
+\begin_inset Quotes eld
+\end_inset
+
+noweb
+\begin_inset Quotes erd
+\end_inset
+
+ or 
+\begin_inset Quotes eld
+\end_inset
+
+literate
+\begin_inset Quotes erd
+\end_inset
+
+ documents and they bear the file extension .Rnw.
+ These files can be edited in any text editor that is suitable for LaTeX.
+ They can even be prepared with the more user-friendly editor named LyX
+ (http://www.lyx.org).
+ 
+\end_layout
+
+\begin_layout Standard
+There are two styles in which R code can be embedded in these documents
+ and each one has its own 
+\begin_inset Quotes eld
+\end_inset
+
+engine
+\begin_inset Quotes erd
+\end_inset
+
+ software to sort through the document, find the R code, and embed the results.
+ The fact that there are these two, separate, not-entirely-compatible code
+ frameworks (Sweave and knitr) is an enduring source of confusion.
+ Many authors tout knitr as a new, upgraded approach, while, in my experience
+ so far, documents based on Sweave are less likely to present surprises.
+ 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "RCore"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The markdown document movement () has been an effort to develop an alternative
+ style of document markup that is not so 
+\begin_inset Quotes eld
+\end_inset
+
+ugly
+\begin_inset Quotes erd
+\end_inset
+
+ as HTML and not so difficult to learn as LaTeX.
+ While the general idea of markdown is quite appealing, the devil is in
+ the details, as usual.
+ A host of competing dialects flowered almost immediately and now it is
+ quite possible to write a document 
+\begin_inset Quotes eld
+\end_inset
+
+in
+\begin_inset Quotes erd
+\end_inset
+
+ markdown that is not intelligible to a practitioner of another kind of
+ markdown.
+ Here, of course, we are interested mainly in R markdown, a variant of markdown
+ that is associated with the knitr package for R.
+\end_layout
+
+\begin_layout Standard
+In the stationery package we now have 7 working document skeletons that
+ are summarized in Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Document-Types"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Document Types in Stationery
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:Document-Types"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="8" columns="6">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top" width="1in">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Label String
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Frontend
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Backend
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Format
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Code Chunk Engine
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+rmd2html-guide
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Markdown
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+HTML
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Guide
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+knitr
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+rnw2pdf-guide-knit
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Markdown
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+PDF
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Guide
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+knitr
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+rnw2pdf-guide-sweave
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+LaTeX/LyX
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+PDF
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Guide
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Sweave
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ rmd2pdf-report
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Markdown
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+PDF
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Report
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+knitr
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+rnw2pdf-report-knit
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+LaTeX/LyX
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+PDF
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Report
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+knitr
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+6
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+rnw2pdf-report-sweave
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+LaTeX/LyX
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+PDF
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Report
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Sweave
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+7
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+rnw2pdf-slides-sweave
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+LaTeX/LyX
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+PDF
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Beamer Slides
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Sweave
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection*
+Guides versus reports
+\end_layout
+
+\begin_layout Standard
+A 
+\series bold
+guide
+\series default
+ is intended for students or other learners.
+ A guide will generally include code and output excerpts.
+ Preferrably, the codeexamples will have line numbers and syntax highlighting.
+ In most cases, a guide format is not format suitable for reports to clients
+ or for journal articles.
+\end_layout
+
+\begin_layout Standard
+A 
+\series bold
+report
+\series default
+ is a more formal document.
+ A report is suitable for a journal article or a technical report.
+ A report has less (maybe no) code and almost never will it include "raw
+ output" from a computer program.
+ A report includes closer-to-publishable tables and figures.
+ The style for "report" documents is fairly well settled.
+ We have a header with the title, the logo, and author information.
+ On page 1, we have contact information, in the style of a stationary footer.
+ The style for "guide" documents is not well settled.
+ It is one of the problems on our immediate agenda.
+\end_layout
+
+\begin_layout Standard
+The slide format we offer is based on LaTeX Beamer () slide format using
+ a customized theme that we prefer.
+ So far, the only code engine for which we have working examples in Sweave.
+ We have experimented with many slide producing strategies using markdown
+ code and none of them have been completely dependable (some of the challenges
+ are discussed in later sections of this document and our vignette named
+ 
+\begin_inset Quotes eld
+\end_inset
+
+/??
+\begin_inset Quotes erd
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Subsection*
+There are too many settings
+\end_layout
+
+\begin_layout Standard
+The `stationery` package has settings that work for our documents.
+ Our compiler scripts leave open the possibility that users can supply additiona
+l command line arguments, arguments that have the same names as our R functions
+ rmd2pdf, rmd2html, rnw2pdf, and rnw2html.
+ Still, the number of options that can govern the production of the document,
+ its transition through several formats, is, well, stupefying.
+\end_layout
+
+\begin_layout Standard
+The list of possible settings is immense partly because each document must
+ be converted through several formats.
+ Consider a document that is written with R markdown.
+ In order to achieve success, the document must undergo these transitions
+\end_layout
+
+\begin_layout Enumerate
+Rmd -> md.
+ R code chunks are isolated, calculated, and replaced by R output.
+ This creates a markdown document.
+\end_layout
+
+\begin_layout Enumerate
+md -> utf8.md.
+ The markdown document's font encoding is homogenized to us Unicode (utf8).
+\end_layout
+
+\begin_layout Enumerate
+utf8.md -> tex.
+ The markdown is converted into LaTeX.
+ This work is handled by pandoc (>>)
+\end_layout
+
+\begin_layout Enumerate
+tex -> PDF.
+ A LaTeX compiler is needed to do this conversion.
+ Perhaps the most frequently used is 
+\begin_inset Quotes eld
+\end_inset
+
+pdflatex
+\begin_inset Quotes erd
+\end_inset
+
+, but there are others that are increasingly popular and compatible with
+ additional fonts and character sets.
+ If the document includes a bibliographic database, one of the companion
+ programs, such as bibtex, biber, or biblatex must be called on to do its
+ work.
+\end_layout
+
+\begin_layout Standard
+The transition from `utf8.md` to LaTeX, considered in isolation, is nearly
+ overwhelming.
+ When we compile a markdown document named 
+\begin_inset Quotes eld
+\end_inset
+
+crmda.Rmd
+\begin_inset Quotes erd
+\end_inset
+
+, we can investigate the details and the `pandoc` command is the following
+ elaborate request.
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "breaklines=true,tabsize=2"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+$ /usr/bin/pandoc +RTS -K512m -RTS crmda.utf8.md 
+\end_layout
+
+\begin_layout Plain Layout
+
+--to latex --from markdown+autolink_bare_uris+ascii_identifiers +tex_math_single
+_backslash --table-of-contents --toc-depth 2 --template theme/report-boilerplate.
+tex --highlight-style haddock --latex-engine 
+\end_layout
+
+\begin_layout Plain Layout
+
+pdflatex --listings
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+It is a little bit difficult to design a template that both allows some
+ user customization while maintaining a consistent look and feel.
+ We believe the default configuration in our document packages should "just
+ work".
+ However, if specialized adjustment is necessary, we have not made this
+ too difficult for most authors with a 
+\begin_inset Quotes eld
+\end_inset
+
+can do
+\begin_inset Quotes erd
+\end_inset
+
+ attitude.
+\end_layout
+
+\begin_layout Section
+Usage overview 
+\end_layout
+
+\begin_layout Standard
+Here we will illustrate the process of initiating a guide document that
+ is to be prepared with Rmarkdown and will have the HTML backend.
+ Start R in a folder where you would like to create a write-up and run
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+initWriteup("rmd2pdf-report")
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+No directory is specified, so this creates a folder named `writeup/rmd2pdf-repor
+t`.
+ It will be created in the R current working directory.
+ Within the folder 
+\begin_inset Quotes eld
+\end_inset
+
+rmd2pdf-report
+\begin_inset Quotes erd
+\end_inset
+
+, one should find 
+\end_layout
+
+\begin_layout Enumerate
+a skeleton template (which the author should rename and edit), 
+\end_layout
+
+\begin_layout Enumerate
+an instructional guide (in either PDF or HTML format)
+\end_layout
+
+\begin_layout Enumerate
+a compiler script.
+\end_layout
+
+\begin_layout Standard
+One can specify the directory in which the documents will be written.
+ For example,
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<usage20,eval=F>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+dirname <- "wherever_you_say"
+\end_layout
+
+\begin_layout Plain Layout
+
+dir.create(dirname)
+\end_layout
+
+\begin_layout Plain Layout
+
+initWriteup("rmd2pdf-report", dir = dirname)
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The output will tell you where the directory ended up, say:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{Soutput}
+\end_layout
+
+\begin_layout Plain Layout
+
+[1] "/home/pauljohn/wherever_you_say/rmd2pdf-report"
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{Soutput}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+From within R, we can check for a list of files that were created:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{Soutput}
+\end_layout
+
+\begin_layout Plain Layout
+
+> list.files(file.path(dirname, "rmd2pdf-report"))
+\end_layout
+
+\begin_layout Plain Layout
+
+[1] "report-instructions.pdf" "report-instructions.Rmd"
+\end_layout
+
+\begin_layout Plain Layout
+
+[3] "rmd2pdf.sh"              "skeleton.Rmd"
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{Soutput}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+because I want my writeups to collect in the writeup folder of the project.
+\end_layout
+
+\begin_layout Standard
+The first order of business is to rename the subfolder from "rmd2pdf-report"
+ to something relevant to a writeup.
+ There may be several reports for this project, choose a name that will
+ help you guess which writeup is in which folder.
+ Be aware that `initWriteup` will erase the files in that folder, if you
+ don't rename it/them.
+\end_layout
+
+\begin_layout Standard
+Next, we need to make sure the build programs exist and work in your computer.
+ Rename the file `report-template.Rmd` to match your purpose.
+ My file name is "crmda.Rmd".
+\end_layout
+
+\begin_layout Standard
+Test the build tools.
+ Edit your document, insert your name or a title and save the document.
+ Now try to compile it.
+\end_layout
+
+\begin_layout Standard
+The file can be compiled in two ways.
+ 
+\end_layout
+
+\begin_layout Standard
+1.
+ Open an R session and use the function `rmd2pdf()` in the crmda package.
+ I'll compile my file `crmda.Rmd`.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<usage100, eval=F>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+library(crmda)
+\end_layout
+
+\begin_layout Plain Layout
+
+rmd2pdf("crmda.Rmd")
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The `rmd2pdf` is a *wrapper* function.
+ It does not do any real work, it just collects your file name and applies
+ defaults that we have set.
+ It calls the `render` and `pdf_document` functions in the `rmarkdown`.
+ Because `knitr` is the only method for handling code chunks in `Rmarkdown`
+ documents, also involves the `knitr`
+\end_layout
+
+\begin_layout Standard
+package.
+\end_layout
+
+\begin_layout Standard
+The `rmd2pdf` allows the user to add arguments that are passed along to
+ `render` and `pdf_document`.
+ This is explained in the help page for `rmd2pdf`.
+ 
+\end_layout
+
+\begin_layout Standard
+2.
+ Run a shell script provided with the template.
+\end_layout
+
+\begin_layout Standard
+It is not necessary to open R to compile the document.
+ The output can also be generated by running a command line script that
+ does the same work.
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+$ ./rmd2pdf.sh crmda.Rmd
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The rendered output will be a pdf file.
+ The configuration inside `rmd2pdf.sh` indicates that output is written in
+ the current working directory.
+ 
+\end_layout
+
+\begin_layout Standard
+If one uses Rstudio as a text editor for an Rmd file, one may not obtain
+ satisfactory output by compiling the document with the pull down menus.
+\end_layout
+
+\begin_layout Subsection
+About the shell scripts
+\end_layout
+
+\begin_layout Standard
+In July, 2017, I decided to change the way that the shell scripts are designed.
+ Users who inspect them should see the script runs R and launches a function
+ in the `stationery` package.
+ As a result, there should not be any difference in the result from running
+ the script `rmd2pdf.sh` and the function inside R named `rmd2pdf`.
+ 
+\end_layout
+
+\begin_layout Standard
+The only difference that might arise is when there are additional arguments
+ supplied in the script that are not present in `rmd2pdf`.
+ 
+\end_layout
+
+\begin_layout Standard
+One difference might be whether or not a table of contents is requested.
+ The default arguments specified in the script are simple, but they do include
+ the table of contents (this was inserted in this script in June 2017).
+ The important line in `rmd2pdf.sh` is this:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+defaults="toc=TRUE, output_dir=
+\backslash
+"$pwd
+\backslash
+""
+\end_layout
+
+\end_inset
+
+This turns on the table of contents feature and asks for output in the current
+ working directory.
+ We have not worked on command-line argument processing in `rmd2pdf.sh`,
+ so if a user wants to change the arguments passed along, it will be necessary
+ to edit that script file and items
+\end_layout
+
+\begin_layout Standard
+in the `defaults` character string.
+\end_layout
+
+\begin_layout Standard
+A little lower in `rmd2pdf.sh`, one should see that the business-end of the
+ project is a call to `Rscript` which supplies the file name, along with
+ the `defaults` string, in a not-very-subtle way:
+\end_layout
+
+\begin_layout Standard
+```
+\end_layout
+
+\begin_layout Standard
+Rscript -e "library(crmda); rmd2pdf(
+\backslash
+"$filename
+\backslash
+", $defaults)" 
+\end_layout
+
+\begin_layout Standard
+```
+\end_layout
+
+\begin_layout Standard
+The new arguments that users might insert in `defaults` should match the
+ arguments that might be supplied to the `rmd2pdf` function in the `stationery`
+ package.
+ Hence, the help page for `rmd2pdf` should be consulted for details.
+ Arguments that can be specified for the `render` and `pdf_document` (or
+ `html_document` if we are creating HTML output) are spelled out.
+ Any defaults specified in the script, or in the function call to `rmd2pdf`
+ inside R, will override the other customizations that are place in the
+ `stationery` package.
+\end_layout
+
+\begin_layout Standard
+We hope that only minor customizations are needed.
+ The document you are reading now is produced with a revised version `rmd2pdf.sh`.
+ By default, the `rmd2pdf` function will pull the 
+\backslash
+LaTeX
+\backslash
+ template for `pandoc` from the `stationery` package's install folder.
+ That is to say, the `rmd2pdf.sh` script overrides the template file that
+ exists in the package install folder and instead uses the one in the theme
+ subdirectory of the current document directory.
+ 
+\end_layout
+
+\begin_layout Standard
+While building this, I had some trouble compiling the document.
+ I turned on detailed error reporting (quiet=FALSE).
+ I also turned off the `clean` argument that erased the intermediate markdown
+ files and asked to keep the 
+\backslash
+LaTeX
+\backslash
+ intermediate files.
+ Hence, my `defaults` string has 
+\end_layout
+
+\begin_layout Standard
+```
+\end_layout
+
+\begin_layout Standard
+defaults="toc=TRUE, output_dir=
+\backslash
+"$pwd
+\backslash
+", clean=FALSE, keep_tex=TRUE, 
+\end_layout
+
+\begin_layout Standard
+quiet=FALSE, template=
+\backslash
+"theme/report-boilerplate.tex
+\backslash
+""
+\end_layout
+
+\begin_layout Standard
+```
+\end_layout
+
+\begin_layout Standard
+Because I don't clean and keep the LaTeX intermediate file, the
+\end_layout
+
+\begin_layout Standard
+working directory has these "extra" files when the run is completed:
+\end_layout
+
+\begin_layout Standard
+```
+\end_layout
+
+\begin_layout Standard
+crmda.utf8.md
+\end_layout
+
+\begin_layout Standard
+crmda.knit.md
+\end_layout
+
+\begin_layout Standard
+crmda.tex
+\end_layout
+
+\begin_layout Standard
+```
+\end_layout
+
+\begin_layout Standard
+Some of these argument can be specified in the document header.
+ For example, the current document header has `keep_tex: false`.
+ The script setting `keep_tex=TRUE` overrides that.
+ The fact that settings can be specified several places--in the document
+ header, or in the processing script, or in the functions that handle documents-
+-is confusing.
+ I don't think anybody can deny that.
+\end_layout
+
+\begin_layout Standard
+Inside R, using the function `rmd2pdf`, I achieve the same result by inserting
+ the arguments into the function call:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<usage200, eval=F>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+rmd2html("guide-template.Rmd", toc=TRUE, output_dir="$pwd", 
+\end_layout
+
+\begin_layout Plain Layout
+
+clean=FALSE, quiet=FALSE, template="theme/report-boilerplate.tex", 
+\end_layout
+
+\begin_layout Plain Layout
+
+keep_tex=TRUE)
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The R help page for `rmd2pdf` should be helpful (or will be, eventually).
+\end_layout
+
+\begin_layout Section
+Working with LaTeX
+\end_layout
+
+\begin_layout Standard
+Like so many other concepts and tools in this area, 
+\backslash
+TeX was a creation of Donald Knuth at Stanford.
+ 
+\backslash
+TeX was the precursor to 
+\backslash
+LaTeX.
+\end_layout
+
+\begin_layout Standard
+The CRMDA maintains a Web page about 
+\backslash
+LaTeX: https://crmda.ku.edu/latex-help
+\end_layout
+
+\begin_layout Standard
+That page has basic guides and information about the KU dissertation template.
+ I prefer to work with 
+\backslash
+LaTeX
+\backslash
+ documents, for a number of reasons.
+ The quality of the PDF output is nicer, in my opinion, and more predictable.
+ However, the major reason I prefer 
+\backslash
+LaTeX
+\backslash
+ is that the Sweave option `split=TRUE` is allowed.
+ That option creates separate `
+\backslash
+*.tex` output files, for each code chunk.
+ The developers of the
+\end_layout
+
+\begin_layout Standard
+Rmarkdown documents framework disapprove of `split` and elected, consciously,
+ not to implement it.
+ A couple of the questions not considered in our Web page are the following.
+\end_layout
+
+\begin_layout Section
+Choosing among formats
+\end_layout
+
+\begin_layout Subsection
+Which backend?
+\end_layout
+
+\begin_layout Standard
+Should I end up with HTML or PDF? The answer depends on the intended audience/cl
+ient.
+ If a "paper" must be submitted, obviously choose PDF.
+ If the document needs numbered equations, cross references, and "floating"
+ tables and figures, choose PDF.
+ If the document is intended for a Webpage, then HTML is the obvious choice
+ (unless you simply want to convey a PDF document via the Web).
+ Our HTML template includes a cascading style sheet feature that allows
+ both color-highlighted sections and tabbed sub-sections.
+\end_layout
+
+\begin_layout Standard
+There is concern about mathematics in HTML documents that deserves mention.
+ For many years, the inability of Web pages to display equations was a major
+ problem.
+ Many tedious, ugly methods were developed.
+ A more-or-less workable solution was developed, a framework called MathJax.
+ MathJax allows inclusion of math markup in the page which--when the conditions
+ are right--can be converted by the Web
+\end_layout
+
+\begin_layout Standard
+browser to look like equations.
+\end_layout
+
+\begin_layout Standard
+If the user is offline, or if the MathJax server is not available, then
+ the HTML document's math will not display.
+ If one wants to put math into a document, using HTML is inherently risky.
+ If one needs to be 100% sure that math will display as intended, choose
+ to create PDF documents.
+\end_layout
+
+\begin_layout Subsection
+Which Frontend? Write in LaTeX or Rmarkdown?
+\end_layout
+
+\begin_layout Standard
+This will be the answer:
+\end_layout
+
+\begin_layout Quote
+When choosing the frontend, consider the backend.
+ Where you want to end up determines where you start.
+\end_layout
+
+\begin_layout Standard
+While working on this document, I prepared an original version in Rmarkdown
+ that was compiled into HTML.
+ Because some features failed to compile, I changed the backend to PDF in
+ the report style.
+ As a result, several features that are unique to the HTML backend had to
+ be removed.
+ HTML offers access to some special document formatting features that are
+ simply not available in PDF, and the converse isalso true.
+\end_layout
+
+\begin_layout Standard
+I believe the following are good conclusions:
+\end_layout
+
+\begin_layout Enumerate
+1.
+ If one intends to export as HTML, then markdown is, *by far*, the most
+ reasonable choice for a frontend.
+ Markdown was developed, first and foremost, as a simpler way to generate
+ Web pages.
+\end_layout
+
+\begin_layout Enumerate
+2.
+ If one intends to export to PDF, then markdown or 
+\backslash
+LaTeX
+\backslash
+ can be useful.
+ But 
+\backslash
+LaTeX
+\backslash
+ is probably better.
+ 
+\backslash
+LaTeX
+\backslash
+ is primarily intended for the creation of publication-quality documents
+ in PDF format.
+ Conversion from 
+\backslash
+LaTeX
+\backslash
+ to HTML is less decidedly less unsatisfactory.
+\end_layout
+
+\begin_layout Standard
+Since one can put much 
+\backslash
+LaTeX
+\backslash
+ markup into a markdown document, perhaps the difference is not so great
+ as it seems.
+ The Rmarkdown compilation process (see Appendix 
+\backslash
+ref{appendix1}) generates a 
+\backslash
+LaTeX
+\backslash
+ file at an intermediate stage, so in some sense the same PDF result ought
+ to be possible with Markdown or 
+\backslash
+LaTeX
+\backslash
+ document preparation.
+ However, in practice, we find differences in conveniences for authors.
+\end_layout
+
+\begin_layout Standard
+I would summarize the situation with a poem:
+\end_layout
+
+\begin_layout Quote
+Markdown documents intended for HTML allow some 
+\backslash
+LaTeX
+\backslash
+ code.
+\end_layout
+
+\begin_layout Quote
+Markdown documents intended for PDF allow more 
+\backslash
+LaTeX
+\backslash
+ code.
+\end_layout
+
+\begin_layout Quote
+Almost all HTML code is tolerated well in a Markdown document intended for
+ HTML.
+\end_layout
+
+\begin_layout Quote
+No HTML code is tolerated in a document intended for PDF.
+\end_layout
+
+\begin_layout Standard
+The main point is that if one writes a markdown document, using special
+ features intended for the backend, then it is generally not possible to,
+ at the last minute, change the output format from HTML to PDF, or vice
+ versa.
+ HTML output has advantages in Web style features, while PDF documents have
+ advantages in "on paper" presentations.
+\end_layout
+
+\begin_layout Standard
+For novices, 
+\backslash
+LaTeX
+\backslash
+ seems more difficult than markdown.
+ Perhaps this is not such a big hurdle as it used to be because [LyX](http://www.
+lyx.org) is available.
+ In my opinion, `LyX` makes preparing a 
+\backslash
+LaTeX
+\backslash
+ document much easier than it is to prepare
+\end_layout
+
+\begin_layout Standard
+a similarly complicated markdown document.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+<!-- Rstudio alters the document header, using its best guesses about -->
+\end_layout
+
+\begin_layout Plain Layout
+<!-- settings suitable for PDF or HTML, *without warning the author*.
+ If -->
+\end_layout
+
+\begin_layout Plain Layout
+<!-- one opens an Rmarkdown document that can be compiled into PDF, and
+ -->
+\end_layout
+
+\begin_layout Plain Layout
+<!-- then chooses "knit to HTML", the document header will often be -->
+\end_layout
+
+\begin_layout Plain Layout
+<!-- destroyed.
+ Noticing that the output is not what the expected, the -->
+\end_layout
+
+\begin_layout Plain Layout
+<!-- author then thinks, "I'll reverse that mistake by choosing 'knit to
+ -->
+\end_layout
+
+\begin_layout Plain Layout
+<!-- PDF', but that replaces the document header with another set of -->
+\end_layout
+
+\begin_layout Plain Layout
+<!-- guesses preferred by the Rstudio team.
+ As a result, a document that -->
+\end_layout
+
+\begin_layout Plain Layout
+<!-- did compile from Rmd into PDF has lost the settings that it needs.
+ -->
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Important caution about Math in the HTML backend
+\end_layout
+
+\begin_layout Standard
+Math is not incorporated in HTML in the same way as PDF.
+ Compiling a document into PDF uses a program like `pdflatex` to put the
+ equations "in" the document.
+ They are displayed in (more or less) the same way on various browsers and
+ operating systems.
+ The same is not true for math in HTML documents.
+ Simply put, **math is not
+\end_layout
+
+\begin_layout Standard
+allowed in HTML**.
+ We think it is allowed--our eyes tells us it is
+\end_layout
+
+\begin_layout Standard
+allowed--because we browse Web pages that show equations.
+ However,
+\end_layout
+
+\begin_layout Standard
+this is an illusion achieved by extraordiary measures involving
+\end_layout
+
+\begin_layout Standard
+Javascript and third party servers.
+ The beautifully formatted 
+\backslash
+LaTeX
+\end_layout
+
+\begin_layout Standard
+equation is not "embedded" in the HTML, it is instead delivered as
+\end_layout
+
+\begin_layout Standard
+code "available for rendering" in the Web browser.
+ The HTML code is
+\end_layout
+
+\begin_layout Standard
+converted, via javascript and functions supplied interactively from
+\end_layout
+
+\begin_layout Standard
+the MathJax Web server.
+\end_layout
+
+\begin_layout Subsubsection*
+Markdown to HTML allows most valid HTML markup, but Markdown to PDF does
+ not allow all LaTeX.
+\end_layout
+
+\begin_layout Standard
+This is a somewhat surprising difference.
+ All HTML markup I've tried
+\end_layout
+
+\begin_layout Standard
+works well in an Rmarkdown document that aims to go into HTML.
+\end_layout
+
+\begin_layout Standard
+However, not all 
+\backslash
+LaTeX
+\backslash
+ markdown is allowed in an Rmarkdown document
+\end_layout
+
+\begin_layout Standard
+going to PDF.
+ And even less 
+\backslash
+LaTeX
+\backslash
+ code works well if the intended
+\end_layout
+
+\begin_layout Standard
+backend is HTML.
+ One cannot insert italics with 
+\backslash
+LaTeX
+\backslash
+ in a document
+\end_layout
+
+\begin_layout Standard
+intended for HTML.
+ For example, writing `
+\backslash
+emph{italics}` or bold
+\end_layout
+
+\begin_layout Standard
+`
+\backslash
+textbf{bold}` in the style of 
+\backslash
+LaTeX
+\backslash
+ code will have no effect in an
+\end_layout
+
+\begin_layout Standard
+HTML document.
+ However, if PDF output is used, then both of those
+\end_layout
+
+\begin_layout Standard
+
+\backslash
+LaTeX
+\backslash
+ codes work.
+ As evidence, note I get 
+\backslash
+emph{italics} and bold
+\end_layout
+
+\begin_layout Standard
+
+\backslash
+textbf{bold} in this PDF document.
+ 
+\end_layout
+
+\begin_layout Subsection
+Should one prefer `Sweave` or `knitr`?
+\end_layout
+
+\begin_layout Standard
+This question is meaningful only in `noweb`/
+\backslash
+LaTeX
+\backslash
+ documents.
+ In Rmarkdown, `knitr` is the only available method to process code chunks.
+ In `noweb`, one can choose between `Sweave` and `knitr`.
+ Perhaps that suggests that, if one must learn one set of chunk options,
+ then `knitr` options are the right place to start (since they can be used
+ in documents intended for HTML or PDF).
+ The chunk options allowed the original `Sweave` were `echo` (include code
+ with output?), `eval` (run the chunk calculations?), `include` (display
+ the chunk in the document?), `fig` (code generates a figure?) and `results`
+ (output in 
+\backslash
+LaTeX
+\backslash
+ is handled differently than raw 
+\backslash
+TeX).
+ There are a few others, but that is most of the story.
+ `knitr` honored most of the Sweave options and then added many more (see
+ [knitr code chunk options](https://yihui.name/knitr/options)).
+\end_layout
+
+\begin_layout Standard
+One benefit of Rmarkdown with `knitr` is that it is possible to make documents
+ about other programs (not just R).
+ I've explored knitr to weave documents about BASH shell programming, for
+ example.
+\end_layout
+
+\begin_layout Section
+Troubleshooting
+\end_layout
+
+\begin_layout Standard
+The first step is understanding the trouble.
+ The trouble stems from the fact that each document must be transformed
+ through several stages to reach the final result.
+ Understanding that, and learning about the problems that appear at each
+ stage, can help with the troubleshooting strategies that we recommend.
+\end_layout
+
+\begin_layout Subsection
+Compilation Stages
+\backslash
+label{appendix1}
+\end_layout
+
+\begin_layout Standard
+Steps to compile documents break down into 2 phases.
+\end_layout
+
+\begin_layout Standard
+1.
+ Handle code chunks
+\end_layout
+
+\begin_layout Standard
+2.
+ render the resulting document.
+\end_layout
+
+\begin_layout Standard
+A noweb file is converted from Rnw into PDF by a sequence of transitions.
+\end_layout
+
+\begin_layout Standard
+1.
+ `Rnw -> tex`.
+ This is called "weaving" or "knitting", depending on whether Sweave or
+ knitr is the code processing engine.
+ R finds the code in the Rnw file and inserts results into a new LaTeX file.
+ The difference between weaving and knitting will be explained below.
+\end_layout
+
+\begin_layout Standard
+2.
+ `tex -> pdf`.
+ The default is `pdflatex` for this step, but the alternative `xelatex`
+ is growing in popularity because it more gracefully handles Unicode characters
+ (utf8).
+ If the document is edited with [LyX](http://www.lyx.org), there is an
+\end_layout
+
+\begin_layout Standard
+implicit step 0,
+\end_layout
+
+\begin_layout Standard
+0.
+ `LyX -> Rnw`.
+ 
+\end_layout
+
+\begin_layout Standard
+In the LyX pull down menu system, this is represented by Export -> Sweave.
+\end_layout
+
+\begin_layout Standard
+A markdown file is converted from Rmd to HTML by this sequence of transitions
+\end_layout
+
+\begin_layout Standard
+1.
+ `Rmd -> md`.
+ The "knitting" process replaces code chunks by R input and output, converting
+ the R markdown file into an ordinary markdown file.
+ In my system, an "md" file is generated, and then a second "utf8.md" is
+ generated to clean up the file encoding.
+\end_layout
+
+\begin_layout Standard
+2.
+ `md -> HTML`.
+ Currently, most people use the program `pandoc` for this.
+ A version of `pandoc` is distributed with Rstudio for the convenience of
+ users.
+ Linux users probably have `pandoc` available as standard system packages
+ and the Rstudio version be removed.
+\end_layout
+
+\begin_layout Standard
+The production of PDF from markdown, involves an additional transition.
+\end_layout
+
+\begin_layout Standard
+1.
+ `Rmd -> md`.
+ Knitting converts code chunks into R input and output that is inserted
+ into an `md` file created in the `pandoc` markdown style.
+\end_layout
+
+\begin_layout Standard
+2.
+ `md -> tex`.
+ A 
+\backslash
+LaTeX
+\backslash
+ file is created by `pandoc`.
+ In the header of the `md` document, one can set a number of parameters
+ to alter the 
+\backslash
+LaTeX
+\backslash
+ generation process.
+ For troubleshooting, "keep_tex: yes" to keep the `tex` file.
+\end_layout
+
+\begin_layout Standard
+3.
+ `tex -> pdf`.
+ The default program for this has been `pdflatex`.
+ It may be important to know that a 
+\backslash
+LaTeX
+\backslash
+ document may need to be run through `pdflatex` several times because cross-refe
+rences among pages and equations need to be made consistent.
+\end_layout
+
+\begin_layout Standard
+The R packages `rmarkdown` and `knitr` orchestrate the process that builds
+ the instructions to `pandoc`.
+ In `rmarkdown`, the function `render` orchestrates all of the work.
+ It calls chunk calculator and assigns work among the various conversion
+ programs.
+ The functions in the crmda package named `rmd2pdf` or `rmd2html` are "wrapper"
+ functions that adjust settings sent to `render`.
+\end_layout
+
+\begin_layout Subsection
+Avoiding compilation trouble
+\end_layout
+
+\begin_layout Standard
+The document production phase can fail at many steps (see Appendix 
+\backslash
+ref{appendix1}).
+ While editing a document, authors are well advised to heed the advice:
+\end_layout
+
+\begin_layout Standard
+
+\backslash
+begin{quote}
+\end_layout
+
+\begin_layout Standard
+
+\backslash
+textbf{Compile early, compile often!}
+\end_layout
+
+\begin_layout Standard
+
+\backslash
+end{quote}
+\end_layout
+
+\begin_layout Standard
+When a mistake is inserted, it is best to find it as soon as possible.
+\end_layout
+
+\begin_layout Subsection
+When debugging, check intermediate files
+\end_layout
+
+\begin_layout Standard
+The compiler scripts may erase intermediate files.
+ While debugging a document, we want to disable that clean-up step so that
+ we can see what goes wrong.
+ In an Rmd document that ends up in PDF, for example, we should be able
+ to inspect an `md` file and a `tex` file.
+ We can not only inspect those files, but we can also attempt to compile
+ them in isolation so that we can see what is going wrong.
+ 
+\end_layout
+
+\begin_layout Standard
+This document includes the header argument `keep_tex: true`, which means
+ we save a copy of "reports_and_guides.tex".
+\end_layout
+
+\begin_layout Standard
+While developing this document, some of the problems with backend-specific
+ code have come to the forefront.
+ The HTML backend allows pleasant color-coded section headings which included
+ in the PDF output.
+ Tables that work well in PDF documents don't work in HTML, and vice versa.
+ Some HTML tables that are legal HTMLdon't cooperate with `pandoc`.
+ 
+\end_layout
+
+\begin_layout Standard
+It is also worth mentioning that error messages are not always informative.
+ In fact, we sometimes don't get error messages when we should.
+ Rather, we simply receive bad output.
+ While developing this document I noticed that when a user includes erroneous
+ 
+\backslash
+LaTeX
+\backslash
+ code in a markdown document, a flawed HTML output is generated without
+ error or warning.
+ On the other hand, changing the intended backend to PDF causes the compiler
+ to fail and issue an error message.
+ If one is exporting to HTML, then, a very careful proofreading of the output
+ to check conversion of 
+\backslash
+LaTeX
+\backslash
+ code into HTML is necessary.
+\end_layout
+
+\begin_layout Section
+What do we Really, Really Need?
+\end_layout
+
+\begin_layout Standard
+## Things we wish we could have in HTML output (that we can get in PDF output)
+\end_layout
+
+\begin_layout Standard
+Numbered equations, easy cross references, numbered tables and figures
+\end_layout
+
+\begin_layout Standard
+## Things we wish we could have in PDF output (that we can get in HTML)
+\end_layout
+
+\begin_layout Standard
+A splash of color, mainly.
+ This is possible in PDF, but more
+\end_layout
+
+\begin_layout Standard
+difficult, at least on the surface.
+\end_layout
+
+\begin_layout Subsection
+Math
+\end_layout
+
+\begin_layout Standard
+We are a Center focused on methodology.
+ It is necessary to be able to
+\end_layout
+
+\begin_layout Standard
+write about math, preferably with a standard, uniform mathematical
+\end_layout
+
+\begin_layout Standard
+markup language, such as 
+\backslash
+LaTeX.
+\end_layout
+
+\begin_layout Standard
+Many social scientists are not familiar with 
+\backslash
+LaTeX
+\backslash
+ document
+\end_layout
+
+\begin_layout Standard
+preparation.
+ That was a hurdle that kept many authors with Microsoft
+\end_layout
+
+\begin_layout Standard
+Word, even when they were frustrated with it.
+ The difficulty of using
+\end_layout
+
+\begin_layout Standard
+
+\backslash
+LaTeX
+\backslash
+ was solved, to a significant extent, by LyX, an open source
+\end_layout
+
+\begin_layout Standard
+graphical interface.
+ With LyX, or other editors that could generate
+\end_layout
+
+\begin_layout Standard
+
+\backslash
+LaTeX
+\backslash
+ output (such as Scientific Word, TexMacs, or Abiword), authors
+\end_layout
+
+\begin_layout Standard
+who were not computer programmers could learn enough 
+\backslash
+LaTeX
+\backslash
+ to finish
+\end_layout
+
+\begin_layout Standard
+their projects.
+\end_layout
+
+\begin_layout Subsection
+Literate documents: include code and output
+\end_layout
+
+\begin_layout Standard
+We need to be able to write about computer code.
+ The "old fashioned"
+\end_layout
+
+\begin_layout Standard
+way is to copy/paste code and output into documents.
+ That's somewhat
+\end_layout
+
+\begin_layout Standard
+error prone and difficult to keep up-to-date.
+\end_layout
+
+\begin_layout Standard
+Donald Knuth, a famous Stanford professor of computer science, proposed
+ strategies to integrate the production of documents with the development
+ of computer code.
+ Rather than creating code in one file, and documentation in another, the
+ idea was that the two parts of our work should be blended in a "literate
+ programming" exercise.
+ 
+\end_layout
+
+\begin_layout Standard
+The literate programming idea is more a general way of life than it is a
+ particular document production strategy.
+ It is, partly, aimed at programmers who don't like to write instruction
+ manuals.
+ In the end, however, it may have more impact on non-programmers who need
+ to prepare technical reports that include computer code examples.
+\end_layout
+
+\begin_layout Standard
+In computer programming, one of the biggest impacts of literate programming
+ is the proliferation of systems for preparation of documentation within
+ code files.
+ In the 1990s and early 2000s, when I was working on the Swarm Simulation
+ System, we used a framework called Autodoc that allowed us to write instruction
+s into Objective-C code
+\end_layout
+
+\begin_layout Standard
+that were later harvested and turned into instructional manuals.
+ See, for example, the documentation for the [Opinion Formation model]
+\end_layout
+
+\begin_layout Standard
+(http://pj.freefaculty.org/Swarm/MySwarmCode/OpinionFormation/Opinion-Docs).
+ The
+\end_layout
+
+\begin_layout Standard
+Autodoc program was poorly documented and not easy to get, but soon after
+ that, a new coding system called Doxygen became widely available.
+ Doxygen, developed for creation of instruction manuals for C++ programs,
+ was a major success in computer programming.
+ Like Autodoc, Doxygen gave programmers a relatively convenient method to
+ explain what they were doing without wasting too much time.
+\end_layout
+
+\begin_layout Standard
+In the modern experience of most CRMDA staffers, the "documentation inside
+ code" approach is visible in the Roxygen markup method used for functions
+ in R documents.
+ Any function worth using should have Roxygen markup.
+\end_layout
+
+\begin_layout Subsection
+Where we have been
+\end_layout
+
+\begin_layout Standard
+In order to embrace the importance of using either markdown or 
+\backslash
+LaTeX, one must first abandon the idea that Microsoft Word can ever be useful
+ for serious authorship.
+ That's a big step for many graduate students and professors.
+\end_layout
+
+\begin_layout Standard
+If we look past GUI "what you see is what you get" (*wyswig*) word processors,
+ where do we go? For a long time, the only answer was 
+\backslash
+LaTeX.
+ However, there was a fatal weakness in 
+\backslash
+LaTeX.
+ It is intended for PDF output, not Web pages.
+ Exports into HTML were problematic.
+ 
+\backslash
+LaTeX
+\backslash
+ was not only difficult for some to use, but it also did not benefit from
+ fancy features that were becomming available in the Internet, especially
+ cascading style sheets and Javascript.
+\end_layout
+
+\begin_layout Standard
+This gap in the document production process created a need for a new methods.
+ In the 1990s, there was quite a bit of effort to make user friendly Web
+ page editors, so that authors could have a Word-like experience that would
+ generate HTML.
+ The end result, generally, was difficult-to-maintain HTML documents.
+ It was generally not feasible to edit and revise documents, the HTML generated
+ was both extremly complicated and generally unsatisfactory.
+\end_layout
+
+\begin_layout Standard
+Another strategy was the development of alternative markup languages.
+ In a way similar to 
+\backslash
+LaTeX, these markup languages (e.g., `docbook`) drop the idea that the user
+ should have a *wyswig* experience.
+ Instead, the author would again become a programmer who would insert symbols
+ to create sections.
+\end_layout
+
+\begin_layout Standard
+Markdown was developed as a rejection of both ugly markup documents (either
+ 
+\backslash
+LaTeX
+\backslash
+ or HTML) and *wyswig* editors.
+ The idea is that documents should be text files that are readable *as is*
+ but also convertible into other backends.
+ The "markdown" movement seeks to deliver an easier-to-edit, less difficult-to-r
+ead, and easier-to-convert format.
+ The leader is John Gruber, whose Website is boldly named ["daringfireball"](htt
+ps://daringfireball.net/projects/markdown).
+\end_layout
+
+\begin_layout Standard
+Markdown is intended to be easy-to-read, so that even if it is not compiled
+ into a backend, it might be presentable to an audience of non-programmers.
+ That general idea seems unrealistic to me, there is almost never going
+ to be an audience (for CRMDA, at least), which is eager to look at a markdown
+ file.
+ The dropback argument is that a markdown file is more easily produced by
+ a novice who does not want to learn to use 
+\backslash
+LaTeX.
+ This seems more persuasive.
+\end_layout
+
+\begin_layout Standard
+The strength of markdown is that it makes it fairly easy to produce HTML
+ documents that utilize some (not all) of the strengths of the World Wide
+ Web's most commonly used method of communication.
+\end_layout
+
+\begin_layout Standard
+Where markdown is not capable, one can still write "raw HTML" in the middle
+ of a markdown document.
+\end_layout
+
+\begin_layout Section
+Required footer 
+\end_layout
+
+\begin_layout Standard
+The guide documents we require authors include a final chunk that includes
+ the session information, to be used in bug-tracking.
+ 
+\end_layout
+
+\begin_layout Standard
+Reports do not include raw output, so it is not recommended to insert that
+ raw output in the report.
+ Instead, we ask report writers toinclude a final R chunk that saves the
+ session information in a file in the same directory as the pdf output.
+\end_layout
+
+\begin_layout Standard
+```{r session, include=F}
+\end_layout
+
+\begin_layout Standard
+zz <- "crmda-sessionInfo.Rout"
+\end_layout
+
+\begin_layout Standard
+capture.output(warnings(), file = zz)
+\end_layout
+
+\begin_layout Standard
+capture.output(sessionInfo(), file = zz, append = TRUE)
+\end_layout
+
+\begin_layout Standard
+```
+\end_layout
+
+\begin_layout Standard
+Available under
+\end_layout
+
+\begin_layout Standard
+[Created Commons license 3.0 <img src="http://crmda.dept.ku.edu/images/cc-3.0.png"
+ alt="CC BY"
+\end_layout
+
+\begin_layout Standard
+style="width: 75px;height: 20px;"/>](http://creativecommons.org/licenses/by/3.0/)
+\end_layout
+
+\begin_layout Section*
+References
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset bibtex
+LatexCommand bibtex
+bibfiles "theme/mlm"
+options "apalike2"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection*
+\begin_inset Note Note
+status open
+
+\begin_layout Subsection*
+Session Info
+\end_layout
+
+\begin_layout Plain Layout
+Session Information is usually not written into a report, but an output
+ file is created by the following pieces.
+ Please leave the next 2 chunks
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<sessioninfo, include=F>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+zz <- "stationery.Rout"
+\end_layout
+
+\begin_layout Plain Layout
+
+capture.output(sessionInfo(), file = zz, append = FALSE)
+\end_layout
+
+\begin_layout Plain Layout
+
+if (!is.null(warnings())){
+\end_layout
+
+\begin_layout Plain Layout
+
+    capture.output(warnings(), file = zz, append =  TRUE)
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<RoptionsRestore, echo=F, include=F>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+## Don't delete this.
+ It puts the interactive session options
+\end_layout
+
+\begin_layout Plain Layout
+
+## back the way they were.
+ If this is compiled within a session
+\end_layout
+
+\begin_layout Plain Layout
+
+## it is vital to do this.
+\end_layout
+
+\begin_layout Plain Layout
+
+options(opts.orig)
+\end_layout
+
+\begin_layout Plain Layout
+
+par(par.orig)
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

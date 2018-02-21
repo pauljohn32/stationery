@@ -5,6 +5,9 @@
 \usepackage{xparse}
 \usepackage{setspace}
 \usepackage{datetime}
+\usepackage{colortbl}
+% \definecolor{lightgray}{gray}{0.80}
+\definecolor{lightgray}{RGB}{0,81,186}
 \newdateformat{crmda}{\shortmonthname[\THEMONTH] \THEDAY, \THEYEAR}
 
 \ExplSyntaxOn
@@ -68,19 +71,20 @@
 }
 \cs_new_protected:Nn \report_hdr:
 {
-  \noindent
-  \begin{minipage}[t]{1\columnwidth}%
+  \noindent\begin{minipage}[t]{6.5in}%
     \begin{center}
-      \begin{tabular}[t]{>{\raggedright}p{4in}>{\centering}p{2.25in}}
-        \hline 
+      \setlength{\tabcolsep}{2pt}
+      \setlength{\arrayrulewidth}{0.6pt}
+      \begin{tabular}[t]{@{}>{\raggedright}p{4in}>{\centering}p{2.5in}@{}}
+        \arrayrulecolor{lightgray}\hline 
         \medskip{}
         \textsc{\Large{}\l_report_title_tl}{\par}
-        \medskip{}
+        \bigskip{}
+        \textcolor{lightgray}{\rule[0.5ex]{3.25in}{0.6pt}}
         & \medskip{}
-          \includegraphics[width=2in]{\l_report_rightlogo_tl}\tabularnewline
-          \hline 
-          \multicolumn{2}{>{\raggedright}p{5in}}{\medskip{}
-          
+          \includegraphics[width=2.5in]{\l_report_rightlogo_tl}
+          \tabularnewline
+         \multicolumn{2}{>{\raggedright}p{6in}}{\medskip{}
           \textbf{\l_report_first_firstname_tl {} ~ \l_report_first_lastname_tl}, ~\l_report_first_affil_tl {} ~ <\href{mailto:\l_report_first_email_tl}{\l_report_first_email_tl}>
           \bool_if:NT \l_report_twoauthors_bool
           {

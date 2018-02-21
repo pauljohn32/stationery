@@ -49,6 +49,8 @@ compileall() {
    		exit 1
 	else
 		echo "Compiling them all"
+		## check extension, ignore case
+		shopt -s nocasematch
 		for fn in *{.Rnw,.rnw,.lyx} 
 		do
 		 	compileOne "$fn"
@@ -99,6 +101,12 @@ usage() {
 	echo -e "library(crmda); $scriptname(\"filename.Rnw\""$parmstring")\n"
     echo "Add argument -v for VERBOSE output from this script."
 	echo "Any arguments described in documentation for $scriptname R function are allowed."
+	echo "CAUTION"
+    echo "Arguments that are quoted strings, such as"
+    echo "--template=\"guide-boilerplate.tex\" need special care when entered from command line."
+    echo "It is necessary to 'protect' (escape) the quotation marks."
+    echo "We suggest this style:"
+    echo "--template='\"guide-boilerplate.tex\"'"
 }
 
 

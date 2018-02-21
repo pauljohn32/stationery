@@ -1,10 +1,12 @@
 --- 
-title: "CRDMA Guides and Reports"
+title: "Stationery"
+subtitle: "CRDMA Guides and Reports"
+keywords: guides, report, pandoc, sweave, knitr
 author:
-- affiliation: CRMDA
+- name: Paul E. Johnson
+  affiliation: CRMDA
   description: Director
   email: pauljohn@ku.edu
-  name: Paul Johnson
 addr:
     l1: 1425 Jayhawk Blvd
     l2: Watson Library, Suite 470
@@ -22,9 +24,9 @@ output:
     pandoc_args: [
         --listings
     ]
-    template: theme/guide-boilerplate.tex
+    template: theme/report-boilerplate.tex
 vignette: >
-    %\VignetteIndexEntry{crmda}
+    %\VignetteIndexEntry{stationery}
     %\VignetteEngine{knitr::rmarkdown}
     %\VignetteEncoding{UTF-8}
 header-includes:
@@ -34,10 +36,10 @@ header-includes:
 -  \usepackage{fancybox}
 -  \usepackage{calc}
 -  \usepackage{subfig}
+logo: theme/logo.pdf
 logoleft: theme/logoleft.pdf
 logoright: theme/logo-vert.pdf
 fontsize: 12pt
-keywords: guides, report, pandoc, sweave, knitr
 ---
 
 
@@ -59,9 +61,9 @@ code-chunk processing engines, `Sweave` and `knitr`.
 
 
 
-# `crmda` package document templates
+# `stationery` package document templates
 
-The `crmda` package provides templates for several types of documents
+The `stationery` package provides templates for several types of documents
 using various front and backends. 
 
 ## Mix and match
@@ -127,7 +129,7 @@ Soon to appear will be "docx-report" and "docx-guide".
 
 ## Let us manage defaults for you
 
-The `crmda` package has settings that work for our documents. 
+The `stationery` package has settings that work for our documents. 
 
 Because the number of formats among which `pandoc` can convert is
 truly immense, and the number of options for each format is immense,
@@ -152,7 +154,7 @@ but not entirely, democratic in selecting styles.
  
 The Rstudio team, the authors of the packages `rmarkdown` and `knitr`,
 and the program `pandoc` have created a family of settings and default
-styles that work for their purposes. In the `crmda` package, we have
+styles that work for their purposes. In the `stationery` package, we have
 customized document templates and style sheets that override some of
 their decisions.  The functions `rmd2html` and `rmd2pdf` are
 "wrappers" that apply our organizational strategy. 
@@ -247,7 +249,7 @@ down menus.
 
 In July, 2017, I decided to change the way that the shell scripts are
 designed. Users who inspect them should see the script runs R and
-launches a function in the `crmda` package. As a result, there should
+launches a function in the `stationery` package. As a result, there should
 not be any difference in the result from running the script
 `rmd2pdf.sh` and the function inside R named `rmd2pdf`. 
 
@@ -280,17 +282,17 @@ Rscript -e "library(crmda); rmd2pdf(\"$filename\", $defaults)"
 
 The new arguments that users might insert in `defaults` should match
 the arguments that might be supplied to the `rmd2pdf` function in the
-`crmda` package.  Hence, the help page for `rmd2pdf` should be consulted
+`stationery` package.  Hence, the help page for `rmd2pdf` should be consulted
 for details. Arguments that can be specified for the `render` and
 `pdf_document` (or `html_document` if we are creating HTML output) are
 spelled out. Any defaults specified in the script, or in the function
 call to `rmd2pdf` inside R, will override the other customizations
-that are place in the `crmda` package.
+that are place in the `stationery` package.
 
 We hope that only minor customizations are needed.  The document you
 are reading now is produced with a revised version `rmd2pdf.sh`. By
 default, the `rmd2pdf` function will pull the \LaTeX\ template for
-`pandoc` from the `crmda` package's install folder.  That is to say,
+`pandoc` from the `stationery` package's install folder.  That is to say,
 the `rmd2pdf.sh` script overrides the template file that exists in the
 package install folder and instead uses the one in the theme
 subdirectory of the current document directory. 

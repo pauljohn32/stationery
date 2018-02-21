@@ -1,0 +1,114 @@
+---
+title: "A Title for Template"
+subtitle: "rmd2pdf-guide"
+guidenum: 48
+guideurl: https://crmda.ku.edu/guides
+keywords: Rmarkdown, R, documents
+author:
+- name: First Author
+  affiliation: CRMDA
+  email: first@ku.edu
+- name:  Second Author
+  affiliation: CRMDA
+  email: second@ku.edu
+- name:  Third Author
+  affiliation: i
+  email: third@ku.edu
+addr:
+    l1: 1425 Jayhawk Blvd.
+    l2: Watson Library, Suite 470
+    l3: Lawrence, KS 66045-7594
+    r1: "Web: http://crmda.ku.edu"
+    r2: "Email: crmda@ku.edu"
+    r3: "Phone: 785-864-3353"
+logoleft: theme/logoleft.pdf
+logoright: theme/logo-vert.pdf
+output: 
+  pdf_document:
+    citation_package: natbib
+    fig_caption: yes
+    latex_engine: pdflatex
+    highlight: haddock
+    pandoc_args: [
+        --listings
+    ]
+    template:  theme/guide-boilerplate.tex
+fontsize: 11pt
+bibliography: theme/mlm.bib
+header-includes:
+- \usepackage{xcolor}
+---
+
+```{r setup, include=FALSE}
+##This Invisible Chunk is required in all CRMDA documents
+tmpdir <- paste0("tmpout")
+if (!dir.exists(tmpdir)) dir.create(tmpdir, recursive = TRUE)
+knitr::opts_chunk$set(echo=TRUE, comment=NA, fig.path=paste0(tmpdir, "/p-"))
+options(width = 70)
+```
+
+```{r themecopy, include = FALSE}
+library(stationery)
+## If theme directory does not have required images or TeX files
+## we need to retrieve them and put them in "theme" directory. 
+logos <- c(logoleft = "logoleft.pdf", 
+           logoright = "logo-vert.pdf")
+files <- c("guide-boilerplate.tex", "mlm.bib")
+getFiles(logos, pkg = "stationery")
+getFiles(files, pkg = "stationery")
+```
+
+\begin{abstract}
+\noindent
+This is an abstract. Please include a terse, yet descriptive statement here of less than 200 words. It should avoid colloquialisms and polysyllabic profundities.
+\end{abstract}
+
+
+# Nuts and Bolts {-}
+
+If you DO NOT want section numbers, insert {-} to prevent the 
+compiler from inserting them.
+
+## Make minimal changes to the top part. {-}
+
+Fill in your name, title, email, tags.  Please don't change the
+pdf_document settings unless you know what you are doing.
+
+## See documentation {-}
+
+We have separate instructions in package vignettes. There is a longish
+essay on markdown formatting. There is also a companion
+"guide-instructions" file in the same directory where this skeleton is supplied.
+
+# LaTeX Syntax is allowed {-}
+
+\[
+\Sigma_{gt}=\Lambda_{gt}\Psi_{gt}\Lambda'_{gt}+\Theta_{gt}
+\]
+
+# `R` code chunks {-}
+
+This document includes R[@RCore] code chunks. Because it is a guide, 
+we expect we will need to display both R input and output.
+Guide documents have numbered listings, as you see below.
+
+
+[//]: (All guides must have this as the final stanza)
+
+# Session Info {-}
+
+Session Information is usually not written into a report, but in a
+guide file we regularly will include it as follows.
+
+```{r sessionInfo, echo = FALSE}
+sessionInfo()
+```
+
+```{r warnings, echo = FALSE}
+if(!is.null(warnings())){
+    print("Warnings:")
+    warnings()
+}
+```
+
+# References {-}

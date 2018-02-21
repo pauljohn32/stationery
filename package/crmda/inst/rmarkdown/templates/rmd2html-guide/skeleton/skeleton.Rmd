@@ -6,7 +6,7 @@ author:
    affiliation: CRMDA
    email: email1@ku.edu
  - name: Firstname2 Lastname2
-   affiliation: Dept. of Psychology, University of Kansas
+   affiliation: CRMDA
    email: email2@ku.edu
 advertise: >
    **CRMDA Guide #XX**. Please  visit 

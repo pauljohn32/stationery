@@ -1,4 +1,4 @@
-PACKAGE="crmda"
+PACKAGE="stationery"
 
 VERSION=$(awk -F": +" '/^Version/ { print $2 }' ${PACKAGE}/DESCRIPTION)
 
@@ -9,10 +9,10 @@ mkdir ${PACKAGE}.gitex
 cd ${PACKAGE}
 
 cd vignettes
-R -e "library(crmda); rmd2pdf(\"crmda.Rmd\", toc=TRUE, type = \"guide\")"
-R -e "library(crmda); rmd2pdf(\"Rmarkdown.Rmd\", toc=TRUE, type = \"report\")"
-R -e "library(crmda); rmd2pdf(\"code_chunks.Rmd\", toc=TRUE, type = \"report\")"
-R -e "library(crmda); rmd2html(\"HTML_special_features.Rmd\", toc=TRUE)"
+./rnw2pdf.sh stationery.lyx
+./rmd2pdf-report.sh code_chunks.Rmd
+./rmd2html.sh HTML_special_features.Rmd
+./rmd2pdf.sh Rmarkdown.Rmd
 cd ..
 
 ## copies UNCOMMITTED but TRACKED files.
@@ -20,22 +20,23 @@ git ls-files . | tar cT - | tar -x -C "../${PACKAGE}.gitex"
 cd ..
 
 cd ${PACKAGE}.gitex
-cp -f ../crmda/vignettes/crmda.pdf inst/doc
-cp -f ../crmda/vignettes/Rmarkdown.pdf inst/doc
-cp -f ../crmda/vignettes/code_chunks.pdf inst/doc
-cp -f ../crmda/vignettes/HTML_special_features.html inst/doc
+mkdir -p inst/doc
+cp -f ../stationery/vignettes/stationery.pdf inst/doc
+cp -f ../stationery/vignettes/Rmarkdown.pdf inst/doc
+cp -f ../stationery/vignettes/code_chunks.pdf inst/doc
+cp -f ../stationery/vignettes/HTML_special_features.html inst/doc
 cd ..
 
-R --vanilla -f runRoxygen2.R
+R --vanilla -f roxygenstationery.R
 
 
-R CMD build ${PACKAGE}.gitex --resave-data --no-build-vignettes
+R CMD build --resave-data --no-build-vignettes ${PACKAGE}.gitex 
 
 
 read -p "Run check: OK? (y or n)" result
 
 if [ $result = "y" ];  then
-R CMD check --as-cran ${PACKAGE}_${VERSION}.tar.gz
+R CMD check --as-cran --no-build-vignettes ${PACKAGE}_${VERSION}.tar.gz
 fi
 
 read -p "Install: OK? (y or n)" result

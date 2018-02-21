@@ -1,0 +1,205 @@
+%% LyX 2.2.3 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[11pt,letterpaper,english]{extarticle}
+\usepackage{lmodern}
+\renewcommand{\sfdefault}{lmss}
+\renewcommand{\ttdefault}{lmtt}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\setlength{\parskip}{\medskipamount}
+\setlength{\parindent}{0pt}
+\usepackage[authoryear]{natbib}
+
+\makeatletter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
+\special{papersize=\the\paperwidth,\the\paperheight}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
+<<echo=F>>=
+  if(exists(".orig.enc")) options(encoding = .orig.enc)
+@
+\providecommand*{\code}[1]{\texttt{#1}}
+
+\@ifundefined{date}{}{\date{}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+% Don't remove next commented line, its needed to fool Sweave
+%\usepackage{Sweave}
+
+\usepackage[includehead,includefoot,
+lmargin=1in,
+rmargin=1in,
+tmargin=0.75in,
+bmargin=1.0in,
+headheight=0pt,
+headsep=0pt,
+marginparwidth=0pt,
+footskip=1.5\baselineskip,
+]{geometry}
+
+\usepackage{multicol}
+\usepackage{listings}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{dcolumn}
+\usepackage{booktabs}
+
+% May be customized for this document
+\lstdefinestyle{custom}{
+  tabsize=2, 
+  breaklines=true, 
+  breakatwhitespace=true,
+  captionpos=b,
+  frame=single,
+  framerule=0.2pt,
+  framesep=1pt,
+  numbersep=5pt,
+  showstringspaces=false,
+  basicstyle=\normalsize\ttfamily,%
+  columns=fixed%,
+  \lst@ifdisplaystyle\scriptsize\fi,%
+  identifierstyle=,
+  keywordstyle=\bfseries,
+  commentstyle=\color{darkgreen},
+  stringstyle=,
+  backgroundcolor=\color[gray]{0.935}
+}
+
+
+
+\input{theme/reportPreambleHeader.tex}
+\input{theme/preambleFooter.tex}
+\input{theme/reportPreambleSweavel.tex}
+
+\makeatother
+
+\usepackage{babel}
+\begin{document}
+%% Fill in values of the arguments here, 
+%% If blanks are needed, must insert value " ~ "
+%% If comma needed inside value, wrap in {}.
+%% Delete secondauthor and thirdauthor if not needed
+\reportsetup{%
+  firstauthor={
+    lastname=Author,
+    firstname=First, 
+    affiliation=CRMDA,
+    email=first@ku.edu},
+ secondauthor={
+    lastname=Author, 
+    firstname=Second, 
+    affiliation=CRMDA, 
+    email=second@ku.edu},
+  thirdauthor={
+    lastname=Author, 
+    firstname=Third, 
+    affiliation=i, 
+    email=third@ku.edu}, 
+  title={A Title for Skeleton Template: rnw2pdf-report-sweave},
+  rightlogo={theme/logo.pdf},
+}
+\reporthdr
+
+<<include=FALSE,echo=FALSE, results=hide>>=
+if(!dir.exists("tmpout"))dir.create("tmpout", recursive = TRUE)
+@
+
+% Please leave this code: In document Latex options:
+\fvset{listparameters={\setlength{\topsep}{0em}}}
+\SweaveOpts{prefix.string=tmpout/t, split=TRUE, ae=FALSE, height=5, width=6}
+
+<<texcopy, include=FALSE,echo=FALSE>>=
+library(stationery)
+## If theme directory does not have required images or TeX files
+## we need to retrieve them and put them in "theme" directory. 
+logos <- c(logoright = "logo.pdf")
+texfiles <- c("reportPreambleHeader.tex", 
+              "preambleFooter.tex", 
+              "addressFooter.tex",
+              "reportPreambleSweavel.tex",
+              "mlm.bib")
+getFiles(logos, pkg = "stationery")
+getFiles(texfiles, pkg = "stationery")
+@
+
+% Please leave this chunk
+<<Roptions, echo=F, include=F>>=
+if(!dir.exists("tmpout"))dir.create("tmpout", recursive = TRUE)
+opts.orig <- options()
+options(device = pdf)
+options(width=160, prompt=" ", continue="  ")
+options(useFancyQuotes = FALSE) 
+set.seed(12345)
+par.orig <- par(no.readonly=TRUE) 
+pjmar <- c(5.1, 5.1, 1.5, 2.1) 
+options(SweaveHooks=list(fig=function() par(mar=pjmar, ps=10)))
+pdf.options(onefile=FALSE, family="Times", pointsize=10)
+@
+\begin{abstract}
+\noindent This is an abstract. Please include a terse, yet descriptive
+statement here of less than 200 words. It should avoid colloquialisms
+and polysyllabic profundities.
+\end{abstract}
+
+\section*{Nuts and Bolts}
+
+This demonstrates how to write a document that interacts with R \citep{RCore}.
+
+The sections in this document are not numbered, just for variety.
+That is easily changed.
+
+Please see the guide document which is distributed in the same folder
+as this template.
+
+\subsection*{Make minimal changes to the top part}
+
+The LaTeX sections above should be treated with caution. Make small
+changes, test whether the document compiles. Do put your title \&
+name in the top block, and of course you need to fix the logo images.
+
+Don't change document margins with LyX menus. You need to edit the
+preamble for that.
+
+We have separate instructions for the crmda package in vignettes if
+you want more detailed information about what to do.
+
+\subsection*{\protect\code{R} Code Chunks}
+
+Our report documents ALMOST NEVER show ``raw'' R code to readers
+and very seldom will they display ``raw'' R output. Almost always,
+code chunks will have the flag ``include=F'' set and the document,
+when it reveals results, will, again, almost always, display a LaTeX
+formatted table that is placed inside a floating table or a figure
+that is placed inside a floating figure object.
+
+If you don't care to embed the R code inside this document, we suggest
+it is convenient to keep another document with the R code and use
+the R split output facility to create the code chunks in the folder
+``tmpout''. Then this document can include those files \& graphs
+when necessary. That is to say, create 2 LyX files, make them work
+together.
+
+\section*{References}
+
+\bibliographystyle{apalike2}
+\bibliography{theme/mlm}
+
+\subsection*{}
+
+<<sessioninfo, include=F>>=
+zz <- "skeleton.Rout"
+capture.output(sessionInfo(), file = zz, append = FALSE)
+if (!is.null(warnings())){
+    capture.output(warnings(), file = zz, append =  TRUE)
+}
+@
+
+<<RoptionsRestore, echo=F, include=F>>=
+## Don't delete this. It puts the interactive session options
+## back the way they were. If this is compiled within a session
+## it is vital to do this.
+options(opts.orig)
+par(par.orig)
+@
+\end{document}
