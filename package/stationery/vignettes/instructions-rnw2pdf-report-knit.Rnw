@@ -5,7 +5,7 @@
 \renewcommand{\sfdefault}{lmss}
 \renewcommand{\ttdefault}{lmtt}
 \usepackage[T1]{fontenc}
-\usepackage[latin9]{inputenc}
+\usepackage[utf8]{inputenc}
 \setlength{\parskip}{\medskipamount}
 \setlength{\parindent}{0pt}
 
@@ -61,9 +61,9 @@ footskip=1.5\baselineskip,
 
 \usepackage{babel}
 \usepackage{listings}
-\addto\captionsamerican{\renewcommand{\lstlistingname}{Listing}}
-\addto\captionsenglish{\renewcommand{\lstlistingname}{Listing}}
-\renewcommand{\lstlistingname}{Listing}
+\addto\captionsamerican{\renewcommand{\lstlistingname}{\inputencoding{latin9}Listing}}
+\addto\captionsenglish{\renewcommand{\lstlistingname}{\inputencoding{latin9}Listing}}
+\renewcommand{\lstlistingname}{\inputencoding{latin9}Listing}
 
 \begin{document}
 %% Fill in values of the arguments here, 
@@ -213,12 +213,12 @@ The syntax for knitr code chunks is slightly different than the syntax
 for Sweave chunks. Many of the options are identical. The syntax for
 a code chunk in both cases is like so
 
-\begin{lstlisting}
+\inputencoding{latin9}\begin{lstlisting}
 < <chunkname, eval=T, include=T, echo=T>>=
 # R code here
 @
 \end{lstlisting}
-
+\inputencoding{utf8}
 where ``\code{T}'' stands for TRUE and it can be changed to ``\code{F}''
 for FALSE. These are explained in the vignette ``code\_chunks''.
 Briefly:
