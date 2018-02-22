@@ -95,7 +95,7 @@ Instead, use "\textbackslash{}input{filename}".
 
 Session Information is usually not written into a report, but an output file is created by the following pieces.
 
-```{r session, include=F}
+```{r session, include=FALSE}
 zz <- gsub("Rmd", "Rout", knitr::current_input())
 capture.output(sessionInfo(), file = zz, append = FALSE)
 if (!is.null(warnings())){
@@ -103,7 +103,7 @@ if (!is.null(warnings())){
 }
 ```
 
-```{r session20, include=F}
+```{r session20, include=FALSE}
 ## Don't delete this. It puts the interactive session options
 ## back the way they were. If this is compiled within a session
 ## it is vital to do this.

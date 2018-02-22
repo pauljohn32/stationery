@@ -98,9 +98,9 @@ logicalmkup
 knitr
 \end_modules
 \maintain_unincluded_children false
-\language american
+\language english
 \language_package default
-\inputencoding iso8859-15
+\inputencoding utf8
 \fontencoding global
 \font_roman "lmodern" "default"
 \font_sans "lmss" "default"
