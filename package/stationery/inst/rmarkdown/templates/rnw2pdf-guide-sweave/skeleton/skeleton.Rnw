@@ -108,6 +108,11 @@ footskip=1.5\baselineskip,
 }
 \guidehdr
 
+% tmpout directory must exist first
+<<tmpout, echo=FALSE, include=FALSE, results=hide>>=
+if(!dir.exists("tmpout")) dir.create("tmpout", showWarnings=FALSE)
+@
+
 % In document Latex options:
 \fvset{listparameters={\setlength{\topsep}{0em}}}
 \SweaveOpts{prefix.string=tmpout/t, split=TRUE, ae=FALSE, height=3, width=5}
@@ -119,7 +124,6 @@ options(useFancyQuotes = FALSE)
 set.seed(12345)
 options(SweaveHooks=list(fig=function() par(ps=10)))
 pdf.options(onefile=FALSE,family="Times",pointsize=10)
-if(!dir.exists("tmpout")) dir.create("tmpout", showWarnings=FALSE)
 @
 
 <<texcopy, include=FALSE, echo=FALSE, results=hide>>=

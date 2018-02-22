@@ -162,6 +162,26 @@ status open
 
 \begin_layout Plain Layout
 
+% tmpout directory must exist first
+\end_layout
+
+\begin_layout Plain Layout
+
+<<tmpout, echo=FALSE, include=FALSE, results=hide>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+if(!dir.exists("tmpout")) dir.create("tmpout", showWarnings=FALSE)
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\begin_layout Plain Layout
+
 % In document Latex options:
 \end_layout
 
@@ -337,7 +357,7 @@ beamer
 \end_layout
 
 \begin_layout Author
-Paul Johnson
+Who Are You
 \begin_inset Flex InstituteMark
 status open
 
@@ -360,12 +380,12 @@ status collapsed
 
 \end_inset
 
-Center for Research Methods and Data Analysis 
+Name of Unit Where You Are 
 \begin_inset Argument 1
 status open
 
 \begin_layout Plain Layout
-K.U.
+NUWUA
 \end_layout
 
 \end_inset

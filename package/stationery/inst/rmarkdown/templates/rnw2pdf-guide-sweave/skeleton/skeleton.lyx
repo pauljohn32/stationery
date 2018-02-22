@@ -292,6 +292,35 @@ status open
 
 \begin_layout Plain Layout
 
+% tmpout directory must exist first
+\end_layout
+
+\begin_layout Plain Layout
+
+<<tmpout, echo=FALSE, include=FALSE, results=hide>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+if(!dir.exists("tmpout")) dir.create("tmpout", showWarnings=FALSE)
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
 % In document Latex options:
 \end_layout
 
@@ -355,11 +384,6 @@ options(SweaveHooks=list(fig=function() par(ps=10)))
 \begin_layout Plain Layout
 
 pdf.options(onefile=FALSE,family="Times",pointsize=10)
-\end_layout
-
-\begin_layout Plain Layout
-
-if(!dir.exists("tmpout")) dir.create("tmpout", showWarnings=FALSE)
 \end_layout
 
 \begin_layout Plain Layout

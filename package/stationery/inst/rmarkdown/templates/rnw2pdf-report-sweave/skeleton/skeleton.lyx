@@ -273,6 +273,26 @@ status open
 
 \begin_layout Plain Layout
 
+% tmpout directory must exist first
+\end_layout
+
+\begin_layout Plain Layout
+
+<<tmpout, echo=FALSE, include=FALSE, results=hide>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+if(!dir.exists("tmpout")) dir.create("tmpout", showWarnings=FALSE)
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\begin_layout Plain Layout
+
 % Please leave this code: In document Latex options:
 \end_layout
 
@@ -361,11 +381,6 @@ options(SweaveHooks=list(fig=function() par(mar=pjmar, ps=10)))
 \begin_layout Plain Layout
 
 pdf.options(onefile=FALSE, family="Times", pointsize=10)
-\end_layout
-
-\begin_layout Plain Layout
-
-if(!dir.exists("tmpout"))dir.create("tmpout", recursive = TRUE)
 \end_layout
 
 \begin_layout Plain Layout

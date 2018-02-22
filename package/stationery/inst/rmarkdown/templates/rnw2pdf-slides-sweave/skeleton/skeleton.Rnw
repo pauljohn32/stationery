@@ -70,6 +70,10 @@
 
 \usepackage{babel}
 \begin{document}
+% tmpout directory must exist first
+<<tmpout, echo=FALSE, include=FALSE, results=hide>>=
+if(!dir.exists("tmpout")) dir.create("tmpout", showWarnings=FALSE)
+@
 % In document Latex options:
 \fvset{listparameters={\setlength{\topsep}{0em}}}
 \SweaveOpts{prefix.string=tmpout/t,split=T,ae=F,height=4.5,width=7}
@@ -100,9 +104,9 @@ getFiles(texfiles, pkg = "stationery")
 
 \title[beamer]{Skeleton rmd2pdf-slides-sweave}
 
-\author{Paul Johnson\inst{1}}
+\author{Who Are You\inst{1}}
 
-\institute[K.U.]{\inst{1}Center for Research Methods and Data Analysis }
+\institute[NUWUA]{\inst{1}Name of Unit Where You Are }
 
 \date{2018}
 

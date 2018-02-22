@@ -101,6 +101,10 @@ footskip=1.5\baselineskip,
 }
 \reporthdr
 
+% tmpout directory must exist first
+<<tmpout, echo=FALSE, include=FALSE, results=hide>>=
+if(!dir.exists("tmpout")) dir.create("tmpout", showWarnings=FALSE)
+@
 % Please leave this code: In document Latex options:
 \fvset{listparameters={\setlength{\topsep}{0em}}}
 \SweaveOpts{prefix.string=tmpout/t, split=TRUE, ae=FALSE, height=5, width=6}
@@ -117,7 +121,6 @@ par.orig <- par(no.readonly=TRUE)
 pjmar <- c(5.1, 5.1, 1.5, 2.1) 
 options(SweaveHooks=list(fig=function() par(mar=pjmar, ps=10)))
 pdf.options(onefile=FALSE, family="Times", pointsize=10)
-if(!dir.exists("tmpout"))dir.create("tmpout", recursive = TRUE)
 @
 
 <<texcopy, include=FALSE,echo=FALSE>>=
