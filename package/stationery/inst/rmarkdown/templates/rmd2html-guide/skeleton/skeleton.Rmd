@@ -113,7 +113,7 @@ if(!is.null(warnings())){
 }
 ```
 
-```{r RoptionsRestore, echo=F, include=F}
+```{r RoptionsRestore, echo=FALSE, include=FALSE}
 ## Don't delete this. It puts the interactive session options
 ## back the way they were. If this is compiled within a session
 ## it is vital to do this.
