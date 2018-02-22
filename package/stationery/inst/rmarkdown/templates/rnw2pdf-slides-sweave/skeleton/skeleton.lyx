@@ -162,30 +162,6 @@ status open
 
 \begin_layout Plain Layout
 
-<<include=T, echo=F>>=
-\end_layout
-
-\begin_layout Plain Layout
-
-if(!file.exists("tmpout")) dir.create("tmpout", showWarnings=F)
-\end_layout
-
-\begin_layout Plain Layout
-
-@
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
 % In document Latex options:
 \end_layout
 
@@ -264,6 +240,11 @@ options(SweaveHooks=list(fig=function() par(mar=pjmar, ps=12, xpd=F)))
 \begin_layout Plain Layout
 
 pdf.options(onefile=F,family="Times",pointsize=12)
+\end_layout
+
+\begin_layout Plain Layout
+
+if(!file.exists("tmpout")) dir.create("tmpout", showWarnings=F)
 \end_layout
 
 \begin_layout Plain Layout
@@ -576,11 +557,11 @@ frametitle{This is a template, not instructions}
 \end_layout
 
 \begin_layout Itemize
-See the companion document 
+See the vignette 
 \begin_inset Quotes eld
 \end_inset
 
-slides-instructions
+instructions
 \begin_inset Quotes erd
 \end_inset
 
@@ -588,10 +569,11 @@ slides-instructions
 \end_layout
 
 \begin_layout Itemize
-We need one cite to compile this, so here's a good one: 
+We need one cite to compile this, so here's a good one.
+ All of this is brought to us by R 
 \begin_inset CommandInset citation
 LatexCommand citep
-key "diggle_analysis_2013"
+key "RCore"
 
 \end_inset
 

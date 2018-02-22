@@ -108,40 +108,33 @@ footskip=1.5\baselineskip,
 }
 \guidehdr
 
-<<include=FALSE,echo=FALSE,results=hide>>=
-if(!dir.exists("tmpout")) dir.create("tmpout", showWarnings=FALSE)
-@
-
 % In document Latex options:
 \fvset{listparameters={\setlength{\topsep}{0em}}}
 \SweaveOpts{prefix.string=tmpout/t, split=TRUE, ae=FALSE, height=3, width=5}
 
-<<include=FALSE>>=
-if(!dir.exists("tmpout")) dir.create("tmpout", showWarnings=FALSE)
-@
-
-<<texcopy, include=FALSE,echo=FALSE>>=
-library(stationery)
-## If theme directory does not have required images or TeX files
-## we need to retrieve them and put them in "theme" directory. 
-logos <- c(logoleft = "logoleft.pdf", 
-            logoright = "logo-vert.pdf")
-texfiles <- c("guidePreambleHeader.tex", 
-              "preambleFooter.tex", 
-              "guidePreambleSweavel.tex",
-              "addressFooter.tex",
-              "mlm.bib")
-getFiles(logos, pkg = "stationery")
-getFiles(texfiles, pkg = "stationery")
-@
-
-<<Roptions, echo=FALSE, echo=FALSE>>=
+<<Roptions, echo=FALSE, include=FALSE, results=hide>>=
 opts.orig <- options()
 options(width=100, prompt=" ", continue="  ")
 options(useFancyQuotes = FALSE) 
 set.seed(12345)
 options(SweaveHooks=list(fig=function() par(ps=10)))
 pdf.options(onefile=FALSE,family="Times",pointsize=10)
+if(!dir.exists("tmpout")) dir.create("tmpout", showWarnings=FALSE)
+@
+
+<<texcopy, include=FALSE, echo=FALSE, results=hide>>=
+library(stationery)
+## If theme directory does not have required images or TeX files
+## we need to retrieve them and put them in "theme" directory. 
+logos <- c(logoleft = "logoleft.pdf", 
+           logoright = "logo-vert.pdf",
+           address = "addressFooter.tex")
+texfiles <- c("guidePreambleHeader.tex", 
+              "preambleFooter.tex", 
+              "guidePreambleSweavel.tex",
+              "mlm.bib")
+getFiles(logos, pkg = "stationery")
+getFiles(texfiles, pkg = "stationery")
 @
 
 %The listings class used here allows within-document style

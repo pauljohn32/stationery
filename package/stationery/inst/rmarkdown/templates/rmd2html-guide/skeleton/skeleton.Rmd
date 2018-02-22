@@ -33,6 +33,7 @@ outdir <- paste0("tmpout")
 if (!file.exists(outdir)) dir.create(outdir, recursive = TRUE)
 knitr::opts_chunk$set(echo=TRUE, comment=NA, fig.path=paste0(outdir, "/p-"))
 opts.orig <- options()
+par.orig <- par(no.readonly=TRUE)
 options(width = 70)
 ```
 
@@ -112,6 +113,13 @@ if(!is.null(warnings())){
 }
 ```
 
+```{r RoptionsRestore, echo=F, include=F}
+## Don't delete this. It puts the interactive session options
+## back the way they were. If this is compiled within a session
+## it is vital to do this.
+options(opts.orig)
+par(par.orig)
+```
 
 Available under
 [Created Commons license 3.0 <img src="http://crmda.dept.ku.edu/images/cc-3.0.png" alt="CC BY"

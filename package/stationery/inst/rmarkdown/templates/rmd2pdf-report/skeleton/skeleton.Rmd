@@ -12,12 +12,12 @@ author:
   affiliation: Institute
   email: third@ku.edu
 addr:
-    l1: 1425 Jayhawk Blvd.
-    l2: Watson Library, Suite 470
-    l3: Lawrence, KS 66045-7594
+    l1: address row 1
+    l2: address row 2
+    l3: City State Zipcode
     r1: "Web: http://crmda.ku.edu"
-    r2: "Email: crmda@ku.edu" 
-    r3: "Phone: 785-864-3353"
+    r2: "Email: author@ku.edu"
+    r3: "Phone: 123-345-5678"
 logo: theme/logo.pdf
 output: 
   pdf_document:
@@ -37,6 +37,7 @@ header-includes:
 ```{r setup, include=FALSE}
 ##This Invisible Chunk is required in all CRMDA documents
 opts.orig <- options()
+par.orig <- par(no.readonly = TRUE)
 tmpdir <- paste0("tmpout")
 if (!dir.exists(tmpdir)) dir.create(tmpdir, recursive = TRUE)
 knitr::opts_chunk$set(echo=TRUE, comment=NA, fig.path=paste0(tmpdir, "/p-"))
@@ -107,4 +108,5 @@ if (!is.null(warnings())){
 ## back the way they were. If this is compiled within a session
 ## it is vital to do this.
 options(opts.orig)
+par(par.orig)
 ```

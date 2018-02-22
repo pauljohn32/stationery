@@ -15,12 +15,12 @@ author:
   affiliation: i
   email: third@ku.edu
 addr:
-    l1: 1425 Jayhawk Blvd.
-    l2: Watson Library, Suite 470
-    l3: Lawrence, KS 66045-7594
+    l1: address row 1
+    l2: address row 2
+    l3: City State Zipcode
     r1: "Web: http://crmda.ku.edu"
-    r2: "Email: crmda@ku.edu"
-    r3: "Phone: 785-864-3353"
+    r2: "Email: author@ku.edu"
+    r3: "Phone: 123-345-5678"
 logoleft: theme/logoleft.pdf
 logoright: theme/logo-vert.pdf
 output: 
@@ -44,6 +44,8 @@ header-includes:
 tmpdir <- paste0("tmpout")
 if (!dir.exists(tmpdir)) dir.create(tmpdir, recursive = TRUE)
 knitr::opts_chunk$set(echo=TRUE, comment=NA, fig.path=paste0(tmpdir, "/p-"))
+opts.orig <- options()
+par.orig <- par(no.readonly = TRUE)
 options(width = 70)
 ```
 
@@ -51,8 +53,7 @@ options(width = 70)
 library(stationery)
 ## If theme directory does not have required images or TeX files
 ## we need to retrieve them and put them in "theme" directory. 
-logos <- c(logoleft = "logoleft.pdf", 
-           logoright = "logo-vert.pdf")
+logos <- c(logoleft = "logoleft.pdf", logoright = "logo-vert.pdf")
 files <- c("guide-boilerplate.tex", "mlm.bib")
 getFiles(logos, pkg = "stationery")
 getFiles(files, pkg = "stationery")
@@ -64,7 +65,7 @@ This is an abstract. Please include a terse, yet descriptive statement here of l
 \end{abstract}
 
 
-# Nuts and Bolts {-}
+# Header Level 1 without number {-}
 
 If you DO NOT want section numbers, insert {-} to prevent the 
 compiler from inserting them.
@@ -76,9 +77,7 @@ pdf_document settings unless you know what you are doing.
 
 ## See documentation {-}
 
-We have separate instructions in package vignettes. There is a longish
-essay on markdown formatting. There is also a companion
-"guide-instructions" file in the same directory where this skeleton is supplied.
+We have separate instructions in package vignettes.
 
 # LaTeX Syntax is allowed {-}
 
@@ -88,9 +87,12 @@ essay on markdown formatting. There is also a companion
 
 # `R` code chunks {-}
 
-This document includes R[@RCore] code chunks. Because it is a guide, 
-we expect we will need to display both R input and output.
-Guide documents have numbered listings, as you see below.
+This document includes R[@RCore] code chunks.
+
+```{r}
+x <- rnorm(100)
+mean(x)
+```
 
 
 [//]: (All guides must have this as the final stanza)
@@ -110,5 +112,14 @@ if(!is.null(warnings())){
     warnings()
 }
 ```
+
+```{r RoptionsRestore, echo=F, include=F}
+## Don't delete this. It puts the interactive session options
+## back the way they were. If this is compiled within a session
+## it is vital to do this.
+options(opts.orig)
+par(par.orig)
+```
+
 
 # References {-}

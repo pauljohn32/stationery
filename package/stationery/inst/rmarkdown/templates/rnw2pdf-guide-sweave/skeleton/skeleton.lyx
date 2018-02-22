@@ -292,30 +292,6 @@ status open
 
 \begin_layout Plain Layout
 
-<<include=FALSE,echo=FALSE,results=hide>>=
-\end_layout
-
-\begin_layout Plain Layout
-
-if(!dir.exists("tmpout")) dir.create("tmpout", showWarnings=FALSE)
-\end_layout
-
-\begin_layout Plain Layout
-
-@
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
 % In document Latex options:
 \end_layout
 
@@ -348,111 +324,7 @@ status open
 
 \begin_layout Plain Layout
 
-<<include=FALSE>>=
-\end_layout
-
-\begin_layout Plain Layout
-
-if(!dir.exists("tmpout")) dir.create("tmpout", showWarnings=FALSE)
-\end_layout
-
-\begin_layout Plain Layout
-
-@
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-<<texcopy, include=FALSE,echo=FALSE>>=
-\end_layout
-
-\begin_layout Plain Layout
-
-library(stationery)
-\end_layout
-
-\begin_layout Plain Layout
-
-## If theme directory does not have required images or TeX files
-\end_layout
-
-\begin_layout Plain Layout
-
-## we need to retrieve them and put them in "theme" directory.
- 
-\end_layout
-
-\begin_layout Plain Layout
-
-logos <- c(logoleft = "logoleft.pdf", 
-\end_layout
-
-\begin_layout Plain Layout
-
-            logoright = "logo-vert.pdf")
-\end_layout
-
-\begin_layout Plain Layout
-
-texfiles <- c("guidePreambleHeader.tex", 
-\end_layout
-
-\begin_layout Plain Layout
-
-              "preambleFooter.tex", 
-\end_layout
-
-\begin_layout Plain Layout
-
-              "guidePreambleSweavel.tex",
-\end_layout
-
-\begin_layout Plain Layout
-
-              "addressFooter.tex",
-\end_layout
-
-\begin_layout Plain Layout
-
-              "mlm.bib")
-\end_layout
-
-\begin_layout Plain Layout
-
-getFiles(logos, pkg = "stationery")
-\end_layout
-
-\begin_layout Plain Layout
-
-getFiles(texfiles, pkg = "stationery")
-\end_layout
-
-\begin_layout Plain Layout
-
-@
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-<<Roptions, echo=FALSE, echo=FALSE>>=
+<<Roptions, echo=FALSE, include=FALSE, results=hide>>=
 \end_layout
 
 \begin_layout Plain Layout
@@ -483,6 +355,91 @@ options(SweaveHooks=list(fig=function() par(ps=10)))
 \begin_layout Plain Layout
 
 pdf.options(onefile=FALSE,family="Times",pointsize=10)
+\end_layout
+
+\begin_layout Plain Layout
+
+if(!dir.exists("tmpout")) dir.create("tmpout", showWarnings=FALSE)
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<texcopy, include=FALSE, echo=FALSE, results=hide>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+library(stationery)
+\end_layout
+
+\begin_layout Plain Layout
+
+## If theme directory does not have required images or TeX files
+\end_layout
+
+\begin_layout Plain Layout
+
+## we need to retrieve them and put them in "theme" directory.
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+logos <- c(logoleft = "logoleft.pdf", 
+\end_layout
+
+\begin_layout Plain Layout
+
+           logoright = "logo-vert.pdf",
+\end_layout
+
+\begin_layout Plain Layout
+
+           address = "addressFooter.tex")
+\end_layout
+
+\begin_layout Plain Layout
+
+texfiles <- c("guidePreambleHeader.tex", 
+\end_layout
+
+\begin_layout Plain Layout
+
+              "preambleFooter.tex", 
+\end_layout
+
+\begin_layout Plain Layout
+
+              "guidePreambleSweavel.tex",
+\end_layout
+
+\begin_layout Plain Layout
+
+              "mlm.bib")
+\end_layout
+
+\begin_layout Plain Layout
+
+getFiles(logos, pkg = "stationery")
+\end_layout
+
+\begin_layout Plain Layout
+
+getFiles(texfiles, pkg = "stationery")
 \end_layout
 
 \begin_layout Plain Layout

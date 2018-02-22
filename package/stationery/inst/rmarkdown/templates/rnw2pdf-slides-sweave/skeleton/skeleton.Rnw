@@ -70,10 +70,6 @@
 
 \usepackage{babel}
 \begin{document}
-<<include=T, echo=F>>=
-if(!file.exists("tmpout")) dir.create("tmpout", showWarnings=F)
-@
-
 % In document Latex options:
 \fvset{listparameters={\setlength{\topsep}{0em}}}
 \SweaveOpts{prefix.string=tmpout/t,split=T,ae=F,height=4.5,width=7}
@@ -88,6 +84,7 @@ pjmar <- c(4.1, 4.1, 1.5, 2.1)
 par(mar=pjmar, ps=11)
 options(SweaveHooks=list(fig=function() par(mar=pjmar, ps=12, xpd=F)))
 pdf.options(onefile=F,family="Times",pointsize=12)
+if(!file.exists("tmpout")) dir.create("tmpout", showWarnings=F)
 @
 
 <<texcopy, include=FALSE>>=
@@ -135,8 +132,9 @@ getFiles(texfiles, pkg = "stationery")
 \begin{frame}
 \frametitle{This is a template, not instructions}
 \begin{itemize}
-\item See the companion document ``slides-instructions'' for HOWTO information.
-\item We need one cite to compile this, so here's a good one: \citep{diggle_analysis_2013}
+\item See the vignette ``instructions'' for HOWTO information.
+\item We need one cite to compile this, so here's a good one. All of this
+is brought to us by R \citep{RCore}
 \end{itemize}
 \end{frame}
 

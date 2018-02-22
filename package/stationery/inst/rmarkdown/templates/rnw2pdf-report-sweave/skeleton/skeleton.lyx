@@ -273,30 +273,6 @@ status open
 
 \begin_layout Plain Layout
 
-<<include=FALSE,echo=FALSE, results=hide>>=
-\end_layout
-
-\begin_layout Plain Layout
-
-if(!dir.exists("tmpout"))dir.create("tmpout", recursive = TRUE)
-\end_layout
-
-\begin_layout Plain Layout
-
-@
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
 % Please leave this code: In document Latex options:
 \end_layout
 
@@ -329,87 +305,12 @@ status open
 
 \begin_layout Plain Layout
 
-<<texcopy, include=FALSE,echo=FALSE>>=
-\end_layout
-
-\begin_layout Plain Layout
-
-library(stationery)
-\end_layout
-
-\begin_layout Plain Layout
-
-## If theme directory does not have required images or TeX files
-\end_layout
-
-\begin_layout Plain Layout
-
-## we need to retrieve them and put them in "theme" directory.
- 
-\end_layout
-
-\begin_layout Plain Layout
-
-logos <- c(logoright = "logo.pdf")
-\end_layout
-
-\begin_layout Plain Layout
-
-texfiles <- c("reportPreambleHeader.tex", 
-\end_layout
-
-\begin_layout Plain Layout
-
-              "preambleFooter.tex", 
-\end_layout
-
-\begin_layout Plain Layout
-
-              "addressFooter.tex",
-\end_layout
-
-\begin_layout Plain Layout
-
-              "reportPreambleSweavel.tex",
-\end_layout
-
-\begin_layout Plain Layout
-
-              "mlm.bib")
-\end_layout
-
-\begin_layout Plain Layout
-
-getFiles(logos, pkg = "stationery")
-\end_layout
-
-\begin_layout Plain Layout
-
-getFiles(texfiles, pkg = "stationery")
-\end_layout
-
-\begin_layout Plain Layout
-
-@
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
 % Please leave this chunk
 \end_layout
 
 \begin_layout Plain Layout
 
-<<Roptions, echo=F, include=F>>=
+<<Roptions, echo=F, include=F, results=hide>>=
 \end_layout
 
 \begin_layout Plain Layout
@@ -464,6 +365,81 @@ pdf.options(onefile=FALSE, family="Times", pointsize=10)
 
 \begin_layout Plain Layout
 
+if(!dir.exists("tmpout"))dir.create("tmpout", recursive = TRUE)
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<texcopy, include=FALSE,echo=FALSE>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+library(stationery)
+\end_layout
+
+\begin_layout Plain Layout
+
+## If theme directory does not have required images or TeX files
+\end_layout
+
+\begin_layout Plain Layout
+
+## we need to retrieve them and put them in "theme" directory.
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+logos <- c(logoright = "logo.pdf", address = "addressFooter.tex")
+\end_layout
+
+\begin_layout Plain Layout
+
+texfiles <- c("reportPreambleHeader.tex", 
+\end_layout
+
+\begin_layout Plain Layout
+
+              "preambleFooter.tex",
+\end_layout
+
+\begin_layout Plain Layout
+
+              "reportPreambleSweavel.tex",
+\end_layout
+
+\begin_layout Plain Layout
+
+              "mlm.bib")
+\end_layout
+
+\begin_layout Plain Layout
+
+getFiles(logos, pkg = "stationery")
+\end_layout
+
+\begin_layout Plain Layout
+
+getFiles(texfiles, pkg = "stationery")
+\end_layout
+
+\begin_layout Plain Layout
+
 @
 \end_layout
 
@@ -481,28 +457,22 @@ This is an abstract.
 \end_layout
 
 \begin_layout Section*
-Nuts and Bolts
+Section with no number
 \end_layout
 
 \begin_layout Standard
-This demonstrates how to write a document that interacts with R 
+How to write reports with R 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "RCore"
 
 \end_inset
 
-.
+ using the Sweave code chunk engine.
 \end_layout
 
 \begin_layout Standard
-The sections in this document are not numbered, just for variety.
- That is easily changed.
-\end_layout
-
-\begin_layout Standard
-Please see the guide document which is distributed in the same folder as
- this template.
+Please see the guide documents which are distributed with the package.
 \end_layout
 
 \begin_layout Subsection*
@@ -510,20 +480,16 @@ Make minimal changes to the top part
 \end_layout
 
 \begin_layout Standard
-The LaTeX sections above should be treated with caution.
- Make small changes, test whether the document compiles.
- Do put your title & name in the top block, and of course you need to fix
- the logo images.
+Make small changes, test whether the document compiles.
 \end_layout
 
 \begin_layout Standard
-Don't change document margins with LyX menus.
+Start by putting your title & name in the top block.
+\end_layout
+
+\begin_layout Standard
+Reminder: Don't change document margins with LyX menus.
  You need to edit the preamble for that.
-\end_layout
-
-\begin_layout Standard
-We have separate instructions for the crmda package in vignettes if you
- want more detailed information about what to do.
 \end_layout
 
 \begin_layout Subsection*
@@ -548,42 +514,13 @@ raw
 \begin_inset Quotes erd
 \end_inset
 
- R code to readers and very seldom will they display 
-\begin_inset Quotes eld
-\end_inset
-
-raw
-\begin_inset Quotes erd
-\end_inset
-
- R output.
- Almost always, code chunks will have the flag 
-\begin_inset Quotes eld
-\end_inset
-
-include=F
-\begin_inset Quotes erd
-\end_inset
-
- set and the document, when it reveals results, will, again, almost always,
- display a LaTeX formatted table that is placed inside a floating table
- or a figure that is placed inside a floating figure object.
-\end_layout
-
-\begin_layout Standard
-If you don't care to embed the R code inside this document, we suggest it
- is convenient to keep another document with the R code and use the R split
- output facility to create the code chunks in the folder 
-\begin_inset Quotes eld
-\end_inset
-
-tmpout
-\begin_inset Quotes erd
-\end_inset
-
-.
- Then this document can include those files & graphs when necessary.
- That is to say, create 2 LyX files, make them work together.
+ R code to readers.
+ Write chunks the generate figures or legal LaTeX output, which are then
+ included with LaTeX macros like 
+\backslash
+include or 
+\backslash
+includegrphics.
 \end_layout
 
 \begin_layout Section*

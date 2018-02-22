@@ -1,8 +1,8 @@
 Package: stationery 
 Type: Package
 Title: The KU CRMDA Private Package
-Version: 0.61
-Date: 2018-02-21
+Version: 0.62
+Date: 2018-02-22
 Authors@R: c(person("Paul", "Johnson", role = c("aut", "cre"), email = "pauljohn@ku.edu"),
              person("Brent", "Kaplan", role = c("ctb"), email = "bkaplan4@ku.edu"),
              person("Meghan", "Sullivan", role = c("ctb"), email = "meg.sullivan@ku.edu"),
@@ -12,11 +12,11 @@ Maintainer: Paul Johnson <pauljohn@ku.edu>
 Description: Templates, guides, and scripts for
     writing documents in LaTeX and Rmarkdown to produce
     guides, slides, and reports.
-License: Artistic-2.0 
+License: CC BY-SA 4.0
 Imports:
     kutils, rmarkdown, knitr
 Suggests:
-    rockchalk
+    rockchalk, xtable, lavaan
 LazyData: TRUE
 RoxygenNote: 6.0.1
 VignetteBuilder: knitr, stationery, utils

@@ -101,30 +101,12 @@ footskip=1.5\baselineskip,
 }
 \reporthdr
 
-<<include=FALSE,echo=FALSE, results=hide>>=
-if(!dir.exists("tmpout"))dir.create("tmpout", recursive = TRUE)
-@
-
 % Please leave this code: In document Latex options:
 \fvset{listparameters={\setlength{\topsep}{0em}}}
 \SweaveOpts{prefix.string=tmpout/t, split=TRUE, ae=FALSE, height=5, width=6}
 
-<<texcopy, include=FALSE,echo=FALSE>>=
-library(stationery)
-## If theme directory does not have required images or TeX files
-## we need to retrieve them and put them in "theme" directory. 
-logos <- c(logoright = "logo.pdf")
-texfiles <- c("reportPreambleHeader.tex", 
-              "preambleFooter.tex", 
-              "addressFooter.tex",
-              "reportPreambleSweavel.tex",
-              "mlm.bib")
-getFiles(logos, pkg = "stationery")
-getFiles(texfiles, pkg = "stationery")
-@
-
 % Please leave this chunk
-<<Roptions, echo=F, include=F>>=
+<<Roptions, echo=F, include=F, results=hide>>=
 if(!dir.exists("tmpout"))dir.create("tmpout", recursive = TRUE)
 opts.orig <- options()
 options(device = pdf)
@@ -135,6 +117,20 @@ par.orig <- par(no.readonly=TRUE)
 pjmar <- c(5.1, 5.1, 1.5, 2.1) 
 options(SweaveHooks=list(fig=function() par(mar=pjmar, ps=10)))
 pdf.options(onefile=FALSE, family="Times", pointsize=10)
+if(!dir.exists("tmpout"))dir.create("tmpout", recursive = TRUE)
+@
+
+<<texcopy, include=FALSE,echo=FALSE>>=
+library(stationery)
+## If theme directory does not have required images or TeX files
+## we need to retrieve them and put them in "theme" directory. 
+logos <- c(logoright = "logo.pdf", address = "addressFooter.tex")
+texfiles <- c("reportPreambleHeader.tex", 
+              "preambleFooter.tex",
+              "reportPreambleSweavel.tex",
+              "mlm.bib")
+getFiles(logos, pkg = "stationery")
+getFiles(texfiles, pkg = "stationery")
 @
 \begin{abstract}
 \noindent This is an abstract. Please include a terse, yet descriptive
@@ -142,43 +138,27 @@ statement here of less than 200 words. It should avoid colloquialisms
 and polysyllabic profundities.
 \end{abstract}
 
-\section*{Nuts and Bolts}
+\section*{Section with no number}
 
-This demonstrates how to write a document that interacts with R \citep{RCore}.
+How to write reports with R \citep{RCore} using the Sweave code chunk
+engine.
 
-The sections in this document are not numbered, just for variety.
-That is easily changed.
-
-Please see the guide document which is distributed in the same folder
-as this template.
+Please see the guide documents which are distributed with the package.
 
 \subsection*{Make minimal changes to the top part}
 
-The LaTeX sections above should be treated with caution. Make small
-changes, test whether the document compiles. Do put your title \&
-name in the top block, and of course you need to fix the logo images.
+Make small changes, test whether the document compiles.
 
-Don't change document margins with LyX menus. You need to edit the
-preamble for that.
+Start by putting your title \& name in the top block.
 
-We have separate instructions for the crmda package in vignettes if
-you want more detailed information about what to do.
+Reminder: Don't change document margins with LyX menus. You need to
+edit the preamble for that.
 
 \subsection*{\protect\code{R} Code Chunks}
 
-Our report documents ALMOST NEVER show ``raw'' R code to readers
-and very seldom will they display ``raw'' R output. Almost always,
-code chunks will have the flag ``include=F'' set and the document,
-when it reveals results, will, again, almost always, display a LaTeX
-formatted table that is placed inside a floating table or a figure
-that is placed inside a floating figure object.
-
-If you don't care to embed the R code inside this document, we suggest
-it is convenient to keep another document with the R code and use
-the R split output facility to create the code chunks in the folder
-``tmpout''. Then this document can include those files \& graphs
-when necessary. That is to say, create 2 LyX files, make them work
-together.
+Our report documents ALMOST NEVER show ``raw'' R code to readers.
+Write chunks the generate figures or legal LaTeX output, which are
+then included with LaTeX macros like \textbackslash{}include or \textbackslash{}includegrphics.
 
 \section*{References}
 

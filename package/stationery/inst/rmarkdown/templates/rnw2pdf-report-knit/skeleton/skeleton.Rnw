@@ -118,50 +118,48 @@ footskip=1.5\baselineskip,
   firstauthor={
     lastname=Author,
     firstname=First, 
-    affiliation=CRMDA,
-    email=first@ku.edu},
+    affiliation=Where Are U,
+    email=first@where.edu},
  secondauthor={
     lastname=Author, 
     firstname=Second, 
-    affiliation=CRMDA, 
-    email=second@ku.edu},
+    affiliation=Where Are U Too, 
+    email=second@where.edu},
   thirdauthor={
     lastname=Author, 
     firstname=Third, 
-    affiliation=i, 
-    email=third@ku.edu}, 
+    affiliation=Where Are U, 
+    email=third@where.edu}, 
   title={A Title for Skeleton Template: rnw2pdf-report-knit},
   rightlogo={theme/logo.pdf},
 }
 \reporthdr
 
-<<include=FALSE, echo=FALSE>>=
-if(!dir.exists("tmpout"))dir.create("tmpout", recursive = TRUE)
-@
-
-<<knitr10,include=FALSE,echo=FALSE>>=
+<<knitr10, include=FALSE, echo=FALSE>>=
 library(knitr)
+if(!dir.exists("tmpout"))dir.create("tmpout", recursive = TRUE)
 opts_chunk$set(fig.path='tmpout/t-', split=TRUE, ae=FALSE, comment=NA,
                fig.height=5, fig.width=6)
 @
 
-<<texcopy, include=FALSE>>=
+<<texcopy, include=FALSE, echo=FALSE>>=
 library(stationery)
 ## If theme directory does not have required images or TeX files
 ## we need to retrieve them and put them in "theme" directory. 
-logos <- c(logoright = "logo.pdf")
+logos <- c(logoright = "logo.pdf", 
+              address = "addressFooter.tex")
 texfiles <- c("reportPreambleHeader.tex", 
-              "preambleFooter.tex", 
-              "addressFooter.tex",
+              "preambleFooter.tex",
               "reportPreambleKnitr.tex")
 getFiles(logos, pkg = "stationery")
 getFiles(texfiles, pkg = "stationery")
 @
 
-<<Roptions, echo=FALSE>>=
+<<Roptions, echo=FALSE, include=FALSE>>=
 opts.orig <- options()
+par.orig <- par(no.readonly=TRUE)
 options(device = pdf)
-options(width=90, prompt=" ", continue="  ")
+options(width=70, prompt=" ", continue="  ")
 options(useFancyQuotes = FALSE) 
 set.seed(12345)
 pdf.options(onefile=FALSE, family="Times", pointsize=10)
@@ -215,5 +213,6 @@ if (!is.null(warnings())){
 ## back the way they were. If this is compiled within a session
 ## it is vital to do this.
 options(opts.orig)
+par(par.orig)
 @
 \end{document}

@@ -281,7 +281,7 @@ guidesetup{%
 
 \begin_layout Plain Layout
 
-  number=-1,
+  number=-1
 \end_layout
 
 \begin_layout Plain Layout
@@ -371,17 +371,17 @@ logos <- c(logoleft = "logoleft.pdf",
 
 \begin_layout Plain Layout
 
-           logoright = "logo-vert.pdf")
+           logoright = "logo-vert.pdf",
+\end_layout
+
+\begin_layout Plain Layout
+
+           address = "preambleFooter.tex")
 \end_layout
 
 \begin_layout Plain Layout
 
 texfiles <- c("guidePreambleHeader.tex", 
-\end_layout
-
-\begin_layout Plain Layout
-
-              "preambleFooter.tex",
 \end_layout
 
 \begin_layout Plain Layout
@@ -426,6 +426,11 @@ status open
 \begin_layout Plain Layout
 
 opts.orig <- options()
+\end_layout
+
+\begin_layout Plain Layout
+
+par.orig <- par(no.readonly=TRUE)
 \end_layout
 
 \begin_layout Plain Layout
@@ -655,6 +660,11 @@ status open
 \begin_layout Plain Layout
 
 options(opts.orig)
+\end_layout
+
+\begin_layout Plain Layout
+
+par(par.orig)
 \end_layout
 
 \begin_layout Plain Layout

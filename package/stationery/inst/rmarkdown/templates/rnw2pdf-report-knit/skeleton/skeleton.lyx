@@ -220,12 +220,12 @@ reportsetup{%
 
 \begin_layout Plain Layout
 
-    affiliation=CRMDA,
+    affiliation=Where Are U,
 \end_layout
 
 \begin_layout Plain Layout
 
-    email=first@ku.edu},
+    email=first@where.edu},
 \end_layout
 
 \begin_layout Plain Layout
@@ -245,12 +245,12 @@ reportsetup{%
 
 \begin_layout Plain Layout
 
-    affiliation=CRMDA, 
+    affiliation=Where Are U Too, 
 \end_layout
 
 \begin_layout Plain Layout
 
-    email=second@ku.edu},
+    email=second@where.edu},
 \end_layout
 
 \begin_layout Plain Layout
@@ -270,12 +270,12 @@ reportsetup{%
 
 \begin_layout Plain Layout
 
-    affiliation=i, 
+    affiliation=Where Are U, 
 \end_layout
 
 \begin_layout Plain Layout
 
-    email=third@ku.edu}, 
+    email=third@where.edu}, 
 \end_layout
 
 \begin_layout Plain Layout
@@ -311,36 +311,17 @@ status open
 
 \begin_layout Plain Layout
 
-<<include=FALSE, echo=FALSE>>=
-\end_layout
-
-\begin_layout Plain Layout
-
-if(!dir.exists("tmpout"))dir.create("tmpout", recursive = TRUE)
-\end_layout
-
-\begin_layout Plain Layout
-
-@
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-<<knitr10,include=FALSE,echo=FALSE>>=
+<<knitr10, include=FALSE, echo=FALSE>>=
 \end_layout
 
 \begin_layout Plain Layout
 
 library(knitr)
+\end_layout
+
+\begin_layout Plain Layout
+
+if(!dir.exists("tmpout"))dir.create("tmpout", recursive = TRUE)
 \end_layout
 
 \begin_layout Plain Layout
@@ -369,7 +350,7 @@ status open
 
 \begin_layout Plain Layout
 
-<<texcopy, include=FALSE>>=
+<<texcopy, include=FALSE, echo=FALSE>>=
 \end_layout
 
 \begin_layout Plain Layout
@@ -390,7 +371,12 @@ library(stationery)
 
 \begin_layout Plain Layout
 
-logos <- c(logoright = "logo.pdf")
+logos <- c(logoright = "logo.pdf", 
+\end_layout
+
+\begin_layout Plain Layout
+
+              address = "addressFooter.tex")
 \end_layout
 
 \begin_layout Plain Layout
@@ -400,12 +386,7 @@ texfiles <- c("reportPreambleHeader.tex",
 
 \begin_layout Plain Layout
 
-              "preambleFooter.tex", 
-\end_layout
-
-\begin_layout Plain Layout
-
-              "addressFooter.tex",
+              "preambleFooter.tex",
 \end_layout
 
 \begin_layout Plain Layout
@@ -439,7 +420,7 @@ status open
 
 \begin_layout Plain Layout
 
-<<Roptions, echo=FALSE>>=
+<<Roptions, echo=FALSE, include=FALSE>>=
 \end_layout
 
 \begin_layout Plain Layout
@@ -449,12 +430,17 @@ opts.orig <- options()
 
 \begin_layout Plain Layout
 
+par.orig <- par(no.readonly=TRUE)
+\end_layout
+
+\begin_layout Plain Layout
+
 options(device = pdf)
 \end_layout
 
 \begin_layout Plain Layout
 
-options(width=90, prompt=" ", continue="  ")
+options(width=70, prompt=" ", continue="  ")
 \end_layout
 
 \begin_layout Plain Layout
@@ -667,6 +653,11 @@ status open
 \begin_layout Plain Layout
 
 options(opts.orig)
+\end_layout
+
+\begin_layout Plain Layout
+
+par(par.orig)
 \end_layout
 
 \begin_layout Plain Layout
