@@ -30,7 +30,7 @@ compileOne(){
 		## check extension, ignore case, allows "rmd" or "RMD"
 		shopt -s nocasematch
 		if [[ "$exten" == "Rmd" ]]; then
-			cmd="library(crmda); $scriptname(\"$filename\"$parmstring)"
+			cmd="library(stationery); $scriptname(\"$filename\"$parmstring)"
 			if [[ ${VERBOSE} -gt 0 ]]; then echo -e "Running: $cmd"; fi
 			Rscript -e "${cmd}"
 		else
@@ -99,7 +99,7 @@ usage() {
     echo "Current arguments:"
     printarr parms
     echo -e "\nThis script reformats and sends request to R as:\n"
-    echo -e "library(crmda); $scriptname(\"filename.Rmd\""$parmstring")\n"
+    echo -e "library(stationery); $scriptname(\"filename.Rmd\""$parmstring")\n"
     echo "Add argument -v for VERBOSE output."
     echo "Any arguments described in documentation for $scriptname R function are allowed."
     echo "CAUTION"
