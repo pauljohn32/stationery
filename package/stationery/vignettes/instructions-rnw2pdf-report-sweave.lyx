@@ -208,35 +208,6 @@ status open
 
 \begin_layout Plain Layout
 
-% Please leave this chunk
-\end_layout
-
-\begin_layout Plain Layout
-
-<<echo=F, include=FALSE>>=
-\end_layout
-
-\begin_layout Plain Layout
-
-if(!dir.exists("tmpout"))dir.create("tmpout", recursive = TRUE)
-\end_layout
-
-\begin_layout Plain Layout
-
-@
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
 % Please leave this code: In document Latex options:
 \end_layout
 
@@ -269,7 +240,7 @@ status open
 
 \begin_layout Plain Layout
 
-<<texcopy, include=FALSE,echo=FALSE>>=
+<<texcopy, include=FALSE, echo=FALSE, results=hide>>=
 \end_layout
 
 \begin_layout Plain Layout
@@ -344,7 +315,7 @@ status open
 
 \begin_layout Plain Layout
 
-<<Roptions, echo=F, include=FALSE>>=
+<<Roptions, echo=F, include=FALSE,results=hide>>=
 \end_layout
 
 \begin_layout Plain Layout
@@ -390,6 +361,11 @@ options(SweaveHooks=list(fig=function() par(mar=pjmar, ps=10)))
 \begin_layout Plain Layout
 
 pdf.options(onefile=FALSE, family="Times", pointsize=10)
+\end_layout
+
+\begin_layout Plain Layout
+
+if(!dir.exists("tmpout"))dir.create("tmpout", recursive = TRUE)
 \end_layout
 
 \begin_layout Plain Layout

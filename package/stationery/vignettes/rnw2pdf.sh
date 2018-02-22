@@ -8,10 +8,11 @@ scriptname=`basename $0 .sh`
 ## Default argument settings
 pwd=`pwd`
 declare -A parms
-parms[engine]=\"Sweave\"
+parms[engine]=\"knitr\"
 parms[verbose]=FALSE
+parms[clean]=TRUE
 parms[tangle]=TRUE
-## VERBOSE is BASH flag, will cause more script output,
+## VERBOSE is local variable, will cause more script output,
 ## and set parms[verbose]=TRUE
 VERBOSE=0
 ## DEBUG if for author of this script, for fixing arg parsing. Not for users
@@ -27,9 +28,9 @@ compileOne(){
 		## check extension, ignore case
 		shopt -s nocasematch
 		if [[ ("$exten" -eq "Rnw") || ( "$exten" -eq "lyx") ]]; then
-			cmd="library(crmda); $scriptname(\"$filename\"$parmstring)"
+			cmd="library(stationery); $scriptname(\"$filename\"$parmstring)"
 			if [[ ${VERBOSE} -gt 0 ]]; then echo -e "Running: $cmd"; fi
-			Rscript -e ${cmd}
+			Rscript -e "${cmd}"
 		else
 			echo -e "Error: $filename. Extension should be \"Rnw\" or \"lyx\""
 		fi
@@ -48,6 +49,8 @@ compileall() {
    		exit 1
 	else
 		echo "Compiling them all"
+		## check extension, ignore case
+		shopt -s nocasematch
 		for fn in *{.Rnw,.rnw,.lyx} 
 		do
 		 	compileOne "$fn"
@@ -78,6 +81,7 @@ printarr() {
 
 ## builds $parmstring by concatenating key=value pairs
 catarr() {
+	parmstring=""
 	declare -n __p="$1"
 	for k in "${!__p[@]}"
 	do parmstring+=", $k=${__p[$k]}"
@@ -88,13 +92,21 @@ catarr() {
 
 ## Usage instruction.  
 usage() {
-	echo -e "\nUsage: $0 --arg=value <filename.Rnw>".
+	echo -e "\nUsage: $0 --arg="value" filename.[Rnw,lyx]".
 	echo "Current arguments:"
 	printarr parms
+	catarr parms
+	showme "${parmstring}"
     echo -e "\nThis script reformats and sends request to R:\n"
-	echo -e "library(crmda); $scriptname(\"filename.Rnw\""$parmstring")\n"
-    echo "Add argument -v for VERBOSE output."
+	echo -e "library(stationery); $scriptname(\"filename.Rnw\""$parmstring")\n"
+    echo "Add argument -v for VERBOSE output from this script."
 	echo "Any arguments described in documentation for $scriptname R function are allowed."
+	echo "CAUTION"
+    echo "Arguments that are quoted strings, such as"
+    echo "--template=\"guide-boilerplate.tex\" need special care when entered from command line."
+    echo "It is necessary to 'protect' (escape) the quotation marks."
+    echo "We suggest this style:"
+    echo "--template='\"guide-boilerplate.tex\"'"
 }
 
 
@@ -145,7 +157,6 @@ done
 
 parmstring=""
 catarr parms
-## echo "parmstring: $parmstring"
 
 ## No shifts inside there, so must throw away arguments
 ## that were processed

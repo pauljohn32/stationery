@@ -6,21 +6,25 @@ author:
 - name: Paul Johnson 
   affiliation: CRMDA
   description: Director
-  email: crmda@ku.edu
+  email: pauljohn@ku.edu
 - name:  Brent Kaplan 
   affiliation: CRMDA
   description: GRA
-  email: crmda@ku.edu
+  email: bkaplan4@ku.edu
 output: 
   pdf_document:
     citation_package: natbib
     keep_tex: true
     fig_caption: true
     latex_engine: pdflatex
-    template:  "`r system.file('theme/guide-boilerplate.tex', package = 'crmda')`"
+    template:  "theme/guide-boilerplate.tex"
     pandoc_args: [
       "--listings"
     ]
+vignette: >
+    %\VignetteIndexEntry{rmd2pdf-guide}
+    %\VignetteEngine{knitr::rmarkdown}
+    %\VignetteEncoding{UTF-8}	
 addr:
     l1: 1425 Jayhawk Blvd
     l2: Watson Library, Suite 470

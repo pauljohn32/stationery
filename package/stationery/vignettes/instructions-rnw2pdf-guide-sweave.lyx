@@ -6,6 +6,10 @@
 \origin unavailable
 \textclass article
 \begin_preamble
+% \VignetteIndexEntry{rnw2pdf-guide-sweave}
+% \VignetteEngine{Sweave}
+% \VignetteBuilder{stationery::rnw2pdf}
+
 % Following comment is required. Do not delete it.
 %\usepackage{Sweave}
 
@@ -268,7 +272,37 @@ status open
 
 \begin_layout Plain Layout
 
-<<include=FALSE,echo=FALSE,results=hide>>=
+<<Roptions, echo=FALSE, include=FALSE, results=hide>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+opts.orig <- options()
+\end_layout
+
+\begin_layout Plain Layout
+
+options(width=100, prompt=" ", continue="  ")
+\end_layout
+
+\begin_layout Plain Layout
+
+options(useFancyQuotes = FALSE) 
+\end_layout
+
+\begin_layout Plain Layout
+
+set.seed(12345)
+\end_layout
+
+\begin_layout Plain Layout
+
+options(SweaveHooks=list(fig=function() par(ps=10)))
+\end_layout
+
+\begin_layout Plain Layout
+
+pdf.options(onefile=FALSE,family="Times",pointsize=10)
 \end_layout
 
 \begin_layout Plain Layout
@@ -310,7 +344,7 @@ topsep}{0em}}}
 
 
 \backslash
-SweaveOpts{prefix.string=tmpout/t, split=TRUE, ae=FALSE, height=3, width=5}
+SweaveOpts{prefix.string=tmpout/t, split=FALSE, ae=FALSE, height=3, width=5}
 \end_layout
 
 \end_inset
@@ -324,31 +358,7 @@ status open
 
 \begin_layout Plain Layout
 
-<<include=FALSE>>=
-\end_layout
-
-\begin_layout Plain Layout
-
-if(!dir.exists("tmpout")) dir.create("tmpout", showWarnings=FALSE)
-\end_layout
-
-\begin_layout Plain Layout
-
-@
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-<<texcopy, include=FALSE,echo=FALSE>>=
+<<texcopy, include=FALSE, echo=FALSE, results=hide>>=
 \end_layout
 
 \begin_layout Plain Layout
@@ -405,55 +415,6 @@ getFiles(logos, pkg = "stationery")
 \begin_layout Plain Layout
 
 getFiles(texfiles, pkg = "stationery")
-\end_layout
-
-\begin_layout Plain Layout
-
-@
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-<<Roptions, echo=FALSE, echo=FALSE>>=
-\end_layout
-
-\begin_layout Plain Layout
-
-opts.orig <- options()
-\end_layout
-
-\begin_layout Plain Layout
-
-options(width=100, prompt=" ", continue="  ")
-\end_layout
-
-\begin_layout Plain Layout
-
-options(useFancyQuotes = FALSE) 
-\end_layout
-
-\begin_layout Plain Layout
-
-set.seed(12345)
-\end_layout
-
-\begin_layout Plain Layout
-
-options(SweaveHooks=list(fig=function() par(ps=10)))
-\end_layout
-
-\begin_layout Plain Layout
-
-pdf.options(onefile=FALSE,family="Times",pointsize=10)
 \end_layout
 
 \begin_layout Plain Layout
@@ -988,9 +949,17 @@ huge}
 
 \begin_layout Plain Layout
 
+<<rnorm1replay>>=
+\end_layout
 
-\backslash
-input{tmpout/t-rnorm1.tex}
+\begin_layout Plain Layout
+
+<<rnorm1>>
+\end_layout
+
+\begin_layout Plain Layout
+
+@
 \end_layout
 
 \begin_layout Plain Layout
@@ -1250,6 +1219,11 @@ status open
 
 \begin_layout Plain Layout
 
+cat(or, file="tmpout/t-pois11.tex")
+\end_layout
+
+\begin_layout Plain Layout
+
 cat(or)
 \end_layout
 
@@ -1371,12 +1345,14 @@ pois10
 
 .
  Because we have the R Sweave argument split=T in the above, the code file
- is written separately and we can retrieve it with an input statement:
+ is written separately and we can retrieve it with an input statement like
+ so:
 \end_layout
 
 \begin_deeper
 \begin_layout Standard
-\begin_inset ERT
+\begin_inset listings
+inline false
 status open
 
 \begin_layout Plain Layout
@@ -1391,10 +1367,17 @@ input{tmpout/t-pois10}
 
 \end_layout
 
+\begin_layout Standard
+Because this note is included as an R vignette, and the R packaging policy
+ prohibits the use of split=T in vignettes, this approach cannot be used
+ in this document.
+ 
+\end_layout
+
 \end_deeper
 \begin_layout Enumerate
-An standard approach using Sweave itself, is to create another chunk and
- then display it inside double 
+An standard approach using Sweave itself, without split, is to create another
+ chunk and then display it inside double 
 \begin_inset Quotes eld
 \end_inset
 
@@ -1443,7 +1426,8 @@ Line wrap
 
 \begin_layout Standard
 This chunk shows what happens if the R input long.
- The linewrapping prevents code input from running into the margin.
+ The line wrapping power of the listings class prevents code input from
+ running into the margin.
 \end_layout
 
 \begin_layout Standard

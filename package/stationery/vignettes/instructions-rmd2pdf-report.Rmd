@@ -20,7 +20,7 @@ addr:
 logo: theme/logo.pdf  
 output: 
   pdf_document:
-    keep_tex: true
+    keep_tex: false 
     fig_caption: true
     latex_engine: pdflatex
     citation_package: natbib
@@ -28,6 +28,10 @@ output:
     pandoc_args: [
       "--listings"
     ]
+vignette: >
+    %\VignetteIndexEntry{rmd2pdf-report}
+    %\VignetteEngine{knitr::rmarkdown}
+    %\VignetteEncoding{UTF-8}	
 table: true
 fontsize: 12pt
 header-includes:

@@ -180,30 +180,6 @@ status open
 
 \begin_layout Plain Layout
 
-<<include=T, echo=F>>=
-\end_layout
-
-\begin_layout Plain Layout
-
-if(!file.exists("tmpout")) dir.create("tmpout", showWarnings=F)
-\end_layout
-
-\begin_layout Plain Layout
-
-@
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
 % In document Latex options:
 \end_layout
 
@@ -236,7 +212,12 @@ status open
 
 \begin_layout Plain Layout
 
-<<Roptions, echo=F>>=
+<<Roptions, echo=FALSE, include=FALSE, results=hide>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+opts.orig <- options()
 \end_layout
 
 \begin_layout Plain Layout
@@ -256,17 +237,12 @@ set.seed(12345)
 
 \begin_layout Plain Layout
 
-op <- par() 
+par.orig <- par(no.readonly=TRUE) 
 \end_layout
 
 \begin_layout Plain Layout
 
 pjmar <- c(4.1, 4.1, 1.5, 2.1)
-\end_layout
-
-\begin_layout Plain Layout
-
-##pjmar <- par("mar")
 \end_layout
 
 \begin_layout Plain Layout
@@ -286,6 +262,11 @@ pdf.options(onefile=F,family="Times",pointsize=12)
 
 \begin_layout Plain Layout
 
+if(!file.exists("tmpout")) dir.create("tmpout", showWarnings=F)
+\end_layout
+
+\begin_layout Plain Layout
+
 @
 \end_layout
 
@@ -300,7 +281,7 @@ status open
 
 \begin_layout Plain Layout
 
-<<texcopy, include=FALSE>>=
+<<texcopy, include=FALSE, results=hide>>=
 \end_layout
 
 \begin_layout Plain Layout
@@ -1536,6 +1517,52 @@ status open
 \begin_layout Plain Layout
 
 sessionInfo()
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<RoptionsRestore, echo=F, include=F>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+## Don't delete this.
+ It puts the interactive session options
+\end_layout
+
+\begin_layout Plain Layout
+
+## back the way they were.
+ If this is compiled within a session
+\end_layout
+
+\begin_layout Plain Layout
+
+## it is vital to do this.
+\end_layout
+
+\begin_layout Plain Layout
+
+options(opts.orig)
+\end_layout
+
+\begin_layout Plain Layout
+
+par(par.orig)
 \end_layout
 
 \begin_layout Plain Layout

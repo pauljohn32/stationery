@@ -18,6 +18,11 @@
 
 \@ifundefined{date}{}{\date{}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+% \VignetteIndexEntry{rnw2pdf-guide-knit}
+% \VignetteEngine{knitr}
+% \VignetteBuilder{stationery::rnw2pdf}
+
+
 \usepackage[includehead, includefoot,
 lmargin=1in,
 rmargin=1in,
@@ -91,25 +96,28 @@ footskip=1.5\baselineskip,
     firstname=Second, 
     affiliation=CRMDA, 
     email=second@ku.edu}, 
- thirdauthor={
-    lastname=Author,
-    firstname=Third, 
-    affiliation=Dept of Statistics,
-    email=third@ku.edu}, 
   url={https://crmda.ku.edu/guides},
-  keywords={single-authoring, just one},
-  title={Guide for using knitr with Guide Documents},
+  keywords={stationery, guide, knitr},
+  title={Instructions for guides using knitted code chunks},
   leftlogo={theme/logoleft.pdf},
   rightlogo={theme/logo-vert.pdf},
   number=48,
 }
 \guidehdr
 
+<<Roptions, echo=FALSE>>=
+opts.orig <- options()
+options(width=75, prompt=" ", continue="  ")
+options(useFancyQuotes = FALSE) 
+set.seed(12345)
+pdf.options(onefile=FALSE,family="Times",pointsize=10)
+if(!dir.exists("tmpout")) dir.create("tmpout", showWarnings=FALSE)
+@
+
 <<knitropts, echo=FALSE>>=
 ## Chunk output 
 library(knitr)
-if(!dir.exists("tmpout")) dir.create("tmpout", showWarnings=FALSE)
-opts_chunk$set(fig.path="tmpout/t-", split=TRUE, 
+opts_chunk$set(fig.path="tmpout/t-", split=FALSE, 
                ae=FALSE, fig.height=3, fig.width=5, comment=NA)
 @
 
@@ -118,21 +126,14 @@ library(stationery)
 ## If theme directory does not have required images or TeX files
 ## we need to retrieve them and put them in "theme" directory. 
 logos <- c(logoleft = "logoleft.pdf", 
-           logoright = "logo-vert.pdf")
+           logoright = "logo-vert.pdf",
+	       address = "addressFooter.tex")
 texfiles <- c("guidePreambleHeader.tex", 
               "preambleFooter.tex", 
               "guidePreambleKnitr.tex",
-              "addressFooter.tex", "mlm.bib")
+              "mlm.bib")
 getFiles(logos, pkg = "crmda")
 getFiles(texfiles, pkg = "crmda")
-@
-
-<<Roptions, echo=FALSE>>=
-opts.orig <- options()
-options(width=75, prompt=" ", continue="  ")
-options(useFancyQuotes = FALSE) 
-set.seed(12345)
-pdf.options(onefile=FALSE,family="Times",pointsize=10)
 @
 \begin{abstract}
 \noindent This is an abstract. Please include a terse, yet descriptive
@@ -253,9 +254,10 @@ from the rockchalk package is the following. As you see, the output
 ``splats'' into the document, it is not in a floating figure or
 table.
 
-<<pois10, results='asis', eval=FALSE>>=
+<<pois10, eval=FALSE>>=
 library(rockchalk)
 or <- outreg(list("My Poisson"= m1), varLabels = c("x" = "A Normal Predictor"), tight = FALSE)
+cat(or, file="tmpout/t-pois15.tex")
 cat(or)
 @
 
@@ -273,13 +275,6 @@ typically-preferred format for presentation of tables in guides.
 \input{tmpout/t-pois15.tex}
 \end{table}
 
-<<opts20, include=F>>=
-## Don't delete this. It puts the interactive session options
-## back the way they were. If this is compiled within a session
-## it is vital to do this.
-options(opts.orig)
-@
-
 \section{References}
 
 \bibliographystyle{apalike2}
@@ -294,7 +289,7 @@ replication.
 sessionInfo()
 if(!is.null(warnings())){
     print("Warnings:")
-    warnings()}
+    warnings()}utreg(list("My Poisson"= m1), varLabels = c("x" = "A Normal Predictor"), tight = FALSE)
 @
 
 <<session20, include=F>>=

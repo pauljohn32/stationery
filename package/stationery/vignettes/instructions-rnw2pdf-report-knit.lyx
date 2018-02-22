@@ -6,6 +6,11 @@
 \origin unavailable
 \textclass scrartcl
 \begin_preamble
+% \VignetteIndexEntry{rnw2pdf-report-knit}
+% \VignetteEngine{knitr}
+% \VignetteBuilder{stationery::rnw2pdf}
+
+
 \usepackage[includehead,includefoot,
 margin=1in,
 rmargin=1in,
@@ -23,27 +28,6 @@ footskip=1.5\baselineskip,
 \usepackage{xcolor}
 \usepackage[yyyymmdd,hhmmss]{datetime}
 
-
-\lstset{tabsize=2, breaklines=true, 
-  breakatwhitespace=true,
-  %language=R,
-  captionpos=b,
-  frame=single,
-  framerule=0.2pt,
-  framesep=1pt,
-  % numbers=left,% not in reports
-  % numberstyle=\tiny,%not in reports
-  numbersep=5pt,
-  showstringspaces=false,
-  basicstyle=\footnotesize,
-  identifierstyle=,
-  keywordstyle=\bfseries,
-  commentstyle=\color{darkgreen},
-  stringstyle=,
-  backgroundcolor=\color[gray]{0.935}
-}
-
-
 \usepackage{dcolumn}
 \usepackage{booktabs}
 \usepackage{multicol}
@@ -52,39 +36,6 @@ footskip=1.5\baselineskip,
 %% I want to use listings in the document and I want nice/same as knitr.
 %% Does knitr provide all of these settings for other listing uses outside
 %% weaved part?
-\usepackage{fancyvrb}
-\fvset{listparameters={\setlength{\topsep}{0em}}}
-\usepackage{listings}
-\def\Sweavesize{\normalsize} 
-\def\Rcolor{\color{black}} 
-\def\Rbackground{\color[gray]{0.95}}
-\providecommand{\Rcolor}{\color[rgb]{0, 0.5, 0.5}}
-%%\providecommand{\Routcolor}{\color[rgb]{0.461, 0.039, 0.102}}
-\providecommand{\Routcolor}{\color[rgb]{1.0, 0.0, 0.0}}
-\providecommand{\Rcommentcolor}{\color[rgb]{0.101, 0.043, 0.432}}
-
-\providecommand{\Rbackground}{\color[gray]{0.95}}
-\providecommand{\Routbackground}{\color[gray]{0.80}}
-% Can specify \color[gray]{1} for white background or just \color{white}
-
-
-\lstdefinestyle{Rstyle}{fancyvrb=false,
-                        frame=none,
-                        escapechar=`,
-                        language=R,%
-                        basicstyle={\Rcolor\Sweavesize},%
-                        backgroundcolor=\Rbackground,%
-                        showstringspaces=false,%
-                        keywordstyle=\Rcolor,%
-                        commentstyle={\Rcommentcolor\ttfamily\itshape},%
-                        literate={<<-}{{$\twoheadleftarrow$}}2{~}{{$\sim$}}1{<=}{{$\leq$}}2{>=}{{$\geq$}}2{^}{{$^{\scriptstyle\wedge}$}}1,%
-                        alsoother={$},%
-                        alsoletter={.<-},%
-                        otherkeywords={!,!=,~,$,*,\&,\%/\%,\%*\%,\%\%,<-,<<-,/},%
-                        escapeinside={(*}{*)}}%
-
-\lstset{tabsize=2, breaklines=true, style=Rstyle}
-
 
 
 \input{theme/reportPreambleHeader.tex}
@@ -210,17 +161,17 @@ reportsetup{%
 
 \begin_layout Plain Layout
 
-    lastname=Sullivan,
+    lastname=Johnson,
 \end_layout
 
 \begin_layout Plain Layout
 
-    firstname=Meghan, 
+    firstname=Paul~E., 
 \end_layout
 
 \begin_layout Plain Layout
 
-    affiliation=CRMDA,
+    affiliation=Director{,}~CRMDA,
 \end_layout
 
 \begin_layout Plain Layout
@@ -235,12 +186,12 @@ reportsetup{%
 
 \begin_layout Plain Layout
 
-    lastname=Author, 
+    lastname=Sullivan, 
 \end_layout
 
 \begin_layout Plain Layout
 
-    firstname=Second, 
+    firstname=Meghan, 
 \end_layout
 
 \begin_layout Plain Layout
@@ -255,32 +206,7 @@ reportsetup{%
 
 \begin_layout Plain Layout
 
-  thirdauthor={
-\end_layout
-
-\begin_layout Plain Layout
-
-    lastname=Author, 
-\end_layout
-
-\begin_layout Plain Layout
-
-    firstname=Third, 
-\end_layout
-
-\begin_layout Plain Layout
-
-    affiliation=i, 
-\end_layout
-
-\begin_layout Plain Layout
-
-    email=third@ku.edu}, 
-\end_layout
-
-\begin_layout Plain Layout
-
-  title={Another Very Long Title: With a Possibly Long Subtitle},
+  title={Instructions for rnw2pdf reports with knitted chunks},
 \end_layout
 
 \begin_layout Plain Layout
@@ -311,7 +237,37 @@ status open
 
 \begin_layout Plain Layout
 
-<<include=FALSE, echo=FALSE>>=
+<<Roptions, echo=FALSE>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+opts.orig <- options()
+\end_layout
+
+\begin_layout Plain Layout
+
+options(device = pdf)
+\end_layout
+
+\begin_layout Plain Layout
+
+options(width=160, prompt=" ", continue="  ")
+\end_layout
+
+\begin_layout Plain Layout
+
+options(useFancyQuotes = FALSE) 
+\end_layout
+
+\begin_layout Plain Layout
+
+set.seed(12345)
+\end_layout
+
+\begin_layout Plain Layout
+
+pdf.options(onefile=FALSE, family="Times", pointsize=10)
 \end_layout
 
 \begin_layout Plain Layout
@@ -335,7 +291,7 @@ status open
 
 \begin_layout Plain Layout
 
-<<knitr10,include=FALSE,echo=FALSE>>=
+<<knitr10, include=FALSE, echo=FALSE>>=
 \end_layout
 
 \begin_layout Plain Layout
@@ -345,7 +301,7 @@ library(knitr)
 
 \begin_layout Plain Layout
 
-opts_chunk$set(fig.path='tmpout/t-', split=TRUE, ae=FALSE, comment=NA,
+opts_chunk$set(fig.path='tmpout/t-', split=FALSE, ae=FALSE, comment=NA,
 \end_layout
 
 \begin_layout Plain Layout
@@ -392,7 +348,7 @@ library(stationery)
 
 \begin_layout Plain Layout
 
-logos <- c(logoright = "logo.pdf")
+logos <- c(logoright = "logo.pdf", "addressFooter.tex")
 \end_layout
 
 \begin_layout Plain Layout
@@ -403,11 +359,6 @@ texfiles <- c("reportPreambleHeader.tex",
 \begin_layout Plain Layout
 
               "preambleFooter.tex", 
-\end_layout
-
-\begin_layout Plain Layout
-
-              "addressFooter.tex",
 \end_layout
 
 \begin_layout Plain Layout
@@ -423,55 +374,6 @@ getFiles(logos, pkg = "stationery")
 \begin_layout Plain Layout
 
 getFiles(texfiles, pkg = "stationery")
-\end_layout
-
-\begin_layout Plain Layout
-
-@
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-<<Roptions, echo=FALSE>>=
-\end_layout
-
-\begin_layout Plain Layout
-
-opts.orig <- options()
-\end_layout
-
-\begin_layout Plain Layout
-
-options(device = pdf)
-\end_layout
-
-\begin_layout Plain Layout
-
-options(width=160, prompt=" ", continue="  ")
-\end_layout
-
-\begin_layout Plain Layout
-
-options(useFancyQuotes = FALSE) 
-\end_layout
-
-\begin_layout Plain Layout
-
-set.seed(12345)
-\end_layout
-
-\begin_layout Plain Layout
-
-pdf.options(onefile=FALSE, family="Times", pointsize=10)
 \end_layout
 
 \begin_layout Plain Layout
@@ -525,6 +427,7 @@ We suggest you
 \begin_layout Enumerate
 Compile this document 
 \emph on
+./rnw2pdf.sh --tangle=FALSE --engine='"knitr"' instructions-rnw2pdf-report-knit.Rnw
 as is 
 \emph default
 to test your setup
@@ -753,7 +656,7 @@ status open
 
 \begin_layout Plain Layout
 
-<<chunkname, eval=T, include=T, echo=T>>=
+< <chunkname, eval=T, include=T, echo=T>>=
 \end_layout
 
 \begin_layout Plain Layout
@@ -966,23 +869,8 @@ summary(m1)
 \end_layout
 
 \begin_layout Standard
-In a report, we do not usually have R output in the raw form
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-input{tmpout/t-m1.tex}
-\end_layout
-
-\end_inset
-
-
+In a report, we do not usually have R output in the raw form as you see
+ above.
 \end_layout
 
 \begin_layout Standard
@@ -1130,13 +1018,18 @@ status open
 
 \begin_layout Plain Layout
 
-<<cfa3, echo=F, include=F,results='asis'>>=
+<<cfa3, echo=F, include=F, results='asis'>>=
 \end_layout
 
 \begin_layout Plain Layout
 
 cfa1 <- semTable(output1, fits = "rmsea", paramSets = c("loadings", "latentvaria
 nces"), type = "latex")
+\end_layout
+
+\begin_layout Plain Layout
+
+cat(cfa1, file="tmpout/t-cfa3.tex")
 \end_layout
 
 \begin_layout Plain Layout
@@ -1159,10 +1052,6 @@ cat(cfa1)
 wide false
 sideways false
 status open
-
-\begin_layout Plain Layout
-
-\end_layout
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard

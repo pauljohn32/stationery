@@ -9,10 +9,7 @@ mkdir ${PACKAGE}.gitex
 cd ${PACKAGE}
 
 cd vignettes
-./rnw2pdf.sh stationery.lyx
-./rmd2pdf-report.sh code_chunks.Rmd
-./rmd2html.sh HTML_special_features.Rmd
-./rmd2pdf.sh Rmarkdown.Rmd
+./compiler.sh
 cd ..
 
 ## copies UNCOMMITTED but TRACKED files.
@@ -21,10 +18,8 @@ cd ..
 
 cd ${PACKAGE}.gitex
 mkdir -p inst/doc
-cp -f ../stationery/vignettes/stationery.pdf inst/doc
-cp -f ../stationery/vignettes/Rmarkdown.pdf inst/doc
-cp -f ../stationery/vignettes/code_chunks.pdf inst/doc
-cp -f ../stationery/vignettes/HTML_special_features.html inst/doc
+cp -f ../stationery/vignettes/*.pdf inst/doc
+cp -f ../stationery/vignettes/*.html inst/doc
 cd ..
 
 R --vanilla -f roxygenstationery.R
