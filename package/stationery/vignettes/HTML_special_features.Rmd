@@ -44,15 +44,15 @@ options(width = 70)
 ```
 
 ```{r themecopy, include = FALSE}
-library(crmda)
+library(stationery)
 ## If theme directory does not have required images or TeX files
 ## we need to retrieve them and put them in "theme" directory. 
 logos <- c(logoleft = "logoleft.png", 
            logoright = "logo-vert.png")
 files <- c("kutils.css", 
            "guide-boilerplate.html")
-getFiles(logos, pkg = "crmda")
-getFiles(files, pkg = "crmda")
+getFiles(logos, pkg = "stationery")
+getFiles(files, pkg = "stationery")
 ```
 
 # Rmarkdown Basics
@@ -637,8 +637,8 @@ how anybody thinks they have a right to impose an infinitely long row,
 but it's bad. Edit the document with Emacs, run M-q to get
 re-positioned text. If your editor cannot do that, quit using it.
 
-4. Must make sure compiling using the kutils.css located in the crmda
-package. For example, `crmda::rmd2html("filename.Rmd")`
+4. Must make sure compiling using the kutils.css located in the stationery
+package. For example, `stationery::rmd2html("filename.Rmd")`
 
 
 [//]: (All guides must have this as the final stanza)

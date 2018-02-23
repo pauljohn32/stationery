@@ -715,8 +715,33 @@ There are 4 methods, we hope one will suit your workflow.
 Use the LyX editor.
  The file can be compiled to PDF in LyX, just like any other LyX file.
  LyX handles conversion from LyX to Rnw to tex to PDF.
+ This has the same effect as using LyX from the command line.
+ The following will create the PDF file using pdflatex as the final comiler:
 \end_layout
 
+\begin_deeper
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+$ lyx -e pdf2 skeleton.lyx
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Because lyx uses a separate working directory for the compilation work,
+ the project directory stays clean.
+ None of the intermediate LaTeX files (*.log, *.log, *.bbl) will appear.
+\end_layout
+
+\end_deeper
 \begin_layout Enumerate
 Open an R session and make sure the working directory is the same as the
  project writeup.
@@ -828,9 +853,35 @@ skeleton.Rnw
 \end_inset
 
 .
- After that proceed as described in the next subsection.
+ This is the equivalent of the command line statement
 \end_layout
 
+\begin_deeper
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+$ lyx -e knitr skeleton.lyx
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+After that Rnw file is created, proceed as described in the next subsection.
+\end_layout
+
+\begin_layout Standard
+This two-step process is valuable for debugging.
+ It makes it easier to spot trouble by focusing on the separate transitions.
+\end_layout
+
+\end_deeper
 \begin_layout Subsection*
 Edit the Rnw file
 \end_layout

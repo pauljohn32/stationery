@@ -97,7 +97,7 @@ output:
     template: theme/report-boilerplate.tex
 fontsize: 12pt
 vignette: >
-    %\VignetteIndexEntry{crmda}
+    %\VignetteIndexEntry{stationery}
     %\VignetteEngine{knitr::rmarkdown}
     %\VignetteEncoding{UTF-8}
 header-includes:
