@@ -9,7 +9,7 @@ mkdir ${PACKAGE}.gitex
 cd ${PACKAGE}
 
 cd vignettes
-#./compiler.sh
+./compiler.sh
 cd ..
 
 ## copies UNCOMMITTED but TRACKED files.

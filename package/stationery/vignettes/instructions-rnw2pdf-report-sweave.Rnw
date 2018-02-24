@@ -110,36 +110,44 @@ options(SweaveHooks=list(fig=function() par(mar=pjmar, ps=10)))
 pdf.options(onefile=FALSE, family="Times", pointsize=10)
 if(!dir.exists("tmpout"))dir.create("tmpout", recursive = TRUE)
 @
+\begin{abstract}
+\noindent This shows how we use R \citep{RCore} to make report documents
+using the CRMDA style. This is a LaTeX ``noweb'' guide document
+generated with the knitr code chunk engine.
+\end{abstract}
 
 \section{Introduction}
 
-This is a LaTeX ``noweb'' report generated with the Sweave engine.
+This is a LaTeX ``noweb'' report generated with the Sweave engine. 
+
+Create a skeleton document by opening R and running
+
+<<eval=F>>=
+library(stationery)
+initWriteup("rnw2pdf-report-sweave")
+@
+
+That will create a folder ``\code{writeup/rnw2pdf-report-sweave}''
+(unless you request otherwise by setting the \code{dir} argument).
 We can compare it to the very similar document produced with ``knitr''
 (in the companion folder rnw2pdf-report-knitr). 
 
 We suggest you
 \begin{enumerate}
 \item Compile this document \emph{as is }to test your setup
-\item Compare the document with the pdf output so see the impact of the
-settings.
+\item Make revisions incrementally, and re-compile often to make sure nothing
+has been broken.
 \end{enumerate}
-Do put your title \& name in the top block.
-
-Don't change the code chunks above or the last chunks below.
-
-For what it is worth, we have found that the knitr framework is not
-so easy to customize and manage as Sweave and, if you are planning
-to produce a PDF document, it seems likely that the
+Don't make changes that you don't understand in the code chunks above
+or the last chunks below.
 
 \section{LyX: Cautions}
 
 The document preamble has manual settings for margins (geometry) as
 well as hyperlinks (PDF hyperref). Don't use the LyX pull down menu
-to revise them. It is necessary to edit settings in the preamble manually. 
-
-Don't change margins or geometry with Lyx pull down menus. Edit preamble
-or config files for that. Repeat \textbf{CAUTION}: Dont change the
-page margins or settings for hyperlinks with pull down menus.
+to revise them. Edit preamble or config files for that. Repeat \textbf{CAUTION}:
+Don't change the page margins or settings for hyperlinks with pull
+down menus.
 
 \section{What to edit}
 
@@ -176,24 +184,156 @@ review them.
 \begin{enumerate}
 \item ``crmda'': the package framework overview
 \item ``code\_chunks'': discusses display of code in LaTeX documents
+\item ``instructions-rnw2pdf-report-sweave''
 \end{enumerate}
 
 \section{Compile as usual, or with rnw2pdf}
 
-If you are editing these files in LyX, it is sufficient to simply
-compile as usual. That will handle the chore of converting a sequence
-of document types to arrive at PDF.
+The skeleton file is provided in 2 formats, LyX and Rnw. 
 
-If not using LyX, then the author is probably editing the Rnw file.
+In either case, please understand that compiling is a two step process.
+\begin{enumerate}
+\item knitting: Run R to do the calculations in the R code chunks and write
+out a LaTeX file
+\item compiling: Run a LaTeX program, such as pdflatex or xelatex to convert
+the LaTeX file to pdf. It is usually necessary to run the compiler
+two or more times, along with a separate bibliography program. If
+it is available, we suggest an aggregator named texi2pdf, which will
+handle this effort.
+\end{enumerate}
+
+\subsection*{Edit the LyX file.}
+
+There are 4 methods, we hope one will suit your workflow.
+\begin{enumerate}
+\item Use the LyX editor. The file can be compiled to PDF in LyX, just like
+any other LyX file. LyX handles conversion from LyX to Rnw to tex
+to PDF. This has the same effect as using LyX from the command line.
+The following will create the PDF file using pdflatex as the final
+comiler:
+
+\inputencoding{latin9}\begin{lstlisting}
+$ lyx -e pdf2 skeleton.lyx
+\end{lstlisting}
+\inputencoding{utf8}
+Because lyx uses a separate working directory for the compilation
+work, the project directory stays clean. None of the intermediate
+LaTeX files ({*}.log, {*}.log, {*}.bbl) will appear.
+\item Open an R session and make sure the working directory is the same
+as the project writeup.
+
+\inputencoding{latin9}\begin{lstlisting}
+rnw2pdf("skeleton.lyx", engine = "Sweave")
+\end{lstlisting}
+\inputencoding{utf8}\item The shell script \code{rnw2pdf.sh} is provided in the same folder.
+It can be run in the shell as
+
+\inputencoding{latin9}\begin{lstlisting}
+$ ./rnw2pdf.sh --engine='"Sweave"' skeleton.lyx
+\end{lstlisting}
+\inputencoding{utf8}
+In the discussion in the next sub section, we outline usage of additional
+arguments with rnw2pdf for the compilation of Rnw files. All of those
+arguments are equally applicable in this context.
+\item In case you want to track the steps of compiling one by one, open
+the file in LyX. Use the pull down menu \code{File} $\rightarrow$
+\code{Export} $\rightarrow$ \code{Sweave}. That will create a file
+named ``skeleton.Rnw''. This is the equivalent of the command line
+statement
+
+\inputencoding{latin9}\begin{lstlisting}
+$ lyx -e sweave skeleton.lyx
+\end{lstlisting}
+\inputencoding{utf8}
+After that Rnw file is created, proceed as described in the next subsection.
+
+This two-step process is valuable for debugging. It makes it easier
+to spot trouble by focusing on the separate transitions.
+\end{enumerate}
+
+\subsection*{Edit the Rnw file}
+
 The Rnw file we provide is produced by LyX, it is an intermediate
 step in the document production sequence. A two step compilation procedure
 is necessary. First, one must convert the ``Rnw'' file to ``pdf''
-(with knit), and then the knitted tex file is compiled into pdf by
+(with Sweave), and then the weaved tex file is compiled into pdf by
 pdflatex (or one of the other LaTeX compilers). 
 
-We provide a shell script that can handle this, \code{rnw2pdf.sh}
-script (which is included with the skeleton file). It is also possible
-to use our R function \code{rnw2pdf}.
+The work flow here will vary, depending on your experience and the
+editor you choose to use. Here are some possibilities:
+\begin{enumerate}
+\item You may have a ``noweb'' aware editor. Emacs, Rstudio, and others
+have menus that can initiate the work of weaving and rendering the
+document.
+\item Open an R session and make sure the working directory is the same
+as the project writeup.
+
+\inputencoding{latin9}\begin{lstlisting}
+rnw2pdf("skeleton.Rnw", engine = "Sweave")
+\end{lstlisting}
+\inputencoding{utf8}
+Additional arguments can be used, mainly to control the verbosity
+of the output and the creation of subsidiary files. Our function,
+by default, will create and R file summary of the command chunks.
+This file is referred to as a ``tangled'' (if using knitr, it is
+referred to as a purled file). 
+\item The shell script \code{rnw2pdf.sh} is provided in the same folder.
+It can be run in the shell as
+
+\inputencoding{latin9}\begin{lstlisting}
+$ ./rnw2pdf.sh --engine='"Sweave"' skeleton.Rnw
+\end{lstlisting}
+\inputencoding{utf8}
+The command script answers to all of the arguments followed by the
+R function \code{rnw2pdf}. The usage is nearly identical. Where the
+R function call would be 
+
+\inputencoding{latin9}\begin{lstlisting}
+rnw2pdf("skeleton.Rnw", purl = FALSE, clean = FALSE, verbose = TRUE, keep_tex = TRUE)
+\end{lstlisting}
+\inputencoding{utf8}
+the shell command would be
+
+\inputencoding{latin9}\begin{lstlisting}
+$ ./rnw2pdf --purl=FALSE --clean=FALSE --keep_tex=TRUE --verbose=TRUE skeleton.Rnw
+\end{lstlisting}
+\inputencoding{utf8}
+The only difference in usage arises when a quoted string must be passed
+through. Suppose the files are in a subdirectory named ``project''.
+Inside the R code, the quoted string to specify the directory where
+the file resides (the working directory) would be like so:
+
+\inputencoding{latin9}\begin{lstlisting}
+rnw2pdf("skeleton.lyx", engine="Sweave" wd = "project")
+\end{lstlisting}
+\inputencoding{utf8}
+the shell command would be
+
+\inputencoding{latin9}\begin{lstlisting}
+$ ./rnw2pdf --engine='"Sweave"' --wd='"project"' skeleton.Rnw
+\end{lstlisting}
+\inputencoding{utf8}
+Note the single quotes that are protecting the double quotes.
+\item Our shell script is not the only way to use command line tools to
+get this done. One can run shell commands such as:
+
+\inputencoding{latin9}\begin{lstlisting}
+$ R CMD Sweave skeleton.Rnw
+\end{lstlisting}
+\inputencoding{utf8}
+That will create \code{skeleton.tex}, which we compile with
+
+\inputencoding{latin9}\begin{lstlisting}
+$ texi2pdf skeleton.tex
+\end{lstlisting}
+\inputencoding{utf8}
+The major difference between running this and the script we provide
+is that our script will handle LyX files and it will, by default,
+will create a purled copy of the R code.
+\end{enumerate}
+If you are editing these files in LyX, it is sufficient to simply
+compile as usual. That will handle the chore of converting a sequence
+of document types to arrive at PDF.
 
 \section{Code Chunk Check}
 
@@ -398,29 +538,23 @@ do it manually, as we can see in Table \ref{tab:kable-output}
 \subsection*{Regression output}
 
 I'll illustrate output from the \code{outreg} function in the \code{rockchalk}
-package.
+package. This table may not be perfect by APA standards, but it is
+certainly good enough for our reports. We estimate a regression and
+save the LaTeX markup in a file named ``tmpout/t-outreg1.tex''.
+(This approach is necessary in this document because it is a vignette
+in the stationery package and the split=TRUE flag is not allowed in
+vignettes for packages on CRAN).
 
-This table may not be perfect by APA standards, but it is certainly
-good enough for our reports. If we drop this output into the text,
-without inserting it into a float, we obtain the following
-
-<<outreg1, echo=F, results=tex>>=
+<<outreg1, results=hide>>=
 library(rockchalk)
 m1 <- lm(y ~ x, data = dat)
 vl <- c("x" = "Excellent Predictor")
 or <- outreg(list("First Model" = m1), varLabels = vl, tight = FALSE)
 cat(or, file="tmpout/t-outreg1.tex")
-cat(or)
 @
 
-One of the truly important differences between Sweave chunks and knitr
-chunks is the ``results'' argument. For Sweave, we need ``results='tex'{}''
-but for knitr they changed this to ``results='asis'{}''.
-
-It is possible to specify a table title and generate a floating object
-from outreg, but I don't usually do that. I usually have the argument
-float = FALSE because I want to create the floating object myself
-and place it where I like. That is illustrated in Table \ref{tab:A-Regression}.
+After the file is created, we then incorporate it in the usual way,
+embedding it in a floating object, Table \ref{tab:A-Regression}.
 
 \begin{table}
 \caption{A Regression from \protect\code{outreg}\label{tab:A-Regression}}
@@ -453,7 +587,6 @@ speed   =~ x7 + x8 + x9'
 output1 <- cfa(HS.model, data = HolzingerSwineford1939, std.lv = TRUE)
 cfa1 <- semTable(output1, fits = "rmsea", paramSets = c("loadings", "latentvariances"), type = "latex")
 cat(cfa1, file = "tmpout/t-cfa1.tex")
-cat(cfa1)
 @
 
 \begin{table}

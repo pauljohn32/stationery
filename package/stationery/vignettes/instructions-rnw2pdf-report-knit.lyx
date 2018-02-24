@@ -616,10 +616,6 @@ instructions-rnw2pdf-report-knit
 Compile as usual, or with rnw2pdf
 \end_layout
 
-\begin_layout Section
-Compile the PDF document
-\end_layout
-
 \begin_layout Standard
 The skeleton file is provided in 2 formats, LyX and Rnw.
  
@@ -950,8 +946,8 @@ $ ./rnw2pdf.sh skeleton.Rnw
 \end_layout
 
 \begin_layout Standard
-The command like script answers to all of the arguments followed by the
- R function 
+The command script answers to all of the arguments followed by the R function
+ 
 \begin_inset Flex Code
 status open
 

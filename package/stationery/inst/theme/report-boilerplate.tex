@@ -15,13 +15,9 @@
 \usepackage[yyyymmdd,hhmmss]{datetime}
 \usepackage{lastpage}
 \usepackage{babel}
-\usepackage{colortbl}
 
 \usepackage[hidelinks]{hyperref}
-
 \definecolor{darkblue}{HTML}{1e2277}
-\definecolor{kublue}{RGB}{0,81,186}
-
 \hypersetup{breaklinks=true, colorlinks=true, linkcolor=, urlcolor=darkblue}
 
 \makeatletter
@@ -158,18 +154,18 @@ footskip=2.5\baselineskip,
 \begin{document}
 
 \begin{minipage}[t]{1\columnwidth}%
-  \begin{center}
-    \setlength{\tabcolsep}{2pt}
-    \setlength{\arrayrulewidth}{0.6pt}
-\begin{tabular}[t]{@{}>{\raggedright}p{4in}>{\centering}p{2.25in}@{}}
-\arrayrulecolor{kublue}\hline 
+\begin{center}
+\begin{tabular}[t]{>{\raggedright}p{4in}>{\centering}p{2.25in}}
+\hline 
 \medskip{}
 $if(title)$
 \textsc{\Large{}$title$$if(subtitle)$: $subtitle$$endif$}{\Large \par}
 $endif$
-  \bigskip{}
-  \textcolor{kublue}{\rule[0.5ex]{3.25in}{0.6pt}} & \medskip{} $if(logo)$\includegraphics[width=2in]{$logo$}$endif$\tabularnewline
-\multicolumn{2}{>{\raggedright}p{6in}}{
+
+\medskip{}  & \medskip{} $if(logo)$\includegraphics[width=2in]{$logo$}$endif$\tabularnewline
+\hline
+
+\multicolumn{2}{>{\raggedright}p{6in}}{\medskip{}
 $for(author)$$author.name$$if(author.description)$,
               $author.description$$endif$$if(author.affiliation)$,
               $author.affiliation$$endif$$if(author.email)$ <$author.email$>$endif$\\
@@ -181,7 +177,7 @@ $endfor$
 \raggedright{}{\today}
 \end{singlespace}
 }\tabularnewline
-\arrayrulecolor{kublue}\hline 
+\hline 
 \end{tabular}
 \par\end{center}
 \medskip{}

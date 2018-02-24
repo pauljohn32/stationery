@@ -1,5 +1,5 @@
 
-##' A CRMDA-styling of the rendering from Rmd to HTML for Guides
+##' Convert an Rmd file into an HTML file
 ##'
 ##' This is a very simple wrapper around the rmarkdown::render function.
 ##' It makes sure that the style sheet we want to use is applied to the data.
@@ -151,7 +151,7 @@ crmda_html_document <- function(template = "custom_template", ...) {
 
 
 
-##' Rmd to PDF
+##' Convert Rmd to PDF
 ##'
 ##' It makes sure that the style sheet we want to use is applied to the data.
 ##'
@@ -277,7 +277,7 @@ rmd2pdf <- function(fn = NULL, wd = NULL, verbose = FALSE, type = "report",
 
 
 
-##' Convert an Rnw or lyx file to pdf
+##' Convert an Rnw or lyx file to PDF
 ##'
 ##' Documents saved with suffic ".lyx" or ".Rnw" will be
 ##' converted.  Note it is very important to specify the
@@ -305,6 +305,7 @@ rmd2pdf <- function(fn = NULL, wd = NULL, verbose = FALSE, type = "report",
 ##' @importFrom knitr knit
 ##' @importFrom utils Sweave
 ##' @importFrom utils Stangle
+##' @importFrom tools texi2pdf
 ##' @examples
 ##' wd.orig <- getwd()
 ##' dir.tmp <- tempdir()
@@ -332,11 +333,51 @@ rnw2pdf <- function(fn = NULL, wd = NULL, engine = "knitr", purl = TRUE,
     if (is.null(fn)) {
         cat("Will render all *.Rnw files in current working directory\n")
         fn <- list.files(pattern="Rnw")
-    }    
+    }  
 
     isWindoze <- if(Sys.info()[['sysname']] == "Windows") TRUE else FALSE
     sysnull <-  if(isWindoze) "> nul" else " > /dev/null"
     
+    sysrun <- function(cmd){
+        if (isWindoze){
+            res <- tryCatch(shell(cmd, intern = TRUE))
+        } else {
+            res <- tryCatch(system(cmd, intern = TRUE))
+        }
+        res
+    }
+
+    ## tangle an Rnw file that has split=TRUE in SweaveOpts
+    ##
+    ## If split=TRUE, R tangle fails. This fixes that by
+    ## creating temp Rnw file with split=FALSE, and tangling that.
+    ##
+    ## @param x file name
+    ## @return Text with name of R file that was created
+    ## @author Paul Johnson <pauljohn@@ku.edu>
+    tangleSplit <- function(x){
+        bak <- "-tanglebackupstring"
+        fnbackup <- gsub("(.*)(\\..*$)", paste0("\\1", bak, "\\2"), x)
+        file.copy(x, fnbackup, overwrite = TRUE)
+        rnwfile <- readLines(fnbackup)
+        rnwfile[grep("SweaveOpts", rnwfile)] <- gsub("(split\\s*=)\\s*.*,", "\\1FALSE,",
+                                                     rnwfile[grep("SweaveOpts", rnwfile)])
+        writeLines(rnwfile, con = fnbackup)
+        Stangle(fnbackup)
+        fnbackupR <- gsub("\\.Rnw", ".R", fnbackup)
+        fnR <- gsub(bak, "", fnbackupR)
+        MESSG <- paste("tangleSplit(", x, "failed creation of R tangle file")
+        if(file.exists(fnbackupR)){
+            fnRrename <- file.copy(fnbackupR, fnR, overwrite = TRUE)
+            if (!fnRrename) warning(MESSG)
+            unlink(paste0("*", bak, "*"))
+        } else {
+            warning(MESSG)
+        }
+        if(file.exists(fnbackup)) unlink(fnbackup)
+        fnR
+    }
+
     compileme <- function(x, verbose) {
         if (length(grep("\\.lyx$", tolower(x)))){
             ## Let lyx compile to pdf
@@ -387,28 +428,25 @@ rnw2pdf <- function(fn = NULL, wd = NULL, engine = "knitr", purl = TRUE,
                 fnpdf <- knitr::knit2pdf(x, quiet = !verbose, envir = envir,
                             encoding = encoding)
             } else {
-                Sweave(x)
+                Sweave(x, quiet = !verbose)
                 if (tangle) {
-                    bak <- "-tanglebackupstring"
-                    fnbackup <- gsub("(.*)(\\..*$)", paste0("\\1", bak, "\\2"), x)
-                    file.copy(x, fnbackup, overwrite = TRUE)
-                    rnwfile <- readLines(fnbackup)
-                    rnwfile[grep("SweaveOpts", rnwfile)] <- gsub("(split\\s*=)\\s*.*,", "\\1FALSE,",
-                                                                 rnwfile[grep("SweaveOpts", rnwfile)])
-                    writeLines(rnwfile, con = fnbackup)
-                    Stangle(fnbackup)
-                    fnR <- gsub("\\.Rnw", ".R", fnbackup)
-                    if(file.exists(fnR)){
-                        fnRrename <- file.copy(fnR, gsub(bak, "", fnR))
-                        unlink(paste0("*", bak, "*"))
-                    } else {
-                        warning("rnw2pdf: failed creation of R tangle file")
-                    }
-                    if(file.exists(fnbackup)) unlink(fnbackup)
+                    rfile <- tangleSplit(x)
                 }
-                tools::texi2pdf(gsub("\\.Rnw$", ".tex", x, ignore.case = TRUE),
-                                texi2dvi = "texi2pdf", clean = clean, quiet = !verbose)
-                if(clean) unlink(gsub("\\.Rnw$", ".tex", x, ignore.case = TRUE))
+                fnbase <- gsub("\\.Rnw$", "", x, ignore.case = TRUE)
+                fntex <- gsub("\\.Rnw$", ".tex", x, ignore.case = TRUE)
+                ## if (!isWindoze){
+                ##      tools::texi2pdf(fntex,
+                ##                      texi2dvi = "texi2pdf", clean = clean,
+                ##                      quiet = !verbose)
+                ## } else {
+                cmd1 <- paste0("pdflatex -interaction=batchmode \"", fntex, "\" ", if(!verbose) sysnull)
+                out1 <- sysrun(cmd1)
+                cmd2 <- paste0("bibtex \"", fnbase, "\" ", if(!verbose) sysnull)
+                out2 <- sysrun(cmd2)
+                out3 <- sysrun(cmd1)
+                out4 <- sysrun(cmd1)
+                ##}                       
+                if(clean) unlink(fntex)
                 fnpdf <- gsub("\\.Rnw$", ".pdf", x, ignore.case = TRUE)
             }
         }

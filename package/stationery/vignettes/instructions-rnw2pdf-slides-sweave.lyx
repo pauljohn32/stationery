@@ -281,7 +281,7 @@ status open
 
 \begin_layout Plain Layout
 
-<<texcopy, include=FALSE, results=hide>>=
+<<texcopy, include=FALSE, echo=FALSE, results=hide>>=
 \end_layout
 
 \begin_layout Plain Layout
@@ -341,7 +341,7 @@ getFiles(texfiles, pkg = "stationery")
 \end_layout
 
 \begin_layout Title
-Skeleton rmd2pdf-slides-sweave
+Instructions for rmd2pdf-slides-sweave
 \begin_inset Argument 1
 status open
 
@@ -532,7 +532,7 @@ end{frame}
 \end_layout
 
 \begin_layout Section
-About slides
+Launch with stationery
 \end_layout
 
 \begin_layout Standard
@@ -550,7 +550,237 @@ begin{frame}[allowframebreaks, containsverbatim]
 
 
 \backslash
-frametitle{This is a default style we created}
+frametitle{Create a Skeleton}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Create a skeleton (template) document by opening R and running
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<eval=F>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+library(stationery)
+\end_layout
+
+\begin_layout Plain Layout
+
+initWriteup("rnw2pdf-slides-sweave")
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+That will create a folder 
+\begin_inset Quotes eld
+\end_inset
+
+
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+writeup/rnw2pdf-slides-sweave
+\end_layout
+
+\end_inset
+
+
+\begin_inset Quotes erd
+\end_inset
+
+ (unless you request otherwise by setting the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+dir
+\end_layout
+
+\end_inset
+
+ argument).
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{frame}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{frame}[allowframebreaks, containsverbatim]
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+frametitle{Edit our skeleton}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Copy skeleton.lyx (or skeleton.Rnw, your choice) to a new file name, one which
+ you will edit.
+\end_layout
+
+\begin_layout Itemize
+Make small changes, try to compile.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{frame}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{frame}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+frametitle{About the theme folder}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Theme files are copied into the theme directory when this document is compiled
+ the first time.
+\end_layout
+
+\begin_layout Itemize
+After that, the author can revise those theme files to suit her taste.
+ 
+\end_layout
+
+\begin_layout Itemize
+The document will not erase those files and re-insert our defaults.
+\end_layout
+
+\begin_layout Itemize
+We DO expect everybody will supply their own 
+\begin_inset Quotes eld
+\end_inset
+
+logo.pdf
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+logomini.pdf
+\begin_inset Quotes erd
+\end_inset
+
+ files, for example.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{frame}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Our Design Plan
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{frame}[allowframebreaks, containsverbatim]
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+frametitle{Elegant yet helpful; artistic yet austere; delicious yet light}
 \end_layout
 
 \end_inset
@@ -565,8 +795,9 @@ The theme settings are in the preamble.
 
 \begin_layout Itemize
 Once we saw how simple a Beamer theme is–just a designation theme types
- for the outer edges and inner content–we understood that it is quite easy
- to put that in the preamble.
+ for the outer edges and inner content–we knew what to do: 
+\series bold
+CUSTOMIZE!
 \end_layout
 
 \begin_layout Itemize
@@ -701,7 +932,15 @@ To alter that, change document setting options.
 \end_layout
 
 \begin_layout Itemize
-Citations use natbib with apacite 
+Citations use natbib with apacite.
+ To check, we'll cite R (
+\begin_inset CommandInset citation
+LatexCommand citealp
+key "RCore"
+
+\end_inset
+
+) and the single most influential book in modern applied statistics 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "mccullagh_nelder_1989"
@@ -711,10 +950,156 @@ key "mccullagh_nelder_1989"
 
 \end_layout
 
-\begin_layout Itemize
-A slide with not options is fine, except if you need to include R code chunks
- or listings objects.
- In that case, 
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{frame}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{frame}[containsverbatim, allowframebreaks]
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+frametitle{About frame options}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In the frames used in these reports, the environment is initiated in one
+ of 3 ways:
+\end_layout
+
+\begin_layout Enumerate
+No options:
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{frame}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Allow for long output to spill onto successive slides:
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{frame}[allowframebreaks]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In case you want to force a break in a long slide, use LaTeX 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{
+\backslash
+framebreak}
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Allow for inclusion of R output or other LaTeX listings objects
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset listings
+lstparams "basicstyle={\small\ttfamily},tabsize=1"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{frame}[allowframebreaks, containsverbatim]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout AlertBlock
+\begin_inset Argument 2
+status open
+
+\begin_layout Plain Layout
+containsverbatim is necessary
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+Any time your slide includes R output, any verbatim markup, or a listings
+ box, the compile will fail if you do not declare the frame with 
 \begin_inset Quotes eld
 \end_inset
 
@@ -722,305 +1107,12 @@ containsverbatim
 \begin_inset Quotes erd
 \end_inset
 
- will be necessary
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-end{frame}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Section
-R Code chunks
-\end_layout
-
-\begin_layout Subsection
-Displaying R code and output
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-begin{frame}[containsverbatim]
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-frametitle{Listings class is used to display code chunks}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-R code chunks are displayed with LaTeX listings, a highly customizable class
- for code displays.
- 
-\end_layout
-
-\begin_layout Itemize
-We use 2 types of listings, one for R code input and one for R output.
- By default, the output listings use smaller font to fit more output within
- the page, but that is adjustable, either on a 
-\end_layout
-
-\begin_deeper
-\begin_layout Itemize
-document wide basis
-\end_layout
-
-\begin_layout Itemize
-per-code chunk basis
-\end_layout
-
-\end_deeper
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-end{frame}
-\end_layout
-
-\end_inset
-
-
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-begin{frame}[containsverbatim]
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-frametitle{Code chunks require "containsverbatim" frame}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-Please name all chunks.
- Here is a chunk named 
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-dat10
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-<<data10>>=
-\end_layout
-
-\begin_layout Plain Layout
-
-x <- rnorm(100)
-\end_layout
-
-\begin_layout Plain Layout
-
-mean(x)
-\end_layout
-
-\begin_layout Plain Layout
-
-@
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-An example of 
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-inline lm(y ~ x, data = dat)
-\end_layout
-
-\end_inset
-
 .
- That's in an environment 
-\begin_inset Quotes eld
-\end_inset
-
-
-\family typewriter
-
-\backslash
-code{lm(y ~ x, data = dat}
-\family default
-
-\begin_inset Quotes erd
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-By marking text as 
-\begin_inset Quotes eld
-\end_inset
-
-
-\backslash
-code
-\begin_inset Quotes erd
-\end_inset
-
-, a color box will be created that uses the same color scheme as the R input
- box.
- This is a visual gimmick, two environments colored to be similar.
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-end{frame}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-begin{frame}[containsverbatim]
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-frametitle{Did you notice: no line numbers on code chunk in previous?}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-The margins are adjustable, see preamble for example.
  
-\end_layout
-
-\begin_layout Itemize
-Note the line numbers are NOT obscured if code chunk 
-\begin_inset Quotes eld
-\end_inset
-
-nested
-\begin_inset Quotes erd
-\end_inset
-
- inside the item.
- 
-\end_layout
-
-\begin_deeper
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-<<data20>>=
-\end_layout
-
-\begin_layout Plain Layout
-
-x <- rnorm(100)
-\end_layout
-
-\begin_layout Plain Layout
-
-mean(x)
-\end_layout
-
-\begin_layout Plain Layout
-
-@
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Code chunk previous slide is so close to edge that numbering is not visible
- if margins are very small.
 \end_layout
 
 \end_deeper
-\begin_layout Itemize
-If margins are made any smaller, the numbers indexing code lines are 
-\begin_inset Quotes eld
-\end_inset
-
-off the edge
-\begin_inset Quotes erd
-\end_inset
-
+\begin_layout AlertBlock
 
 \end_layout
 
@@ -1038,10 +1130,6 @@ end{frame}
 \end_inset
 
 
-\end_layout
-
-\begin_layout Subsection
-More Frame Options
 \end_layout
 
 \begin_layout Standard
@@ -1222,6 +1310,521 @@ begin{frame}[allowframebreaks,containsverbatim]
 
 
 \backslash
+frametitle{Using "allowframebreaks" and "containsverbatim"}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+I usually use both "allowframebreaks" and "containsverbatim" on most slides.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Quotes eld
+\end_inset
+
+allowframebreaks
+\begin_inset Quotes erd
+\end_inset
+
+ is now harmless.
+ It has no effect in current configuration unless there are actually 2 or
+ more slides worth of material
+\end_layout
+
+\begin_layout Itemize
+However, containsverbatim is not harmless.
+ It will break use of beamer overlay features, or one-at-a-time revelation
+ of enumerated lists.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{frame}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+R Code chunks
+\end_layout
+
+\begin_layout Subsection
+Displaying R code and output
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{frame}[containsverbatim]
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+frametitle{Listings class is used to display code chunks}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+R code chunks are displayed with LaTeX listings, a highly customizable class
+ for code displays.
+ 
+\end_layout
+
+\begin_layout Itemize
+We use 2 types of listings:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\series bold
+Rinput
+\series default
+: for all listings boxes and for R code 
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Routput
+\series default
+: output listings use smaller font
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Because slides are often 
+\begin_inset Quotes eld
+\end_inset
+
+guides
+\begin_inset Quotes erd
+\end_inset
+
+, the listings style is the same as a CRMDA guide document.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+framebreak
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+The author can adjust these by editing the file 
+\begin_inset Quotes eld
+\end_inset
+
+
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+theme/guidePreambleSweavel.tex
+\end_layout
+
+\end_inset
+
+
+\begin_inset Quotes erd
+\end_inset
+
+, or
+\end_layout
+
+\begin_layout Itemize
+replacing the theme file with our alternative 
+\begin_inset Quotes eld
+\end_inset
+
+
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+theme/reportPreambleSweavel.tex
+\end_layout
+
+\end_inset
+
+
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+by adjusting the properties of the individual listings items.
+ In the previous slide, we adjusted the listings options for a smaller font
+ in the third item, or
+\end_layout
+
+\begin_layout Itemize
+I (often) fiddle the line-numbering settings in that tex file to suit my
+ taste.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{frame}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{frame}[containsverbatim]
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+frametitle{line numbers on code chunks}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Sometimes it appears that there are line numbers with code chunks.
+\end_layout
+
+\begin_layout Itemize
+Sometimes they are invisible because they are outside the left margin
+\end_layout
+
+\begin_layout Itemize
+The margins are adjustable when this happens, see preamble for example.
+ Don't use LyX menus, use the preamble to edit.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{frame}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{frame}[containsverbatim]
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+frametitle{Code chunks suggestions for authors}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Please name all chunks.
+ 
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+This makes bug-shooting much easier
+\end_layout
+
+\begin_layout Itemize
+Here is a chunk named 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+dat10
+\end_layout
+
+\end_inset
+
+.
+ The default settings of the options 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+include
+\end_layout
+
+\end_inset
+
+ and 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+echo
+\end_layout
+
+\end_inset
+
+ are 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+TRUE
+\end_layout
+
+\end_inset
+
+, so we set them as FALSE for variety.
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+< <data10, include=FALSE, echo=FALSE>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+x <- rnorm(100)
+\end_layout
+
+\begin_layout Plain Layout
+
+mean(x)
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{frame}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{frame}[containsverbatim]
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+frametitle{Styling of non-chunk code commentary}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+The listings environment can be used in 
+\begin_inset Quotes eld
+\end_inset
+
+containsverbatim
+\begin_inset Quotes erd
+\end_inset
+
+ chunks.
+ The styling will, by default, be same as R input.
+\end_layout
+
+\begin_layout Itemize
+If instead author desires style of Routput, the listings argument 
+\begin_inset Quotes eld
+\end_inset
+
+style=Routput
+\begin_inset Quotes erd
+\end_inset
+
+ can be specified.
+ 
+\end_layout
+
+\begin_layout Itemize
+Inline comments will declared with the code environment will have a gray
+ box similar to the Rinput box for chunks.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Examples, should have same appearance in PDF:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+LyX text menu
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+lm(y ~ x, data = dat)
+\end_layout
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Itemize
+Raw Latex 
+\family typewriter
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{lm(y ~ x, data = dat}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{frame}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+More Frame Options
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{frame}[allowframebreaks,containsverbatim]
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
 frametitle{Both "allowframebreaks" and "containsverbatim" accomodate large
  R output}
 \end_layout
@@ -1253,68 +1856,6 @@ example(lm)
 \end_inset
 
 
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-end{frame}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-begin{frame}[allowframebreaks,containsverbatim]
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-frametitle{Using "allowframebreaks" and "containsverbatim"}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-I usually use both "allowframebreaks" and "containsverbatim" on most slides.
-\end_layout
-
-\begin_layout Itemize
-\begin_inset Quotes eld
-\end_inset
-
-allowframebreaks
-\begin_inset Quotes erd
-\end_inset
-
- is now harmless.
- It has no effect in current configuration unless there are actually 2 or
- more slides worth of material
-\end_layout
-
-\begin_layout Itemize
-However, containsverbatim is not harmless.
- It will break use of beamer overlay features, or one-at-a-time revelation
- of enumerated lists.
 \end_layout
 
 \begin_layout Standard

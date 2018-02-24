@@ -109,7 +109,7 @@ pdf.options(onefile=F,family="Times",pointsize=12)
 if(!file.exists("tmpout")) dir.create("tmpout", showWarnings=F)
 @
 
-<<texcopy, include=FALSE, results=hide>>=
+<<texcopy, include=FALSE, echo=FALSE, results=hide>>=
 library(stationery)
 ## If theme directory does not have required images or TeX files
 ## we need to retrieve them and put them in "theme" directory. 
@@ -120,7 +120,7 @@ getFiles(logos, pkg = "stationery")
 getFiles(texfiles, pkg = "stationery")
 @
 
-\title[beamer]{Skeleton rmd2pdf-slides-sweave}
+\title[beamer]{Instructions for rmd2pdf-slides-sweave}
 
 \author{Paul Johnson\inst{1}}
 
@@ -147,16 +147,53 @@ getFiles(texfiles, pkg = "stationery")
 
 \global\long\def\vb#1{\bm{\mathrm{#1}}}
 
-\section{About slides}
+\section{Launch with stationery}
 
 \begin{frame}[allowframebreaks, containsverbatim]
-\frametitle{This is a default style we created}
+\frametitle{Create a Skeleton}
+
+Create a skeleton (template) document by opening R and running
+
+<<eval=F>>=
+library(stationery)
+initWriteup("rnw2pdf-slides-sweave")
+@
+
+That will create a folder ``\code{writeup/rnw2pdf-slides-sweave}''
+(unless you request otherwise by setting the \code{dir} argument). 
+
+\end{frame}
+
+\begin{frame}[allowframebreaks, containsverbatim]
+\frametitle{Edit our skeleton}
+\begin{itemize}
+\item Copy skeleton.lyx (or skeleton.Rnw, your choice) to a new file name,
+one which you will edit.
+\item Make small changes, try to compile.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{About the theme folder}
+\begin{itemize}
+\item Theme files are copied into the theme directory when this document
+is compiled the first time.
+\item After that, the author can revise those theme files to suit her taste. 
+\item The document will not erase those files and re-insert our defaults.
+\item We DO expect everybody will supply their own ``logo.pdf'' and ``logomini.pdf''
+files, for example.
+\end{itemize}
+\end{frame}
+
+\section{Our Design Plan}
+
+\begin{frame}[allowframebreaks, containsverbatim]
+\frametitle{Elegant yet helpful; artistic yet austere; delicious yet light}
 \begin{itemize}
 \item The theme settings are in the preamble. No external dependency on
 a theme file needed.
 \item Once we saw how simple a Beamer theme is–just a designation theme
-types for the outer edges and inner content–we understood that it
-is quite easy to put that in the preamble.
+types for the outer edges and inner content–we knew what to do: \textbf{CUSTOMIZE!}
 \item Our preferred theme uses the \emph{right} shades of blue along with:
 \begin{exampleblock}{Key elements in our theme}
 
@@ -182,69 +219,44 @@ the author's taste.
 \begin{itemize}
 \item This document is formatted to create 16:9 resolution slides. 
 \item To alter that, change document setting options.
-\item Citations use natbib with apacite \citep{mccullagh_nelder_1989}
-\item A slide with not options is fine, except if you need to include R
-code chunks or listings objects. In that case, ``containsverbatim''
-will be necessary
+\item Citations use natbib with apacite. To check, we'll cite R (\citealp{RCore})
+and the single most influential book in modern applied statistics
+\citep{mccullagh_nelder_1989}
 \end{itemize}
 \end{frame}
 
-\section{R Code chunks}
+\begin{frame}[containsverbatim, allowframebreaks]
+\frametitle{About frame options}
 
-\subsection{Displaying R code and output}
+In the frames used in these reports, the environment is initiated
+in one of 3 ways:
+\begin{enumerate}
+\item No options:
 
-\begin{frame}[containsverbatim]
-\frametitle{Listings class is used to display code chunks}
-\begin{itemize}
-\item R code chunks are displayed with LaTeX listings, a highly customizable
-class for code displays. 
-\item We use 2 types of listings, one for R code input and one for R output.
-By default, the output listings use smaller font to fit more output
-within the page, but that is adjustable, either on a 
-\begin{itemize}
-\item document wide basis
-\item per-code chunk basis
-\end{itemize}
-\end{itemize}
-\end{frame}\begin{frame}[containsverbatim]
-\frametitle{Code chunks require "containsverbatim" frame}
-\begin{itemize}
-\item Please name all chunks. Here is a chunk named \code{dat10}
-\end{itemize}
-<<data10>>=
-x <- rnorm(100)
-mean(x)
-@
-\begin{itemize}
-\item An example of \code{inline lm(y \textasciitilde{} x, data = dat)}.
-That's in an environment ``\texttt{\textbackslash{}code\{lm(y \textasciitilde{}
-x, data = dat\}}''
-\item By marking text as ``\textbackslash{}code'', a color box will be
-created that uses the same color scheme as the R input box. This is
-a visual gimmick, two environments colored to be similar.
-\end{itemize}
+\inputencoding{latin9}\begin{lstlisting}
+\begin{frame}
+\end{lstlisting}
+\inputencoding{utf8}\item Allow for long output to spill onto successive slides:
+
+\inputencoding{latin9}\begin{lstlisting}
+\begin{frame}[allowframebreaks]
+\end{lstlisting}
+\inputencoding{utf8}
+In case you want to force a break in a long slide, use LaTeX \code{\framebreak}.
+\item Allow for inclusion of R output or other LaTeX listings objects
+
+\inputencoding{latin9}\begin{lstlisting}[basicstyle={\small\ttfamily},tabsize=1]
+\begin{frame}[allowframebreaks, containsverbatim]
+\end{lstlisting}
+\inputencoding{utf8}
+\end{enumerate}
+\begin{alertblock}{containsverbatim is necessary}
+
+Any time your slide includes R output, any verbatim markup, or a listings
+box, the compile will fail if you do not declare the frame with ``containsverbatim''. 
+
+\end{alertblock}
 \end{frame}
-
-\begin{frame}[containsverbatim]
-\frametitle{Did you notice: no line numbers on code chunk in previous?}
-\begin{itemize}
-\item The margins are adjustable, see preamble for example. 
-\item Note the line numbers are NOT obscured if code chunk ``nested''
-inside the item. 
-
-<<data20>>=
-x <- rnorm(100)
-mean(x)
-@
-
-Code chunk previous slide is so close to edge that numbering is not
-visible if margins are very small.
-\item If margins are made any smaller, the numbers indexing code lines are
-``off the edge''
-\end{itemize}
-\end{frame}
-
-\subsection{More Frame Options}
 
 \begin{frame}[allowframebreaks]
 \frametitle{Slide with "allowframebreaks" can spill onto several slides}
@@ -291,15 +303,6 @@ equation labels
 \end{frame}
 
 \begin{frame}[allowframebreaks,containsverbatim]
-\frametitle{Both "allowframebreaks" and "containsverbatim" accomodate large R output}
-
-<<reg10>>=
-example(lm)
-@
-
-\end{frame}
-
-\begin{frame}[allowframebreaks,containsverbatim]
 \frametitle{Using "allowframebreaks" and "containsverbatim"}
 \begin{itemize}
 \item I usually use both \textquotedbl{}allowframebreaks\textquotedbl{}
@@ -310,6 +313,96 @@ material
 \item However, containsverbatim is not harmless. It will break use of beamer
 overlay features, or one-at-a-time revelation of enumerated lists.
 \end{itemize}
+\end{frame}
+
+\section{R Code chunks}
+
+\subsection{Displaying R code and output}
+
+\begin{frame}[containsverbatim]
+\frametitle{Listings class is used to display code chunks}
+\begin{itemize}
+\item R code chunks are displayed with LaTeX listings, a highly customizable
+class for code displays. 
+\item We use 2 types of listings:
+\begin{itemize}
+\item \textbf{Rinput}: for all listings boxes and for R code 
+\item \textbf{Routput}: output listings use smaller font
+\end{itemize}
+\item Because slides are often ``guides'', the listings style is the same
+as a CRMDA guide document.
+\end{itemize}
+\framebreak
+\begin{itemize}
+\item The author can adjust these by editing the file ``\code{theme/guidePreambleSweavel.tex}'',
+or
+\item replacing the theme file with our alternative ``\code{theme/reportPreambleSweavel.tex}''.
+\item by adjusting the properties of the individual listings items. In the
+previous slide, we adjusted the listings options for a smaller font
+in the third item, or
+\item I (often) fiddle the line-numbering settings in that tex file to suit
+my taste.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[containsverbatim]
+\frametitle{line numbers on code chunks}
+\begin{itemize}
+\item Sometimes it appears that there are line numbers with code chunks.
+\item Sometimes they are invisible because they are outside the left margin
+\item The margins are adjustable when this happens, see preamble for example.
+Don't use LyX menus, use the preamble to edit.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[containsverbatim]
+\frametitle{Code chunks suggestions for authors}
+\begin{itemize}
+\item Please name all chunks. 
+\begin{itemize}
+\item This makes bug-shooting much easier
+\item Here is a chunk named \code{dat10}. The default settings of the options
+\code{include} and \code{echo} are \code{TRUE}, so we set them
+as FALSE for variety.
+
+\inputencoding{latin9}\begin{lstlisting}
+< <data10, include=FALSE, echo=FALSE>>=
+x <- rnorm(100)
+mean(x)
+@
+\end{lstlisting}
+\inputencoding{utf8}\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[containsverbatim]
+\frametitle{Styling of non-chunk code commentary}
+\begin{itemize}
+\item The listings environment can be used in ``containsverbatim'' chunks.
+The styling will, by default, be same as R input.
+\item If instead author desires style of Routput, the listings argument
+``style=Routput'' can be specified. 
+\item Inline comments will declared with the code environment will have
+a gray box similar to the Rinput box for chunks.
+\begin{itemize}
+\item Examples, should have same appearance in PDF:
+\begin{itemize}
+\item LyX text menu\code{lm(y \textasciitilde{} x, data = dat)}. 
+\item Raw Latex \texttt{\code{lm(y ~ x, data = dat}}
+\end{itemize}
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\subsection{More Frame Options}
+
+\begin{frame}[allowframebreaks,containsverbatim]
+\frametitle{Both "allowframebreaks" and "containsverbatim" accomodate large R output}
+
+<<reg10>>=
+example(lm)
+@
+
 \end{frame}
 
 \begin{frame}[allowframebreaks,containsverbatim]

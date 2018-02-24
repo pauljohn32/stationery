@@ -427,6 +427,36 @@ getFiles(texfiles, pkg = "stationery")
 
 \end_layout
 
+\begin_layout Abstract
+\noindent
+This shows how we use R 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "RCore"
+
+\end_inset
+
+ to make report documents using the CRMDA style.
+ This is a LaTeX 
+\begin_inset Quotes eld
+\end_inset
+
+noweb
+\begin_inset Quotes erd
+\end_inset
+
+ guide document generated with the Sweave engine.
+\end_layout
+
+\begin_layout Abstract
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
 Introduction
 \end_layout
@@ -444,6 +474,72 @@ key "RCore"
 \end_layout
 
 \begin_layout Standard
+Create a skeleton document by opening R and running
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<eval=F>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+library(stationery)
+\end_layout
+
+\begin_layout Plain Layout
+
+initWriteup("rnw2pdf-guide-sweave")
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+That will create a folder 
+\begin_inset Quotes eld
+\end_inset
+
+
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+writeup/rnw2pdf-guide-sweave
+\end_layout
+
+\end_inset
+
+
+\begin_inset Quotes erd
+\end_inset
+
+ (unless you request otherwise by setting the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+dir
+\end_layout
+
+\end_inset
+
+ argument).
+ 
+\end_layout
+
+\begin_layout Standard
 We suggest you
 \end_layout
 
@@ -456,15 +552,13 @@ to test your setup
 \end_layout
 
 \begin_layout Enumerate
-Compare the document with the pdf output so see the impact of the settings.
+Make revisions incrementally, and re-compile often to make sure nothing
+ has been broken.
 \end_layout
 
 \begin_layout Standard
-Do put your title & name in the top block.
-\end_layout
-
-\begin_layout Standard
-Don't change the code chunks above or the last chunks below.
+Don't make changes that you don't understand in the code chunks above or
+ the last chunks below.
 \end_layout
 
 \begin_layout Section
@@ -475,18 +569,12 @@ LyX: Cautions
 The document preamble has manual settings for margins (geometry) as well
  as hyperlinks (PDF hyperref).
  Don't use the LyX pull down menu to revise them.
- It is necessary to edit settings in the preamble manually.
- 
-\end_layout
-
-\begin_layout Standard
-Don't change margins or geometry with Lyx pull down menus.
  Edit preamble or config files for that.
  Repeat 
 \series bold
 CAUTION
 \series default
-: Dont change the page margins or settings for hyperlinks with pull down
+: Don't change the page margins or settings for hyperlinks with pull down
  menus.
 \end_layout
 
@@ -518,6 +606,7 @@ addressFooter.tex
 .
  After the document is compiled for the first time, that document should
  be available in the theme folder.
+ 
 \end_layout
 
 \begin_layout Subsection*
@@ -586,21 +675,230 @@ code_chunks
 : discusses display of code in LaTeX documents
 \end_layout
 
+\begin_layout Enumerate
+\begin_inset Quotes eld
+\end_inset
+
+instructions-rnw2pdf-guide-sweave
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
-Compile as usual, or with rnw2pdf
+Compile as usual with LyX, or with rnw2pdf
 \end_layout
 
 \begin_layout Standard
-If you are editing these files in LyX, it is sufficient to simply compile
- as usual.
- That will handle the chore of converting a sequence of document types to
- arrive at PDF.
+The skeleton file is provided in 2 formats, LyX and Rnw.
+ 
 \end_layout
 
 \begin_layout Standard
-If not using LyX, then the author is probably editing the Rnw file.
- The Rnw file we provide is produced by LyX, it is an intermediate step
- in the document production sequence.
+In either case, please understand that compiling is a two step process.
+\end_layout
+
+\begin_layout Enumerate
+knitting: Run R to do the calculations in the R code chunks and write out
+ a LaTeX file
+\end_layout
+
+\begin_layout Enumerate
+compiling: Run a LaTeX program, such as pdflatex or xelatex to convert the
+ LaTeX file to pdf.
+ It is usually necessary to run the compiler two or more times, along with
+ a separate bibliography program.
+ If it is available, we suggest an aggregator named texi2pdf, which will
+ handle this effort.
+\end_layout
+
+\begin_layout Subsection*
+Edit the LyX file.
+\end_layout
+
+\begin_layout Standard
+There are 4 methods, we hope one will suit your workflow.
+\end_layout
+
+\begin_layout Enumerate
+Use the LyX editor.
+ The file can be compiled to PDF in LyX, just like any other LyX file.
+ LyX handles conversion from LyX to Rnw to tex to PDF.
+ This has the same effect as using LyX from the command line.
+ The following will create the PDF file using pdflatex as the final comiler:
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+$ lyx -e pdf2 skeleton.lyx
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Because lyx uses a separate working directory for the compilation work,
+ the project directory stays clean.
+ None of the intermediate LaTeX files (*.log, *.log, *.bbl) will appear.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Open an R session and make sure the working directory is the same as the
+ project writeup.
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+rnw2pdf("skeleton.lyx", engine = "Sweave")
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+The shell script 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+rnw2pdf.sh
+\end_layout
+
+\end_inset
+
+ is provided in the same folder.
+ It can be run in the shell as
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+$ ./rnw2pdf.sh --engine='"Sweave"' skeleton.lyx
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In the discussion in the next sub section, we outline usage of additional
+ arguments with rnw2pdf for the compilation of Rnw files.
+ All of those arguments are equally applicable in this context.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+In case you want to track the steps of compiling one by one, open the file
+ in LyX.
+ Use the pull down menu 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+File
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $\rightarrow$
+\end_inset
+
+ 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+Export
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $\rightarrow$
+\end_inset
+
+ 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+Sweave
+\end_layout
+
+\end_inset
+
+.
+ That will create a file named 
+\begin_inset Quotes eld
+\end_inset
+
+skeleton.Rnw
+\begin_inset Quotes erd
+\end_inset
+
+.
+ This is the equivalent of the command line statement
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+$ lyx -e sweave skeleton.lyx
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+After that Rnw file is created, proceed as described in the next subsection.
+\end_layout
+
+\begin_layout Standard
+This two-step process is valuable for debugging.
+ It makes it easier to spot trouble by focusing on the separate transitions.
+\end_layout
+
+\end_deeper
+\begin_layout Subsection*
+Edit the Rnw file
+\end_layout
+
+\begin_layout Standard
+The Rnw file we provide is produced by LyX, it is an intermediate step in
+ the document production sequence.
  A two step compilation procedure is necessary.
  First, one must convert the 
 \begin_inset Quotes eld
@@ -618,40 +916,271 @@ pdf
 \begin_inset Quotes erd
 \end_inset
 
- (with knit), and then the knitted tex file is compiled into pdf by pdflatex
+ (with Sweave), and then the weaved tex file is compiled into pdf by pdflatex
  (or one of the other LaTeX compilers).
  
 \end_layout
 
 \begin_layout Standard
-We provide a shell script that can handle this, 
-\begin_inset ERT
+The work flow here will vary, depending on your experience and the editor
+ you choose to use.
+ Here are some possibilities:
+\end_layout
+
+\begin_layout Enumerate
+You may have a 
+\begin_inset Quotes eld
+\end_inset
+
+noweb
+\begin_inset Quotes erd
+\end_inset
+
+ aware editor.
+ Emacs, Rstudio, and others have menus that can initiate the work of weaving
+ and rendering the document.
+\end_layout
+
+\begin_layout Enumerate
+Open an R session and make sure the working directory is the same as the
+ project writeup.
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset listings
+inline false
 status open
 
 \begin_layout Plain Layout
 
-
-\backslash
-code{rnw2pdf.sh}
+rnw2pdf("skeleton.Rnw", engine = "Sweave")
 \end_layout
 
 \end_inset
 
- script (which is included with the skeleton file).
- It is also possible to use our R function 
-\begin_inset ERT
+
+\end_layout
+
+\begin_layout Standard
+Additional arguments can be used, mainly to control the verbosity of the
+ output and the creation of subsidiary files.
+ Our function, by default, will create and R file summary of the command
+ chunks.
+ This file is referred to as a 
+\begin_inset Quotes eld
+\end_inset
+
+tangled
+\begin_inset Quotes erd
+\end_inset
+
+ (if using knitr, it is referred to as a purled file).
+ 
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+The shell script 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+rnw2pdf.sh
+\end_layout
+
+\end_inset
+
+ is provided in the same folder.
+ It can be run in the shell as
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset listings
+inline false
 status open
 
 \begin_layout Plain Layout
 
+$ ./rnw2pdf.sh --engine='"Sweave"' skeleton.Rnw
+\end_layout
 
-\backslash
-code{rnw2pdf}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The command script answers to all of the arguments followed by the R function
+ 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+rnw2pdf
 \end_layout
 
 \end_inset
 
 .
+ The usage is nearly identical.
+ Where the R function call would be 
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+rnw2pdf("skeleton.Rnw", purl = FALSE, clean = FALSE, verbose = TRUE, keep_tex
+ = TRUE)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+the shell command would be
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+$ ./rnw2pdf --purl=FALSE --clean=FALSE --keep_tex=TRUE --verbose=TRUE skeleton.Rnw
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The only difference in usage arises when a quoted string must be passed
+ through.
+ Suppose the files are in a subdirectory named 
+\begin_inset Quotes eld
+\end_inset
+
+project
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Inside the R code, the quoted string to specify the directory where the
+ file resides (the working directory) would be like so:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+rnw2pdf("skeleton.lyx", engine="Sweave" wd = "project")
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+the shell command would be
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+$ ./rnw2pdf --engine='"Sweave"' --wd='"project"' skeleton.Rnw
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Note the single quotes that are protecting the double quotes.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Our shell script is not the only way to use command line tools to get this
+ done.
+ One can run shell commands such as:
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+$ R CMD Sweave skeleton.Rnw
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+That will create 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+skeleton.tex
+\end_layout
+
+\end_inset
+
+, which we compile with
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+$ texi2pdf skeleton.tex
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The major difference between running this and the script we provide is that
+ our script will handle LyX files and it will, by default, will create a
+ purled copy of the R code.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+If you are editing these files in LyX, it is sufficient to simply compile
+ as usual.
+ That will handle the chore of converting a sequence of document types to
+ arrive at PDF.
 \end_layout
 
 \begin_layout Section
