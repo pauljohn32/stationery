@@ -4,8 +4,7 @@ subtitle: "Comparing Sweave and Knitr"
 guideurl: https://crmda.ku.edu/guides
 author:
 - name: Paul E. Johnson
-  affiliation: CRMDA
-  description: Director
+  affiliation: Director, CRMDA
   email: pauljohn@ku.edu
 addr:
     l1: 1425 Jayhawk Blvd.

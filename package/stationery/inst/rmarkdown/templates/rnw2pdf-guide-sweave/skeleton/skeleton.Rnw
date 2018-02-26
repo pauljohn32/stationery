@@ -38,42 +38,12 @@ marginparwidth=0pt,
 footskip=1.5\baselineskip,
 }
 
-\usepackage{multicol}
-\usepackage{listings}
-\usepackage{graphicx}
-\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{dcolumn}
 
 \input{theme/guidePreambleHeader.tex}
 \input{theme/preambleFooter.tex}
 \input{theme/guidePreambleSweavel.tex}
-
-\lstdefinestyle{custom}{
-  language=R,
-  escapechar=`,
-  fancyvrb=false,%
-  tabsize=2,%
-  breaklines=true,
-  breakatwhitespace=true,%
-  captionpos=b,%
-  frame=single,%
-  framerule=0.2pt,%
-  framesep=1pt,%
-  showstringspaces=false,%
-  basicstyle=\normalsize\ttfamily,%
-  columns=fixed%,
-  \lst@ifdisplaystyle\scriptsize\fi,%
-  identifierstyle=,%
-  keywords=\bfseries,%
-  keywordstyle=\color[rgb]{0, 0.5, 0.5},
-  escapeinside={(*}{*)},
-  literate={~}{{$$\sim$$}}1 {==}{{=\,=}}2,
-  alsoother={$$},
-  alsoletter={.<-},%
-  otherkeywords={!,!=,~,$$,*,\&,\%/\%,\%*\%,\%\%,<-,<<-,/},
-  backgroundcolor=\Rbackground,
-  numbers=left,
-  numberstyle={\tiny}
-}%
 
 \makeatother
 
@@ -84,17 +54,17 @@ footskip=1.5\baselineskip,
 %% If comma needed inside value, wrap in {}.
 %% Delete secondauthor and thirdauthor if not needed
 \guidesetup{%
-  firstauthor={
+  author={
     lastname=Author, 
     firstname=First, 
     affiliation=CRMDA,
     email=first@ku.edu},
-  secondauthor={
+  author={
     lastname=Author, 
     firstname=Second, 
     affiliation=CRMDA, 
     email=second@ku.edu}, 
- thirdauthor={
+  author={
     lastname=Author,
     firstname=Third, 
     affiliation=i,
@@ -196,7 +166,7 @@ mean(x)
 \bibliographystyle{apalike2}
 \addcontentsline{toc}{section}{\refname}\bibliography{theme/mlm}
 
-\section{Session Info\label{sec:Session-Info}}
+\section*{Session Info\label{sec:Session-Info}}
 
 Please leave this section \ref{sec:Session-Info} as it is for guide
 documents. 

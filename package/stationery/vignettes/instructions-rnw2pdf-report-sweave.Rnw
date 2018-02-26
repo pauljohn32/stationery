@@ -34,7 +34,7 @@
 \usepackage[includehead,includefoot,
 lmargin=1in,
 rmargin=1in,
-tmargin=0.75in,
+tmargin=0.5in,
 bmargin=1.0in,
 headheight=0pt,
 headsep=0pt,
@@ -43,9 +43,6 @@ footskip=1.5\baselineskip,
 ]{geometry}
 
 \usepackage{multicol}
-\usepackage{listings}
-\usepackage{graphicx}
-\usepackage{xcolor}
 \usepackage{dcolumn}
 \usepackage{booktabs}
 
@@ -75,6 +72,16 @@ footskip=1.5\baselineskip,
     firstname=Paul~E., 
     affiliation=Director{,}~CRMDA,
     email=pauljohn@ku.edu},
+  author={
+    lastname=Coauthor,
+    firstname=Imaginar~E.,
+    affiliation=CRMDA,
+    email=imaginary@ku.edu},
+  author={
+    lastname=Coauthor,
+    firstname=Another~Imaginary,
+    affiliation=CRMDA,
+    email=imaginary@ku.edu},
   title={Guide for authoring reports with Sweave code chunks},
   rightlogo={theme/logo.pdf},
 }

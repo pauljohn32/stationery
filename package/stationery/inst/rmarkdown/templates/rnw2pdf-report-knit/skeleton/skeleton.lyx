@@ -17,75 +17,6 @@ marginparwidth=0pt,
 footskip=1.5\baselineskip,
 ]{geometry}
 
-\usepackage{multicol}
-\usepackage{listings}
-\usepackage{graphicx}
-\usepackage{xcolor}
-\usepackage[yyyymmdd,hhmmss]{datetime}
-
-
-\lstset{tabsize=2, breaklines=true, 
-  breakatwhitespace=true,
-  %language=R,
-  captionpos=b,
-  frame=single,
-  framerule=0.2pt,
-  framesep=1pt,
-  % numbers=left,% not in reports
-  % numberstyle=\tiny,%not in reports
-  numbersep=5pt,
-  showstringspaces=false,
-  basicstyle=\footnotesize,
-  identifierstyle=,
-  keywordstyle=\bfseries,
-  commentstyle=\color{darkgreen},
-  stringstyle=,
-  backgroundcolor=\color[gray]{0.935}
-}
-
-
-\usepackage{dcolumn}
-\usepackage{booktabs}
-\usepackage{multicol}
-
-%% PJ 20161110
-%% I want to use listings in the document and I want nice/same as knitr.
-%% Does knitr provide all of these settings for other listing uses outside
-%% weaved part?
-\usepackage{fancyvrb}
-\fvset{listparameters={\setlength{\topsep}{0em}}}
-\usepackage{listings}
-\def\Sweavesize{\normalsize} 
-\def\Rcolor{\color{black}} 
-\def\Rbackground{\color[gray]{0.95}}
-\providecommand{\Rcolor}{\color[rgb]{0, 0.5, 0.5}}
-%%\providecommand{\Routcolor}{\color[rgb]{0.461, 0.039, 0.102}}
-\providecommand{\Routcolor}{\color[rgb]{1.0, 0.0, 0.0}}
-\providecommand{\Rcommentcolor}{\color[rgb]{0.101, 0.043, 0.432}}
-
-\providecommand{\Rbackground}{\color[gray]{0.95}}
-\providecommand{\Routbackground}{\color[gray]{0.80}}
-% Can specify \color[gray]{1} for white background or just \color{white}
-
-
-\lstdefinestyle{Rstyle}{fancyvrb=false,
-                        frame=none,
-                        escapechar=`,
-                        language=R,%
-                        basicstyle={\Rcolor\Sweavesize},%
-                        backgroundcolor=\Rbackground,%
-                        showstringspaces=false,%
-                        keywordstyle=\Rcolor,%
-                        commentstyle={\Rcommentcolor\ttfamily\itshape},%
-                        literate={<-}{{$\leftarrow$}}2{<<-}{{$\twoheadleftarrow$}}2{~}{{$\sim$}}1{<=}{{$\leq$}}2{>=}{{$\geq$}}2{^}{{$^{\scriptstyle\wedge}$}}1,%
-                        alsoother={$},%
-                        alsoletter={.<-},%
-                        otherkeywords={!,!=,~,$,*,\&,\%/\%,\%*\%,\%\%,<-,<<-,/},%
-                        escapeinside={(*}{*)}}%
-
-\lstset{tabsize=2, breaklines=true, style=Rstyle}
-
-
 
 \input{theme/reportPreambleHeader.tex}
 \input{theme/preambleFooter.tex}
@@ -205,7 +136,7 @@ reportsetup{%
 
 \begin_layout Plain Layout
 
-  firstauthor={
+  author={
 \end_layout
 
 \begin_layout Plain Layout
@@ -220,7 +151,7 @@ reportsetup{%
 
 \begin_layout Plain Layout
 
-    affiliation=Where Are U,
+    affiliation=Where~Are~U,
 \end_layout
 
 \begin_layout Plain Layout
@@ -230,7 +161,7 @@ reportsetup{%
 
 \begin_layout Plain Layout
 
- secondauthor={
+  author={
 \end_layout
 
 \begin_layout Plain Layout
@@ -245,7 +176,7 @@ reportsetup{%
 
 \begin_layout Plain Layout
 
-    affiliation=Where Are U Too, 
+    affiliation=Where~Are~U~Too, 
 \end_layout
 
 \begin_layout Plain Layout
@@ -255,7 +186,7 @@ reportsetup{%
 
 \begin_layout Plain Layout
 
-  thirdauthor={
+  author={
 \end_layout
 
 \begin_layout Plain Layout
@@ -270,7 +201,7 @@ reportsetup{%
 
 \begin_layout Plain Layout
 
-    affiliation=Where Are U, 
+    affiliation=Where~Are~U, 
 \end_layout
 
 \begin_layout Plain Layout

@@ -203,7 +203,7 @@ The following will create the PDF file using pdflatex as the final
 comiler:
 
 \inputencoding{latin9}\begin{lstlisting}
-## $ lyx -e pdf2 skeleton.lyx
+$ lyx -e pdf2 skeleton.lyx
 \end{lstlisting}
 \inputencoding{utf8}
 Because lyx uses a separate working directory for the compilation
@@ -213,13 +213,13 @@ LaTeX files ({*}.log, {*}.log, {*}.bbl) will appear.
 as the project writeup.
 
 \inputencoding{latin9}\begin{lstlisting}
-## rnw2pdf("skeleton.lyx")
+rnw2pdf("skeleton.lyx")
 \end{lstlisting}
 \inputencoding{utf8}\item The shell script \code{rnw2pdf.sh} is provided in the same folder.
 It can be run in the shell as
 
 \inputencoding{latin9}\begin{lstlisting}
-## $ ./rnw2pdf.sh skeleton.lyx
+$ ./rnw2pdf.sh skeleton.lyx
 \end{lstlisting}
 \inputencoding{utf8}
 In the discussion in the next sub section, we outline usage of additional
@@ -232,7 +232,7 @@ a file named ``skeleton.Rnw''. This is the equivalent of the command
 line statement
 
 \inputencoding{latin9}\begin{lstlisting}
-## $ lyx -e knitr skeleton.lyx
+$ lyx -e knitr skeleton.lyx
 \end{lstlisting}
 \inputencoding{utf8}
 After that Rnw file is created, proceed as described in the next subsection.
@@ -259,7 +259,7 @@ document.
 as the project writeup.
 
 \inputencoding{latin9}\begin{lstlisting}
-## rnw2pdf("skeleton.Rnw")
+rnw2pdf("skeleton.Rnw")
 \end{lstlisting}
 \inputencoding{utf8}
 Additional arguments can be used, mainly to control the verbosity
@@ -270,7 +270,7 @@ This file is referred to as a ``purled'' or ``tangled'' file.
 It can be run in the shell as
 
 \inputencoding{latin9}\begin{lstlisting}
-## $ ./rnw2pdf.sh skeleton.Rnw
+$ ./rnw2pdf.sh skeleton.Rnw
 \end{lstlisting}
 \inputencoding{utf8}
 The command like script answers to all of the arguments followed by
@@ -278,13 +278,13 @@ the R function \code{rnw2pdf}. The usage is nearly identical. Where
 the R function call would be 
 
 \inputencoding{latin9}\begin{lstlisting}
-##rnw2pdf("skeleton.lyx", purl = FALSE, clean = FALSE, verbose = TRUE, keep_tex = TRUE)
+rnw2pdf("skeleton.lyx", purl = FALSE, clean = FALSE, verbose = TRUE, keep_tex = TRUE)
 \end{lstlisting}
 \inputencoding{utf8}
 the shell command would be
 
 \inputencoding{latin9}\begin{lstlisting}[style=Rinput]
-## $ ./rnw2pdf --purl=FALSE --clean=FALSE --keep_tex=TRUE --verbose=TRUE skeleton.lyx
+$ ./rnw2pdf --purl=FALSE --clean=FALSE --keep_tex=TRUE --verbose=TRUE skeleton.lyx
 \end{lstlisting}
 \inputencoding{utf8}
 The only difference in usage arises when a quoted string must be passed
@@ -293,13 +293,13 @@ Inside the R code, the quoted string to specify the directory where
 the file resides (the working directory) would be like so:
 
 \inputencoding{latin9}\begin{lstlisting}
-##rnw2pdf("skeleton.lyx", wd = "project")
+rnw2pdf("skeleton.lyx", wd = "project")
 \end{lstlisting}
 \inputencoding{utf8}
 the shell command would be
 
 \inputencoding{latin9}\begin{lstlisting}
-##$ ./rnw2pdf --wd='"project"' skeleton.lyx
+$ ./rnw2pdf --wd='"project"' skeleton.lyx
 \end{lstlisting}
 \inputencoding{utf8}
 Note the single quotes that are protecting the double quotes.
@@ -307,13 +307,13 @@ Note the single quotes that are protecting the double quotes.
 get this done. One can run shell commands such as:
 
 \inputencoding{latin9}\begin{lstlisting}
-## $ R CMD knit skeleton.Rnw
+$ R CMD knit skeleton.Rnw
 \end{lstlisting}
 \inputencoding{utf8}
 That will create \code{skeleton.tex}, which we compile with
 
 \inputencoding{latin9}\begin{lstlisting}
-## $ texi2pdf skeleton.tex
+$ texi2pdf skeleton.tex
 \end{lstlisting}
 \inputencoding{utf8}
 The major difference between running this and the script we provide
@@ -332,11 +332,24 @@ markdown to produce HTML web pages.
 
 Styling of knitr code chunks is different than Sweave. It appears
 we lose line-wrap entirely. I can't figure how to make Sweavel ``listings''
-environments take over the knitr presentation.
+environments take over the knitr presentation. This is what knitr
+forces on us for the R input chunk
 
-We have not yet learned the ins-and-outs of correcting the knitr code
-and R output chunks to match our desired style. That is one reason
-to prefer the sweave-based templates we offer.
+<<eval=F>>=
+library(stationery)
+initWriteup("rnw2pdf-guide-knit")
+@
+
+This is what we would rather have
+
+\inputencoding{latin9}\begin{lstlisting}[style=Rinput]
+library(stationery)
+initWriteup("rnw2pdf-guide-knit")
+\end{lstlisting}
+\inputencoding{utf8}
+We have not yet learned how to control the coloring of knitr code
+chunks, in other words. That is one reason to prefer the sweave-based
+templates we offer.
 
 \subsection{Code Chunks}
 

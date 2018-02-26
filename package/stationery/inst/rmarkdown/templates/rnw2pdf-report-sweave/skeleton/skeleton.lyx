@@ -20,34 +20,8 @@ marginparwidth=0pt,
 footskip=1.5\baselineskip,
 ]{geometry}
 
-\usepackage{multicol}
-\usepackage{listings}
-\usepackage{graphicx}
-\usepackage{xcolor}
 \usepackage{dcolumn}
 \usepackage{booktabs}
-
-% May be customized for this document
-\lstdefinestyle{custom}{
-  tabsize=2, 
-  breaklines=true, 
-  breakatwhitespace=true,
-  captionpos=b,
-  frame=single,
-  framerule=0.2pt,
-  framesep=1pt,
-  numbersep=5pt,
-  showstringspaces=false,
-  basicstyle=\normalsize\ttfamily,%
-  columns=fixed%,
-  \lst@ifdisplaystyle\scriptsize\fi,%
-  identifierstyle=,
-  keywordstyle=\bfseries,
-  commentstyle=\color{darkgreen},
-  stringstyle=,
-  backgroundcolor=\color[gray]{0.935}
-}
-
 
 
 \input{theme/reportPreambleHeader.tex}

@@ -33,44 +33,6 @@ footskip=1.5\baselineskip,
 \usepackage{graphicx}
 \usepackage{xcolor}
 
-
-\def\Sweavesize{\scriptsize} 
-\def\Rcolor{\color{black}} 
-\def\Rbackground{\color[gray]{0.95}}
-
-\usepackage{listings}
-\usepackage{upquote, fancyvrb, relsize, ae}
-\lstdefinestyle{custom}{
-  language=R,
-  escapechar=`,
-  fancyvrb=false,%
-  tabsize=2,%
-  breaklines=true,
-  breakatwhitespace=true,%
-  captionpos=b,%
-  frame=single,%
-  framerule=0.2pt,%
-  framesep=1pt,%
-  showstringspaces=false,%
-  basicstyle=\normalsize\ttfamily,%
-  columns=fixed%,
-  \lst@ifdisplaystyle\scriptsize\fi,%
-  identifierstyle=,%
-  keywords=\bfseries,%
-  keywordstyle=\color[rgb]{0, 0.5, 0.5},
-  escapeinside={(*}{*)},
-  literate={~}{{$$\sim$$}}1 {==}{{=\,=}}2,
-  alsoother={$$},
-  alsoletter={.<-},%
-  otherkeywords={!,!=,~,$$,*,\&,\%/\%,\%*\%,\%\%,<-,<<-,/},
-  backgroundcolor=\Rbackground,
-  numbers=left,
-  numberstyle={\tiny}
-}%
-
-\lstset{style=custom}
-
-
 \input{theme/guidePreambleHeader.tex}
 \input{theme/preambleFooter.tex}
 \input{theme/guidePreambleKnitr.tex}
@@ -78,23 +40,26 @@ footskip=1.5\baselineskip,
 \makeatother
 
 \usepackage{babel}
+\usepackage{listings}
+\renewcommand{\lstlistingname}{\inputencoding{latin9}Listing}
+
 \begin{document}
 %% Fill in values of the arguments here, 
 %% If blanks are needed, must insert value " ~ "
 %% If comma needed inside value, wrap in {}.
 %% Delete secondauthor and thirdauthor if not needed
 \guidesetup{%
-  firstauthor={
+  author={
     lastname=Author, 
     firstname=First, 
     affiliation=Title{,}~Institute,
     email=first@ku.edu},
-  secondauthor={
+  author={
     lastname=Author, 
     firstname=Second, 
     affiliation=Title{,}~Institute, 
     email=second@ku.edu}, 
- thirdauthor={
+  author={
     lastname=Author,
     firstname=Third, 
     affiliation=Title{,}~Institute,
@@ -104,7 +69,7 @@ footskip=1.5\baselineskip,
   title={A Title for Skeleton Template: rnw2pdf-guide-knit},
   leftlogo={theme/logoleft.pdf},
   rightlogo={theme/logo-vert.pdf},
-  number=-1
+  number={}
 }
 \guidehdr
 
@@ -167,6 +132,12 @@ what they want.
 
 \section{R Code Chunks Work}
 
+Listing objects differ in output from R code chunks-
+
+\inputencoding{latin9}\begin{lstlisting}
+$ ./rnw2pdf --engine='"knitr"' skeleton.lyx
+\end{lstlisting}
+\inputencoding{utf8}
 When using knitr, we have not succeeded in customizing the display
 of input or output cells. What you see is what they insist on, at
 least until we figure how to change it.

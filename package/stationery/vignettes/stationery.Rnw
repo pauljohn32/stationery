@@ -41,10 +41,6 @@ marginparwidth=0pt,
 footskip=1.5\baselineskip,
 ]{geometry}
 
-\usepackage{multicol}
-\usepackage{listings}
-\usepackage{graphicx}
-\usepackage{xcolor}
 \usepackage{dcolumn}
 \usepackage{booktabs}
 
@@ -52,8 +48,6 @@ footskip=1.5\baselineskip,
 \input{theme/reportPreambleHeader.tex}
 \input{theme/preambleFooter.tex}
 \input{theme/reportPreambleSweavel.tex}
-
-\lstset{tabsize=2, breaklines=true, style=Rinput, breakatwhitespace=true}
 
 \makeatother
 
@@ -63,7 +57,7 @@ footskip=1.5\baselineskip,
 
 \begin{document}
 \reportsetup{%
-  firstauthor={
+  author={
     lastname=Johnson,
     firstname=Paul E., 
     affiliation=Director{,} CRMDA,
@@ -81,8 +75,21 @@ if(!dir.exists("tmpout"))dir.create("tmpout", recursive = TRUE)
 \fvset{listparameters={\setlength{\topsep}{0em}}}
 \SweaveOpts{prefix.string=tmpout/t, split=FALSE, ae=FALSE, height=5, width=6}
 
+<<texcopy, include=FALSE,echo=FALSE,results=hide>>=
+library(stationery)
+## If theme directory does not have required images or TeX files
+## we need to retrieve them and put them in "theme" directory. 
+logos <- c(logoright = "logo.pdf", "addressFooter.tex")
+texfiles <- c("reportPreambleHeader.tex", 
+              "preambleFooter.tex", 
+              "reportPreambleSweavel.tex",
+              "mlm.bib")
+getFiles(logos, pkg = "stationery")
+getFiles(texfiles, pkg = "stationery")
+@
+
 % Please leave this chunk
-<<Roptions, echo=F, include=F>>=
+<<Roptions, echo=F, include=F, results=hide>>=
 if(!dir.exists("tmpout"))dir.create("tmpout", recursive = TRUE)
 opts.orig <- options()
 options(device = pdf)
@@ -95,10 +102,10 @@ options(SweaveHooks=list(fig=function() par(mar=pjmar, ps=10)))
 pdf.options(onefile=FALSE, family="Times", pointsize=10)
 @
 \begin{abstract}
-This document discusses the CRMDA package templates and how to use
-them. It compares some strengths and weaknesses of the `noweb`/LaTeX
-format versus `Rmarkdown`. It also mentions two code-chunk processing
-engines, `Sweave` and `knitr`. 
+\noindent This document discusses the CRMDA package templates and
+how to use them. It compares some strengths and weaknesses of the
+`noweb`/LaTeX format versus `Rmarkdown`. It also mentions two code-chunk
+processing engines, `Sweave` and `knitr`. 
 \end{abstract}
 
 \section{Introduction}

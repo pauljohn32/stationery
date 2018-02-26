@@ -1,7 +1,7 @@
 Package: stationery 
 Type: Package
 Title: The KU CRMDA Private Package
-Version: 0.75
+Version: 0.76
 Date: 2018-02-26
 Authors@R: c(person("Paul", "Johnson", role = c("aut", "cre"), email = "pauljohn@ku.edu"),
              person("Brent", "Kaplan", role = c("ctb"), email = "bkaplan4@ku.edu"),

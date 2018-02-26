@@ -17,10 +17,8 @@ marginparwidth=0pt,
 footskip=1.5\baselineskip,
 ]{geometry}
 
-\usepackage{multicol}
-\usepackage{listings}
-\usepackage{graphicx}
-\usepackage{xcolor}
+%\usepackage{dcolumn}
+%\usepackage{booktabs}
 
 \input{theme/guidePreambleHeader.tex}
 \input{theme/preambleFooter.tex}
@@ -243,7 +241,7 @@ guidesetup{%
 
 \begin_layout Plain Layout
 
-  number=-1
+  number={44}
 \end_layout
 
 \begin_layout Plain Layout

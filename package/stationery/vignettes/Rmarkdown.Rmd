@@ -1,8 +1,7 @@
 --- 
 title: "Rmarkdown Basics"
 author:
-- affiliation: CRMDA
-  description: Director
+- affiliation: Director, CRMDA
   email: pauljohn@ku.edu
   name: Paul Johnson
 output:
