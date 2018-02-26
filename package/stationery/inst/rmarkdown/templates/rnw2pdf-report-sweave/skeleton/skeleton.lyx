@@ -167,7 +167,7 @@ reportsetup{%
 
 \begin_layout Plain Layout
 
-  firstauthor={
+  author={
 \end_layout
 
 \begin_layout Plain Layout
@@ -192,7 +192,7 @@ reportsetup{%
 
 \begin_layout Plain Layout
 
- secondauthor={
+ author={
 \end_layout
 
 \begin_layout Plain Layout
@@ -217,7 +217,7 @@ reportsetup{%
 
 \begin_layout Plain Layout
 
-  thirdauthor={
+  author={
 \end_layout
 
 \begin_layout Plain Layout

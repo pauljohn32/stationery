@@ -1,6 +1,6 @@
 
 %% This controls display of code chunks
-\usepackage{ae,fancyvrb,relsize,ae,listings}
+\usepackage{ae,fancyvrb,relsize,listings}
 \providecommand{\Sweavesize}{\normalsize}
 \providecommand{\Rsize}{}
 \renewcommand{\Rsize}{\normalsize}
@@ -34,7 +34,7 @@
   keywords=\bfseries,%
   keywordstyle=\color[rgb]{0, 0.5, 0.5},
   escapeinside={(*}{*)},
-  literate={~}{{$\sim$}}1 {==}{{=\,=}}2,
+  literate={~}{{$\sim$}}1{==}{{=\,=}}2{--}{{-\,-}}2,
   alsoother={$},
   alsoletter={.<-},%
   otherkeywords={!,!=,~,$$,*,\&,\%/\%,\%*\%,\%\%,<-,<<-,/},%
@@ -82,6 +82,7 @@
 \lstnewenvironment{Scode}{\lstset{style=Rinput}}{}
 \lstnewenvironment{Soutput}{\lstset{style=Routput}}{}
 
-\providecommand*{\code}[1]{\texttt{#1}}
-
 \lstset{tabsize=2, breaklines=true, style=Rinput, breakatwhitespace=true}
+\fvset{listparameters={\setlength{\topsep}{0em}}}
+
+\providecommand*{\code}[1]{\texttt{#1}}

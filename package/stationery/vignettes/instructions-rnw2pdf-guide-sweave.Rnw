@@ -43,43 +43,9 @@ marginparwidth=0pt,
 footskip=1.5\baselineskip,
 }
 
-\usepackage{multicol}
-\usepackage{listings}
-\usepackage{graphicx}
-\usepackage{xcolor}
-
 \input{theme/guidePreambleHeader.tex}
 \input{theme/preambleFooter.tex}
 \input{theme/guidePreambleSweavel.tex}
-
-
-\lstdefinestyle{custom}{
-  language=R,
-  escapechar=`,
-  fancyvrb=false,%
-  tabsize=2,%
-  breaklines=true,
-  breakatwhitespace=true,%
-  captionpos=b,%
-  frame=single,%
-  framerule=0.2pt,%
-  framesep=1pt,%
-  showstringspaces=false,%
-  basicstyle=\normalsize\ttfamily,%
-  columns=fixed%,
-  \lst@ifdisplaystyle\scriptsize\fi,%
-  identifierstyle=,%
-  keywords=\bfseries,%
-  keywordstyle=\color[rgb]{0, 0.5, 0.5},
-  escapeinside={(*}{*)},
-  literate={~}{{$$\sim$$}}1 {==}{{=\,=}}2,
-  alsoother={$$},
-  alsoletter={.<-},%
-  otherkeywords={!,!=,~,$$,*,\&,\%/\%,\%*\%,\%\%,<-,<<-,/},
-  backgroundcolor=\Rbackground,
-  numbers=left,
-  numberstyle={\tiny}
-}%
 
 \makeatother
 
@@ -93,22 +59,22 @@ footskip=1.5\baselineskip,
 %% If comma needed inside value, wrap in {}.
 %% Delete secondauthor and thirdauthor if not needed
 \guidesetup{%
-  firstauthor={
+  author={
     lastname=Johnson, 
-    firstname=Paul, 
+    firstname=Paul~E., 
     affiliation=CRMDA,
     email=pauljohn.edu},
-  secondauthor={
+  author={
     lastname=Sullivan, 
     firstname=Meghan, 
     affiliation=CRMDA, 
     email=second@ku.edu}, 
   url={https://crmda.ku.edu/guides},
-  keywords={single-authoring, just one},
-  title={Guide Sweave Instructions},
+  keywords={Sweave, guide, listings},
+  title={Writing Sweaved Guides with the CRMDA Template},
   leftlogo={theme/logoleft.pdf},
   rightlogo={theme/logo-vert.pdf},
-  number=48,
+  number=,
 }
 \guidehdr
 

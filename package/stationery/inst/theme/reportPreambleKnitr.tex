@@ -1,6 +1,6 @@
 
 %% This controls display of code chunks
-\usepackage{ae,fancyvrb,relsize,ae}
+\usepackage{ae,fancyvrb,relsize,listings}
 \providecommand{\Sweavesize}{\normalsize}
 \providecommand{\Rsize}{}
 \renewcommand{\Rsize}{\normalsize}
@@ -34,13 +34,13 @@
   keywords=\bfseries,%
   keywordstyle=\color[rgb]{0, 0.5, 0.5},
   escapeinside={(*}{*)},
-  literate={~}{{$\sim$}}1 {==}{{=\,=}}2,
+  literate={~}{{$\sim$}}1{==}{{=\,=}}2{--}{{-\,-}}2,
   alsoother={$},
   alsoletter={.<-},%
   otherkeywords={!,!=,~,$$,*,\&,\%/\%,\%*\%,\%\%,<-,<<-,/},%
-  backgroundcolor=\Rbackground,%
-  numbers=left,%
-  numberstyle={\tiny}
+  backgroundcolor=\Rbackground%,%
+  %numbers=left,%
+  %numberstyle={\tiny}
 }%
 
 % Other options of interest:
@@ -72,9 +72,9 @@
   literate={~}{{$\sim$}}1 {==}{{=\,=}}2,
   alsoother={$},
   alsoletter={.<-},%
-  otherkeywords={!,!=,~,$,*,\&,\%/\%,\%*\%,\%\%,<-,<<-,/},
-  numbers=left,
-  numberstyle={\tiny}
+  otherkeywords={!,!=,~,$,*,\&,\%/\%,\%*\%,\%\%,<-,<<-,/}%,
+  %numbers=left,
+  %numberstyle={\tiny}
 }
 
 \newenvironment{Schunk}{}{}
@@ -82,5 +82,7 @@
 \lstnewenvironment{Scode}{\lstset{style=Rinput}}{}
 \lstnewenvironment{Soutput}{\lstset{style=Routput}}{}
 
+\lstset{tabsize=2, breaklines=true, style=Rinput, breakatwhitespace=true}
+\fvset{listparameters={\setlength{\topsep}{0em}}}
 
 \providecommand*{\code}[1]{\texttt{#1}}

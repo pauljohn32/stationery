@@ -37,45 +37,6 @@ marginparwidth=0pt,
 footskip=1.5\baselineskip,
 ]{geometry}
 
-\usepackage{multicol}
-\usepackage{listings}
-\usepackage{graphicx}
-\usepackage{xcolor}
-
-\def\Rcolor{\color{black}} 
-\def\Rbackground{\color[gray]{0.95}}
-
-\usepackage{listings}
-\usepackage{upquote, fancyvrb, relsize, ae}
-\lstdefinestyle{custom}{
-  language=R,
-  escapechar=`,
-  fancyvrb=false,%
-  tabsize=2,%
-  breaklines=true,
-  breakatwhitespace=true,%
-  captionpos=b,%
-  frame=single,%
-  framerule=0.2pt,%
-  framesep=1pt,%
-  showstringspaces=false,%
-  basicstyle=\normalsize\ttfamily,%
-  columns=fixed%,
-  \lst@ifdisplaystyle\scriptsize\fi,%
-  identifierstyle=,%
-  keywords=\bfseries,%
-  keywordstyle=\color[rgb]{0, 0.5, 0.5},
-  escapeinside={(*}{*)},
-  literate={~}{{$$\sim$$}}1 {==}{{=\,=}}2,
-  alsoother={$$},
-  alsoletter={.<-},%
-  otherkeywords={!,!=,~,$$,*,\&,\%/\%,\%*\%,\%\%,<-,<<-,/},
-  backgroundcolor=\Rbackground,
-  numbers=left,
-  numberstyle={\tiny}
-}%
-\lstset{style=custom}
-
 \input{theme/guidePreambleHeader.tex}
 \input{theme/preambleFooter.tex}
 \input{theme/guidePreambleKnitr.tex}
@@ -92,12 +53,12 @@ footskip=1.5\baselineskip,
 %% If comma needed inside value, wrap in {}.
 %% Delete secondauthor and thirdauthor if not needed
 \guidesetup{%
-  firstauthor={
-    lastname=Paul~E., 
-    firstname=Johnson, 
+  author={
+    lastname=Johnson, 
+    firstname=Paul~E., 
     affiliation=Directior{,}~CRMDA,
     email=pauljohn@ku.edu},
-  secondauthor={
+  author={
     lastname=Author, 
     firstname=Second, 
     affiliation=CRMDA, 
@@ -242,7 +203,7 @@ The following will create the PDF file using pdflatex as the final
 comiler:
 
 \inputencoding{latin9}\begin{lstlisting}
-$ lyx -e pdf2 skeleton.lyx
+## $ lyx -e pdf2 skeleton.lyx
 \end{lstlisting}
 \inputencoding{utf8}
 Because lyx uses a separate working directory for the compilation
@@ -252,13 +213,13 @@ LaTeX files ({*}.log, {*}.log, {*}.bbl) will appear.
 as the project writeup.
 
 \inputencoding{latin9}\begin{lstlisting}
-rnw2pdf("skeleton.lyx")
+## rnw2pdf("skeleton.lyx")
 \end{lstlisting}
 \inputencoding{utf8}\item The shell script \code{rnw2pdf.sh} is provided in the same folder.
 It can be run in the shell as
 
 \inputencoding{latin9}\begin{lstlisting}
-$ ./rnw2pdf.sh skeleton.lyx
+## $ ./rnw2pdf.sh skeleton.lyx
 \end{lstlisting}
 \inputencoding{utf8}
 In the discussion in the next sub section, we outline usage of additional
@@ -271,7 +232,7 @@ a file named ``skeleton.Rnw''. This is the equivalent of the command
 line statement
 
 \inputencoding{latin9}\begin{lstlisting}
-$ lyx -e knitr skeleton.lyx
+## $ lyx -e knitr skeleton.lyx
 \end{lstlisting}
 \inputencoding{utf8}
 After that Rnw file is created, proceed as described in the next subsection.
@@ -298,7 +259,7 @@ document.
 as the project writeup.
 
 \inputencoding{latin9}\begin{lstlisting}
-rnw2pdf("skeleton.Rnw")
+## rnw2pdf("skeleton.Rnw")
 \end{lstlisting}
 \inputencoding{utf8}
 Additional arguments can be used, mainly to control the verbosity
@@ -309,7 +270,7 @@ This file is referred to as a ``purled'' or ``tangled'' file.
 It can be run in the shell as
 
 \inputencoding{latin9}\begin{lstlisting}
-$ ./rnw2pdf.sh skeleton.Rnw
+## $ ./rnw2pdf.sh skeleton.Rnw
 \end{lstlisting}
 \inputencoding{utf8}
 The command like script answers to all of the arguments followed by
@@ -317,13 +278,13 @@ the R function \code{rnw2pdf}. The usage is nearly identical. Where
 the R function call would be 
 
 \inputencoding{latin9}\begin{lstlisting}
-rnw2pdf("skeleton.lyx", purl = FALSE, clean = FALSE, verbose = TRUE, keep_tex = TRUE)
+##rnw2pdf("skeleton.lyx", purl = FALSE, clean = FALSE, verbose = TRUE, keep_tex = TRUE)
 \end{lstlisting}
 \inputencoding{utf8}
 the shell command would be
 
-\inputencoding{latin9}\begin{lstlisting}
-$ ./rnw2pdf --purl=FALSE --clean=FALSE --keep_tex=TRUE --verbose=TRUE skeleton.lyx
+\inputencoding{latin9}\begin{lstlisting}[style=Rinput]
+## $ ./rnw2pdf --purl=FALSE --clean=FALSE --keep_tex=TRUE --verbose=TRUE skeleton.lyx
 \end{lstlisting}
 \inputencoding{utf8}
 The only difference in usage arises when a quoted string must be passed
@@ -332,13 +293,13 @@ Inside the R code, the quoted string to specify the directory where
 the file resides (the working directory) would be like so:
 
 \inputencoding{latin9}\begin{lstlisting}
-rnw2pdf("skeleton.lyx", wd = "project")
+##rnw2pdf("skeleton.lyx", wd = "project")
 \end{lstlisting}
 \inputencoding{utf8}
 the shell command would be
 
 \inputencoding{latin9}\begin{lstlisting}
-$ ./rnw2pdf --wd='"project"' skeleton.lyx
+##$ ./rnw2pdf --wd='"project"' skeleton.lyx
 \end{lstlisting}
 \inputencoding{utf8}
 Note the single quotes that are protecting the double quotes.
@@ -346,13 +307,13 @@ Note the single quotes that are protecting the double quotes.
 get this done. One can run shell commands such as:
 
 \inputencoding{latin9}\begin{lstlisting}
-$ R CMD knit skeleton.Rnw
+## $ R CMD knit skeleton.Rnw
 \end{lstlisting}
 \inputencoding{utf8}
 That will create \code{skeleton.tex}, which we compile with
 
 \inputencoding{latin9}\begin{lstlisting}
-$ texi2pdf skeleton.tex
+## $ texi2pdf skeleton.tex
 \end{lstlisting}
 \inputencoding{utf8}
 The major difference between running this and the script we provide

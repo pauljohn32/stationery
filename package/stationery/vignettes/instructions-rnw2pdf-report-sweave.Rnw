@@ -70,7 +70,7 @@ footskip=1.5\baselineskip,
 %% If comma needed inside value, wrap in {}.
 %% Delete secondauthor and thirdauthor if not needed
 \reportsetup{%
-  firstauthor={
+  author={
     lastname=Johnson,
     firstname=Paul~E., 
     affiliation=Director{,}~CRMDA,

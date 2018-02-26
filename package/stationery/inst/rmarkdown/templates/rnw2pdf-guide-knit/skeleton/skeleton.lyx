@@ -22,44 +22,6 @@ footskip=1.5\baselineskip,
 \usepackage{graphicx}
 \usepackage{xcolor}
 
-
-\def\Sweavesize{\scriptsize} 
-\def\Rcolor{\color{black}} 
-\def\Rbackground{\color[gray]{0.95}}
-
-\usepackage{listings}
-\usepackage{upquote, fancyvrb, relsize, ae}
-\lstdefinestyle{custom}{
-  language=R,
-  escapechar=`,
-  fancyvrb=false,%
-  tabsize=2,%
-  breaklines=true,
-  breakatwhitespace=true,%
-  captionpos=b,%
-  frame=single,%
-  framerule=0.2pt,%
-  framesep=1pt,%
-  showstringspaces=false,%
-  basicstyle=\normalsize\ttfamily,%
-  columns=fixed%,
-  \lst@ifdisplaystyle\scriptsize\fi,%
-  identifierstyle=,%
-  keywords=\bfseries,%
-  keywordstyle=\color[rgb]{0, 0.5, 0.5},
-  escapeinside={(*}{*)},
-  literate={~}{{$$\sim$$}}1 {==}{{=\,=}}2,
-  alsoother={$$},
-  alsoletter={.<-},%
-  otherkeywords={!,!=,~,$$,*,\&,\%/\%,\%*\%,\%\%,<-,<<-,/},
-  backgroundcolor=\Rbackground,
-  numbers=left,
-  numberstyle={\tiny}
-}%
-
-\lstset{style=custom}
-
-
 \input{theme/guidePreambleHeader.tex}
 \input{theme/preambleFooter.tex}
 \input{theme/guidePreambleKnitr.tex}
@@ -181,7 +143,7 @@ guidesetup{%
 
 \begin_layout Plain Layout
 
-  firstauthor={
+  author={
 \end_layout
 
 \begin_layout Plain Layout
@@ -206,7 +168,7 @@ guidesetup{%
 
 \begin_layout Plain Layout
 
-  secondauthor={
+  author={
 \end_layout
 
 \begin_layout Plain Layout
@@ -231,7 +193,7 @@ guidesetup{%
 
 \begin_layout Plain Layout
 
- thirdauthor={
+  author={
 \end_layout
 
 \begin_layout Plain Layout
@@ -532,6 +494,25 @@ Please do use sections and focused subsections to help readers find what
 
 \begin_layout Section
 R Code Chunks Work
+\end_layout
+
+\begin_layout Standard
+Listing objects differ in output from R code chunks-
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+$ ./rnw2pdf --engine='"knitr"' skeleton.lyx
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard

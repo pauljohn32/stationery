@@ -22,45 +22,6 @@ marginparwidth=0pt,
 footskip=1.5\baselineskip,
 ]{geometry}
 
-\usepackage{multicol}
-\usepackage{listings}
-\usepackage{graphicx}
-\usepackage{xcolor}
-
-\def\Rcolor{\color{black}} 
-\def\Rbackground{\color[gray]{0.95}}
-
-\usepackage{listings}
-\usepackage{upquote, fancyvrb, relsize, ae}
-\lstdefinestyle{custom}{
-  language=R,
-  escapechar=`,
-  fancyvrb=false,%
-  tabsize=2,%
-  breaklines=true,
-  breakatwhitespace=true,%
-  captionpos=b,%
-  frame=single,%
-  framerule=0.2pt,%
-  framesep=1pt,%
-  showstringspaces=false,%
-  basicstyle=\normalsize\ttfamily,%
-  columns=fixed%,
-  \lst@ifdisplaystyle\scriptsize\fi,%
-  identifierstyle=,%
-  keywords=\bfseries,%
-  keywordstyle=\color[rgb]{0, 0.5, 0.5},
-  escapeinside={(*}{*)},
-  literate={~}{{$$\sim$$}}1 {==}{{=\,=}}2,
-  alsoother={$$},
-  alsoletter={.<-},%
-  otherkeywords={!,!=,~,$$,*,\&,\%/\%,\%*\%,\%\%,<-,<<-,/},
-  backgroundcolor=\Rbackground,
-  numbers=left,
-  numberstyle={\tiny}
-}%
-\lstset{style=custom}
-
 \input{theme/guidePreambleHeader.tex}
 \input{theme/preambleFooter.tex}
 \input{theme/guidePreambleKnitr.tex}
@@ -182,17 +143,17 @@ guidesetup{%
 
 \begin_layout Plain Layout
 
-  firstauthor={
+  author={
 \end_layout
 
 \begin_layout Plain Layout
 
-    lastname=Paul~E., 
+    lastname=Johnson, 
 \end_layout
 
 \begin_layout Plain Layout
 
-    firstname=Johnson, 
+    firstname=Paul~E., 
 \end_layout
 
 \begin_layout Plain Layout
@@ -207,7 +168,7 @@ guidesetup{%
 
 \begin_layout Plain Layout
 
-  secondauthor={
+  author={
 \end_layout
 
 \begin_layout Plain Layout
@@ -1048,6 +1009,7 @@ the shell command would be
 
 \begin_layout Standard
 \begin_inset listings
+lstparams "style=Rinput"
 inline false
 status open
 
@@ -1210,11 +1172,66 @@ listings
 \end_inset
 
  environments take over the knitr presentation.
+ This is what knitr forces on us for the R input chunk
 \end_layout
 
 \begin_layout Standard
-We have not yet learned the ins-and-outs of correcting the knitr code and
- R output chunks to match our desired style.
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<eval=F>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+library(stationery)
+\end_layout
+
+\begin_layout Plain Layout
+
+initWriteup("rnw2pdf-guide-knit")
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This is what we would rather have
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "style=Rinput"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+library(stationery)
+\end_layout
+
+\begin_layout Plain Layout
+
+initWriteup("rnw2pdf-guide-knit")
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We have not yet learned how to control the coloring of knitr code chunks,
+ in other words.
  That is one reason to prefer the sweave-based templates we offer.
 \end_layout
 
