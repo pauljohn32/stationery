@@ -157,7 +157,7 @@ guidesetup{%
 
 \begin_layout Plain Layout
 
-    email=pauljohn.edu},
+    email=pauljohn@ku.edu},
 \end_layout
 
 \begin_layout Plain Layout
@@ -182,12 +182,12 @@ guidesetup{%
 
 \begin_layout Plain Layout
 
-    email=second@ku.edu}, 
+    email=meg.sullivan@ku.edu}, 
 \end_layout
 
 \begin_layout Plain Layout
 
-  url={https://crmda.ku.edu/guides},
+  url={crmda.ku.edu/guides},
 \end_layout
 
 \begin_layout Plain Layout
@@ -197,7 +197,12 @@ guidesetup{%
 
 \begin_layout Plain Layout
 
-  title={Writing Sweaved Guides with the CRMDA Template},
+  title={Writing Sweaved Guides:},
+\end_layout
+
+\begin_layout Plain Layout
+
+  subtitle={Using the CRMDA Template},
 \end_layout
 
 \begin_layout Plain Layout
@@ -212,7 +217,7 @@ guidesetup{%
 
 \begin_layout Plain Layout
 
-  number=,
+  number=00,
 \end_layout
 
 \begin_layout Plain Layout
@@ -402,7 +407,7 @@ key "RCore"
 
 \end_inset
 
- to make report documents using the CRMDA style.
+ to make guide documents using the CRMDA style.
  This is a LaTeX 
 \begin_inset Quotes eld
 \end_inset

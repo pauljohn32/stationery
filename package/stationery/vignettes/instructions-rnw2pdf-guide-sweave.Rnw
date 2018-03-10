@@ -63,18 +63,19 @@ footskip=1.5\baselineskip,
     lastname=Johnson, 
     firstname=Paul~E., 
     affiliation=CRMDA,
-    email=pauljohn.edu},
+    email=pauljohn@ku.edu},
   author={
     lastname=Sullivan, 
     firstname=Meghan, 
     affiliation=CRMDA, 
-    email=second@ku.edu}, 
-  url={https://crmda.ku.edu/guides},
+    email=meg.sullivan@ku.edu}, 
+  url={crmda.ku.edu/guides},
   keywords={Sweave, guide, listings},
-  title={Writing Sweaved Guides with the CRMDA Template},
+  title={Writing Sweaved Guides:},
+  subtitle={Using the CRMDA Template},
   leftlogo={theme/logoleft.pdf},
   rightlogo={theme/logo-vert.pdf},
-  number=,
+  number=00,
 }
 \guidehdr
 
@@ -106,7 +107,7 @@ getFiles(logos, pkg = "stationery")
 getFiles(texfiles, pkg = "stationery")
 @
 \begin{abstract}
-\noindent This shows how we use R \citep{RCore} to make report documents
+\noindent This shows how we use R \citep{RCore} to make guide documents
 using the CRMDA style. This is a LaTeX ``noweb'' guide document
 generated with the Sweave engine.
 

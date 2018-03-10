@@ -147,7 +147,7 @@ reportsetup{%
 
 \begin_layout Plain Layout
 
-  title={Stationery: Guides, Slides, and Reports},
+  title={stationery Package Overview: Guides, Slides, and Reports},
 \end_layout
 
 \begin_layout Plain Layout
@@ -255,17 +255,12 @@ library(stationery)
 
 \begin_layout Plain Layout
 
-logos <- c(logoright = "logo.pdf", "addressFooter.tex")
+logos <- c(logoright = "logo.pdf", "addressFooter.tex", "preambleFooter.tex")
 \end_layout
 
 \begin_layout Plain Layout
 
 texfiles <- c("reportPreambleHeader.tex", 
-\end_layout
-
-\begin_layout Plain Layout
-
-              "preambleFooter.tex", 
 \end_layout
 
 \begin_layout Plain Layout
@@ -374,11 +369,24 @@ pdf.options(onefile=FALSE, family="Times", pointsize=10)
 
 \begin_layout Abstract
 \noindent
-This document discusses the CRMDA package templates and how to use them.
- It compares some strengths and weaknesses of the `noweb`/LaTeX format versus
- `Rmarkdown`.
- It also mentions two code-chunk processing engines, `Sweave` and `knitr`.
- 
+This document surveys methodologies for literate document preparation.
+ It offers an overview for 8 document templates provided by the R package
+ named 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+\noindent
+stationery
+\end_layout
+
+\end_inset
+
+.
+ The document compares LaTeX-based strategies (using the code chunk engines
+ Sweave and knitr) with documents prepared with markdown.
+ We discuss strengths and weaknesses of each method and then offer some
+ advice about how authors should plan their projects.
 \end_layout
 
 \begin_layout Section
@@ -386,81 +394,168 @@ Introduction
 \end_layout
 
 \begin_layout Standard
-Researchers who have used word processors are understandably bewildered
- by recent talk about reproducible research documents (??).
- 
+Researchers who have been using word processors to prepare their research
+ articles are understandably bewildered by recent talk about reproducible
+ research documents (
+\begin_inset CommandInset citation
+LatexCommand citealp
+key "leisch2002,xiedynamic,stodden_2013,xiebookdown"
+
+\end_inset
+
+).
+ The banner of 
 \begin_inset Quotes eld
 \end_inset
 
-I have no idea what that means,
+reproducible documents
 \begin_inset Quotes erd
 \end_inset
 
- exclaimed an administrator who recently asked us what we were working on.
- An entire article, lecture, or book can be generated in one single execution
- that conducts analysis, saves graphics, and assembles them together in
- a single output document.
- 
+ hangs over scholars who combine code and analysis into a single authoring
+ process.
+ We are in a new era of emphasis on reproducible research and the integration
+ of statistical analysis with report preparation is intended to enhance
+ integrity and reduce the frequency of typographical (and other) errors.
 \end_layout
 
 \begin_layout Standard
-The whole idea is, one must expect, entirely unfamiliar to most graduate
- students in social science, not to mention their professors.
- It comes as a rude shock, then that the general idea of 
+Still, the majority response from most professors in the university seems
+ to echo the exclamation of one university administrator: 
 \begin_inset Quotes eld
 \end_inset
 
-code embedded within documents
+I have no idea what that means!
 \begin_inset Quotes erd
 \end_inset
 
- is immediately followed by another cold slap: There are several competing
- formats in which one can prepare these documents.
- Furthermore, it seems likely that no sooner will we begin to understand
- the strong (and weak) points of one approach than we are confronted with
- yet another proposed framework.
-\end_layout
-
-\begin_layout Standard
-I've been using the editor LyX to weave together R code with reports and
- slides since the turn of the century.
- In the Center for Research Methods and Data Analysis at the University
- of Kansas, I've shown the graduate students how to do the same king of
- work.
- We have developed a set of template document styles for usage in technical
- reports, in guides for students and other learners, and also slides for
- use in classes and workshops.
+ In the 
+\emph on
+old
+\emph default
  
+\emph on
+way
+\emph default
+ of doing things, one prepares a document in a word processor program.
+ While doing that, one types tables and pastes in graphs.
+ One often types in a bibliography if the word processor does not integrate
+ well with a bibliography manager.
+ The old way is practiced by most social scientists and humanists today.
 \end_layout
 
 \begin_layout Standard
-The development work on these templates was carried out in an R package
- we called 
+In the 
+\emph on
+new way
+\emph default
+ of doing things, we try to avoid typing tables or pasting in graphs.
+ We want the analysis software to prepare article-ready tables and graphs
+ that can be incorporated into the generation of a final report.
+ In the ideal case, an entire article, lecture, or book can be generated
+ in one single execution that conducts analysis, saves graphics, and assembles
+ them together in a single output document.
+ This is roughly along the lines of the 
 \begin_inset Quotes eld
 \end_inset
 
-crmda
+literate programming
 \begin_inset Quotes erd
+\end_inset
+
+ movement started by computer scientist Donald Knuth (
+\begin_inset CommandInset citation
+LatexCommand citeyear
+key "knuth1984,knuth1989"
+
+\end_inset
+
+), who also created the TeX document preparation system (1984), an accomplishmen
+t so massive that its impact on academic research can scarcely be comprehended.
+ The statistical program R 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "RCore"
+
+\end_inset
+
+ built its documentation framework on the literate programming philosophy,
+ integrating Knuth's concepts of 
+\begin_inset Quotes eld
+\end_inset
+
+weaving
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+tangling
+\begin_inset Quotes erd
+\end_inset
+
+ to produce documents and extract code files 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "leisch2002"
+
 \end_inset
 
 .
- It was not feasible to distribute crmda because because our address and
- logos were too deeply embedded in the document templates to allow workers
- in other institutions to make use of them.
- Recently, we have taken a second look at the templates and revised them
- so that there are no institutional identifiers that are deeply embedded.
- That is to say, it is obvious how a user can replace the name of the author,
- the institutional address information, the logos, and do forth.
- These new templates are packages along with full working example document
- in this new package named 
+ 
+\end_layout
+
+\begin_layout Standard
+Because researchers in mathematics, engineering, and natural sciences were
+ more likely to be familiar with TeX, and its successor LaTeX, they were
+ more amenable to concepts of reproducible document preparatoin.
+ For social scientists and humanists, where LaTeX was unfamiliar, the idea
+ of integrating code and document preparation did not seem tractable.
+\end_layout
+
+\begin_layout Standard
+Then comes a rude shock.
+ Immediately after one comprehends the general idea of 
 \begin_inset Quotes eld
 \end_inset
 
-stationery
+code embedded within documents,
 \begin_inset Quotes erd
 \end_inset
 
+ then one is immediately slapped in the face by another grim reality: 
+\emph on
+There are several competing formats for doing this kind of work
+\emph default
 .
+ Furthermore, no single approach is best for all eventualities.
+ One can learn to live within one framework, and accept its limitations,
+ or cultivate some experience with several methods, in danger of remaining
+ a jack of all trades (and master of none).
+\end_layout
+
+\begin_layout Standard
+Some of the impediments that have made LaTeX document preparation difficult
+ have been addressed over the years by the growth of the graphical user
+ interface named LyX (http://www.lyx.org).
+ This is a user-friendly with a look-and-feel of more common word processors,
+ but it generates LaTeX documents that are then compiled by standard LaTeX
+ software.
+ When I say 
+\begin_inset Quotes eld
+\end_inset
+
+LaTeX document,
+\begin_inset Quotes erd
+\end_inset
+
+ I generally mean a document prepared with LyX and then exported to LaTeX.
+ LyX is not a new program.
+ I've been using LyX for 20 years to prepare course notes and slides.
+ It is appealing because it is now available for all major operating systems.
+ It is an open framework and it is also an free/open source software project.
 \end_layout
 
 \begin_layout Section
@@ -468,33 +563,43 @@ What Do You Get with stationery?
 \end_layout
 
 \begin_layout Standard
-Second, there are R functions that can create skeleton documents in many
- formats and these functions can also be used to compile the documents.
- These functions are needed only to pull together some loose ends.
- We have integrated ideas and terminology from several of the R packages
- on which we depend.
+First, there document templates.
+ Each document type is delivered in a fully working format that can be immediate
+ly compiled into a presentable document.
+ Each one is delivered with an instructional guide that explains how to
+ create a new skeleton file for editing and how to compile the document.
+ 
 \end_layout
 
 \begin_layout Standard
-Each document type is delivered in a fully working format that can be immediatel
-y compiled into a presentable document.
- Each one is delivered with a brief guide document that points to some of
- the highlights that need to be considered.
- Each one includes a compiler script as well, so that if one is partial
- to using the terminal to interact with documents, then this will offer
- a dependable way to compile documents (and debug problems with them).
+Second, there are R functions that create new templates and assist in compiling
+ them.
+ Each template includes a compiler script, so that if one is partial to
+ using the 
+\begin_inset Quotes eld
+\end_inset
+
+command line
+\begin_inset Quotes erd
+\end_inset
+
+ to handle repetitive jobs, then this will offer a dependable way to compile
+ documents (and debug problems with them).
+ It is not necessary to use the command line, however, as one can also compile
+ the document using R functions.
+ The LaTeX-based templates can also be compiled within LyX.
 \end_layout
 
 \begin_layout Standard
-Second, there are 4 vignettes, the first of which is the present document.
+Third, there are vignettes, the first of which is the present document.
 \end_layout
 
 \begin_layout Enumerate
-d
+stationery Package Overview: The package overview (this document)
 \end_layout
 
 \begin_layout Enumerate
-c
+Code Chunks
 \end_layout
 
 \begin_layout Enumerate
@@ -505,24 +610,189 @@ Rmarkdown
 HTML Special Features
 \end_layout
 
-\begin_layout Section
-`stationery` package document templates
+\begin_layout Subsection*
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+stationery
+\end_layout
+
+\end_inset
+
+ package document templates
 \end_layout
 
 \begin_layout Standard
-The `stationery` package provides templates for several types of documents
- using various frontends (formats in which documents are prepared) and backends
- (output formats like PDF or HTML).
+The document types in the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+stationery
+\end_layout
+
+\end_inset
+
+ package, and the labels we use for them, are provided in Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Document-Types"
+
+\end_inset
+
+.
+ There are several types of documents because authors will make different
+ choices about the document format and the tools covert the document into
+ a presentable format.
+ The formats in which documents are prepared are referred to as 
+\begin_inset Quotes eld
+\end_inset
+
+frontends
+\begin_inset Quotes erd
+\end_inset
+
+
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+In this context, it is a bit vague to say 
+\emph on
+front end
+\emph default
+ because each document is converted through several formats in the compilation
+ process.
+ Any intermediate format that precedes another might be referred to as a
+ frontend.
+\end_layout
+
+\end_inset
+
+ while the output formats–the ones intended for readers–are the 
+\begin_inset Quotes eld
+\end_inset
+
+backends
+\begin_inset Quotes erd
+\end_inset
+
+.
  
 \end_layout
 
 \begin_layout Standard
-There is more terminology to be aware of.
- LaTeX documents in which R code is embedded are referred to as 
+In Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Document-Types"
+
+\end_inset
+
+, readers will note that the templates have three-part names like 
 \begin_inset Quotes eld
 \end_inset
 
-noweb
+
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+rnw2pdf-guide-sweave
+\end_layout
+
+\end_inset
+
+
+\begin_inset Quotes erd
+\end_inset
+
+.
+ The first part of the label an abbreviation for 
+\emph on
+frontend
+\emph default
+2
+\emph on
+backend.
+ 
+\emph default
+The nicknames 
+\begin_inset Quotes eld
+\end_inset
+
+rnw
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+rmd
+\begin_inset Quotes erd
+\end_inset
+
+ represent the two primary frontends used in 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+stationery
+\end_layout
+
+\end_inset
+
+.
+ The two backends are portable document format (PDF) and hypertext markup
+ language (HTML).
+ By mixing and matching the front ends and the backends, we have identifiers
+ like 
+\begin_inset Quotes eld
+\end_inset
+
+rnw2pdf
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+rmd2pdf
+\begin_inset Quotes erd
+\end_inset
+
+.
+ To avoid creating additional labels when it is not completely necessary,
+ we use the label 
+\begin_inset Quotes eld
+\end_inset
+
+rnw
+\begin_inset Quotes erd
+\end_inset
+
+ to refer to documents that are prepared either as Rnw or LyX files (Since
+ we use LyX to generate Rnw, this is not a harmful simplification).
+ 
+\end_layout
+
+\begin_layout Standard
+The middle part of the format label is either 
+\begin_inset Quotes eld
+\end_inset
+
+guide
+\begin_inset Quotes erd
+\end_inset
+
+, 
+\begin_inset Quotes eld
+\end_inset
+
+report
 \begin_inset Quotes erd
 \end_inset
 
@@ -530,44 +800,107 @@ noweb
 \begin_inset Quotes eld
 \end_inset
 
-literate
+slides
 \begin_inset Quotes erd
 \end_inset
 
- documents and they bear the file extension .Rnw.
- These files can be edited in any text editor that is suitable for LaTeX.
- They can even be prepared with the more user-friendly editor named LyX
- (http://www.lyx.org).
+.
+ These will be discussed in the next section.
  
 \end_layout
 
 \begin_layout Standard
-There are two styles in which R code can be embedded in these documents
- and each one has its own 
+The final part of the template label represents the engine that is used
+ to convert the embedded computer code into statistical output.
+ This might be either 
 \begin_inset Quotes eld
 \end_inset
 
-engine
+sweave
 \begin_inset Quotes erd
 \end_inset
 
- software to sort through the document, find the R code, and embed the results.
- The fact that there are these two, separate, not-entirely-compatible code
- frameworks (Sweave and knitr) is an enduring source of confusion.
- Many authors tout knitr as a new, upgraded approach, while, in my experience
- so far, documents based on Sweave are less likely to present surprises.
- 
+ or 
+\begin_inset Quotes eld
+\end_inset
+
+knit
+\begin_inset Quotes erd
+\end_inset
+
+.
+ These names refer to the code chunk engines, Sweave (
 \begin_inset CommandInset citation
-LatexCommand citet
-key "RCore"
+LatexCommand citealp
+key "leisch2002"
 
 \end_inset
 
+) and knitr (
+\begin_inset CommandInset citation
+LatexCommand citealt
+key "xie2014,knitr"
 
+\end_inset
+
+).
+ Sweave and knitr are two, separate, not-entirely-compatible code frameworks.
+ A possible source of confusion is that Sweave, which is the original engine,
+ uses the term 
+\begin_inset Quotes eld
+\end_inset
+
+Sweave
+\begin_inset Quotes erd
+\end_inset
+
+ (an homage to Knuth's term 
+\begin_inset Quotes eld
+\end_inset
+
+weave
+\begin_inset Quotes erd
+\end_inset
+
+) to refer to the act of processing S or R code chunks in a LaTeX document,
+ while the knitr package introduced a new term for this, 
+\begin_inset Quotes eld
+\end_inset
+
+knit
+\begin_inset Quotes erd
+\end_inset
+
+.
+ 
 \end_layout
 
 \begin_layout Standard
-The markdown document movement () has been an effort to develop an alternative
+The markdown document movement is associated with the John Gruber's Daring
+ Fireball website (https://daringfireball.net/projects/markdown) and John
+ MacFarlane's ambitious software program 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+pandoc
+\end_layout
+
+\end_inset
+
+ (https://johnmacfarlane.net/pandoc).
+ Gruber is credited with the main idea of this movement, which is to allow
+ authors to prepare documents in a readable format which can then be converted
+ into beautiful PDF, HTML, or other formats.
+ pandoc is a Swiss army knife of format conversion and its implementation
+ is what makes most of this actually work.
+ 
+\end_layout
+
+\begin_layout Standard
+Because markdown is a movement, rather than a product, it allows the creation
+ of specialized dialects.
+ and its author's webpage () has been an effort to develop an alternative
  style of document markup that is not so 
 \begin_inset Quotes eld
 \end_inset
@@ -656,7 +989,7 @@ name "tab:Document-Types"
 \begin_inset Text
 
 \begin_layout Plain Layout
-Label String
+Template Label
 \end_layout
 
 \end_inset
@@ -1075,7 +1408,7 @@ PDF
 \begin_inset Text
 
 \begin_layout Plain Layout
-Beamer Slides
+Slides
 \end_layout
 
 \end_inset

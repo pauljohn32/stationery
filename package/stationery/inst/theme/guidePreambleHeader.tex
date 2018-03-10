@@ -40,6 +40,7 @@
   rightlogo .tl_set:N = \l_guide_rightlogo_tl,
   number .tl_set:N = \l_guide_number_tl,
   title .tl_set:N = \l_guide_title_tl,
+  subtitle .tl_set:N = \l_guide_subtitle_tl,
   keywords .tl_set:N = \l_guide_keywords_tl,
   url .tl_set:N = \l_guide_url_tl,
   title .initial:n = {TITLE~NEEDED},
@@ -63,8 +64,8 @@
    }
   \hline
   &&\tabularnewline[-\dim_eval:n { -\normalbaselineskip + 3ex }]
-  \begin{tabular}{@{}c@{}}
-  \includegraphics[width=1.25in]{\l_guide_leftlogo_tl} \\[\medskipamount]
+  \begin{tabular}{@{}>{\centering}p{1.25in}@{}}
+  \includegraphics[width=.75in]{\l_guide_leftlogo_tl} \\[\medskipamount]
   \small\bfseries
   \tl_if_empty:NTF \l_guide_number_tl %<--- there was a typo
    { \leavevmode\vphantom{G} }
@@ -72,7 +73,11 @@
   \end{tabular}
   &
   \centering
-  \textbf{\large\l_guide_title_tl\\}
+    {\textsc{\large{}\l_guide_title_tl}\\}
+    \tl_if_empty:NF \l_guide_subtitle_tl
+    {
+      {\textsc{\l_guide_subtitle_tl}\\}
+    }  
   \rule[0.5ex]{1\linewidth}{1pt} \\
   \guide_print_authors:
   \vspace{\bigskipamount}
@@ -86,7 +91,7 @@
     See ~ \url{\l_guide_url_tl} ~ for ~ updates.
    }
   &
-  \begin{tabular}{@{}c@{}}
+  \begin{tabular}{@{}>{\centering}p{1.25in}@{}}
   \includegraphics[width=1.25in]{\l_guide_rightlogo_tl} \\[\medskipamount]
   \small\bfseries\monddyyyy\today
   \end{tabular}
@@ -114,8 +119,8 @@
         \prop_item:Nn \g_guide_authors_prop { firstname ##1 }~
         \prop_item:Nn \g_guide_authors_prop { lastname ##1 },~
        }
-      \prop_item:Nn \g_guide_authors_prop { affiliation##1 }~
-      \prop_item:Nn \g_guide_authors_prop { < email##1 > } \\
+       \prop_item:Nn \g_guide_authors_prop { affiliation##1 }~
+       <\prop_item:Nn \g_guide_authors_prop { email##1 }>\\
      }
    }
    \tl_use:N \l__guide_authors_tl
