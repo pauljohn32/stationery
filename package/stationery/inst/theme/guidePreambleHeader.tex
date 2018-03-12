@@ -6,6 +6,7 @@
 \usepackage{babel}
 \usepackage{datetime}
 \usepackage{xcolor}
+\usepackage{colortbl}
 \usepackage{graphicx}
 \usepackage{multicol}
 
@@ -52,49 +53,49 @@
   \guide_hdr:
   \group_end:
  }
-
 \cs_new_protected:Nn \guide_hdr:
  {
   \centering
   \begin{tabular}
    {
     |c
-    m{ \dim_eval:n { \textwidth - 2.5in - 6\tabcolsep - 2\arrayrulewidth } }
+    >{\centering}m{ \dim_eval:n { \textwidth - 2.5in - 6\tabcolsep - 2\arrayrulewidth } }
     c|
    }
-  \hline
+  \arrayrulecolor{kublue81186}\hline
   &&\tabularnewline[-\dim_eval:n { -\normalbaselineskip + 3ex }]
   \begin{tabular}{@{}>{\centering}p{1.25in}@{}}
-  \includegraphics[width=.75in]{\l_guide_leftlogo_tl} \\[\medskipamount]
-  \small\bfseries
-  \tl_if_empty:NTF \l_guide_number_tl %<--- there was a typo
-   { \leavevmode\vphantom{G} }
-   { Guide~No: ~ \tl_use:N \l_guide_number_tl }
+  \includegraphics[width=.75in]{\l_guide_leftlogo_tl}
   \end{tabular}
   &
   \centering
-    {\textsc{\large{}\l_guide_title_tl}\\}
+    {\textsc{\large{}\l_guide_title_tl}}
     \tl_if_empty:NF \l_guide_subtitle_tl
     {
-      {\textsc{\l_guide_subtitle_tl}\\}
-    }  
-  \rule[0.5ex]{1\linewidth}{1pt} \\
+      {\\\textsc{\large{}\l_guide_subtitle_tl}}
+    }
+  \\
+  \textcolor{kublue81186}{\rule[0.5ex]{1\linewidth}{0.7pt}}\\
   \guide_print_authors:
-  \vspace{\bigskipamount}
-  \raggedright
-  \tl_if_empty:NF \l_guide_keywords_tl
-   {
-    \textbf{Keywords}: ~ \l_guide_keywords_tl \\
-   }
-  \tl_if_empty:NF \l_guide_url_tl
-   {
-    See ~ \url{\l_guide_url_tl} ~ for ~ updates.
-   }
+  %\vspace{\bigskipamount}
   &
   \begin{tabular}{@{}>{\centering}p{1.25in}@{}}
-  \includegraphics[width=1.25in]{\l_guide_rightlogo_tl} \\[\medskipamount]
-  \small\bfseries\monddyyyy\today
+  \includegraphics[width=1.25in]{\l_guide_rightlogo_tl}
   \end{tabular}
+  \tabularnewline
+  \tl_if_empty:NTF \l_guide_number_tl
+   { \leavevmode\vphantom{G}}
+   {\small\bfseries { Guide~No: ~ \tl_use:N \l_guide_number_tl }} & 
+   \tl_if_empty:NF \l_guide_keywords_tl
+   {\centering
+    \textbf{Keywords}: ~ \l_guide_keywords_tl}
+   & 
+   \small\bfseries\monddyyyy\today \tabularnewline
+   \tl_if_empty:NF \l_guide_url_tl
+   {
+   \multicolumn{3}{|c|}{
+    See ~ \url{\l_guide_url_tl} ~ for ~ updates.}
+     }
   \tabularnewline
   \hline 
   \end{tabular}
@@ -119,8 +120,10 @@
         \prop_item:Nn \g_guide_authors_prop { firstname ##1 }~
         \prop_item:Nn \g_guide_authors_prop { lastname ##1 },~
        }
-       \prop_item:Nn \g_guide_authors_prop { affiliation##1 }~
-       <\prop_item:Nn \g_guide_authors_prop { email##1 }>\\
+       \prop_item:Nn \g_guide_authors_prop { affiliation##1 },~
+       \href{mailto:\prop_item:Nn \g_guide_authors_prop { email##1 } }
+       {\url{\prop_item:Nn \g_guide_authors_prop { email##1 }}}
+       \\
      }
    }
    \tl_use:N \l__guide_authors_tl
@@ -132,13 +135,14 @@
 %%Now the hyperref colors
 
 
-\usepackage[unicode=true,pdfusetitle,
-bookmarks=true,bookmarksnumbered=false, bookmarksopen=false,
-breaklinks=true, pdfborder={0 0 0},
-pdfborderstyle={}, backref=false,
-colorlinks=true, linkcolor=darkblue, urlcolor=darkblue, 
-citecolor=darkblue] {hyperref}
-
+\usepackage{hyperref}
+\hypersetup{
+  unicode=true,pdfusetitle,bookmarks=true,
+  bookmarksnumbered=false, bookmarksopen=false,
+  breaklinks=true, pdfborder={0 0 0},
+  pdfborderstyle={}, backref=false,
+  colorlinks=true, linkcolor=darkblue,
+  urlcolor=darkblue, citecolor=darkblue}
 
 %% Was previously in "preambleFloatCenter.tex"
 %%BEGIN: graphics and such inside floats are centered by default
