@@ -56,7 +56,16 @@ sweave
 \index_command default
 \paperfontsize 11
 \spacing single
-\use_hyperref false
+\use_hyperref true
+\pdf_bookmarks true
+\pdf_bookmarksnumbered false
+\pdf_bookmarksopen false
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks false
+\pdf_pdfborder false
+\pdf_colorlinks false
+\pdf_backref false
+\pdf_pdfusetitle true
 \papersize letterpaper
 \use_geometry false
 \use_package amsmath 1
@@ -192,7 +201,7 @@ guidesetup{%
 
 \begin_layout Plain Layout
 
-  keywords={Sweave, guide, listings},
+  keywords={Sweave, LaTeX, guide, listings},
 \end_layout
 
 \begin_layout Plain Layout
@@ -1732,13 +1741,24 @@ cat(or)
 @
 \end_layout
 
+\begin_layout Plain Layout
+
+
+\backslash
+
+\backslash
+
+\end_layout
+
 \end_inset
 
 
 \end_layout
 
 \begin_layout Standard
-That chunk might be placed in a LaTeX floating table object, of course.
+\noindent
+That chunk might be placed in a LaTeX floating table object, of course,
+ as we show next.
 \end_layout
 
 \begin_layout Standard
@@ -1752,7 +1772,7 @@ pois11
 \begin_inset Quotes erd
 \end_inset
 
- is excuted, it creates a file named 
+ is executed, it creates a file named 
 \begin_inset Quotes eld
 \end_inset
 
@@ -1937,41 +1957,6 @@ status open
 \begin_layout Plain Layout
 
 <<norm10>>=
-\end_layout
-
-\begin_layout Plain Layout
-
-## Show very long variable names
-\end_layout
-
-\begin_layout Plain Layout
-
-Nisthesamplesamplesize <- 100
-\end_layout
-
-\begin_layout Plain Layout
-
-Misformuorthemean <- 10123
-\end_layout
-
-\begin_layout Plain Layout
-
-Sisforsigma <- 234234
-\end_layout
-
-\begin_layout Plain Layout
-
-x <- rnorm(Nisthesamplesamplesize, mean = Misformuorthemean, s = Sisforsigma)
-\end_layout
-
-\begin_layout Plain Layout
-
-head(x)
-\end_layout
-
-\begin_layout Plain Layout
-
-mean(x)
 \end_layout
 
 \begin_layout Plain Layout

@@ -558,13 +558,13 @@ The theme folder should be empty when the
 status open
 
 \begin_layout Plain Layout
-initProject()
+initWrite()
 \end_layout
 
 \end_inset
 
  function is run.
- 
+ It will not be empty after the first compilation of the document.
 \end_layout
 
 \begin_layout Standard

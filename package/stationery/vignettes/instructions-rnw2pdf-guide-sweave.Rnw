@@ -8,7 +8,13 @@
 \usepackage[utf8]{inputenc}
 \setlength{\parskip}{\medskipamount}
 \setlength{\parindent}{0pt}
+\usepackage{babel}
 \usepackage[authoryear]{natbib}
+\usepackage[unicode=true,pdfusetitle,
+ bookmarks=true,bookmarksnumbered=false,bookmarksopen=false,
+ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false]
+ {hyperref}
+\usepackage{breakurl}
 
 \makeatletter
 
@@ -49,7 +55,6 @@ footskip=1.5\baselineskip,
 
 \makeatother
 
-\usepackage{babel}
 \usepackage{listings}
 \renewcommand{\lstlistingname}{\inputencoding{latin9}Listing}
 
@@ -70,7 +75,7 @@ footskip=1.5\baselineskip,
     affiliation=CRMDA, 
     email=meg.sullivan@ku.edu}, 
   url={crmda.ku.edu/guides},
-  keywords={Sweave, guide, listings},
+  keywords={Sweave, LaTeX, guide, listings},
   title={Writing Sweaved Guides:},
   subtitle={Using the CRMDA Template},
   leftlogo={theme/logoleft.pdf},
@@ -454,11 +459,13 @@ into the document (depends on ``results=tex'').
 cat(or, file="tmpout/t-pois11.tex")
 cat(or)
 @
+\\
 
-That chunk might be placed in a LaTeX floating table object, of course.
+That chunk might be placed in a LaTeX floating table object, of course,
+as we show next.
 
 A second option, which is more convenient, is to simply use LaTeX
-to input the saved file. When the code chunk ``pois11'' is excuted,
+to input the saved file. When the code chunk ``pois11'' is executed,
 it creates a file named ``tmpout/t-pois11.tex''. In Table \ref{tab:A-Poisson-Regression}
 we demonstrate how that can be included in a numbered floating table.
 
@@ -502,13 +509,6 @@ power of the listings class prevents code input from running into
 the margin.
 
 <<norm10>>=
-## Show very long variable names
-Nisthesamplesamplesize <- 100
-Misformuorthemean <- 10123
-Sisforsigma <- 234234
-x <- rnorm(Nisthesamplesamplesize, mean = Misformuorthemean, s = Sisforsigma)
-head(x)
-mean(x)
 dataFrame <- data.frame(x1 = rnorm(100, m = 13, s = 23), x2 = rnorm(100, m = 13, s = 23), x3 = rnorm(100, m = 13, s = 23))
 @
 

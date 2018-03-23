@@ -6,8 +6,9 @@
 \origin unavailable
 \textclass extarticle
 \begin_preamble
-% Don't remove next commented line, its needed to fool Sweave
-%\usepackage{Sweave}
+% \VignetteIndexEntry{stationery}
+% \VignetteEngine{Sweave}
+% \VignetteBuilder{stationery::rnw2pdf}
 
 \usepackage[includehead,includefoot,
 lmargin=1in,
@@ -20,34 +21,8 @@ marginparwidth=0pt,
 footskip=1.5\baselineskip,
 ]{geometry}
 
-\usepackage{multicol}
-\usepackage{listings}
-\usepackage{graphicx}
-\usepackage{xcolor}
 \usepackage{dcolumn}
 \usepackage{booktabs}
-
-% May be customized for this document
-\lstdefinestyle{custom}{
-  tabsize=2, 
-  breaklines=true, 
-  breakatwhitespace=true,
-  captionpos=b,
-  frame=single,
-  framerule=0.2pt,
-  framesep=1pt,
-  numbersep=5pt,
-  showstringspaces=false,
-  basicstyle=\normalsize\ttfamily,%
-  columns=fixed%,
-  \lst@ifdisplaystyle\scriptsize\fi,%
-  identifierstyle=,
-  keywordstyle=\bfseries,
-  commentstyle=\color{darkgreen},
-  stringstyle=,
-  backgroundcolor=\color[gray]{0.935}
-}
-
 
 
 \input{theme/reportPreambleHeader.tex}
@@ -140,26 +115,6 @@ status open
 
 \begin_layout Plain Layout
 
-%% Fill in values of the arguments here, 
-\end_layout
-
-\begin_layout Plain Layout
-
-%% If blanks are needed, must insert value " ~ "
-\end_layout
-
-\begin_layout Plain Layout
-
-%% If comma needed inside value, wrap in {}.
-\end_layout
-
-\begin_layout Plain Layout
-
-%% Delete secondauthor and thirdauthor if not needed
-\end_layout
-
-\begin_layout Plain Layout
-
 
 \backslash
 reportsetup{%
@@ -167,82 +122,32 @@ reportsetup{%
 
 \begin_layout Plain Layout
 
-  firstauthor={
+  author={
 \end_layout
 
 \begin_layout Plain Layout
 
-    lastname=Author,
+    lastname=Johnson,
 \end_layout
 
 \begin_layout Plain Layout
 
-    firstname=First, 
+    firstname=Paul E., 
 \end_layout
 
 \begin_layout Plain Layout
 
-    affiliation=CRMDA,
+    affiliation=Director{,} CRMDA,
 \end_layout
 
 \begin_layout Plain Layout
 
-    email=first@ku.edu},
+    email=pauljohn@ku.edu},
 \end_layout
 
 \begin_layout Plain Layout
 
- secondauthor={
-\end_layout
-
-\begin_layout Plain Layout
-
-    lastname=Author, 
-\end_layout
-
-\begin_layout Plain Layout
-
-    firstname=Second, 
-\end_layout
-
-\begin_layout Plain Layout
-
-    affiliation=CRMDA, 
-\end_layout
-
-\begin_layout Plain Layout
-
-    email=second@ku.edu},
-\end_layout
-
-\begin_layout Plain Layout
-
-  thirdauthor={
-\end_layout
-
-\begin_layout Plain Layout
-
-    lastname=Author, 
-\end_layout
-
-\begin_layout Plain Layout
-
-    firstname=Third, 
-\end_layout
-
-\begin_layout Plain Layout
-
-    affiliation=i, 
-\end_layout
-
-\begin_layout Plain Layout
-
-    email=third@ku.edu}, 
-\end_layout
-
-\begin_layout Plain Layout
-
-  title={A Title for Skeleton Template: rnw2pdf-report-sweave},
+  title={crmda Package Overview: Its only logos and addresses now},
 \end_layout
 
 \begin_layout Plain Layout
@@ -315,7 +220,7 @@ topsep}{0em}}}
 
 
 \backslash
-SweaveOpts{prefix.string=tmpout/t, split=TRUE, ae=FALSE, height=5, width=6}
+SweaveOpts{prefix.string=tmpout/t, split=FALSE, ae=FALSE, height=5, width=6}
 \end_layout
 
 \end_inset
@@ -329,12 +234,12 @@ status open
 
 \begin_layout Plain Layout
 
-<<texcopy, include=FALSE,echo=FALSE>>=
+<<texcopy, include=FALSE,echo=FALSE,results=hide>>=
 \end_layout
 
 \begin_layout Plain Layout
 
-library(crmda)
+library(stationery)
 \end_layout
 
 \begin_layout Plain Layout
@@ -350,22 +255,12 @@ library(crmda)
 
 \begin_layout Plain Layout
 
-logos <- c(logoright = "logo.pdf")
+logos <- c(logoright = "logo.pdf", "addressFooter.tex", "preambleFooter.tex")
 \end_layout
 
 \begin_layout Plain Layout
 
 texfiles <- c("reportPreambleHeader.tex", 
-\end_layout
-
-\begin_layout Plain Layout
-
-              "preambleFooter.tex", 
-\end_layout
-
-\begin_layout Plain Layout
-
-              "addressFooter.tex",
 \end_layout
 
 \begin_layout Plain Layout
@@ -385,7 +280,7 @@ getFiles(logos, pkg = "crmda")
 
 \begin_layout Plain Layout
 
-getFiles(texfiles, pkg = "crmda")
+getFiles(texfiles, pkg = "stationery")
 \end_layout
 
 \begin_layout Plain Layout
@@ -409,7 +304,7 @@ status open
 
 \begin_layout Plain Layout
 
-<<Roptions, echo=F, include=F>>=
+<<Roptions, echo=F, include=F, results=hide>>=
 \end_layout
 
 \begin_layout Plain Layout
@@ -474,184 +369,220 @@ pdf.options(onefile=FALSE, family="Times", pointsize=10)
 
 \begin_layout Abstract
 \noindent
-This is an abstract.
- Please include a terse, yet descriptive statement here of less than 200
- words.
- It should avoid colloquialisms and polysyllabic profundities.
-\end_layout
-
-\begin_layout Section*
-Nuts and Bolts
-\end_layout
-
-\begin_layout Standard
-This demonstrates how to write a document that interacts with R 
-\begin_inset CommandInset citation
-LatexCommand citep
-key "RCore"
-
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-The sections in this document are not numbered, just for variety.
- That is easily changed.
-\end_layout
-
-\begin_layout Standard
-Please see the guide document which is distributed in the same folder as
- this template.
-\end_layout
-
-\begin_layout Subsection*
-Make minimal changes to the top part
-\end_layout
-
-\begin_layout Standard
-The LaTeX sections above should be treated with caution.
- Make small changes, test whether the document compiles.
- Do put your title & name in the top block, and of course you need to fix
- the logo images.
-\end_layout
-
-\begin_layout Standard
-Don't change document margins with LyX menus.
- You need to edit the preamble for that.
-\end_layout
-
-\begin_layout Standard
-We have separate instructions for the crmda package in vignettes if you
- want more detailed information about what to do.
-\end_layout
-
-\begin_layout Subsection*
+The document types and theme structures were moved from the 
 \begin_inset Flex Code
 status open
 
 \begin_layout Plain Layout
-R
+\noindent
+crmda
 \end_layout
 
 \end_inset
 
- Code Chunks
+ into the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+\noindent
+stationery
+\end_layout
+
+\end_inset
+
+ package.
+ The 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+\noindent
+stationery
+\end_layout
+
+\end_inset
+
+ package does not include the CRMDA logo and address files, but otherwise
+ it has what you need to make guides, reports, and slides.
+ The 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+\noindent
+crmda
+\end_layout
+
+\end_inset
+
+ package has the logos and departmental address information.
+ The two packages can work together.
+ If one creates a document with stationery, there is one little change in
+ the skeleton file that can be used to import the logos.
+\end_layout
+
+\begin_layout Section
+Step 1.
+ Create a document skeleton.
 \end_layout
 
 \begin_layout Standard
-Our report documents ALMOST NEVER show 
-\begin_inset Quotes eld
+Run the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+stationery
+\end_layout
+
 \end_inset
 
-raw
-\begin_inset Quotes erd
+ package 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+initWriteup
+\end_layout
+
 \end_inset
 
- R code to readers and very seldom will they display 
-\begin_inset Quotes eld
+ function to get started.
+ In the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+stationery
+\end_layout
+
 \end_inset
 
-raw
-\begin_inset Quotes erd
-\end_inset
-
- R output.
- Almost always, code chunks will have the flag 
-\begin_inset Quotes eld
-\end_inset
-
-include=F
-\begin_inset Quotes erd
-\end_inset
-
- set and the document, when it reveals results, will, again, almost always,
- display a LaTeX formatted table that is placed inside a floating table
- or a figure that is placed inside a floating figure object.
+ package, we now have more than 10 vignettes showing how to do this, in
+ excruciating detail.
 \end_layout
 
 \begin_layout Standard
-If you don't care to embed the R code inside this document, we suggest it
- is convenient to keep another document with the R code and use the R split
- output facility to create the code chunks in the folder 
+Pay attention to your selection of directory.
+ By default, 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+initWriteup
+\end_layout
+
+\end_inset
+
+ will put the result in 
 \begin_inset Quotes eld
 \end_inset
 
-tmpout
+
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+writeup/rmd2pdf-sweave-guide
+\end_layout
+
+\end_inset
+
+
 \begin_inset Quotes erd
+\end_inset
+
+ or such.
+ Maybe you want a different directory.
+ You can change that.
+ Read 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+?initWriteup
+\end_layout
+
 \end_inset
 
 .
- Then this document can include those files & graphs when necessary.
- That is to say, create 2 LyX files, make them work together.
 \end_layout
 
-\begin_layout Section*
-References
+\begin_layout Section
+Change the getFiles code block
 \end_layout
 
 \begin_layout Standard
-\begin_inset CommandInset bibtex
-LatexCommand bibtex
-bibfiles "theme/mlm"
-options "apalike2"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsection*
-\begin_inset Note Note
+Look for the chunk that calls 
+\begin_inset Flex Code
 status open
 
-\begin_layout Subsection*
-Session Info
-\end_layout
-
 \begin_layout Plain Layout
-Session Information is usually not written into a report, but an output
- file is created by the following pieces.
- Please leave the next 2 chunks
+getFiles
 \end_layout
 
 \end_inset
 
-
+ to fill in the theme folder for your writeup.
+ Suppose you find this.
 \end_layout
 
 \begin_layout Standard
-\begin_inset ERT
+\begin_inset listings
+lstparams "numbers=left,numberstyle={\tiny},stepnumber=1,tabsize=2"
+inline false
 status open
 
 \begin_layout Plain Layout
 
-<<sessioninfo, include=F>>=
+< <texcopy, include=FALSE,echo=FALSE,results=hide>>=
 \end_layout
 
 \begin_layout Plain Layout
 
-zz <- "skeleton.Rout"
+library(stationery)
 \end_layout
 
 \begin_layout Plain Layout
 
-capture.output(sessionInfo(), file = zz, append = FALSE)
+## If theme directory does not have required images or TeX files
 \end_layout
 
 \begin_layout Plain Layout
 
-if (!is.null(warnings())){
+## we need to retrieve them and put them in "theme" directory.
+ 
 \end_layout
 
 \begin_layout Plain Layout
 
-    capture.output(warnings(), file = zz, append =  TRUE)
+logos <- c(logoright = "logo.pdf", "addressFooter.tex", "preambleFooter.tex")
 \end_layout
 
 \begin_layout Plain Layout
 
-}
+texfiles <- c("reportPreambleHeader.tex", 
+\end_layout
+
+\begin_layout Plain Layout
+
+              "reportPreambleSweavel.tex",
+\end_layout
+
+\begin_layout Plain Layout
+
+              "mlm.bib")
+\end_layout
+
+\begin_layout Plain Layout
+
+getFiles(logos, pkg = "stationery")
+\end_layout
+
+\begin_layout Plain Layout
+
+getFiles(texfiles, pkg = "stationery")
 \end_layout
 
 \begin_layout Plain Layout
@@ -662,6 +593,161 @@ if (!is.null(warnings())){
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+Change 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+"stationery"
+\end_layout
+
+\end_inset
+
+ to 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+"crmda"
+\end_layout
+
+\end_inset
+
+ in line 9.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "numbers=left,stepnumber=1,tabsize=2"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+< <texcopy, include=FALSE,echo=FALSE,results=hide>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+library(stationery)
+\end_layout
+
+\begin_layout Plain Layout
+
+## If theme directory does not have required images or TeX files
+\end_layout
+
+\begin_layout Plain Layout
+
+## we need to retrieve them and put them in "theme" directory.
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+logos <- c(logoright = "logo.pdf", "addressFooter.tex", "preambleFooter.tex")
+\end_layout
+
+\begin_layout Plain Layout
+
+texfiles <- c("reportPreambleHeader.tex", 
+\end_layout
+
+\begin_layout Plain Layout
+
+              "reportPreambleSweavel.tex",
+\end_layout
+
+\begin_layout Plain Layout
+
+              "mlm.bib")
+\end_layout
+
+\begin_layout Plain Layout
+
+getFiles(logos, pkg = "crmda")
+\end_layout
+
+\begin_layout Plain Layout
+
+getFiles(texfiles, pkg = "stationery")
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+If you have current versions of stationery and crmda, 
+\emph on
+this will just work
+\emph default
+.
+ The generic logo will be replaced by KU CRMDA logos.
+\end_layout
+
+\begin_layout Section
+That will not replace previous theme and logo files
+\end_layout
+
+\begin_layout Standard
+The 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+getFiles
+\end_layout
+
+\end_inset
+
+ function is simple thing that pulls theme files from a package, but only
+ if those files are not present in the theme folder.
+ The idea is that you–the author–might adjust those theme files and you
+ don't want them to be replaced with the originals.
+\end_layout
+
+\begin_layout Standard
+If you ran the build one time already, then running it over after changing
+ the logo package will not help.
+ You need to delete the files from the theme folder that you don't want.
+ Then re-running will get the logos from the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+crmda
+\end_layout
+
+\end_inset
+
+ package.
+\end_layout
+
+\begin_layout Standard
+Once you get the logos and theme files you like, it is OK to delete the
+ code chunk that uses 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+getFiles
+\end_layout
+
+\end_inset
+
+.
+ You have the files, no need to get them again.
 \end_layout
 
 \begin_layout Standard

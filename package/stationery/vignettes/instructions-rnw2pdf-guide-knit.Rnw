@@ -152,8 +152,8 @@ time, that document should be available in the theme folder.
 
 \subsection*{About the theme folder}
 
-The theme folder should be empty when the \code{initProject()} function
-is run. 
+The theme folder should be empty when the \code{initWrite()} function
+is run. It will not be empty after the first compilation of the document.
 
 There is an R code chunk above called ``texcopy''. It will copy
 configuration files from the package into the theme folder. After
