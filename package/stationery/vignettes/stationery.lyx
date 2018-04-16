@@ -1799,7 +1799,7 @@ The file can be compiled in two ways.
 
 \begin_layout Standard
 1.
- Open an R session and use the function `rmd2pdf()` in the crmda package.
+ Open an R session and use the function `rmd2pdf()` in the stationery package.
  I'll compile my file `crmda.Rmd`.
 \end_layout
 
@@ -1814,7 +1814,7 @@ status open
 
 \begin_layout Plain Layout
 
-library(crmda)
+library(stationery)
 \end_layout
 
 \begin_layout Plain Layout
@@ -1952,7 +1952,7 @@ A little lower in `rmd2pdf.sh`, one should see that the business-end of the
 \end_layout
 
 \begin_layout Standard
-Rscript -e "library(crmda); rmd2pdf(
+Rscript -e "library(stationery); rmd2pdf(
 \backslash
 "$filename
 \backslash
@@ -2692,8 +2692,8 @@ The R packages `rmarkdown` and `knitr` orchestrate the process that builds
  In `rmarkdown`, the function `render` orchestrates all of the work.
  It calls chunk calculator and assigns work among the various conversion
  programs.
- The functions in the crmda package named `rmd2pdf` or `rmd2html` are "wrapper"
- functions that adjust settings sent to `render`.
+ The functions in the stationery package named `rmd2pdf` or `rmd2html` are
+ "wrapper" functions that adjust settings sent to `render`.
 \end_layout
 
 \begin_layout Subsection
@@ -3059,7 +3059,7 @@ Reports do not include raw output, so it is not recommended to insert that
 \end_layout
 
 \begin_layout Standard
-zz <- "crmda-sessionInfo.Rout"
+zz <- "stationery-sessionInfo.Rout"
 \end_layout
 
 \begin_layout Standard
