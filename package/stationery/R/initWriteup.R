@@ -7,14 +7,17 @@
 ##' directory.
 ##' \cr
 ##' \cr
-##' The current formats are:
-##' 1) rmd2html-guide  2) rmd2pdf-report
-##' 3) rnw2pdf-guide-sweave  4) rnw2pdf-report-sweave  
-##' 5) rmd2pdf-guide   6) rnw2pdf-guide-knit
-##' 7) rnw2pdf-report-knit 7) rnw2pdf-slides-sweave
-##' \cr
-##' \cr
-##' ##' The names represent the "from" format (rmd or rnw), the "to"
+##' The current formats are: \enumerate{
+##' \item rmd2html-guide  
+##' \item rmd2pdf-report
+##' \item rnw2pdf-guide-sweave  
+##' \item rnw2pdf-report-sweave  
+##' \item rmd2pdf-guide
+##' \item rnw2pdf-guide-knit
+##' \item rnw2pdf-report-knit
+##' \item rnw2pdf-slides-sweave
+##' }
+##' The names represent the "from" format (rmd or rnw), the "to"
 ##' format (html or pdf), the document type (guide or report), and the
 ##' chunck processing program (Sweave or knitr).
 ##' \cr
@@ -68,13 +71,14 @@
 ##' We may have slide templates as well, at some point in future.
 ##'
 ##' 
-##' @param type One of these: \code{c("rmd2html-guide",
-##'     "rmd2pdf-report", "rnw2pdf-guide-knit",
-##'     "rnw2pdf-guide-sweave", "rmd2pdf-guide",
+##' @param type One of these character strings:
+##'     \code{c("rmd2html-guide", "rmd2pdf-report",
+##'     "rnw2pdf-guide-knit", "rnw2pdf-guide-sweave", "rmd2pdf-guide",
 ##'     "rnw2pdf-report-knit", "rnw2pdf-report-sweave",
 ##'     "rnw2pdf-slides-sweave")}
-##' @param dir Type "." for current working directory.  Default is a
-##'     new directory named "writeup"
+##' @param dir Directory into which files are inserted. Type "." for
+##'     current working directory.  Default is a new directory with
+##'     name equal to the \code{type} parameter
 ##' @importFrom kutils initProject
 ##' @export
 ##' @return The normalized path of the new directory
@@ -87,7 +91,8 @@
 ##'           "rnw2pdf-guide-knit", "rnw2pdf-guide-sweave",
 ##'           "rmd2pdf-guide", "rnw2pdf-report-knit",
 ##'           "rnw2pdf-report-sweave", "rnw2pdf-slides-sweave")
-##' folders <- vapply(doctype, initWriteup, dir = file.path(tdir, "todaytest"),
+##' folders <- vapply(doctype, function(x){
+##'                initWriteup(x, dir = file.path(tdir, "todaytest", x))},
 ##'            character(1))
 ##' folders
 ##' list.files(file.path(tdir, "todaytest"), recursive = TRUE)
@@ -98,11 +103,10 @@
 ##' ## Check the pdf was created
 ##' list.files(file.path(tdir, "todaytest/rnw2pdf-report-sweave"))
 ##' if(interactive()) browseURL(file.path(tdir, "todaytest/rnw2pdf-report-sweave", "skeleton.pdf"))
-initWriteup <- function(type = NULL, dir = "writeup")
+initWriteup <- function(type, dir = type)
 {
     wd <- getwd()
     on.exit(setwd(wd))
-    dir <- file.path(dir, type)
     ## Only create dir if dir NULL
     if (!dir.exists(dir)){
         dir.create(dir, recursive = TRUE)
