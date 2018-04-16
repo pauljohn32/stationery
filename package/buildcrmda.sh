@@ -9,10 +9,7 @@ mkdir ${PACKAGE}.gitex
 cd ${PACKAGE}
 
 cd vignettes
-R -e "library(crmda); rmd2pdf(\"stationery.Rmd\", toc=TRUE, type = \"guide\")"
-R -e "library(crmda); rmd2pdf(\"Rmarkdown.Rmd\", toc=TRUE, type = \"report\")"
-R -e "library(crmda); rmd2pdf(\"code_chunks.Rmd\", toc=TRUE, type = \"report\")"
-R -e "library(crmda); rmd2html(\"HTML_special_features.Rmd\", toc=TRUE)"
+R -e "library(stationery); rmd2pdf(\"crmda.Rmd\", toc=TRUE, type = \"guide\")"
 cd ..
 
 ## copies UNCOMMITTED but TRACKED files.
@@ -20,10 +17,7 @@ git ls-files . | tar cT - | tar -x -C "../${PACKAGE}.gitex"
 cd ..
 
 cd ${PACKAGE}.gitex
-cp -f ../crmda/vignettes/stationery.pdf inst/doc
-cp -f ../crmda/vignettes/Rmarkdown.pdf inst/doc
-cp -f ../crmda/vignettes/code_chunks.pdf inst/doc
-cp -f ../crmda/vignettes/HTML_special_features.html inst/doc
+cp -f ../crmda/vignettes/crmda.pdf inst/doc
 cd ..
 
 R --vanilla -f runRoxygen2.R
