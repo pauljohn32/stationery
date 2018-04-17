@@ -1628,15 +1628,27 @@ initWriteup("rmd2pdf-report")
 \end_layout
 
 \begin_layout Standard
-No directory is specified, so this creates a folder named `writeup/rmd2pdf-repor
-t`.
- It will be created in the R current working directory.
- Within the folder 
-\begin_inset Quotes eld
+No directory is specified, so the default setting creates a folder named
+ 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+rmd2pdf-report
+\end_layout
+
 \end_inset
 
+.
+ It will be created in the R current working directory.
+ Within the folder 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
 rmd2pdf-report
-\begin_inset Quotes erd
+\end_layout
+
 \end_inset
 
 , one should find 
@@ -1833,22 +1845,130 @@ rmd2pdf("crmda.Rmd")
 \end_layout
 
 \begin_layout Standard
-The `rmd2pdf` is a *wrapper* function.
+The function 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+rmd2pdf
+\end_layout
+
+\end_inset
+
+ is a 
+\emph on
+wrapper
+\emph default
+ function.
  It does not do any real work, it just collects your file name and applies
  defaults that we have set.
- It calls the `render` and `pdf_document` functions in the `rmarkdown`.
- Because `knitr` is the only method for handling code chunks in `Rmarkdown`
- documents, also involves the `knitr`
+ It calls the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+render
+\end_layout
+
+\end_inset
+
+ and 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+pdf_document
+\end_layout
+
+\end_inset
+
+ functions in the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+rmarkdown
+\end_layout
+
+\end_inset
+
+.
+ Because 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+knitr
+\end_layout
+
+\end_inset
+
+ is the only method for handling code chunks in 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+Rmarkdown
+\end_layout
+
+\end_inset
+
+ documents, also involves the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+knitr
+\end_layout
+
+\end_inset
+
+ package.
 \end_layout
 
 \begin_layout Standard
-package.
+The 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+rmd2pdf
 \end_layout
 
-\begin_layout Standard
-The `rmd2pdf` allows the user to add arguments that are passed along to
- `render` and `pdf_document`.
- This is explained in the help page for `rmd2pdf`.
+\end_inset
+
+ function allows the user to add arguments that are passed along to 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+render
+\end_layout
+
+\end_inset
+
+ and 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+pdf_document
+\end_layout
+
+\end_inset
+
+.
+ This is explained in the help page for 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+rmd2pdf
+\end_layout
+
+\end_inset
+
+.
  
 \end_layout
 
@@ -1880,8 +2000,17 @@ $ ./rmd2pdf.sh crmda.Rmd
 
 \begin_layout Standard
 The rendered output will be a pdf file.
- The configuration inside `rmd2pdf.sh` indicates that output is written in
- the current working directory.
+ The configuration inside 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+rmd2pdf.sh
+\end_layout
+
+\end_inset
+
+ indicates that output is written in the current working directory.
  
 \end_layout
 
@@ -1897,15 +2026,55 @@ About the shell scripts
 \begin_layout Standard
 In July, 2017, I decided to change the way that the shell scripts are designed.
  Users who inspect them should see the script runs R and launches a function
- in the `stationery` package.
+ in the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+stationery
+\end_layout
+
+\end_inset
+
+ package.
  As a result, there should not be any difference in the result from running
- the script `rmd2pdf.sh` and the function inside R named `rmd2pdf`.
+ the script 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+rmd2pdf.sh
+\end_layout
+
+\end_inset
+
+ and the function inside R named 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+rmd2pdf
+\end_layout
+
+\end_inset
+
+.
  
 \end_layout
 
 \begin_layout Standard
 The only difference that might arise is when there are additional arguments
- supplied in the script that are not present in `rmd2pdf`.
+ supplied in the script that are not present in 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+rmd2pdf
+\end_layout
+
+\end_inset
+
+.
  
 \end_layout
 
@@ -1913,7 +2082,17 @@ The only difference that might arise is when there are additional arguments
 One difference might be whether or not a table of contents is requested.
  The default arguments specified in the script are simple, but they do include
  the table of contents (this was inserted in this script in June 2017).
- The important line in `rmd2pdf.sh` is this:
+ The important line in 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+rmd2pdf.sh
+\end_layout
+
+\end_inset
+
+ is this: FIXME FIXME this is out of date
 \end_layout
 
 \begin_layout Standard
@@ -1930,10 +2109,23 @@ defaults="toc=TRUE, output_dir=
 
 \end_inset
 
+
+\end_layout
+
+\begin_layout Standard
 This turns on the table of contents feature and asks for output in the current
  working directory.
- We have not worked on command-line argument processing in `rmd2pdf.sh`,
- so if a user wants to change the arguments passed along, it will be necessary
+ We have not worked on command-line argument processing in 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+rmd2pdf.sh
+\end_layout
+
+\end_inset
+
+, so if a user wants to change the arguments passed along, it will be necessary
  to edit that script file and items
 \end_layout
 
@@ -1942,16 +2134,37 @@ in the `defaults` character string.
 \end_layout
 
 \begin_layout Standard
-A little lower in `rmd2pdf.sh`, one should see that the business-end of the
- project is a call to `Rscript` which supplies the file name, along with
- the `defaults` string, in a not-very-subtle way:
+A little lower in 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+rmd2pdf.sh
+\end_layout
+
+\end_inset
+
+, one should see that the business-end of the project is a call to 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+Rscript
+\end_layout
+
+\end_inset
+
+ which supplies the file name, along with the `defaults` string, in a not-very-s
+ubtle way:
 \end_layout
 
 \begin_layout Standard
-```
-\end_layout
+\begin_inset listings
+inline false
+status open
 
-\begin_layout Standard
+\begin_layout Plain Layout
+
 Rscript -e "library(stationery); rmd2pdf(
 \backslash
 "$filename
@@ -1959,103 +2172,113 @@ Rscript -e "library(stationery); rmd2pdf(
 ", $defaults)" 
 \end_layout
 
-\begin_layout Standard
-```
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
 The new arguments that users might insert in `defaults` should match the
- arguments that might be supplied to the `rmd2pdf` function in the `stationery`
+ arguments that might be supplied to the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+rmd2pdf
+\end_layout
+
+\end_inset
+
+ function in the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+stationery
+\end_layout
+
+\end_inset
+
  package.
- Hence, the help page for `rmd2pdf` should be consulted for details.
- Arguments that can be specified for the `render` and `pdf_document` (or
- `html_document` if we are creating HTML output) are spelled out.
- Any defaults specified in the script, or in the function call to `rmd2pdf`
+ Hence, the help page for 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+rmd2pdf
+\end_layout
+
+\end_inset
+
+ should be consulted for details.
+ Arguments that can be specified for the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+render
+\end_layout
+
+\end_inset
+
+ and 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+pdf_document
+\end_layout
+
+\end_inset
+
+ (or 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+html_document
+\end_layout
+
+\end_inset
+
+ if we are creating HTML output) are spelled out.
+ Any defaults specified in the script, or in the function call to 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+rmd2pdf
+\end_layout
+
+\end_inset
+
  inside R, will override the other customizations that are place in the
- `stationery` package.
-\end_layout
-
-\begin_layout Standard
-We hope that only minor customizations are needed.
- The document you are reading now is produced with a revised version `rmd2pdf.sh`.
- By default, the `rmd2pdf` function will pull the 
-\backslash
-LaTeX
-\backslash
- template for `pandoc` from the `stationery` package's install folder.
- That is to say, the `rmd2pdf.sh` script overrides the template file that
- exists in the package install folder and instead uses the one in the theme
- subdirectory of the current document directory.
  
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+stationery
 \end_layout
 
-\begin_layout Standard
-While building this, I had some trouble compiling the document.
- I turned on detailed error reporting (quiet=FALSE).
- I also turned off the `clean` argument that erased the intermediate markdown
- files and asked to keep the 
-\backslash
-LaTeX
-\backslash
- intermediate files.
- Hence, my `defaults` string has 
-\end_layout
+\end_inset
 
-\begin_layout Standard
-```
-\end_layout
-
-\begin_layout Standard
-defaults="toc=TRUE, output_dir=
-\backslash
-"$pwd
-\backslash
-", clean=FALSE, keep_tex=TRUE, 
-\end_layout
-
-\begin_layout Standard
-quiet=FALSE, template=
-\backslash
-"theme/report-boilerplate.tex
-\backslash
-""
-\end_layout
-
-\begin_layout Standard
-```
-\end_layout
-
-\begin_layout Standard
-Because I don't clean and keep the LaTeX intermediate file, the
-\end_layout
-
-\begin_layout Standard
-working directory has these "extra" files when the run is completed:
-\end_layout
-
-\begin_layout Standard
-```
-\end_layout
-
-\begin_layout Standard
-crmda.utf8.md
-\end_layout
-
-\begin_layout Standard
-crmda.knit.md
-\end_layout
-
-\begin_layout Standard
-crmda.tex
-\end_layout
-
-\begin_layout Standard
-```
+ package.
 \end_layout
 
 \begin_layout Standard
 Some of these argument can be specified in the document header.
- For example, the current document header has `keep_tex: false`.
+ For example, the current document header has `
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+keep_tex: false
+\end_layout
+
+\end_inset
+
+`.
  The script setting `keep_tex=TRUE` overrides that.
  The fact that settings can be specified several places--in the document
  header, or in the processing script, or in the functions that handle documents-
@@ -2112,37 +2335,128 @@ Working with LaTeX
 
 \begin_layout Standard
 Like so many other concepts and tools in this area, 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
 \backslash
-TeX was a creation of Donald Knuth at Stanford.
+TeX
+\end_layout
+
+\end_inset
+
+ was a creation of Donald Knuth at Stanford.
  
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
 \backslash
-TeX was the precursor to 
+TeX
+\end_layout
+
+\end_inset
+
+ was the precursor to 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
 \backslash
-LaTeX.
+LaTeX
+\end_layout
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
 The CRMDA maintains a Web page about 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
 \backslash
-LaTeX: https://crmda.ku.edu/latex-help
+LaTeX
+\end_layout
+
+\end_inset
+
+: 
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+https://crmda.ku.edu/latex-help
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
 That page has basic guides and information about the KU dissertation template.
  I prefer to work with 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
 \backslash
 LaTeX
-\backslash
+\end_layout
+
+\end_inset
+
  documents, for a number of reasons.
  The quality of the PDF output is nicer, in my opinion, and more predictable.
  However, the major reason I prefer 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
 \backslash
 LaTeX
-\backslash
- is that the Sweave option `split=TRUE` is allowed.
- That option creates separate `
-\backslash
-*.tex` output files, for each code chunk.
+\end_layout
+
+\end_inset
+
+ is that the Sweave option 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+split=TRUE
+\end_layout
+
+\end_inset
+
+ is allowed.
+ That option creates separate 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+*.tex
+\end_layout
+
+\end_inset
+
+ output files, for each code chunk.
  The developers of the
 \end_layout
 
