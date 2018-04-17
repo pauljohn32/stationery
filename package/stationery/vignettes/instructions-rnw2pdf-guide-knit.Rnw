@@ -21,8 +21,8 @@
 
 \@ifundefined{date}{}{\date{}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
-% \VignetteIndexEntry{rnw2pdf-guide-knit}
-% \VignetteEngine{knitr}
+% \VignetteIndexEntry{Instructions for guides using knitted code chunks}
+% \VignetteEngine{knitr::rmarkdown}
 % \VignetteBuilder{stationery::rnw2pdf}
 
 
