@@ -23,6 +23,7 @@
 <<echo=F>>=
   if(exists(".orig.enc")) options(encoding = .orig.enc)
 @
+\providecommand*{\code}[1]{\texttt{#1}}
 
 \@ifundefined{date}{}{\date{}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
@@ -62,7 +63,7 @@ footskip=1.5\baselineskip,
     firstname=Paul E., 
     affiliation=Director{,} CRMDA,
     email=pauljohn@ku.edu},
-  title={Stationery: Guides, Slides, and Reports},
+  title={stationery Package Overview: Guides, Slides, and Reports},
   rightlogo={theme/logo.pdf},
 }
 \reporthdr
@@ -79,9 +80,8 @@ if(!dir.exists("tmpout"))dir.create("tmpout", recursive = TRUE)
 library(stationery)
 ## If theme directory does not have required images or TeX files
 ## we need to retrieve them and put them in "theme" directory. 
-logos <- c(logoright = "logo.pdf", "addressFooter.tex")
+logos <- c(logoright = "logo.pdf", "addressFooter.tex", "preambleFooter.tex")
 texfiles <- c("reportPreambleHeader.tex", 
-              "preambleFooter.tex", 
               "reportPreambleSweavel.tex",
               "mlm.bib")
 getFiles(logos, pkg = "stationery")
@@ -102,102 +102,159 @@ options(SweaveHooks=list(fig=function() par(mar=pjmar, ps=10)))
 pdf.options(onefile=FALSE, family="Times", pointsize=10)
 @
 \begin{abstract}
-\noindent This document discusses the CRMDA package templates and
-how to use them. It compares some strengths and weaknesses of the
-`noweb`/LaTeX format versus `Rmarkdown`. It also mentions two code-chunk
-processing engines, `Sweave` and `knitr`. 
+\noindent This document surveys methodologies for literate document
+preparation. It offers an overview for 8 document templates provided
+by the R package named \code{stationery}. The document compares LaTeX-based
+strategies (using the code chunk engines Sweave and knitr) with documents
+prepared with markdown. We discuss strengths and weaknesses of each
+method and then offer some advice about how authors should plan their
+projects.
 \end{abstract}
 
 \section{Introduction}
 
-Researchers who have used word processors are understandably bewildered
-by recent talk about reproducible research documents (??). ``I have
-no idea what that means,'' exclaimed an administrator who recently
-asked us what we were working on. An entire article, lecture, or book
-can be generated in one single execution that conducts analysis, saves
-graphics, and assembles them together in a single output document. 
+Researchers who have been using word processors to prepare their research
+articles are understandably bewildered by recent talk about reproducible
+research documents (\citealp{leisch2002,xiedynamic,stodden_2013,xiebookdown}).
+The banner of ``reproducible documents'' hangs over scholars who
+combine code and analysis into a single authoring process. We are
+in a new era of emphasis on reproducible research and the integration
+of statistical analysis with report preparation is intended to enhance
+integrity and reduce the frequency of typographical (and other) errors.
 
-The whole idea is, one must expect, entirely unfamiliar to most graduate
-students in social science, not to mention their professors. It comes
-as a rude shock, then that the general idea of ``code embedded within
-documents'' is immediately followed by another cold slap: There are
-several competing formats in which one can prepare these documents.
-Furthermore, it seems likely that no sooner will we begin to understand
-the strong (and weak) points of one approach than we are confronted
-with yet another proposed framework.
+Still, the majority response from most professors in the university
+seems to echo the exclamation of one university administrator: ``I
+have no idea what that means!'' In the \emph{old} \emph{way} of doing
+things, one prepares a document in a word processor program. While
+doing that, one types tables and pastes in graphs. One often types
+in a bibliography if the word processor does not integrate well with
+a bibliography manager. The old way is practiced by most social scientists
+and humanists today.
 
-I've been using the editor LyX to weave together R code with reports
-and slides since the turn of the century. In the Center for Research
-Methods and Data Analysis at the University of Kansas, I've shown
-the graduate students how to do the same king of work. We have developed
-a set of template document styles for usage in technical reports,
-in guides for students and other learners, and also slides for use
-in classes and workshops. 
+In the \emph{new way} of doing things, we try to avoid typing tables
+or pasting in graphs. We want the analysis software to prepare article-ready
+tables and graphs that can be incorporated into the generation of
+a final report. In the ideal case, an entire article, lecture, or
+book can be generated in one single execution that conducts analysis,
+saves graphics, and assembles them together in a single output document.
+This is roughly along the lines of the ``literate programming''
+movement started by computer scientist Donald Knuth (\citeyear{knuth1984,knuth1989}),
+who also created the TeX document preparation system (1984), an accomplishment
+so massive that its impact on academic research can scarcely be comprehended.
+The statistical program R \citep{RCore} built its documentation framework
+on the literate programming philosophy, integrating Knuth's concepts
+of ``weaving'' and ``tangling'' to produce documents and extract
+code files \citep{leisch2002}. 
 
-The development work on these templates was carried out in an R package
-we called ``crmda''. It was not feasible to distribute crmda because
-because our address and logos were too deeply embedded in the document
-templates to allow workers in other institutions to make use of them.
-Recently, we have taken a second look at the templates and revised
-them so that there are no institutional identifiers that are deeply
-embedded. That is to say, it is obvious how a user can replace the
-name of the author, the institutional address information, the logos,
-and do forth. These new templates are packages along with full working
-example document in this new package named ``stationery''.
+Because researchers in mathematics, engineering, and natural sciences
+were more likely to be familiar with TeX, and its successor LaTeX,
+they were more amenable to concepts of reproducible document preparatoin.
+For social scientists and humanists, where LaTeX was unfamiliar, the
+idea of integrating code and document preparation did not seem tractable.
+
+Then comes a rude shock. Immediately after one comprehends the general
+idea of ``code embedded within documents,'' then one is immediately
+slapped in the face by another grim reality: \emph{There are several
+competing formats for doing this kind of work}. Furthermore, no single
+approach is best for all eventualities. One can learn to live within
+one framework, and accept its limitations, or cultivate some experience
+with several methods, in danger of remaining a jack of all trades
+(and master of none).
+
+Some of the impediments that have made LaTeX document preparation
+difficult have been addressed over the years by the growth of the
+graphical user interface named LyX (http://www.lyx.org). This is a
+user-friendly with a look-and-feel of more common word processors,
+but it generates LaTeX documents that are then compiled by standard
+LaTeX software. When I say ``LaTeX document,'' I generally mean
+a document prepared with LyX and then exported to LaTeX. LyX is not
+a new program. I've been using LyX for 20 years to prepare course
+notes and slides. It is appealing because it is now available for
+all major operating systems. It is an open framework and it is also
+an free/open source software project.
 
 \section{What Do You Get with stationery?}
 
-Second, there are R functions that can create skeleton documents in
-many formats and these functions can also be used to compile the documents.
-These functions are needed only to pull together some loose ends.
-We have integrated ideas and terminology from several of the R packages
-on which we depend.
+First, there document templates. Each document type is delivered in
+a fully working format that can be immediately compiled into a presentable
+document. Each one is delivered with an instructional guide that explains
+how to create a new skeleton file for editing and how to compile the
+document. 
 
-Each document type is delivered in a fully working format that can
-be immediately compiled into a presentable document. Each one is delivered
-with a brief guide document that points to some of the highlights
-that need to be considered. Each one includes a compiler script as
-well, so that if one is partial to using the terminal to interact
-with documents, then this will offer a dependable way to compile documents
-(and debug problems with them).
+Second, there are R functions that create new templates and assist
+in compiling them. Each template includes a compiler script, so that
+if one is partial to using the ``command line'' to handle repetitive
+jobs, then this will offer a dependable way to compile documents (and
+debug problems with them). It is not necessary to use the command
+line, however, as one can also compile the document using R functions.
+The LaTeX-based templates can also be compiled within LyX.
 
-Second, there are 4 vignettes, the first of which is the present document.
+Third, there are vignettes, the first of which is the present document.
 \begin{enumerate}
-\item d
-\item c
+\item stationery Package Overview: The package overview (this document)
+\item Code Chunks
 \item Rmarkdown
 \item HTML Special Features
 \end{enumerate}
 
-\section{`stationery` package document templates}
+\subsection*{\protect\code{stationery} package document templates}
 
-The `stationery` package provides templates for several types of documents
-using various frontends (formats in which documents are prepared)
-and backends (output formats like PDF or HTML). 
+The document types in the \code{stationery} package, and the labels
+we use for them, are provided in Table \ref{tab:Document-Types}.
+There are several types of documents because authors will make different
+choices about the document format and the tools covert the document
+into a presentable format. The formats in which documents are prepared
+are referred to as ``frontends''\footnote{In this context, it is a bit vague to say \emph{front end} because
+each document is converted through several formats in the compilation
+process. Any intermediate format that precedes another might be referred
+to as a frontend.} while the output formats–the ones intended for readers–are the ``backends''. 
 
-There is more terminology to be aware of. LaTeX documents in which
-R code is embedded are referred to as ``noweb'' or ``literate''
-documents and they bear the file extension .Rnw. These files can be
-edited in any text editor that is suitable for LaTeX. They can even
-be prepared with the more user-friendly editor named LyX (http://www.lyx.org). 
+In Table \ref{tab:Document-Types}, readers will note that the templates
+have three-part names like ``\code{rnw2pdf-guide-sweave}''. The
+first part of the label an abbreviation for \emph{frontend}2\emph{backend.
+}The nicknames ``rnw'' and ``rmd'' represent the two primary frontends
+used in \code{stationery}. The two backends are portable document
+format (PDF) and hypertext markup language (HTML). By mixing and matching
+the front ends and the backends, we have identifiers like ``rnw2pdf''
+and ``rmd2pdf''. To avoid creating additional labels when it is
+not completely necessary, we use the label ``rnw'' to refer to documents
+that are prepared either as Rnw or LyX files (Since we use LyX to
+generate Rnw, this is not a harmful simplification). 
 
-There are two styles in which R code can be embedded in these documents
-and each one has its own ``engine'' software to sort through the
-document, find the R code, and embed the results. The fact that there
-are these two, separate, not-entirely-compatible code frameworks (Sweave
-and knitr) is an enduring source of confusion. Many authors tout knitr
-as a new, upgraded approach, while, in my experience so far, documents
-based on Sweave are less likely to present surprises. \citet{RCore}
+The middle part of the format label is either ``guide'', ``report''
+or ``slides''. These will be discussed in the next section. 
 
-The markdown document movement () has been an effort to develop an
-alternative style of document markup that is not so ``ugly'' as
-HTML and not so difficult to learn as LaTeX. While the general idea
-of markdown is quite appealing, the devil is in the details, as usual.
-A host of competing dialects flowered almost immediately and now it
-is quite possible to write a document ``in'' markdown that is not
-intelligible to a practitioner of another kind of markdown. Here,
-of course, we are interested mainly in R markdown, a variant of markdown
-that is associated with the knitr package for R.
+The final part of the template label represents the engine that is
+used to convert the embedded computer code into statistical output.
+This might be either ``sweave'' or ``knit''. These names refer
+to the code chunk engines, Sweave (\citealp{leisch2002}) and knitr
+(\citealt{xie2014,knitr}). Sweave and knitr are two, separate, not-entirely-compatible
+code frameworks. A possible source of confusion is that Sweave, which
+is the original engine, uses the term ``Sweave'' (an homage to Knuth's
+term ``weave'') to refer to the act of processing S or R code chunks
+in a LaTeX document, while the knitr package introduced a new term
+for this, ``knit''. 
+
+The markdown document movement is associated with the John Gruber's
+Daring Fireball website (https://daringfireball.net/projects/markdown)
+and John MacFarlane's ambitious software program \code{pandoc} (https://johnmacfarlane.net/pandoc).
+Gruber is credited with the main idea of this movement, which is to
+allow authors to prepare documents in a readable format which can
+then be converted into beautiful PDF, HTML, or other formats. pandoc
+is a Swiss army knife of format conversion and its implementation
+is what makes most of this actually work. 
+
+Because markdown is a movement, rather than a product, it allows the
+creation of specialized dialects. and its author's webpage () has
+been an effort to develop an alternative style of document markup
+that is not so ``ugly'' as HTML and not so difficult to learn as
+LaTeX. While the general idea of markdown is quite appealing, the
+devil is in the details, as usual. A host of competing dialects flowered
+almost immediately and now it is quite possible to write a document
+``in'' markdown that is not intelligible to a practitioner of another
+kind of markdown. Here, of course, we are interested mainly in R markdown,
+a variant of markdown that is associated with the knitr package for
+R.
 
 In the stationery package we now have 7 working document skeletons
 that are summarized in Table \ref{tab:Document-Types}. 
@@ -207,7 +264,7 @@ that are summarized in Table \ref{tab:Document-Types}.
 
 \begin{tabular}{ccccc>{\centering}p{1in}}
 \hline 
- & Label String & Frontend & Backend & Format & Code Chunk Engine\tabularnewline
+ & Template Label & Frontend & Backend & Format & Code Chunk Engine\tabularnewline
 \hline 
 1 & rmd2html-guide & Markdown & HTML & Guide & knitr\tabularnewline
 2 & rnw2pdf-guide-knit & Markdown & PDF & Guide & knitr\tabularnewline
@@ -215,7 +272,7 @@ that are summarized in Table \ref{tab:Document-Types}.
 4 &  rmd2pdf-report & Markdown & PDF & Report & knitr\tabularnewline
 5 & rnw2pdf-report-knit & LaTeX/LyX & PDF & Report & knitr\tabularnewline
 6 & rnw2pdf-report-sweave & LaTeX/LyX & PDF & Report & Sweave\tabularnewline
-7 & rnw2pdf-slides-sweave & LaTeX/LyX & PDF & Beamer Slides & Sweave\tabularnewline
+7 & rnw2pdf-slides-sweave & LaTeX/LyX & PDF & Slides & Sweave\tabularnewline
 \hline 
 \end{tabular}
 \end{table}
@@ -352,11 +409,11 @@ and save the document. Now try to compile it.
 
 The file can be compiled in two ways. 
 
-1. Open an R session and use the function `rmd2pdf()` in the crmda
+1. Open an R session and use the function `rmd2pdf()` in the stationery
 package. I'll compile my file `crmda.Rmd`.
 
 <<usage100, eval=F>>=
-library(crmda)
+library(stationery)
 rmd2pdf("crmda.Rmd")
 @
 
@@ -419,7 +476,7 @@ along with the `defaults` string, in a not-very-subtle way:
 
 ```
 
-Rscript -e \textquotedbl{}library(crmda); rmd2pdf(\textbackslash{}\textquotedbl{}\$filename\textbackslash{}\textquotedbl{},
+Rscript -e \textquotedbl{}library(stationery); rmd2pdf(\textbackslash{}\textquotedbl{}\$filename\textbackslash{}\textquotedbl{},
 \$defaults)\textquotedbl{} 
 
 ```
@@ -751,7 +808,7 @@ The R packages `rmarkdown` and `knitr` orchestrate the process that
 builds the instructions to `pandoc`. In `rmarkdown`, the function
 `render` orchestrates all of the work. It calls chunk calculator and
 assigns work among the various conversion programs. The functions
-in the crmda package named `rmd2pdf` or `rmd2html` are \textquotedbl{}wrapper\textquotedbl{}
+in the stationery package named `rmd2pdf` or `rmd2html` are \textquotedbl{}wrapper\textquotedbl{}
 functions that adjust settings sent to `render`.
 
 \subsection{Avoiding compilation trouble}
@@ -950,7 +1007,7 @@ same directory as the pdf output.
 
 ```\{r session, include=F\}
 
-zz <- \textquotedbl{}crmda-sessionInfo.Rout\textquotedbl{}
+zz <- \textquotedbl{}stationery-sessionInfo.Rout\textquotedbl{}
 
 capture.output(warnings(), file = zz)
 

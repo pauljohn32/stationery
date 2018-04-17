@@ -372,11 +372,6 @@ opts.orig <- options()
 
 \begin_layout Plain Layout
 
-options(device = pdf)
-\end_layout
-
-\begin_layout Plain Layout
-
 options(width=160, prompt=" ", continue="  ")
 \end_layout
 
@@ -403,6 +398,10 @@ pjmar <- c(5.1, 5.1, 1.5, 2.1)
 \begin_layout Plain Layout
 
 options(SweaveHooks=list(fig=function() par(mar=pjmar, ps=10)))
+\end_layout
+
+\begin_layout Plain Layout
+
 \end_layout
 
 \begin_layout Plain Layout
@@ -1786,7 +1785,7 @@ status open
 
 \begin_layout Plain Layout
 
-<<tab4, echo=F,results=tex>>=
+<<tab4, echo=F, results=tex>>=
 \end_layout
 
 \begin_layout Plain Layout

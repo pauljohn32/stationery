@@ -6,8 +6,8 @@
 \origin unavailable
 \textclass scrartcl
 \begin_preamble
-% \VignetteIndexEntry{rnw2pdf-report-knit}
-% \VignetteEngine{knitr}
+% \VignetteIndexEntry{Instructions for rnw2pdf reports with knitted chunks}
+% \VignetteEngine{knitr::rmarkdown}
 % \VignetteBuilder{stationery::rnw2pdf}
 
 

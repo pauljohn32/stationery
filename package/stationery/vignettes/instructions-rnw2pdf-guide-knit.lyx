@@ -6,8 +6,8 @@
 \origin unavailable
 \textclass extarticle
 \begin_preamble
-% \VignetteIndexEntry{rnw2pdf-guide-knit}
-% \VignetteEngine{knitr}
+% \VignetteIndexEntry{Instructions for guides using knitted code chunks}
+% \VignetteEngine{knitr::rmarkdown}
 % \VignetteBuilder{stationery::rnw2pdf}
 
 

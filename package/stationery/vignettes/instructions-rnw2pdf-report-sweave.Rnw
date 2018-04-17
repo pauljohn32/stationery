@@ -107,13 +107,13 @@ getFiles(texfiles, pkg = "stationery")
 % Please leave this chunk
 <<Roptions, echo=F, include=FALSE,results=hide>>=
 opts.orig <- options()
-options(device = pdf)
 options(width=160, prompt=" ", continue="  ")
 options(useFancyQuotes = FALSE) 
 set.seed(12345)
 par.orig <- par(no.readonly=TRUE) 
 pjmar <- c(5.1, 5.1, 1.5, 2.1) 
 options(SweaveHooks=list(fig=function() par(mar=pjmar, ps=10)))
+
 pdf.options(onefile=FALSE, family="Times", pointsize=10)
 if(!dir.exists("tmpout"))dir.create("tmpout", recursive = TRUE)
 @
@@ -508,7 +508,7 @@ to include them in the document where appropriate.
 The following is a result from \code{kable} in the \code{knitr}
 package:
 
-<<tab4, echo=F,results=tex>>=
+<<tab4, echo=F, results=tex>>=
 tab4.x <- knitr::kable(tab1$numerics, format = "latex")
 ## keep file copy because vignette cannot use split
 cat(tab4.x, file = "tmpout/t-tab4.tex") 

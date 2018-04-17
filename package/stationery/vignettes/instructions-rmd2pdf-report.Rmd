@@ -29,7 +29,7 @@ output:
       "--listings"
     ]
 vignette: >
-    %\VignetteIndexEntry{rmd2pdf-report}
+    %\VignetteIndexEntry{Instructions for Reports}
     %\VignetteEngine{knitr::rmarkdown}
     %\VignetteEncoding{UTF-8}	
 table: true

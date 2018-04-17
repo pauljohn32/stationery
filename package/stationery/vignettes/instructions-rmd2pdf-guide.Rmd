@@ -1,5 +1,5 @@
 ---
-title: "Using the rmd2pdf-guide"
+title: "Guide for writing with Rmd to create PDF Guides"
 subtitle: "All the News that is Fit to Print"
 guideurl: http://crmda.ku.edu/guides
 author:
@@ -22,7 +22,7 @@ output:
       "--listings"
     ]
 vignette: >
-    %\VignetteIndexEntry{rmd2pdf-guide}
+    %\VignetteIndexEntry{Guide for writing with Rmd to create PDF Guides}
     %\VignetteEngine{knitr::rmarkdown}
     %\VignetteEncoding{UTF-8}	
 addr:

@@ -36,8 +36,8 @@ lyx -e sweave stationery.lyx
 
 ./rmd2html.sh --template='"theme/guide-boilerplate.html"' --purl=FALSE HTML_special_features.Rmd
 
-
-
+rm -rf Rplots*.pdf
+cleanLatex.sh . 
 
 # % \VignetteIndexEntry{rnw2pdf-slides-sweave}
 # % \VignetteEngine{Sweave}
