@@ -36,7 +36,7 @@ header-includes:
 -  \usepackage{calc}
 -  \usepackage{subfig}
 vignette: >
-    %\VignetteIndexEntry{code_chunks}
+    %\VignetteIndexEntry{"Code Chunks: Comparing Sweave and Knitr"}
     %\VignetteEngine{knitr::rmarkdown}
     %\VignetteEncoding{UTF-8}
 ---
@@ -52,7 +52,7 @@ options(width = 70)
 ```
 
 ```{r themecopy, include = FALSE}
-library(crmda)
+library(stationery)
 ## If theme directory does not have required images or TeX files
 ## we need to retrieve them and put them in "theme" directory. 
 files <- c("logo.pdf", "report-boilerplate.tex", "mlm.bib")
