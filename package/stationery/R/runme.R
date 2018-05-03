@@ -362,6 +362,9 @@ rnw2pdf <- function(fn = NULL, wd = NULL, engine = "knitr", purl = TRUE,
         rnwfile <- readLines(fnbackup)
         rnwfile[grep("SweaveOpts", rnwfile)] <- gsub("(split\\s*=)\\s*.*,", "\\1FALSE,",
                                                      rnwfile[grep("SweaveOpts", rnwfile)])
+        ## sets the prompt at ">"
+        rnwfile[grep("prompt", rnwfile)] <- gsub("prompt\\s*=.*\"", "prompt=\"> \"",
+                                                 rnwfile[grep("prompt", rnwfile)])
         writeLines(rnwfile, con = fnbackup)
         Stangle(fnbackup)
         fnbackupR <- gsub("\\.Rnw", ".R", fnbackup)
