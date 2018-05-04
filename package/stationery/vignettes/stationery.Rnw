@@ -9,6 +9,7 @@
 \setlength{\parskip}{\medskipamount}
 \setlength{\parindent}{0pt}
 \usepackage{array}
+\usepackage{url}
 \usepackage[authoryear]{natbib}
 
 \makeatletter
@@ -360,9 +361,10 @@ run
 initWriteup("rmd2pdf-report")
 \end{lstlisting}
 \inputencoding{utf8}
-No directory is specified, so this creates a folder named `writeup/rmd2pdf-report`.
-It will be created in the R current working directory. Within the
-folder ``rmd2pdf-report'', one should find 
+No directory is specified, so the default setting creates a folder
+named \code{rmd2pdf-report}. It will be created in the R current
+working directory. Within the folder \code{rmd2pdf-report}, one should
+find 
 \begin{enumerate}
 \item a skeleton template (which the author should rename and edit), 
 \item an instructional guide (in either PDF or HTML format)
@@ -417,17 +419,16 @@ library(stationery)
 rmd2pdf("crmda.Rmd")
 @
 
-The `rmd2pdf` is a {*}wrapper{*} function. It does not do any real
-work, it just collects your file name and applies defaults that we
-have set. It calls the `render` and `pdf\_document` functions in the
-`rmarkdown`. Because `knitr` is the only method for handling code
-chunks in `Rmarkdown` documents, also involves the `knitr`
+The function \code{rmd2pdf} is a \emph{wrapper} function. It does
+not do any real work, it just collects your file name and applies
+defaults that we have set. It calls the \code{render} and \code{pdf\_document}
+functions in the \code{rmarkdown}. Because \code{knitr} is the only
+method for handling code chunks in \code{Rmarkdown} documents, also
+involves the \code{knitr} package.
 
-package.
-
-The `rmd2pdf` allows the user to add arguments that are passed along
-to `render` and `pdf\_document`. This is explained in the help page
-for `rmd2pdf`. 
+The \code{rmd2pdf} function allows the user to add arguments that
+are passed along to \code{render} and \code{pdf\_document}. This
+is explained in the help page for \code{rmd2pdf}. 
 
 2. Run a shell script provided with the template.
 
@@ -439,7 +440,7 @@ same work.
 $ ./rmd2pdf.sh crmda.Rmd
 \end{lstlisting}
 \inputencoding{utf8}
-The rendered output will be a pdf file. The configuration inside `rmd2pdf.sh`
+The rendered output will be a pdf file. The configuration inside \code{rmd2pdf.sh}
 indicates that output is written in the current working directory. 
 
 If one uses Rstudio as a text editor for an Rmd file, one may not
@@ -450,90 +451,51 @@ down menus.
 
 In July, 2017, I decided to change the way that the shell scripts
 are designed. Users who inspect them should see the script runs R
-and launches a function in the `stationery` package. As a result,
+and launches a function in the \code{stationery} package. As a result,
 there should not be any difference in the result from running the
-script `rmd2pdf.sh` and the function inside R named `rmd2pdf`. 
+script \code{rmd2pdf.sh} and the function inside R named \code{rmd2pdf}. 
 
 The only difference that might arise is when there are additional
-arguments supplied in the script that are not present in `rmd2pdf`. 
+arguments supplied in the script that are not present in \code{rmd2pdf}. 
 
 One difference might be whether or not a table of contents is requested.
 The default arguments specified in the script are simple, but they
 do include the table of contents (this was inserted in this script
-in June 2017). The important line in `rmd2pdf.sh` is this:
+in June 2017). The important line in \code{rmd2pdf.sh} is this: FIXME
+FIXME this is out of date
 
 This turns on the table of contents feature and asks for output in
 the current working directory. We have not worked on command-line
-argument processing in `rmd2pdf.sh`, so if a user wants to change
+argument processing in \code{rmd2pdf.sh}, so if a user wants to change
 the arguments passed along, it will be necessary to edit that script
 file and items
 
 in the `defaults` character string.
 
-A little lower in `rmd2pdf.sh`, one should see that the business-end
-of the project is a call to `Rscript` which supplies the file name,
-along with the `defaults` string, in a not-very-subtle way:
+A little lower in \code{rmd2pdf.sh}, one should see that the business-end
+of the project is a call to \code{Rscript} which supplies the file
+name, along with the `defaults` string, in a not-very-subtle way:
 
-```
-
-Rscript -e \textquotedbl{}library(stationery); rmd2pdf(\textbackslash{}\textquotedbl{}\$filename\textbackslash{}\textquotedbl{},
-\$defaults)\textquotedbl{} 
-
-```
-
+\inputencoding{latin9}\begin{lstlisting}
+Rscript -e "library(stationery); rmd2pdf(\"$filename\", $defaults)" 
+\end{lstlisting}
+\inputencoding{utf8}
 The new arguments that users might insert in `defaults` should match
-the arguments that might be supplied to the `rmd2pdf` function in
-the `stationery` package. Hence, the help page for `rmd2pdf` should
-be consulted for details. Arguments that can be specified for the
-`render` and `pdf\_document` (or `html\_document` if we are creating
-HTML output) are spelled out. Any defaults specified in the script,
-or in the function call to `rmd2pdf` inside R, will override the other
-customizations that are place in the `stationery` package.
-
-We hope that only minor customizations are needed. The document you
-are reading now is produced with a revised version `rmd2pdf.sh`. By
-default, the `rmd2pdf` function will pull the \textbackslash{}LaTeX\textbackslash{}
-template for `pandoc` from the `stationery` package's install folder.
-That is to say, the `rmd2pdf.sh` script overrides the template file
-that exists in the package install folder and instead uses the one
-in the theme subdirectory of the current document directory. 
-
-While building this, I had some trouble compiling the document. I
-turned on detailed error reporting (quiet=FALSE). I also turned off
-the `clean` argument that erased the intermediate markdown files and
-asked to keep the \textbackslash{}LaTeX\textbackslash{} intermediate
-files. Hence, my `defaults` string has 
-
-```
-
-defaults=\textquotedbl{}toc=TRUE, output\_dir=\textbackslash{}\textquotedbl{}\$pwd\textbackslash{}\textquotedbl{},
-clean=FALSE, keep\_tex=TRUE, 
-
-quiet=FALSE, template=\textbackslash{}\textquotedbl{}theme/report-boilerplate.tex\textbackslash{}\textquotedbl{}\textquotedbl{}
-
-```
-
-Because I don't clean and keep the LaTeX intermediate file, the
-
-working directory has these \textquotedbl{}extra\textquotedbl{} files
-when the run is completed:
-
-```
-
-crmda.utf8.md
-
-crmda.knit.md
-
-crmda.tex
-
-```
+the arguments that might be supplied to the \code{rmd2pdf} function
+in the \code{stationery} package. Hence, the help page for \code{rmd2pdf}
+should be consulted for details. Arguments that can be specified for
+the \code{render} and \code{pdf\_document} (or \code{html\_document}
+if we are creating HTML output) are spelled out. Any defaults specified
+in the script, or in the function call to \code{rmd2pdf} inside R,
+will override the other customizations that are place in the \code{stationery}
+package.
 
 Some of these argument can be specified in the document header. For
-example, the current document header has `keep\_tex: false`. The script
-setting `keep\_tex=TRUE` overrides that. The fact that settings can
-be specified several places-{}-in the document header, or in the processing
-script, or in the functions that handle documents-{}-is confusing.
-I don't think anybody can deny that.
+example, the current document header has `\code{keep\_tex: false}`.
+The script setting `keep\_tex=TRUE` overrides that. The fact that
+settings can be specified several places-{}-in the document header,
+or in the processing script, or in the functions that handle documents-{}-is
+confusing. I don't think anybody can deny that.
 
 Inside R, using the function `rmd2pdf`, I achieve the same result
 by inserting the arguments into the function call:
@@ -548,19 +510,17 @@ The R help page for `rmd2pdf` should be helpful (or will be, eventually).
 
 \section{Working with LaTeX}
 
-Like so many other concepts and tools in this area, \textbackslash{}TeX
-was a creation of Donald Knuth at Stanford. \textbackslash{}TeX was
-the precursor to \textbackslash{}LaTeX.
+Like so many other concepts and tools in this area, \TeX was a creation
+of Donald Knuth at Stanford. \TeX was the precursor to \LaTeX.
 
-The CRMDA maintains a Web page about \textbackslash{}LaTeX: https://crmda.ku.edu/latex-help
+The CRMDA maintains a Web page about \LaTeX: \url{https://crmda.ku.edu/latex-help}
 
 That page has basic guides and information about the KU dissertation
-template. I prefer to work with \textbackslash{}LaTeX\textbackslash{}
-documents, for a number of reasons. The quality of the PDF output
-is nicer, in my opinion, and more predictable. However, the major
-reason I prefer \textbackslash{}LaTeX\textbackslash{} is that the
-Sweave option `split=TRUE` is allowed. That option creates separate
-`\textbackslash{}{*}.tex` output files, for each code chunk. The developers
+template. I prefer to work with \LaTeX documents, for a number of
+reasons. The quality of the PDF output is nicer, in my opinion, and
+more predictable. However, the major reason I prefer \LaTeX is that
+the Sweave option \code{split=TRUE} is allowed. That option creates
+separate \code{{*}.tex} output files, for each code chunk. The developers
 of the
 
 Rmarkdown documents framework disapprove of `split` and elected, consciously,
@@ -616,28 +576,24 @@ I believe the following are good conclusions:
 \item 1. If one intends to export as HTML, then markdown is, {*}by far{*},
 the most reasonable choice for a frontend. Markdown was developed,
 first and foremost, as a simpler way to generate Web pages.
-\item 2. If one intends to export to PDF, then markdown or \textbackslash{}LaTeX\textbackslash{}
-can be useful. But \textbackslash{}LaTeX\textbackslash{} is probably
-better. \textbackslash{}LaTeX\textbackslash{} is primarily intended
+\item 2. If one intends to export to PDF, then markdown or  LaTeX  can be
+useful. But  LaTeX  is probably better.  LaTeX  is primarily intended
 for the creation of publication-quality documents in PDF format. Conversion
-from \textbackslash{}LaTeX\textbackslash{} to HTML is less decidedly
-less unsatisfactory.
+from  LaTeX  to HTML is less decidedly less unsatisfactory.
 \end{enumerate}
-Since one can put much \textbackslash{}LaTeX\textbackslash{} markup
-into a markdown document, perhaps the difference is not so great as
-it seems. The Rmarkdown compilation process (see Appendix \textbackslash{}ref\{appendix1\})
-generates a \textbackslash{}LaTeX\textbackslash{} file at an intermediate
-stage, so in some sense the same PDF result ought to be possible with
-Markdown or \textbackslash{}LaTeX\textbackslash{} document preparation.
-However, in practice, we find differences in conveniences for authors.
+Since one can put much  LaTeX  markup into a markdown document, perhaps
+the difference is not so great as it seems. The Rmarkdown compilation
+process (see Appendix \textbackslash{}ref\{appendix1\}) generates
+a  LaTeX  file at an intermediate stage, so in some sense the same
+PDF result ought to be possible with Markdown or  LaTeX  document
+preparation. However, in practice, we find differences in conveniences
+for authors.
 
 I would summarize the situation with a poem:
 \begin{quote}
-Markdown documents intended for HTML allow some \textbackslash{}LaTeX\textbackslash{}
-code.
+Markdown documents intended for HTML allow some  LaTeX  code.
 
-Markdown documents intended for PDF allow more \textbackslash{}LaTeX\textbackslash{}
-code.
+Markdown documents intended for PDF allow more  LaTeX  code.
 
 Almost all HTML code is tolerated well in a Markdown document intended
 for HTML.
@@ -651,10 +607,9 @@ or vice versa. HTML output has advantages in Web style features, while
 PDF documents have advantages in \textquotedbl{}on paper\textquotedbl{}
 presentations.
 
-For novices, \textbackslash{}LaTeX\textbackslash{} seems more difficult
-than markdown. Perhaps this is not such a big hurdle as it used to
-be because {[}LyX{]}(http://www.lyx.org) is available. In my opinion,
-`LyX` makes preparing a \textbackslash{}LaTeX\textbackslash{} document
+For novices,  LaTeX  seems more difficult than markdown. Perhaps this
+is not such a big hurdle as it used to be because {[}LyX{]}(http://www.lyx.org)
+is available. In my opinion, `LyX` makes preparing a  LaTeX  document
 much easier than it is to prepare
 
 a similarly complicated markdown document. 
@@ -695,43 +650,39 @@ This is a somewhat surprising difference. All HTML markup I've tried
 
 works well in an Rmarkdown document that aims to go into HTML.
 
-However, not all \textbackslash{}LaTeX\textbackslash{} markdown is
-allowed in an Rmarkdown document
+However, not all  LaTeX  markdown is allowed in an Rmarkdown document
 
-going to PDF. And even less \textbackslash{}LaTeX\textbackslash{}
-code works well if the intended
+going to PDF. And even less  LaTeX  code works well if the intended
 
-backend is HTML. One cannot insert italics with \textbackslash{}LaTeX\textbackslash{}
-in a document
+backend is HTML. One cannot insert italics with  LaTeX  in a document
 
 intended for HTML. For example, writing `\textbackslash{}emph\{italics\}`
 or bold
 
-`\textbackslash{}textbf\{bold\}` in the style of \textbackslash{}LaTeX\textbackslash{}
-code will have no effect in an
+`\textbackslash{}textbf\{bold\}` in the style of  LaTeX  code will
+have no effect in an
 
 HTML document. However, if PDF output is used, then both of those
 
-\textbackslash{}LaTeX\textbackslash{} codes work. As evidence, note
-I get \textbackslash{}emph\{italics\} and bold
+ LaTeX  codes work. As evidence, note I get \textbackslash{}emph\{italics\}
+and bold
 
 \textbackslash{}textbf\{bold\} in this PDF document. 
 
 \subsection{Should one prefer `Sweave` or `knitr`?}
 
-This question is meaningful only in `noweb`/\textbackslash{}LaTeX\textbackslash{}
-documents. In Rmarkdown, `knitr` is the only available method to process
-code chunks. In `noweb`, one can choose between `Sweave` and `knitr`.
-Perhaps that suggests that, if one must learn one set of chunk options,
-then `knitr` options are the right place to start (since they can
-be used in documents intended for HTML or PDF). The chunk options
-allowed the original `Sweave` were `echo` (include code with output?),
-`eval` (run the chunk calculations?), `include` (display the chunk
-in the document?), `fig` (code generates a figure?) and `results`
-(output in \textbackslash{}LaTeX\textbackslash{} is handled differently
-than raw \textbackslash{}TeX). There are a few others, but that is
-most of the story. `knitr` honored most of the Sweave options and
-then added many more (see {[}knitr code chunk options{]}(https://yihui.name/knitr/options)).
+This question is meaningful only in `noweb`/ LaTeX  documents. In
+Rmarkdown, `knitr` is the only available method to process code chunks.
+In `noweb`, one can choose between `Sweave` and `knitr`. Perhaps that
+suggests that, if one must learn one set of chunk options, then `knitr`
+options are the right place to start (since they can be used in documents
+intended for HTML or PDF). The chunk options allowed the original
+`Sweave` were `echo` (include code with output?), `eval` (run the
+chunk calculations?), `include` (display the chunk in the document?),
+`fig` (code generates a figure?) and `results` (output in  LaTeX  is
+handled differently than raw \textbackslash{}TeX). There are a few
+others, but that is most of the story. `knitr` honored most of the
+Sweave options and then added many more (see {[}knitr code chunk options{]}(https://yihui.name/knitr/options)).
 
 One benefit of Rmarkdown with `knitr` is that it is possible to make
 documents about other programs (not just R). I've explored knitr to
@@ -793,16 +744,15 @@ The production of PDF from markdown, involves an additional transition.
 that is inserted into an `md` file created in the `pandoc` markdown
 style.
 
-2. `md -> tex`. A \textbackslash{}LaTeX\textbackslash{} file is created
-by `pandoc`. In the header of the `md` document, one can set a number
-of parameters to alter the \textbackslash{}LaTeX\textbackslash{} generation
-process. For troubleshooting, \textquotedbl{}keep\_tex: yes\textquotedbl{}
-to keep the `tex` file.
+2. `md -> tex`. A  LaTeX  file is created by `pandoc`. In the header
+of the `md` document, one can set a number of parameters to alter
+the  LaTeX  generation process. For troubleshooting, \textquotedbl{}keep\_tex:
+yes\textquotedbl{} to keep the `tex` file.
 
 3. `tex -> pdf`. The default program for this has been `pdflatex`.
-It may be important to know that a \textbackslash{}LaTeX\textbackslash{}
-document may need to be run through `pdflatex` several times because
-cross-references among pages and equations need to be made consistent.
+It may be important to know that a  LaTeX  document may need to be
+run through `pdflatex` several times because cross-references among
+pages and equations need to be made consistent.
 
 The R packages `rmarkdown` and `knitr` orchestrate the process that
 builds the instructions to `pandoc`. In `rmarkdown`, the function
@@ -846,13 +796,12 @@ Some HTML tables that are legal HTMLdon't cooperate with `pandoc`.
 It is also worth mentioning that error messages are not always informative.
 In fact, we sometimes don't get error messages when we should. Rather,
 we simply receive bad output. While developing this document I noticed
-that when a user includes erroneous \textbackslash{}LaTeX\textbackslash{}
-code in a markdown document, a flawed HTML output is generated without
-error or warning. On the other hand, changing the intended backend
-to PDF causes the compiler to fail and issue an error message. If
-one is exporting to HTML, then, a very careful proofreading of the
-output to check conversion of \textbackslash{}LaTeX\textbackslash{}
-code into HTML is necessary.
+that when a user includes erroneous  LaTeX  code in a markdown document,
+a flawed HTML output is generated without error or warning. On the
+other hand, changing the intended backend to PDF causes the compiler
+to fail and issue an error message. If one is exporting to HTML, then,
+a very careful proofreading of the output to check conversion of  LaTeX
+ code into HTML is necessary.
 
 \section{What do we Really, Really Need?}
 
@@ -877,23 +826,19 @@ write about math, preferably with a standard, uniform mathematical
 
 markup language, such as \textbackslash{}LaTeX.
 
-Many social scientists are not familiar with \textbackslash{}LaTeX\textbackslash{}
-document
+Many social scientists are not familiar with  LaTeX  document
 
 preparation. That was a hurdle that kept many authors with Microsoft
 
 Word, even when they were frustrated with it. The difficulty of using
 
-\textbackslash{}LaTeX\textbackslash{} was solved, to a significant
-extent, by LyX, an open source
+ LaTeX  was solved, to a significant extent, by LyX, an open source
 
 graphical interface. With LyX, or other editors that could generate
 
-\textbackslash{}LaTeX\textbackslash{} output (such as Scientific Word,
-TexMacs, or Abiword), authors
+ LaTeX  output (such as Scientific Word, TexMacs, or Abiword), authors
 
-who were not computer programmers could learn enough \textbackslash{}LaTeX\textbackslash{}
-to finish
+who were not computer programmers could learn enough  LaTeX  to finish
 
 their projects.
 
@@ -953,10 +898,10 @@ If we look past GUI \textquotedbl{}what you see is what you get\textquotedbl{}
 ({*}wyswig{*}) word processors, where do we go? For a long time, the
 only answer was \textbackslash{}LaTeX. However, there was a fatal
 weakness in \textbackslash{}LaTeX. It is intended for PDF output,
-not Web pages. Exports into HTML were problematic. \textbackslash{}LaTeX\textbackslash{}
-was not only difficult for some to use, but it also did not benefit
-from fancy features that were becomming available in the Internet,
-especially cascading style sheets and Javascript.
+not Web pages. Exports into HTML were problematic.  LaTeX  was not
+only difficult for some to use, but it also did not benefit from fancy
+features that were becomming available in the Internet, especially
+cascading style sheets and Javascript.
 
 This gap in the document production process created a need for a new
 methods. In the 1990s, there was quite a bit of effort to make user
@@ -973,12 +918,12 @@ experience. Instead, the author would again become a programmer who
 would insert symbols to create sections.
 
 Markdown was developed as a rejection of both ugly markup documents
-(either \textbackslash{}LaTeX\textbackslash{} or HTML) and {*}wyswig{*}
-editors. The idea is that documents should be text files that are
-readable {*}as is{*} but also convertible into other backends. The
-\textquotedbl{}markdown\textquotedbl{} movement seeks to deliver an
-easier-to-edit, less difficult-to-read, and easier-to-convert format.
-The leader is John Gruber, whose Website is boldly named {[}\textquotedbl{}daringfireball\textquotedbl{}{]}(https://daringfireball.net/projects/markdown).
+(either LaTeX or HTML) and {*}wyswig{*} editors. The idea is that
+documents should be text files that are readable {*}as is{*} but also
+convertible into other backends. The \textquotedbl{}markdown\textquotedbl{}
+movement seeks to deliver an easier-to-edit, less difficult-to-read,
+and easier-to-convert format. The leader is John Gruber, whose Website
+is boldly named {[}\textquotedbl{}daringfireball\textquotedbl{}{]}(https://daringfireball.net/projects/markdown).
 
 Markdown is intended to be easy-to-read, so that even if it is not
 compiled into a backend, it might be presentable to an audience of

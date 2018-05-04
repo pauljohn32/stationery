@@ -7,8 +7,9 @@
 \textclass scrartcl
 \begin_preamble
 % \VignetteIndexEntry{Instructions for rnw2pdf reports with knitted chunks}
-% \VignetteEngine{knitr::rmarkdown}
+% \VignetteEngine{knitr}
 % \VignetteBuilder{stationery::rnw2pdf}
+% \VignetteEncoding{UTF-8}
 
 
 \usepackage[includehead,includefoot,

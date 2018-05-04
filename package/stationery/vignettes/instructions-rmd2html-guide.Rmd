@@ -17,7 +17,8 @@ checked_by: "First Last"
 Note to Authors: please_dont_change_the_next 4 lines!
 date: "`r format(Sys.time(), '%b. %e %Y')`"
 output:
-  crmda::crmda_html_document:
+  stationery::crmda_html_document:
+    theme: null
     toc: true
     toc_depth: 3
     highlight: haddock
@@ -26,9 +27,10 @@ output:
 logoleft: theme/logoleft.png
 logoright: theme/logo-vert.png
 vignette: >
-%\VignetteIndexEntry{Instructions for Rmd authors of Guide Documents}
-%\VignetteEngine{knitr::rmarkdown}
-%\VignetteEncoding{UTF-8}
+  % \VignetteIndexEntry{Instructions for Rmd authors of Guide Documents}
+  % \VignetteEngine{knitr::rmarkdown}
+  % \VignetteEncoding{UTF-8}
+  \usepackage[utf8]{inputenc}
 ---
 
 ```{r setup, include=FALSE}
@@ -53,7 +55,7 @@ getFiles(files, pkg = "stationery")
 
 # About this framework
 
-See the `crmda` vignette in the `crmda` package.  That
+See the `stationery` vignette in the `stationery` package.  That
 explains the big picture. 
 
 In the theme folder provided with this document, there is a
@@ -68,7 +70,7 @@ In R, run
 init.writeup("rmd2html-guide")
 ```
 
-That will create a directory "writeup/rmd2html-guide" in which the 
+That will create a directory "rmd2html-guide" in which the 
 skeleton file will be found.
 
 ## To compile
@@ -76,7 +78,7 @@ skeleton file will be found.
 There are 2 options. Either use the R function
 
 ```
-crmda::rmd2html("skeleton.Rmd")
+stationery::rmd2html("skeleton.Rmd")
 ```
 
 or the shell script that is provided with the `skeleton.Rmd` file:
@@ -91,7 +93,7 @@ to regulate these things (see `?rmd2html`), insert arguments
 
 
 ```
-crmda::rmd2html("skeleton.Rmd", toc = TRUE, toc_depth = 1, keep_md = TRUE)
+stationery::rmd2html("skeleton.Rmd", toc = TRUE, toc_depth = 1, keep_md = TRUE)
 ```
 
 The command line script allows the same arguments, however THERE MUST
@@ -99,7 +101,7 @@ NOT BE SPACES betwen the option name, the equal sign, and the value of
 the option:
 
 ```
-$ ./rmd2html.sh --toc=TRUE --toc_depth=1 keep_md=TRUE skeleton.Rmd
+$ ./rmd2html.sh --toc=TRUE --toc_depth=1 --keep_md=TRUE skeleton.Rmd
 ```
 
 A full list of arguments is provided in `?rmd2html`.
@@ -137,9 +139,9 @@ in here. Could be code chunks, pictures, my favorite Bible verses.
 
 ### Third Tab Here
 
-Third tab. 
+This is the content inside the third tab 
 
-## Equations
+## Equations: another section after the tabs are finished
 
 Markdown accepts much LaTeX code. Especially well supported are
 equations, either "inline", such as $y_i = \beta_0 + \beta_1 x1_i +
@@ -167,7 +169,7 @@ a problem discussed in "HTML_special_features".
 R code chunks are demarcated by three back-ticks and appear in-text
 with a shaded box (because we are using the listings-style output).
 
-```{r myFirstPlot, dev=c('png','pdf')}
+```{r myFirstPlot, dev=c('png'), out.width="500px", fig.width=3}
 x <- rnorm(500)
 hist(x)
 ```

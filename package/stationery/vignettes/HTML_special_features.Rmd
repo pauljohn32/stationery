@@ -21,6 +21,7 @@ Note to Authors: please_dont_change_the_next lines!
 date: "`r format(Sys.time(), '%B %d %Y')`"
 output:
   stationery::crmda_html_document:
+    theme: null
     toc: true
     toc_depth: 3
     highlight: haddock

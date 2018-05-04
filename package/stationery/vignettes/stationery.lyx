@@ -2547,46 +2547,32 @@ I believe the following are good conclusions:
 \begin_layout Enumerate
 2.
  If one intends to export to PDF, then markdown or 
-\backslash
-LaTeX
-\backslash
+ LaTeX 
  can be useful.
  But 
-\backslash
-LaTeX
-\backslash
+ LaTeX 
  is probably better.
  
-\backslash
-LaTeX
-\backslash
+ LaTeX 
  is primarily intended for the creation of publication-quality documents
  in PDF format.
  Conversion from 
-\backslash
-LaTeX
-\backslash
+ LaTeX 
  to HTML is less decidedly less unsatisfactory.
 \end_layout
 
 \begin_layout Standard
 Since one can put much 
-\backslash
-LaTeX
-\backslash
+ LaTeX 
  markup into a markdown document, perhaps the difference is not so great
  as it seems.
  The Rmarkdown compilation process (see Appendix 
 \backslash
 ref{appendix1}) generates a 
-\backslash
-LaTeX
-\backslash
+ LaTeX 
  file at an intermediate stage, so in some sense the same PDF result ought
  to be possible with Markdown or 
-\backslash
-LaTeX
-\backslash
+ LaTeX 
  document preparation.
  However, in practice, we find differences in conveniences for authors.
 \end_layout
@@ -2597,17 +2583,13 @@ I would summarize the situation with a poem:
 
 \begin_layout Quote
 Markdown documents intended for HTML allow some 
-\backslash
-LaTeX
-\backslash
+ LaTeX 
  code.
 \end_layout
 
 \begin_layout Quote
 Markdown documents intended for PDF allow more 
-\backslash
-LaTeX
-\backslash
+ LaTeX 
  code.
 \end_layout
 
@@ -2631,16 +2613,12 @@ The main point is that if one writes a markdown document, using special
 
 \begin_layout Standard
 For novices, 
-\backslash
-LaTeX
-\backslash
+ LaTeX 
  seems more difficult than markdown.
  Perhaps this is not such a big hurdle as it used to be because [LyX](http://www.
 lyx.org) is available.
  In my opinion, `LyX` makes preparing a 
-\backslash
-LaTeX
-\backslash
+ LaTeX 
  document much easier than it is to prepare
 \end_layout
 
@@ -2768,27 +2746,21 @@ works well in an Rmarkdown document that aims to go into HTML.
 
 \begin_layout Standard
 However, not all 
-\backslash
-LaTeX
-\backslash
+ LaTeX 
  markdown is allowed in an Rmarkdown document
 \end_layout
 
 \begin_layout Standard
 going to PDF.
  And even less 
-\backslash
-LaTeX
-\backslash
+ LaTeX 
  code works well if the intended
 \end_layout
 
 \begin_layout Standard
 backend is HTML.
  One cannot insert italics with 
-\backslash
-LaTeX
-\backslash
+ LaTeX 
  in a document
 \end_layout
 
@@ -2803,9 +2775,7 @@ emph{italics}` or bold
 `
 \backslash
 textbf{bold}` in the style of 
-\backslash
-LaTeX
-\backslash
+ LaTeX 
  code will have no effect in an
 \end_layout
 
@@ -2816,9 +2786,7 @@ HTML document.
 
 \begin_layout Standard
 
-\backslash
-LaTeX
-\backslash
+ LaTeX 
  codes work.
  As evidence, note I get 
 \backslash
@@ -2838,9 +2806,7 @@ Should one prefer `Sweave` or `knitr`?
 
 \begin_layout Standard
 This question is meaningful only in `noweb`/
-\backslash
-LaTeX
-\backslash
+ LaTeX 
  documents.
  In Rmarkdown, `knitr` is the only available method to process code chunks.
  In `noweb`, one can choose between `Sweave` and `knitr`.
@@ -2851,9 +2817,7 @@ LaTeX
  with output?), `eval` (run the chunk calculations?), `include` (display
  the chunk in the document?), `fig` (code generates a figure?) and `results`
  (output in 
-\backslash
-LaTeX
-\backslash
+ LaTeX 
  is handled differently than raw 
 \backslash
 TeX).
@@ -2975,15 +2939,11 @@ The production of PDF from markdown, involves an additional transition.
 2.
  `md -> tex`.
  A 
-\backslash
-LaTeX
-\backslash
+ LaTeX 
  file is created by `pandoc`.
  In the header of the `md` document, one can set a number of parameters
  to alter the 
-\backslash
-LaTeX
-\backslash
+ LaTeX 
  generation process.
  For troubleshooting, "keep_tex: yes" to keep the `tex` file.
 \end_layout
@@ -2993,9 +2953,7 @@ LaTeX
  `tex -> pdf`.
  The default program for this has been `pdflatex`.
  It may be important to know that a 
-\backslash
-LaTeX
-\backslash
+ LaTeX 
  document may need to be run through `pdflatex` several times because cross-refe
 rences among pages and equations need to be made consistent.
 \end_layout
@@ -3079,18 +3037,14 @@ It is also worth mentioning that error messages are not always informative.
  Rather, we simply receive bad output.
  While developing this document I noticed that when a user includes erroneous
  
-\backslash
-LaTeX
-\backslash
+ LaTeX 
  code in a markdown document, a flawed HTML output is generated without
  error or warning.
  On the other hand, changing the intended backend to PDF causes the compiler
  to fail and issue an error message.
  If one is exporting to HTML, then, a very careful proofreading of the output
  to check conversion of 
-\backslash
-LaTeX
-\backslash
+ LaTeX 
  code into HTML is necessary.
 \end_layout
 
@@ -3140,9 +3094,7 @@ LaTeX.
 
 \begin_layout Standard
 Many social scientists are not familiar with 
-\backslash
-LaTeX
-\backslash
+ LaTeX 
  document
 \end_layout
 
@@ -3158,9 +3110,7 @@ Word, even when they were frustrated with it.
 
 \begin_layout Standard
 
-\backslash
-LaTeX
-\backslash
+ LaTeX 
  was solved, to a significant extent, by LyX, an open source
 \end_layout
 
@@ -3171,17 +3121,13 @@ graphical interface.
 
 \begin_layout Standard
 
-\backslash
-LaTeX
-\backslash
+ LaTeX 
  output (such as Scientific Word, TexMacs, or Abiword), authors
 \end_layout
 
 \begin_layout Standard
 who were not computer programmers could learn enough 
-\backslash
-LaTeX
-\backslash
+ LaTeX 
  to finish
 \end_layout
 
@@ -3284,9 +3230,7 @@ LaTeX.
  It is intended for PDF output, not Web pages.
  Exports into HTML were problematic.
  
-\backslash
-LaTeX
-\backslash
+ LaTeX 
  was not only difficult for some to use, but it also did not benefit from
  fancy features that were becomming available in the Internet, especially
  cascading style sheets and Javascript.
@@ -3314,10 +3258,7 @@ LaTeX, these markup languages (e.g., `docbook`) drop the idea that the user
 
 \begin_layout Standard
 Markdown was developed as a rejection of both ugly markup documents (either
- 
-\backslash
-LaTeX
-\backslash
+ LaTeX
  or HTML) and *wyswig* editors.
  The idea is that documents should be text files that are readable *as is*
  but also convertible into other backends.

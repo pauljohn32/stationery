@@ -6,9 +6,10 @@
 \origin unavailable
 \textclass extarticle
 \begin_preamble
-% \VignetteIndexEntry{Instructions for guides using knitted code chunks}
-% \VignetteEngine{knitr::rmarkdown}
-% \VignetteBuilder{stationery::rnw2pdf}
+%\VignetteIndexEntry{Instructions for guides using knitted code chunks}
+%\VignetteEngine{knitr}
+%\VignetteBuilder{stationery::rnw2pdf}
+%\VignetteEncoding{UTF-8}
 
 
 \usepackage[includehead, includefoot,
