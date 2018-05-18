@@ -13,7 +13,7 @@ parms[toc_depth]=2
 parms[purl]=TRUE
 parms[quiet]=TRUE 
 parms[keep_md]=FALSE
-## parms[template]=\"theme/guide-boilerplate.html\"
+parms[template]=\"theme/guide-boilerplate.html\"
 parms[output_dir]=\"$pwd\" 
 
 scriptname=`basename $0 .sh`
