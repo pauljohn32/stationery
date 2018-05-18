@@ -74,17 +74,15 @@ showme(){
 
 ## Prints key=value pairs, one per line
 printarr() {
-    declare -n __p="$1"
-    for k in "${!__p[@]}"
-    do printf "     %s=%s\n" "$k" "${__p[$k]}"
+    for k in "${!parms[@]}"
+    do printf "     %s=%s\n" "$k" "${parms[$k]}"
     done
 } 
 
 ## builds $parmstring by concatenating key=value pairs
 catarr() {
-    declare -n __p="$1"
-    for k in "${!__p[@]}"
-    do parmstring+=", $k=${__p[$k]}"
+    for k in "${!parms[@]}"
+    do parmstring+=", $k=${parms[$k]}"
     done
 } 
 
@@ -96,7 +94,7 @@ usage() {
     echo -e "Note: Because this document uses a template, the yaml header"
     echo -e "format settings are ignored. Instead, specify arguments for this script."
     echo "Current arguments:"
-    printarr parms
+    printarr
     echo -e "\nThis script reformats and sends request to R as:\n"
     echo -e "library(stationery); $scriptname(\"filename.Rmd\""$parmstring")\n"
     echo "Add argument -v for VERBOSE output."
@@ -144,7 +142,7 @@ while getopts "$optspec" OPTCHAR; do
             parms["quiet"]="FALSE"
             ## must print default parms here, before more parsing
             echo "Parameters are:" >&2
-            printarr parms
+            printarr
             ;;
         *)
              if [ "$OPTERR" != 1 ] || [ "${optspec:0:1}" = ":" ]; then
@@ -155,7 +153,7 @@ while getopts "$optspec" OPTCHAR; do
 done
 
 parmstring=""
-catarr parms
+catarr
 
 ## No shifts inside there, so must throw away arguments
 ## that were processed
@@ -166,7 +164,7 @@ showme "Args:  $@"
 
 if [ ${VERBOSE} -gt 0 ]; then
     echo -e "After parsing command line, the parameters are:"
-    printarr parms
+    printarr
 fi
 
 ## Retrieve the number of arguments that are left
