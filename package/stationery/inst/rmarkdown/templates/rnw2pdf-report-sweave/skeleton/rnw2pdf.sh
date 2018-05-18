@@ -90,6 +90,7 @@ usage() {
 	echo -e "\nUsage: $0 --arg=value <filename.Rnw>".
 	echo "Current arguments:"
 	printarr
+        catarr
     echo -e "\nThis script reformats and sends request to R:\n"
 	echo -e "library(stationery); $scriptname(\"filename.Rnw\""$parmstring")\n"
     echo "Add argument -v for VERBOSE output."

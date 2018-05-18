@@ -80,7 +80,6 @@ printarr() {
 
 ## builds $parmstring by concatenating key=value pairs
 catarr() {
-	parmstring=""
 	for k in "${!parms[@]}"
 	do parmstring+=", $k=${parms[$k]}"
 	done
@@ -90,11 +89,11 @@ catarr() {
 
 ## Usage instruction.  
 usage() {
-	echo -e "\nUsage: $0 --arg="value" filename.[Rnw,lyx]".
-	echo "Current arguments:"
-	printarr
-	catarr parms
-	showme "${parmstring}"
+    echo -e "\nUsage: $0 --arg="value" filename.[Rnw,lyx]".
+    echo "Current arguments:"
+    printarr
+    catarr
+    showme "${parmstring}"
     echo -e "\nThis script reformats and sends request to R:\n"
 	echo -e "library(stationery); $scriptname(\"filename.Rnw\""$parmstring")\n"
     echo "Add argument -v for VERBOSE output from this script."

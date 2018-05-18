@@ -95,6 +95,7 @@ usage() {
     echo -e "format settings are ignored. Instead, specify arguments for this script."
     echo "Current arguments:"
     printarr
+	catarr
     echo -e "\nThis script reformats and sends request to R as:\n"
     echo -e "library(stationery); $scriptname(\"filename.Rmd\""$parmstring")\n"
     echo "Add argument -v for VERBOSE output."

@@ -73,18 +73,16 @@ showme(){
 
 ## Prints key=value pairs, one per line
 printarr() {
-	declare -n __p="$1"
-	for k in "${!__p[@]}"
-	do printf "     %s=%s\n" "$k" "${__p[$k]}"
+	for k in "${!parms[@]}"
+	do printf "     %s=%s\n" "$k" "${parms[$k]}"
 	done
 } 
 
 ## builds $parmstring by concatenating key=value pairs
 catarr() {
 	parmstring=""
-	declare -n __p="$1"
-	for k in "${!__p[@]}"
-	do parmstring+=", $k=${__p[$k]}"
+	for k in "${!parms[@]}"
+	do parmstring+=", $k=${parms[$k]}"
 	done
 } 
 
@@ -94,8 +92,8 @@ catarr() {
 usage() {
 	echo -e "\nUsage: $0 --arg="value" filename.[Rnw,lyx]".
 	echo "Current arguments:"
-	printarr parms
-	catarr parms
+	printarr
+	catarr
 	showme "${parmstring}"
     echo -e "\nThis script reformats and sends request to R:\n"
 	echo -e "library(stationery); $scriptname(\"filename.Rnw\""$parmstring")\n"
@@ -145,7 +143,7 @@ while getopts "$optspec" OPTCHAR; do
 			parms["verbose"]=TRUE
 			## must print default parms here, before more parsing
 			echo "Parameters are:" >&2
-			printarr parms
+			printarr
 			;;
         *)
              if [ "$OPTERR" != 1 ] || [ "${optspec:0:1}" = ":" ]; then
@@ -156,7 +154,7 @@ while getopts "$optspec" OPTCHAR; do
 done
 
 parmstring=""
-catarr parms
+catarr 
 
 ## No shifts inside there, so must throw away arguments
 ## that were processed
@@ -167,7 +165,7 @@ showme "Args:  $@"
 
 if [ ${VERBOSE} -gt 0 ]; then
 	echo -e "After parsing command line, the parameters are:"
-	printarr parms
+	printarr
 fi
 
 ## Retrieve the number of arguments that are left
