@@ -404,6 +404,9 @@ rnw2pdf <- function(fn = NULL, wd = NULL, engine = "knitr", purl = TRUE,
                     ## Find SweaveOpts line, change split to FALSE
                     rnwfile[grep("SweaveOpts", rnwfile)] <- gsub("(split\\s*=)\\s*.*,", "\\1FALSE,",
                                                                  rnwfile[grep("SweaveOpts", rnwfile)])
+                    ## sets the prompt at ">"
+                    rnwfile[grep("prompt", rnwfile)] <- gsub("prompt\\s*=.*\"", "prompt=\"> \"",
+                                                             rnwfile[grep("prompt", rnwfile)])
                     writeLines(rnwfile, con = fnbackup)
                     cmd <- paste("lyx -e r", fnbackup, if(!verbose) sysnull)
                     if (isWindoze) shell(cmd) else system(cmd)
