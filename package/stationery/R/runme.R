@@ -101,9 +101,11 @@ rmd2html <- function(fn = NULL, wd = NULL, verbose = FALSE, purl = TRUE, tangle 
 
    
     dots_for_render <- dots[formals_render[formals_render %in% names(dots)]]
-    html_args <- list(template = template, theme = NULL, 
+    html_args <- list(template = template,
+                      theme = NULL, 
                       css = css,
-                      toc = TRUE)
+                      toc = TRUE,
+                      mathjax = "https://mathjax.rstudio.com/lates/MathJax.js?config=TeX-AMS-MML_HTMLorMML")
     
     html_argz <- modifyList(html_args, dots_for_html_document, keep.null = TRUE)
     if(verbose) {print(paste("dots_for_html")); lapply(html_argz, print)}
@@ -139,13 +141,20 @@ rmd2html <- function(fn = NULL, wd = NULL, verbose = FALSE, purl = TRUE, tangle 
 ##' @return html_document object with custom template
 ##' @export
 ##' @author Paul Johnson
-crmda_html_document <- function(template = "custom_template", ...) {
-  base_format <- rmarkdown::html_document(...)
+crmda_html_document <- function(template = "custom_template", theme = NULL, ...) {
+    dots <- list(...)
+    html_args <- list(template = template,
+                      theme = NULL, 
+                      css = css,
+                      toc = TRUE,
+                      mathjax = "https://mathjax.rstudio.com/lates/MathJax.js?config=TeX-AMS-MML_HTMLorMML")
+    html_argz <- modifyList(html_args, dots, keep.null = TRUE)
+    base_format <- rmarkdown::html_document(html_argz)
 
-  template_arg <- which(base_format$pandoc$args == "--template") + 1L
-  base_format$pandoc$args[template_arg] <- template
-
-  base_format
+    template_arg <- which(base_format$pandoc$args == "--template") + 1L
+    base_format$pandoc$args[template_arg] <- template
+    
+    base_format
 }
 
 
