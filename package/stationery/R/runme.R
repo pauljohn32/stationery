@@ -101,11 +101,11 @@ rmd2html <- function(fn = NULL, wd = NULL, verbose = FALSE, purl = TRUE, tangle 
 
    
     dots_for_render <- dots[formals_render[formals_render %in% names(dots)]]
-    html_args <- list(template = template, 
+    html_args <- list(template = template, theme = NULL, 
                       css = css,
                       toc = TRUE)
     
-    html_argz <- modifyList(html_args, dots_for_html_document)
+    html_argz <- modifyList(html_args, dots_for_html_document, keep.null = TRUE)
     if(verbose) {print(paste("dots_for_html")); lapply(html_argz, print)}
     
     htmldoc <- do.call(stationery::crmda_html_document, html_argz)
@@ -113,7 +113,7 @@ rmd2html <- function(fn = NULL, wd = NULL, verbose = FALSE, purl = TRUE, tangle 
     res <- sapply(fn, function(x) {
         render_args <- list(input = x, output_format = htmldoc, quiet = !verbose,
                             envir = globalenv())
-        render_argz <- modifyList(render_args, dots_for_render)
+        render_argz <- modifyList(render_args, dots_for_render, keep.null = TRUE)
         if(purl) knitr::purl(fn)
         if(verbose) {print(paste("dots_for_render"));  lapply(dots_for_render, print)}
         do.call(rmarkdown::render, render_argz)
