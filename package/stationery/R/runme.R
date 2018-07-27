@@ -40,6 +40,7 @@
 ##' @importFrom rmarkdown render
 ##' @importFrom rmarkdown html_document
 ##' @importFrom utils modifyList
+##' @importFrom rmarkdown resolve_output_format
 ##' @return A vector of output file names
 ##' @author Paul Johnson <pauljohn@@ku.edu>
 ##' @export
@@ -102,9 +103,10 @@ rmd2html <- function(fn = NULL, wd = NULL, verbose = FALSE, purl = TRUE, tangle 
     html_argz <- utils::modifyList(html_args, dots_for_html_document, keep.null = TRUE)
     if(verbose) {print(paste("dots_for_html")); lapply(html_argz, print)}
     
-    htmldoc <- do.call(stationery::crmda_html_document, html_argz)
+   
     ## htmldoc <- do.call(html_document, html_argz)
     res <- sapply(fn, function(x) {
+        htmldoc <- rmarkdown::resolve_output_format(fn, output_options = html_argz)
         render_args <- list(input = x, output_format = htmldoc, quiet = !verbose,
                             envir = globalenv())
         render_argz <- utils::modifyList(render_args, dots_for_render, keep.null = TRUE)
@@ -127,13 +129,14 @@ rmd2html <- function(fn = NULL, wd = NULL, verbose = FALSE, purl = TRUE, tangle 
 ##' template is supplied. This is described here
 ##' \url{https://github.com/rstudio/rmarkdown/issues/727}.  The workaround
 ##' is to provide this wrapper
+##' @param template Name of template file.
 ##' @param ... Any arguments passed along to html_document in
 ##'     rmarkdown
 ##' @return html_document object with custom template
 ##' @importFrom utils modifyList
 ##' @export
 ##' @author Paul Johnson
-crmda_html_document <- function(template = "custom_template", ...) {
+crmda_html_document <- function(template = "theme/guide-boilerplate.html", ...) {
     base_format <- rmarkdown::html_document(...)
     template_arg <- which(base_format$pandoc$args == "--template") + 1L
     base_format$pandoc$args[template_arg] <- template
