@@ -2,12 +2,9 @@
 title: "Instructions for Rmd authors of Guide Documents"
 subtitle: "Using HTML Output for Guides"
 author:
- - name: Firstname1 Lastname1
+ - name: Paul Johnson
    affiliation: CRMDA
-   email: email1@ku.edu
- - name: Firstname2 Lastname2
-   affiliation: CRMDA
-   email: email2@ku.edu
+   email: pauljohn@ku.edu
 advertise: >
    Please  visit [http://crmda.ku.edu/guides](http://crmda.ku.edu/guides) 
 keywords: guide, Rmarkdown
@@ -17,13 +14,8 @@ checked_by: "First Last"
 Note to Authors: please_dont_change_the_next 4 lines!
 date: "`r format(Sys.time(), '%b. %e %Y')`"
 output:
-  stationery::crmda_html_document:
-    theme: null
-    toc: true
-    toc_depth: 3
-    highlight: haddock
-    css: theme/kutils.css
-    template: theme/guide-boilerplate.html
+  prettydoc::html_pretty: 
+    theme: cayman 
 logoleft: theme/logoleft.png
 logoright: theme/logo-vert.png
 vignette: >
@@ -41,19 +33,35 @@ knitr::opts_chunk$set(echo=TRUE, comment=NA, fig.path=paste0(outdir, "/p-"))
 options(width = 70)
 ```
 
-```{r themecopy, include = FALSE}
-library(stationery)
-## If theme directory does not have required images or TeX files
-## we need to retrieve them and put them in "theme" directory. 
-logos <- c(logoleft = "logoleft.png", 
-           logoright = "logo-vert.png")
-files <- c("kutils.css", 
-           "guide-boilerplate.html")
-getFiles(logos, pkg = "stationery")
-getFiles(files, pkg = "stationery")
-```
+
 
 # About this framework
+
+For guides, we use a customized template and style sheet. 
+
+Unfortunately, this creates HUGE HTML files and the R
+package cannot tolerate it.  Hence, we are, at least
+for now, changing to a style that does not use the special
+features for this document. 
+
+```
+output:
+  stationery::crmda_html_document:
+    css: theme/kutils.css
+    template: theme/guide-boilerplate.html
+```
+
+This has been a ridiculous experience. We thought
+we had good advice to create the template, but later
+we realized that if a template is specified, then the
+YAML header settings for table of contents are
+ignored.
+
+But the worst news was that the HTML output files
+are gigantic when we use our template and css. That
+is truly discouraging.
+
+# Try with the skeleton, it has the full header
 
 See the `stationery` vignette in the `stationery` package.  That
 explains the big picture. 
