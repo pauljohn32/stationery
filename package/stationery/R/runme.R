@@ -21,26 +21,20 @@
 ##'     will be "theme/guide-boilerplate.html". To force the use of
 ##'     template and css from compiler suite, set type as any value
 ##'     except "guide" or "report".
-##' @param template An html template file. This will override the
-##'     \code{type} argument. If \code{type != "guide"} and
-##'     \code{template} is not specified, generic template from
-##'     compiler suite will be used.
-##' @param css Cascading style sheet. If type = "report", this will be
-##'     set as "kutils.css" in this package. If \code{type = NULL},
-##'     then generic css will be used from compiler suite.
 ##' @param ... Arguments that will be passed to render and
-##'     html_document. For these arguments, the defaults set within
-##'     the \code{rmarkdown::render} and
-##'     \code{rmarkdown::html_documents}.  These arguments intended
-##'     for \code{render()} are allowed: c("output_file",
-##'     "output_dir", "output_options", "intermediates_dir",
-##'     "knit_root_dir", "runtime", "clean", "params", "knit_meta",
-##'     "envir", "run_pandoc", "quiet", "encoding") .  These arguments
-##'     intended for html_document are allowed: \code{c("toc",
-##'     "toc_depth", "toc_float", "number_sections", "section_divs",
-##'     "fig_width", "fig_height", "fig_retina", "fig_caption", "dev",
-##'     "df_print", "code_folding", "code_download", "smart",
-##'     "self_contained", "theme", "highlight", "mathjax", "template",
+##'     html_document. We usually have \code{css} and \code{template},
+##'     but many others can be specified to change arguments for
+##'     \code{rmarkdown::render} and \code{rmarkdown::html_documents}.
+##'     These arguments intended for \code{render()} are allowed:
+##'     c("output_file", "output_dir", "output_options",
+##'     "intermediates_dir", "knit_root_dir", "runtime", "clean",
+##'     "params", "knit_meta", "envir", "run_pandoc", "quiet",
+##'     "encoding").  These arguments intended for html_document are
+##'     allowed: \code{c("toc", "toc_depth", "toc_float",
+##'     "number_sections", "section_divs", "fig_width", "fig_height",
+##'     "fig_retina", "fig_caption", "dev", "df_print",
+##'     "code_folding", "code_download", "smart", "self_contained",
+##'     "theme", "highlight", "mathjax", "template",
 ##'     "extra_dependencies", "css", "includes", "keep_md", "lib_dir",
 ##'     "md_extensions", "pandoc_args")}.
 ##' @importFrom rmarkdown render
@@ -58,22 +52,23 @@
 ##' list.files(dirout)
 ##' if(interactive()) browseURL(file.path(dirout, "skeleton.html"))
 rmd2html <- function(fn = NULL, wd = NULL, verbose = FALSE, purl = TRUE, tangle = purl, 
-                     type = "guide", template, css, ...) {
+                     type = "guide", ...) {
     if (!missing(tangle) && is.logical(tangle)) purl <- tangle
    
     if (!is.null(wd)){
         wd.orig <- getwd()
         setwd(wd)
     }
-    if (missing(template) && type %in% c("guide")){
+    dots <- list(...)
+    if (is.null(dots$template) && type %in% c("guide")){
         templatename <- paste0(type, "-boilerplate.html")
-        template = file.path("theme", templatename)
+        dots$template = file.path("theme", templatename)
         getFiles(templatename, dn = "theme", pkg = "stationery")
     }
-    if (missing(css) && type %in% c("guide")){
+    if (is.null(dots$css) && type %in% c("guide")){
         css <-  "kutils.css"
         getFiles(css, dn = "theme", pkg = "stationery")
-        css <- "theme/kutils.css"
+        dots$css <- "theme/kutils.css"
     }
     if (is.null(fn)) {
         cat("Will render all *.Rmd files in current working directory\n")
@@ -98,20 +93,17 @@ rmd2html <- function(fn = NULL, wd = NULL, verbose = FALSE, purl = TRUE, tangle 
                         "intermediates_dir", "knit_root_dir",
                         "runtime", "clean", "params", "knit_meta",
                         "envir", "run_pandoc", "quiet", "encoding")
-
    
     dots_for_render <- dots[formals_render[formals_render %in% names(dots)]]
-    html_args <- list(template = template,
-                      theme = NULL, 
-                      css = css,
+    html_args <- list(theme = NULL,
                       toc = TRUE,
-                      mathjax = "https://mathjax.rstudio.com/lates/MathJax.js?config=TeX-AMS-MML_HTMLorMML")
+                      mathjax = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML")
     
     html_argz <- utils::modifyList(html_args, dots_for_html_document, keep.null = TRUE)
     if(verbose) {print(paste("dots_for_html")); lapply(html_argz, print)}
     
     htmldoc <- do.call(stationery::crmda_html_document, html_argz)
-    
+    ## htmldoc <- do.call(html_document, html_argz)
     res <- sapply(fn, function(x) {
         render_args <- list(input = x, output_format = htmldoc, quiet = !verbose,
                             envir = globalenv())
@@ -135,30 +127,16 @@ rmd2html <- function(fn = NULL, wd = NULL, verbose = FALSE, purl = TRUE, tangle 
 ##' template is supplied. This is described here
 ##' \url{https://github.com/rstudio/rmarkdown/issues/727}.  The workaround
 ##' is to provide this wrapper
-##' @param template Name of file that has custom template
-##' @param theme default is NULL, so no bootstrap theme
 ##' @param ... Any arguments passed along to html_document in
 ##'     rmarkdown
-
 ##' @return html_document object with custom template
 ##' @importFrom utils modifyList
 ##' @export
 ##' @author Paul Johnson
-crmda_html_document <- function(template = "custom_template", theme = NULL, ...) {
-    dots <- list(...)
-    ## Defaults we use
-    html_args <- list(template = template,
-                      theme = theme, 
-                      css = system.file("theme/kutils.css", package = "stationery"),
-                      toc = TRUE,
-                      mathjax = "https://mathjax.rstudio.com/lates/MathJax.js?config=TeX-AMS-MML_HTMLorMML",
-                      highlight = "pygments")
-    html_argz <- utils::modifyList(html_args, dots, keep.null = TRUE)
-    base_format <- do.call(rmarkdown::html_document, html_argz)
-
+crmda_html_document <- function(template = "custom_template", ...) {
+    base_format <- rmarkdown::html_document(...)
     template_arg <- which(base_format$pandoc$args == "--template") + 1L
     base_format$pandoc$args[template_arg] <- template
-    
     base_format
 }
 
@@ -489,19 +467,3 @@ rnw2pdf <- function(fn = NULL, wd = NULL, engine = "knitr", purl = TRUE,
     res
 }
 
-
-##' Can be named as an output theme, which knitr will understand
-##'
-##' Insert output: stationery::crmda_guide.
-##'
-##' For additional embellishments, see \url{http://rmarkdown.rstudio.com/developer_custom_formats.html}
-##' @param toc Table of Contents flag
-##' @param verbose Verbose output
-##' @return rmarkdown function
-##' @export
-##' @author Paul Johnson <pauljohn@@ku.edu>
-##' @importFrom rmarkdown html_document
-crmda_guide <- function(toc = FALSE, verbose = FALSE){
-    css <- system.file("theme/kutils.css", package = "stationery") 
-    rmarkdown::html_document(toc = toc, css = css, quiet = !verbose)
-}
