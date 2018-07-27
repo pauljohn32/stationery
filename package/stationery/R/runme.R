@@ -107,7 +107,7 @@ rmd2html <- function(fn = NULL, wd = NULL, verbose = FALSE, purl = TRUE, tangle 
                       toc = TRUE,
                       mathjax = "https://mathjax.rstudio.com/lates/MathJax.js?config=TeX-AMS-MML_HTMLorMML")
     
-    html_argz <- modifyList(html_args, dots_for_html_document, keep.null = TRUE)
+    html_argz <- utils::modifyList(html_args, dots_for_html_document, keep.null = TRUE)
     if(verbose) {print(paste("dots_for_html")); lapply(html_argz, print)}
     
     htmldoc <- do.call(stationery::crmda_html_document, html_argz)
@@ -115,7 +115,7 @@ rmd2html <- function(fn = NULL, wd = NULL, verbose = FALSE, purl = TRUE, tangle 
     res <- sapply(fn, function(x) {
         render_args <- list(input = x, output_format = htmldoc, quiet = !verbose,
                             envir = globalenv())
-        render_argz <- modifyList(render_args, dots_for_render, keep.null = TRUE)
+        render_argz <- utils::modifyList(render_args, dots_for_render, keep.null = TRUE)
         if(purl) knitr::purl(fn)
         if(verbose) {print(paste("dots_for_render"));  lapply(dots_for_render, print)}
         do.call(rmarkdown::render, render_argz)
@@ -136,20 +136,25 @@ rmd2html <- function(fn = NULL, wd = NULL, verbose = FALSE, purl = TRUE, tangle 
 ##' \url{https://github.com/rstudio/rmarkdown/issues/727}.  The workaround
 ##' is to provide this wrapper
 ##' @param template Name of file that has custom template
+##' @param theme default is NULL, so no bootstrap theme
 ##' @param ... Any arguments passed along to html_document in
 ##'     rmarkdown
+
 ##' @return html_document object with custom template
+##' @importFrom utils modifyList
 ##' @export
 ##' @author Paul Johnson
 crmda_html_document <- function(template = "custom_template", theme = NULL, ...) {
     dots <- list(...)
+    ## Defaults we use
     html_args <- list(template = template,
-                      theme = NULL, 
-                      css = css,
+                      theme = theme, 
+                      css = system.file("theme/kutils.css", package = "stationery"),
                       toc = TRUE,
-                      mathjax = "https://mathjax.rstudio.com/lates/MathJax.js?config=TeX-AMS-MML_HTMLorMML")
-    html_argz <- modifyList(html_args, dots, keep.null = TRUE)
-    base_format <- rmarkdown::html_document(html_argz)
+                      mathjax = "https://mathjax.rstudio.com/lates/MathJax.js?config=TeX-AMS-MML_HTMLorMML",
+                      highlight = "pygments")
+    html_argz <- utils::modifyList(html_args, dots, keep.null = TRUE)
+    base_format <- do.call(rmarkdown::html_document, html_argz)
 
     template_arg <- which(base_format$pandoc$args == "--template") + 1L
     base_format$pandoc$args[template_arg] <- template
@@ -262,7 +267,7 @@ rmd2pdf <- function(fn = NULL, wd = NULL, verbose = FALSE, type = "report",
     pdf_args <- list(highlight = "haddock",
                      template = template,
                      pandoc_args = "--listings")
-    pdf_argz <- modifyList(pdf_args, dots_for_pdf_document)
+    pdf_argz <- utils::modifyList(pdf_args, dots_for_pdf_document)
     if(verbose) {print(paste("dots_for_pdf")); lapply(pdf_argz, print)}
     
     pdfdoc <- do.call(rmarkdown::pdf_document, pdf_argz)
@@ -270,7 +275,7 @@ rmd2pdf <- function(fn = NULL, wd = NULL, verbose = FALSE, type = "report",
     res <- sapply(fn, function(x) {
         render_args <- list(input = x, output_format = pdfdoc, quiet = !verbose,
                             envir = globalenv())
-        render_argz <- modifyList(render_args, dots_for_render)
+        render_argz <- utils::modifyList(render_args, dots_for_render)
         if (purl) knitr::purl(fn)
         if(verbose) {print(paste("dots_for_render"));  lapply(dots_for_render, print)}
         do.call(rmarkdown::render, render_argz)
@@ -375,7 +380,7 @@ rnw2pdf <- function(fn = NULL, wd = NULL, engine = "knitr", purl = TRUE,
         rnwfile[grep("prompt", rnwfile)] <- gsub("prompt\\s*=.*\"", "prompt=\"> \"",
                                                  rnwfile[grep("prompt", rnwfile)])
         writeLines(rnwfile, con = fnbackup)
-        Stangle(fnbackup)
+        utils::Stangle(fnbackup)
         fnbackupR <- gsub("\\.Rnw", ".R", fnbackup)
         fnR <- gsub(bak, "", fnbackupR)
         MESSG <- paste("tangleSplit(", x, "failed creation of R tangle file")
@@ -443,7 +448,7 @@ rnw2pdf <- function(fn = NULL, wd = NULL, engine = "knitr", purl = TRUE,
                 fnpdf <- knitr::knit2pdf(x, quiet = !verbose, envir = envir,
                             encoding = encoding)
             } else {
-                Sweave(x, quiet = !verbose)
+                utils::Sweave(x, quiet = !verbose)
                 if (tangle) {
                     rfile <- tangleSplit(x)
                 }
