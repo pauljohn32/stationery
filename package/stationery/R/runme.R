@@ -118,7 +118,7 @@ rmd2html <- function(fn = NULL, wd = NULL, verbose = FALSE, purl = TRUE, tangle 
     render_argz <- utils::modifyList(render_args, dots_for_render, keep.null = TRUE)
     if(purl) knitr::purl(fn)
     if(verbose) {print(paste("dots_for_render"));  lapply(dots_for_render, print)}
-    do.call(rmarkdown::render, render_argz)
+    res <- do.call(rmarkdown::render, render_argz)
     
     if (!is.null(wd)){
         setwd(wd.orig)
