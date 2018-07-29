@@ -63,7 +63,7 @@ rmd2html <- function(fn = NULL, wd = NULL, verbose = FALSE, purl = TRUE, tangle 
     dots <- list(...)
     if (is.null(dots$template) && type %in% c("guide")){
         templatename <- paste0(type, "-boilerplate.html")
-        dots$template = file.path("theme", templatename)
+        dots$template <- file.path("theme", templatename)
         getFiles(templatename, dn = "theme", pkg = "stationery")
     }
     if (is.null(dots$css) && type %in% c("guide")){
@@ -74,6 +74,15 @@ rmd2html <- function(fn = NULL, wd = NULL, verbose = FALSE, purl = TRUE, tangle 
     if (is.null(fn)) {
         cat("Will render all *.Rmd files in current working directory\n")
         fn <- list.files(pattern="Rmd$")
+    }
+    if (length(fn) > 1){
+        cl <- match.call()
+        res <- c()
+        for (x in fn){
+            cl[["fn"]] <- x
+            res <- c(res, eval(cl, parent.frame()))
+        }
+        return(res)
     }
 
     dots <- list(...)
@@ -103,17 +112,14 @@ rmd2html <- function(fn = NULL, wd = NULL, verbose = FALSE, purl = TRUE, tangle 
     html_argz <- utils::modifyList(html_args, dots_for_html_document, keep.null = TRUE)
     if(verbose) {print(paste("dots_for_html")); lapply(html_argz, print)}
     
-   
-    ## htmldoc <- do.call(html_document, html_argz)
-    res <- sapply(fn, function(x) {
-        htmldoc <- rmarkdown::resolve_output_format(fn, output_options = html_argz)
-        render_args <- list(input = x, output_format = htmldoc, quiet = !verbose,
+    htmldoc <- rmarkdown::resolve_output_format(fn, output_options = html_argz)
+    render_args <- list(input = fn, output_format = htmldoc, quiet = !verbose,
                             envir = globalenv())
-        render_argz <- utils::modifyList(render_args, dots_for_render, keep.null = TRUE)
-        if(purl) knitr::purl(fn)
-        if(verbose) {print(paste("dots_for_render"));  lapply(dots_for_render, print)}
-        do.call(rmarkdown::render, render_argz)
-    })
+    render_argz <- utils::modifyList(render_args, dots_for_render, keep.null = TRUE)
+    if(purl) knitr::purl(fn)
+    if(verbose) {print(paste("dots_for_render"));  lapply(dots_for_render, print)}
+    do.call(rmarkdown::render, render_argz)
+    
     if (!is.null(wd)){
         setwd(wd.orig)
     }
@@ -203,17 +209,19 @@ crmda_html_document <- function(template = "theme/guide-boilerplate.html", ...) 
 ##' if(interactive()) browseURL(of2[1])
 ##' setwd(wd.orig)
 rmd2pdf <- function(fn = NULL, wd = NULL, verbose = FALSE, type = "report",
-                    purl = TRUE, tangle = purl,
-                    template,
-                    package = "stationery",
-                    ...) {
+                    purl = TRUE, tangle = purl, themedir = "theme", 
+                    template, package = "stationery", ...){
     if(!missing(tangle) && is.logical(tangle)) purl <- tangle
-
+    
     if (missing(template)){
-        templatename <- paste0(type, "-boilerplate.tex")
-        template = file.path("theme", templatename)
-        getFiles(templatename, dn = "theme", pkg = "stationery")
+        template <- file.path(themedir, paste0(type, "-boilerplate.tex"))
     }
+    
+    if(!file.exists(template)){
+        if(!file.exists(themedir)) dir.create(themedir)
+        try(getFiles(basename(template), dn = themedir, pkg = package))
+    }
+    
     if (!is.null(wd)){
         wd.orig <- getwd()
         setwd(wd)
@@ -222,7 +230,17 @@ rmd2pdf <- function(fn = NULL, wd = NULL, verbose = FALSE, type = "report",
     if (is.null(fn)) {
         cat("Will render all *.Rmd files in current working directory\n")
         fn <- list.files(pattern="Rmd$")
-    }    
+    }
+
+    if (length(fn) > 1){
+        cl <- match.call()
+        res <- c()
+        for (x in fn){
+            cl[["fn"]] <- x
+            res <- c(res, eval(cl, parent.frame()))
+        }
+        return(res)
+    }
     
     dots <- list(...)
 
@@ -250,17 +268,15 @@ rmd2pdf <- function(fn = NULL, wd = NULL, verbose = FALSE, type = "report",
                      pandoc_args = "--listings")
     pdf_argz <- utils::modifyList(pdf_args, dots_for_pdf_document)
     if(verbose) {print(paste("dots_for_pdf")); lapply(pdf_argz, print)}
+   
+    pdfdoc <- rmarkdown::resolve_output_format(fn, output_options = pdf_argz)
+    render_args <- list(input = fn, output_format = pdfdoc, quiet = !verbose,
+                        envir = globalenv())
+    render_argz <- utils::modifyList(render_args, dots_for_render)
+    if (purl) knitr::purl(fn)
+    if(verbose) {print(paste("dots_for_render"));  lapply(dots_for_render, print)}
+    res <- do.call(rmarkdown::render, render_argz)
     
-    pdfdoc <- do.call(rmarkdown::pdf_document, pdf_argz)
-    
-    res <- sapply(fn, function(x) {
-        render_args <- list(input = x, output_format = pdfdoc, quiet = !verbose,
-                            envir = globalenv())
-        render_argz <- utils::modifyList(render_args, dots_for_render)
-        if (purl) knitr::purl(fn)
-        if(verbose) {print(paste("dots_for_render"));  lapply(dots_for_render, print)}
-        do.call(rmarkdown::render, render_argz)
-    })
     if (!is.null(wd)){
         setwd(wd.orig)
     }
