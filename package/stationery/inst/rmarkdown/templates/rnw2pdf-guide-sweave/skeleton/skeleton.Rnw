@@ -103,12 +103,7 @@ library(stationery)
 logos <- c(logoleft = "logoleft.pdf", 
            logoright = "logo-vert.pdf",
            address = "addressFooter.tex")
-texfiles <- c("guidePreambleHeader.tex", 
-              "preambleFooter.tex", 
-              "guidePreambleSweavel.tex",
-              "mlm.bib")
 getFiles(logos, pkg = "stationery")
-getFiles(texfiles, pkg = "stationery")
 @
 
 %The listings class used here allows within-document style
@@ -164,7 +159,7 @@ mean(x)
 @
 
 \bibliographystyle{apalike2}
-\addcontentsline{toc}{section}{\refname}\bibliography{theme/mlm}
+\addcontentsline{toc}{section}{\refname}\bibliography{theme/R}
 
 \section*{Session Info\label{sec:Session-Info}}
 

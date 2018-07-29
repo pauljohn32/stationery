@@ -99,15 +99,9 @@ pdf.options(onefile=FALSE, family="Times", pointsize=10)
 
 <<texcopy, include=FALSE,echo=FALSE>>=
 library(stationery)
-## If theme directory does not have required images or TeX files
-## we need to retrieve them and put them in "theme" directory. 
+## If theme directory does not have required logos, retrieve them. 
 logos <- c(logoright = "logo.pdf", address = "addressFooter.tex")
-texfiles <- c("reportPreambleHeader.tex", 
-              "preambleFooter.tex",
-              "reportPreambleSweavel.tex",
-              "mlm.bib")
 getFiles(logos, pkg = "stationery")
-getFiles(texfiles, pkg = "stationery")
 @
 \begin{abstract}
 \noindent This is an abstract. Please include a terse, yet descriptive
@@ -140,7 +134,7 @@ then included with LaTeX macros like \textbackslash{}include or \textbackslash{}
 \section*{References}
 
 \bibliographystyle{apalike2}
-\bibliography{theme/mlm}
+\bibliography{theme/R}
 
 \subsection*{}
 

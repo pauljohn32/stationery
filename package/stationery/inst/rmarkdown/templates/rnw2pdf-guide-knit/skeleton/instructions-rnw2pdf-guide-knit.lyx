@@ -4,17 +4,15 @@
 \begin_header
 \save_transient_properties true
 \origin unavailable
-\textclass article
+\textclass extarticle
 \begin_preamble
-% \VignetteIndexEntry{rnw2pdf-guide-sweave}
-% \VignetteEngine{Sweave}
-% \VignetteBuilder{stationery::rnw2pdf}
+%\VignetteIndexEntry{Instructions for guides using knitted code chunks}
+%\VignetteEngine{knitr}
+%\VignetteBuilder{stationery::rnw2pdf}
+%\VignetteEncoding{UTF-8}
 
-% Following comment is required. Do not delete it.
-%\usepackage{Sweave}
 
-\usepackage[includehead,includefoot]{geometry}
-\geometry{
+\usepackage[includehead, includefoot,
 lmargin=1in,
 rmargin=1in,
 tmargin=0.75in,
@@ -23,16 +21,16 @@ headheight=0pt,
 headsep=0pt,
 marginparwidth=0pt,
 footskip=1.5\baselineskip,
-}
+]{geometry}
 
 \input{theme/guidePreambleHeader.tex}
 \input{theme/preambleFooter.tex}
-\input{theme/guidePreambleSweavel.tex}
+\input{theme/guidePreambleKnitr.tex}
 \end_preamble
 \use_default_options false
 \begin_modules
 logicalmkup
-sweave
+knitr
 \end_modules
 \maintain_unincluded_children false
 \language english
@@ -56,14 +54,14 @@ sweave
 \index_command default
 \paperfontsize 11
 \spacing single
-\use_hyperref true
+\use_hyperref false
 \pdf_bookmarks true
 \pdf_bookmarksnumbered false
 \pdf_bookmarksopen false
 \pdf_bookmarksopenlevel 1
-\pdf_breaklinks false
-\pdf_pdfborder false
-\pdf_colorlinks false
+\pdf_breaklinks true
+\pdf_pdfborder true
+\pdf_colorlinks true
 \pdf_backref false
 \pdf_pdfusetitle true
 \papersize letterpaper
@@ -161,7 +159,7 @@ guidesetup{%
 
 \begin_layout Plain Layout
 
-    affiliation=CRMDA,
+    affiliation=Directior{,}~CRMDA,
 \end_layout
 
 \begin_layout Plain Layout
@@ -176,12 +174,12 @@ guidesetup{%
 
 \begin_layout Plain Layout
 
-    lastname=Sullivan, 
+    lastname=Author, 
 \end_layout
 
 \begin_layout Plain Layout
 
-    firstname=Meghan, 
+    firstname=Second, 
 \end_layout
 
 \begin_layout Plain Layout
@@ -191,27 +189,22 @@ guidesetup{%
 
 \begin_layout Plain Layout
 
-    email=meg.sullivan@ku.edu}, 
+    email=second@ku.edu}, 
 \end_layout
 
 \begin_layout Plain Layout
 
-  url={crmda.ku.edu/guides},
+  url={https://crmda.ku.edu/guides},
 \end_layout
 
 \begin_layout Plain Layout
 
-  keywords={Sweave, LaTeX, guide, listings},
+  keywords={stationery, guide, knitr},
 \end_layout
 
 \begin_layout Plain Layout
 
-  title={Writing Sweaved Guides:},
-\end_layout
-
-\begin_layout Plain Layout
-
-  subtitle={Using the CRMDA Template},
+  title={Instructions for guides using knitted code chunks},
 \end_layout
 
 \begin_layout Plain Layout
@@ -226,7 +219,7 @@ guidesetup{%
 
 \begin_layout Plain Layout
 
-  number=00,
+  number=48,
 \end_layout
 
 \begin_layout Plain Layout
@@ -252,7 +245,7 @@ status open
 
 \begin_layout Plain Layout
 
-<<Roptions, echo=FALSE, include=FALSE, results=hide>>=
+<<Roptions, echo=FALSE>>=
 \end_layout
 
 \begin_layout Plain Layout
@@ -262,7 +255,7 @@ opts.orig <- options()
 
 \begin_layout Plain Layout
 
-options(width=100, prompt=" ", continue="  ")
+options(width=75, prompt=" ", continue="  ")
 \end_layout
 
 \begin_layout Plain Layout
@@ -273,11 +266,6 @@ options(useFancyQuotes = FALSE)
 \begin_layout Plain Layout
 
 set.seed(12345)
-\end_layout
-
-\begin_layout Plain Layout
-
-options(SweaveHooks=list(fig=function() par(ps=10)))
 \end_layout
 
 \begin_layout Plain Layout
@@ -306,25 +294,32 @@ status open
 
 \begin_layout Plain Layout
 
-% In document Latex options:
+<<knitropts, echo=FALSE>>=
 \end_layout
 
 \begin_layout Plain Layout
 
-
-\backslash
-fvset{listparameters={
-\backslash
-setlength{
-\backslash
-topsep}{0em}}}
+## Chunk output 
 \end_layout
 
 \begin_layout Plain Layout
 
+library(knitr)
+\end_layout
 
-\backslash
-SweaveOpts{prefix.string=tmpout/t, split=FALSE, ae=FALSE, height=3, width=5}
+\begin_layout Plain Layout
+
+opts_chunk$set(fig.path="tmpout/t-", split=FALSE, 
+\end_layout
+
+\begin_layout Plain Layout
+
+               ae=FALSE, fig.height=3, fig.width=5, comment=NA)
+\end_layout
+
+\begin_layout Plain Layout
+
+@
 \end_layout
 
 \end_inset
@@ -338,7 +333,7 @@ status open
 
 \begin_layout Plain Layout
 
-<<texcopy, include=FALSE, echo=FALSE, results=hide>>=
+<<texcopy, include=FALSE>>=
 \end_layout
 
 \begin_layout Plain Layout
@@ -364,37 +359,17 @@ logos <- c(logoleft = "logoleft.pdf",
 
 \begin_layout Plain Layout
 
-            logoright = "logo-vert.pdf")
+           logoright = "logo-vert.pdf",
 \end_layout
 
 \begin_layout Plain Layout
 
-texfiles <- c("guidePreambleHeader.tex", 
-\end_layout
-
-\begin_layout Plain Layout
-
-              "preambleFooter.tex", 
-\end_layout
-
-\begin_layout Plain Layout
-
-              "guidePreambleSweavel.tex",
-\end_layout
-
-\begin_layout Plain Layout
-
-              "addressFooter.tex", "mlm.bib")
+           "preambleFooter.tex")
 \end_layout
 
 \begin_layout Plain Layout
 
 getFiles(logos, pkg = "stationery")
-\end_layout
-
-\begin_layout Plain Layout
-
-getFiles(texfiles, pkg = "stationery")
 \end_layout
 
 \begin_layout Plain Layout
@@ -417,15 +392,7 @@ key "RCore"
 \end_inset
 
  to make guide documents using the CRMDA style.
- This is a LaTeX 
-\begin_inset Quotes eld
-\end_inset
-
-noweb
-\begin_inset Quotes erd
-\end_inset
-
- guide document generated with the Sweave engine.
+ 
 \end_layout
 
 \begin_layout Abstract
@@ -439,18 +406,6 @@ LatexCommand tableofcontents
 
 \begin_layout Section
 Introduction
-\end_layout
-
-\begin_layout Standard
-This shows how we use R 
-\begin_inset CommandInset citation
-LatexCommand citep
-key "RCore"
-
-\end_inset
-
- to make guide documents using the CRMDA style.
- 
 \end_layout
 
 \begin_layout Standard
@@ -473,7 +428,7 @@ library(stationery)
 
 \begin_layout Plain Layout
 
-initWriteup("rnw2pdf-guide-sweave")
+initWriteup("rnw2pdf-guide-knit")
 \end_layout
 
 \begin_layout Plain Layout
@@ -491,31 +446,11 @@ That will create a folder
 \begin_inset Quotes eld
 \end_inset
 
-
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-writeup/rnw2pdf-guide-sweave
-\end_layout
-
-\end_inset
-
-
+writeup/rnw2pdf-guide-knit
 \begin_inset Quotes erd
 \end_inset
 
- (unless you request otherwise by setting the 
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-dir
-\end_layout
-
-\end_inset
-
- argument).
+ (unless you request otherwise by setting the dir argument).
  
 \end_layout
 
@@ -524,7 +459,7 @@ We suggest you
 \end_layout
 
 \begin_layout Enumerate
-Compile this document 
+Compile the skeleton document 
 \emph on
 as is 
 \emph default
@@ -562,12 +497,13 @@ CAUTION
 What to edit
 \end_layout
 
-\begin_layout Section*
+\begin_layout Subsection*
 Title and author information
 \end_layout
 
 \begin_layout Standard
 The first block in the document has the title and author information.
+ 
 \end_layout
 
 \begin_layout Subsection*
@@ -586,7 +522,6 @@ addressFooter.tex
 .
  After the document is compiled for the first time, that document should
  be available in the theme folder.
- 
 \end_layout
 
 \begin_layout Subsection*
@@ -594,8 +529,18 @@ About the theme folder
 \end_layout
 
 \begin_layout Standard
-The theme folder should be empty when the initProject() function is run.
- 
+The theme folder should be empty when the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+initWrite()
+\end_layout
+
+\end_inset
+
+ function is run.
+ It will not be empty after the first compilation of the document.
 \end_layout
 
 \begin_layout Standard
@@ -615,7 +560,9 @@ texcopy
 \end_layout
 
 \begin_layout Standard
-That means authors are free to edit them to fit their needs.
+Authors are free to edit the theme files, to replace logo images and, of
+ course, to insert their addresses.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -637,7 +584,7 @@ There are several vignettes distributed with this package.
 \begin_inset Quotes eld
 \end_inset
 
-crmda
+stationery
 \begin_inset Quotes erd
 \end_inset
 
@@ -655,19 +602,8 @@ code_chunks
 : discusses display of code in LaTeX documents
 \end_layout
 
-\begin_layout Enumerate
-\begin_inset Quotes eld
-\end_inset
-
-instructions-rnw2pdf-guide-sweave
-\begin_inset Quotes erd
-\end_inset
-
-
-\end_layout
-
 \begin_layout Section
-Compile as usual with LyX, or with rnw2pdf
+Compile the PDF document
 \end_layout
 
 \begin_layout Standard
@@ -745,7 +681,7 @@ status open
 
 \begin_layout Plain Layout
 
-rnw2pdf("skeleton.lyx", engine = "Sweave")
+rnw2pdf("skeleton.lyx")
 \end_layout
 
 \end_inset
@@ -777,7 +713,7 @@ status open
 
 \begin_layout Plain Layout
 
-$ ./rnw2pdf.sh --engine='"Sweave"' skeleton.lyx
+$ ./rnw2pdf.sh skeleton.lyx
 \end_layout
 
 \end_inset
@@ -828,7 +764,7 @@ Export
 status open
 
 \begin_layout Plain Layout
-Sweave
+Rnw (knitr)
 \end_layout
 
 \end_inset
@@ -854,7 +790,7 @@ status open
 
 \begin_layout Plain Layout
 
-$ lyx -e sweave skeleton.lyx
+$ lyx -e knitr skeleton.lyx
 \end_layout
 
 \end_inset
@@ -896,7 +832,7 @@ pdf
 \begin_inset Quotes erd
 \end_inset
 
- (with Sweave), and then the weaved tex file is compiled into pdf by pdflatex
+ (with knit), and then the knitted tex file is compiled into pdf by pdflatex
  (or one of the other LaTeX compilers).
  
 \end_layout
@@ -917,7 +853,7 @@ noweb
 \end_inset
 
  aware editor.
- Emacs, Rstudio, and others have menus that can initiate the work of weaving
+ Emacs, Rstudio, and others have menus that can initiate the work of knitting
  and rendering the document.
 \end_layout
 
@@ -934,7 +870,7 @@ status open
 
 \begin_layout Plain Layout
 
-rnw2pdf("skeleton.Rnw", engine = "Sweave")
+rnw2pdf("skeleton.Rnw")
 \end_layout
 
 \end_inset
@@ -951,11 +887,19 @@ Additional arguments can be used, mainly to control the verbosity of the
 \begin_inset Quotes eld
 \end_inset
 
+purled
+\begin_inset Quotes erd
+\end_inset
+
+ or 
+\begin_inset Quotes eld
+\end_inset
+
 tangled
 \begin_inset Quotes erd
 \end_inset
 
- (if using knitr, it is referred to as a purled file).
+ file.
  
 \end_layout
 
@@ -983,7 +927,7 @@ status open
 
 \begin_layout Plain Layout
 
-$ ./rnw2pdf.sh --engine='"Sweave"' skeleton.Rnw
+$ ./rnw2pdf.sh skeleton.Rnw
 \end_layout
 
 \end_inset
@@ -992,8 +936,8 @@ $ ./rnw2pdf.sh --engine='"Sweave"' skeleton.Rnw
 \end_layout
 
 \begin_layout Standard
-The command script answers to all of the arguments followed by the R function
- 
+The command like script answers to all of the arguments followed by the
+ R function 
 \begin_inset Flex Code
 status open
 
@@ -1015,7 +959,7 @@ status open
 
 \begin_layout Plain Layout
 
-rnw2pdf("skeleton.Rnw", purl = FALSE, clean = FALSE, verbose = TRUE, keep_tex
+rnw2pdf("skeleton.lyx", purl = FALSE, clean = FALSE, verbose = TRUE, keep_tex
  = TRUE)
 \end_layout
 
@@ -1030,12 +974,13 @@ the shell command would be
 
 \begin_layout Standard
 \begin_inset listings
+lstparams "style=Rinput"
 inline false
 status open
 
 \begin_layout Plain Layout
 
-$ ./rnw2pdf --purl=FALSE --clean=FALSE --keep_tex=TRUE --verbose=TRUE skeleton.Rnw
+$ ./rnw2pdf --purl=FALSE --clean=FALSE --keep_tex=TRUE --verbose=TRUE skeleton.lyx
 \end_layout
 
 \end_inset
@@ -1066,7 +1011,7 @@ status open
 
 \begin_layout Plain Layout
 
-rnw2pdf("skeleton.lyx", engine="Sweave" wd = "project")
+rnw2pdf("skeleton.lyx", wd = "project")
 \end_layout
 
 \end_inset
@@ -1085,7 +1030,7 @@ status open
 
 \begin_layout Plain Layout
 
-$ ./rnw2pdf --engine='"Sweave"' --wd='"project"' skeleton.Rnw
+$ ./rnw2pdf --wd='"project"' skeleton.lyx
 \end_layout
 
 \end_inset
@@ -1112,7 +1057,7 @@ status open
 
 \begin_layout Plain Layout
 
-$ R CMD Sweave skeleton.Rnw
+$ R CMD knit skeleton.Rnw
 \end_layout
 
 \end_inset
@@ -1153,221 +1098,46 @@ $ texi2pdf skeleton.tex
 The major difference between running this and the script we provide is that
  our script will handle LyX files and it will, by default, will create a
  purled copy of the R code.
+ 
 \end_layout
 
 \end_deeper
-\begin_layout Standard
-If you are editing these files in LyX, it is sufficient to simply compile
- as usual.
- That will handle the chore of converting a sequence of document types to
- arrive at PDF.
-\end_layout
-
 \begin_layout Section
 Code Chunk Check
 \end_layout
 
-\begin_layout Standard
-Illustrative R code can be included in the document.
- The author has a good deal of control over how, and at which, the input
- and output are displayed.
- Correctly formatted LaTeX code can be written by R functions and it can
- appear in the document.
- The vignette 
-\begin_inset Quotes eld
-\end_inset
-
-code_chunks
-\begin_inset Quotes erd
-\end_inset
-
- has full details.
- This is a brief highlight.
-\end_layout
-
 \begin_layout Subsection
-The listings package
+knitr issues/features
 \end_layout
 
 \begin_layout Standard
-The document preamble includes settings for the LaTeX package listings,
- which is used to display code input and output.
- Inline references to 
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-code
-\end_layout
+The original R 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "RCore"
 
 \end_inset
 
- can be marked for highlighting (by LaTeX macro 
-\begin_inset Quotes eld
-\end_inset
-
-
-\backslash
-code
-\begin_inset Quotes erd
-\end_inset
-
-) that will mimic the color styling of the code displays.
-\end_layout
-
-\begin_layout Standard
-One advantage of using our Sweave-based LaTeX documents is the listings
- class can handle very long lines (allows linewrap) and also lets us have
- fine grained control over the display of code input and output.
- In guide documents, we have ine numbers turned on.
- is used.
- Among its benefits, we get 
-\begin_inset Quotes eld
-\end_inset
-
-line wrap
-\begin_inset Quotes erd
-\end_inset
-
- on long lines.
-\end_layout
-
-\begin_layout Standard
-The listings class used here allows within-document style changes.
- We expect that report documents will not be customized by most authors,
- but guide documents are less formal.
- In order to make output fit within the indicated space, it may be necessary
- to fiddle with the font size, for example.
- Here are the highlights: 
-\end_layout
-
-\begin_layout Enumerate
-The font size and colors of R input chunks are controlled by LaTeX settings
- "Rsize", "Rbackground" and "Rcolor".
- Output displays depend on "Routsize", "Routbackground", and "Routcolor".
+ approach to combining code, output within the document is called Sweave.
+ The knitr approach is an alternative package.
+ knitr is helpful especially because it can be used with R markdown to produce
+ HTML web pages.
  
 \end_layout
 
-\begin_layout Enumerate
-The font can be adjusted by declarations like this
-\end_layout
-
-\begin_deeper
 \begin_layout Standard
-\begin_inset listings
-inline false
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-def
-\backslash
-Rsize{
-\backslash
-huge
-\backslash
-ttfamily}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-def
-\backslash
-Routsize{
-\backslash
-huge}
-\end_layout
-
+Styling of knitr code chunks is different than Sweave.
+ It appears we lose line-wrap entirely.
+ I can't figure how to make Sweavel 
+\begin_inset Quotes eld
 \end_inset
 
-
-\end_layout
-
-\begin_layout Standard
-These can be placed at the very beginning of the document to control all
- following chunks, but they can be placed immediately before any chunk to
- adjust just that one chunk.
-\end_layout
-
-\end_deeper
-\begin_layout Enumerate
-Colors can be specified in many ways
-\end_layout
-
-\begin_deeper
-\begin_layout Standard
-\begin_inset listings
-inline false
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-def
-\backslash
-Rbackground{
-\backslash
-color[gray]{0.90}}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-def
-\backslash
-Routbackground{
-\backslash
-color[gray]{0.40}}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-def
-\backslash
-Rcolor{
-\backslash
-color[gray]{0.60}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-def
-\backslash
-Routcolor{
-\backslash
-color[rgb]{0.9, 0.1, 0.1}]}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-def
-\backslash
-Rcommentcolor{
-\backslash
-color{green}}
-\end_layout
-
+listings
+\begin_inset Quotes erd
 \end_inset
 
-
-\end_layout
-
-\end_deeper
-\begin_layout Standard
-To demonstrate this customization, compare these two chunks.
- The first uses the defaults:
+ environments take over the knitr presentation.
+ This is what knitr forces on us for the R input chunk
 \end_layout
 
 \begin_layout Standard
@@ -1376,17 +1146,17 @@ status open
 
 \begin_layout Plain Layout
 
-<<rnorm1>>=
+<<eval=F>>=
 \end_layout
 
 \begin_layout Plain Layout
 
-x <- rnorm(100)
+library(stationery)
 \end_layout
 
 \begin_layout Plain Layout
 
-mean(x)
+initWriteup("rnw2pdf-guide-knit")
 \end_layout
 
 \begin_layout Plain Layout
@@ -1400,157 +1170,23 @@ mean(x)
 \end_layout
 
 \begin_layout Standard
-While the second offers a shockingly beautiful offering (emphasis on shockingly).
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-{
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-def
-\backslash
-Rbackground{
-\backslash
-color[rgb]{0.4, 0.7, 0.6}}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-def
-\backslash
-Routbackground{
-\backslash
-color[rgb]{0.6, 0.5, 0.8}}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-def
-\backslash
-Routcolor{
-\backslash
-color{blue}}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-def
-\backslash
-Routsize{
-\backslash
-huge}
-\end_layout
-
-\begin_layout Plain Layout
-
-<<rnorm1replay>>=
-\end_layout
-
-\begin_layout Plain Layout
-
-<<rnorm1>>
-\end_layout
-
-\begin_layout Plain Layout
-
-@
-\end_layout
-
-\begin_layout Plain Layout
-
-}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Note we use a LaTeX group here–the squiggly braces–to confine the beautifying
- impact of the change to the immediately following output.
- 
+This is what we would rather have
 \end_layout
 
 \begin_layout Standard
 \begin_inset listings
+lstparams "style=Rinput"
 inline false
 status open
 
 \begin_layout Plain Layout
 
-{
+library(stationery)
 \end_layout
 
 \begin_layout Plain Layout
 
-
-\backslash
-def
-\backslash
-Rbackground{
-\backslash
-color[rgb]{0.4, 0.7, 0.6}}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-def
-\backslash
-Routbackground{
-\backslash
-color[rgb]{0.6, 0.5, 0.8}}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-def
-\backslash
-Routcolor{
-\backslash
-color{blue}}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-def
-\backslash
-Routsize{
-\backslash
-huge}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-input{tmpout/t-rnorm1.tex}
-\end_layout
-
-\begin_layout Plain Layout
-
-}
+initWriteup("rnw2pdf-guide-knit")
 \end_layout
 
 \end_inset
@@ -1559,16 +1195,24 @@ input{tmpout/t-rnorm1.tex}
 \end_layout
 
 \begin_layout Standard
-Otherwise, at least in this document type, the change applies to all following
- chunks.
+We have not yet learned how to control the coloring of knitr code chunks,
+ in other words.
+ That is one reason to prefer the sweave-based templates we offer.
 \end_layout
 
 \begin_layout Subsection
-Raw R input and output
+Code Chunks
 \end_layout
 
 \begin_layout Standard
-Consider a regression.
+If you choose to use knitr rather than Sweave as the chunk-processor–and
+ by using this template that is what you did decide–you should study the
+ knitr chunk options.
+ These are discussed in some detail in the vignette on code chunks.
+\end_layout
+
+\begin_layout Standard
+Here is an example of a data frame being created and a glm is estimated:
 \end_layout
 
 \begin_layout Standard
@@ -1578,6 +1222,11 @@ status open
 \begin_layout Plain Layout
 
 <<>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+set.seed(234234)
 \end_layout
 
 \begin_layout Plain Layout
@@ -1605,42 +1254,18 @@ summary(m1)
 
 \end_layout
 
-\begin_layout Subsection
-Controlling display of chunk input and output
-\end_layout
-
 \begin_layout Standard
-The chunk option 
+Some code that might be used to create a regression table using outreg from
+ the rockchalk package is the following.
+ As you see, the output 
 \begin_inset Quotes eld
 \end_inset
 
-include
+splats
 \begin_inset Quotes erd
 \end_inset
 
- can be used to regulate whether the input and output appear immediately
- in the document.
- When combined with 
-\begin_inset Quotes eld
-\end_inset
-
-echo
-\begin_inset Quotes erd
-\end_inset
-
- and 
-\begin_inset Quotes eld
-\end_inset
-
-results
-\begin_inset Quotes erd
-\end_inset
-
-, we can have a great deal of control.
-\end_layout
-
-\begin_layout Standard
-In this chunk, we create a regression table object, but we hide everything:
+ into the document, it is not in a floating figure or table.
 \end_layout
 
 \begin_layout Standard
@@ -1649,7 +1274,7 @@ status open
 
 \begin_layout Plain Layout
 
-<<pois10, include=F, results=hide>>=
+<<pois10, eval=FALSE>>=
 \end_layout
 
 \begin_layout Plain Layout
@@ -1665,70 +1290,7 @@ or <- outreg(list("My Poisson"= m1), varLabels = c("x" = "A Normal Predictor"),
 
 \begin_layout Plain Layout
 
-@
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-To display the object 
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-code{or}
-\end_layout
-
-\end_inset
-
- to the reader, we have two options.
- 
-\end_layout
-
-\begin_layout Standard
-The standard Sweave approach is to include another chunk, and then cause
- the LaTeX markup for the object 
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-code{or}
-\end_layout
-
-\end_inset
-
- to be woven directly into the document (depends on 
-\begin_inset Quotes eld
-\end_inset
-
-results=tex
-\begin_inset Quotes erd
-\end_inset
-
-).
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-<<pois11, results=tex, echo=F>>=
-\end_layout
-
-\begin_layout Plain Layout
-
-cat(or, file="tmpout/t-pois11.tex")
+cat(or, file="tmpout/t-pois15.tex")
 \end_layout
 
 \begin_layout Plain Layout
@@ -1741,13 +1303,28 @@ cat(or)
 @
 \end_layout
 
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
 \begin_layout Plain Layout
 
+<<pois15, results='asis', echo=FALSE>>=
+\end_layout
 
-\backslash
+\begin_layout Plain Layout
 
-\backslash
+<<pois10>>
+\end_layout
 
+\begin_layout Plain Layout
+
+@
 \end_layout
 
 \end_inset
@@ -1756,44 +1333,21 @@ cat(or)
 \end_layout
 
 \begin_layout Standard
-\noindent
-That chunk might be placed in a LaTeX floating table object, of course,
- as we show next.
-\end_layout
-
-\begin_layout Standard
-A second option, which is more convenient, is to simply use LaTeX to input
- the saved file.
- When the code chunk 
-\begin_inset Quotes eld
-\end_inset
-
-pois11
-\begin_inset Quotes erd
-\end_inset
-
- is executed, it creates a file named 
-\begin_inset Quotes eld
-\end_inset
-
-tmpout/t-pois11.tex
-\begin_inset Quotes erd
-\end_inset
-
-.
- In Table 
+It is possible, however, to input the same chunk into a table, as we have
+ done in Table 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "tab:A-Poisson-Regression"
 
 \end_inset
 
- we demonstrate how that can be included in a numbered floating table.
+.
+ That is the typically-preferred format for presentation of tables in guides.
 \end_layout
 
 \begin_layout Standard
 \begin_inset Float table
-placement b
+placement h
 wide false
 sideways false
 status open
@@ -1825,149 +1379,12 @@ status open
 
 
 \backslash
-input{tmpout/t-pois11.tex}
+input{tmpout/t-pois15.tex}
 \end_layout
 
 \end_inset
 
 
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-The reader has not yet had a chance to see the code chunk that calculated
- the regression.
- The code chunk that ran the regression was marked 
-\begin_inset Quotes eld
-\end_inset
-
-include=F, results=hide
-\begin_inset Quotes erd
-\end_inset
-
-.
- To show that code, there are (at least) 2 ways.
- 
-\end_layout
-
-\begin_layout Enumerate
-The chunk is named 
-\begin_inset Quotes eld
-\end_inset
-
-pois10
-\begin_inset Quotes erd
-\end_inset
-
-.
- Because we have the R Sweave argument split=T in the above, the code file
- is written separately and we can retrieve it with an input statement like
- so:
-\end_layout
-
-\begin_deeper
-\begin_layout Standard
-\begin_inset listings
-inline false
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-input{tmpout/t-pois10}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Because this note is included as an R vignette, and the R packaging policy
- prohibits the use of split=T in vignettes, this approach cannot be used
- in this document.
- 
-\end_layout
-
-\end_deeper
-\begin_layout Enumerate
-An standard approach using Sweave itself, without split, is to create another
- chunk and then display it inside double 
-\begin_inset Quotes eld
-\end_inset
-
-<<>>
-\begin_inset Quotes erd
-\end_inset
-
- brackets.
- Here we turn off evaluation (set eval=F) to prevent R from re-running the
- code chunk:
-\end_layout
-
-\begin_deeper
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-<<pois15, echo=T, eval=F, include=T>>=
-\end_layout
-
-\begin_layout Plain Layout
-
-<<pois10>>
-\end_layout
-
-\begin_layout Plain Layout
-
-@
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_deeper
-\begin_layout Standard
-Those two code displays should be identical in the document.
-\end_layout
-
-\begin_layout Subsection
-Line wrap
-\end_layout
-
-\begin_layout Standard
-This chunk shows what happens if the R input long.
- The line wrapping power of the listings class prevents code input from
- running into the margin.
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-<<norm10>>=
-\end_layout
-
-\begin_layout Plain Layout
-
-dataFrame <- data.frame(x1 = rnorm(100, m = 13, s = 23), x2 = rnorm(100,
- m = 13, s = 23), x3 = rnorm(100, m = 13, s = 23))
-\end_layout
-
-\begin_layout Plain Layout
-
-@
 \end_layout
 
 \end_inset
@@ -1982,7 +1399,7 @@ References
 \begin_layout Standard
 \begin_inset CommandInset bibtex
 LatexCommand bibtex
-bibfiles "theme/mlm"
+bibfiles "theme/R"
 options "apalike2"
 
 \end_inset
@@ -2002,12 +1419,18 @@ name "sec:Session-Info"
 \end_layout
 
 \begin_layout Standard
+Please leave this section for guide documents.
+ It is important for replication.
+ 
+\end_layout
+
+\begin_layout Standard
 \begin_inset ERT
 status open
 
 \begin_layout Plain Layout
 
-<<session, echo=F>>=
+<<session10, echo=F>>=
 \end_layout
 
 \begin_layout Plain Layout
@@ -2046,7 +1469,7 @@ status open
 
 \begin_layout Plain Layout
 
-<<opts20, include=F>>=
+<<session20, include=F>>=
 \end_layout
 
 \begin_layout Plain Layout

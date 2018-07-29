@@ -1,5 +1,3 @@
-%% LyX 2.2.3 created this file.  For more info, see http://www.lyx.org/.
-%% Do not edit unless you really know what you are doing.
 \documentclass[11pt,letterpaper,english]{extarticle}
 \usepackage{lmodern}
 \renewcommand{\sfdefault}{lmss}
@@ -28,10 +26,8 @@ marginparwidth=0pt,
 footskip=1.5\baselineskip,
 ]{geometry}
 
-\usepackage{multicol}
-\usepackage{listings}
-\usepackage{graphicx}
-\usepackage{xcolor}
+%\usepackage{dcolumn}
+%\usepackage{booktabs}
 
 \input{theme/guidePreambleHeader.tex}
 \input{theme/preambleFooter.tex}
@@ -69,7 +65,7 @@ footskip=1.5\baselineskip,
   title={A Title for Skeleton Template: rnw2pdf-guide-knit},
   leftlogo={theme/logoleft.pdf},
   rightlogo={theme/logo-vert.pdf},
-  number={}
+  number={44}
 }
 \guidehdr
 
@@ -85,13 +81,9 @@ opts_chunk$set(fig.path="tmpout/t-", split=TRUE,
 library(stationery)
 ## Retrieve theme files 
 logos <- c(logoleft = "logoleft.pdf", 
-           logoright = "logo-vert.pdf",
-           address = "preambleFooter.tex")
-texfiles <- c("guidePreambleHeader.tex", 
-              "guidePreambleKnitr.tex",
-              "addressFooter.tex")
+           logoright = "logo-vert.pdf", 
+           "preambleFooter.tex")
 getFiles(logos, pkg = "stationery")
-getFiles(texfiles, pkg = "stationery")
 @
 
 <<Roptions, echo=FALSE>>=

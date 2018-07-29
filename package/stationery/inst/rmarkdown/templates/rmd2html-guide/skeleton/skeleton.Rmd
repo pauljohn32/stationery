@@ -21,8 +21,10 @@ output:
     toc: true
     toc_depth: 2
     highlight: haddock
+    theme: default
     css: theme/kutils.css
     template: theme/guide-boilerplate.html
+guide_number: 00
 logoleft: theme/logoleft.png
 logoright: theme/logo-vert.png
 ---

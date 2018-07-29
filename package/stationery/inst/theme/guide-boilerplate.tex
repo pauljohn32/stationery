@@ -15,10 +15,13 @@
 \newdateformat{crmda}{\small{}\textbf{\shortmonthname[\THEMONTH].~\THEDAY,~\THEYEAR}}
 \usepackage{lastpage}
 \usepackage{babel}
-\usepackage{natbib}
+\usepackage[authoryear]{natbib}
+\usepackage{colortbl}
 
 \usepackage[hidelinks]{hyperref}
+
 \definecolor{darkblue}{HTML}{1e2277}
+\definecolor{kublue81186}{RGB}{0,81,186}
 \hypersetup{breaklinks=true, colorlinks=true, linkcolor=, urlcolor=darkblue}
 
 \makeatletter
@@ -104,22 +107,29 @@ footskip=2.5\baselineskip,
 %% \usepackage{Sweavel}
 %% \usepackage[noae]{Sweave}
 
-\usepackage{listings}
-\usepackage{upquote, fancyvrb, relsize, ae}
 
-%%\lstset{tabsize=2, breaklines=true,style=Rstyle}
-\definecolor{darkgreen}{RGB}{0,100,0}
-\definecolor{indianred}{RGB}{205,92,92}
-\definecolor{steelblue}{RGB}{70,130,180}
-\definecolor{antwhite}{RGB}{139,119,101}
-\definecolor{lightgray}{RGB}{240,240,240}
+%% paste in guidePreambleSweavel.tex
+%% Must DOUBLE dollar signs for template
+%%% From beamer slide:
+\usepackage{Sweave}
+%% 
+%% This controls display of code chunks
+\usepackage{ae,fancyvrb,relsize,listings}
 
+\providecommand{\Sweavesize}{\normalsize}
+\providecommand{\Rsize}{}
+\renewcommand{\Rsize}{\normalsize}
+\providecommand{\Routsize}{\scriptsize}
 
-\def\Sweavesize{\scriptsize} 
-\def\Rcolor{\color{black}} 
-\def\Rbackground{\color[gray]{0.95}}
+\providecommand{\Rcolor}{\color[rgb]{0.1, 0.1, 0.1}}
+\providecommand{\Routcolor}{\color[rgb]{0.2, 0.2, 0.2}}
+\providecommand{\Rcommentcolor}{\color[rgb]{0.101, 0.43, 0.432}}
 
-\lstdefinestyle{Rstylecrmda}{
+\providecommand{\Rbackground}{\color[gray]{0.91}}
+\providecommand{\Routbackground}{\color[gray]{0.935}}
+% Can specify \color[gray]{1} for white background or just \color{white}
+
+\lstdefinestyle{Rinput}{
   language=R,
   escapechar=`,
   fancyvrb=false,%
@@ -131,7 +141,46 @@ footskip=2.5\baselineskip,
   framerule=0.2pt,%
   framesep=1pt,%
   showstringspaces=false,%
-  basicstyle=\normalsize\ttfamily,%
+  basicstyle=\Rsize\Rcolor\ttfamily,%
+  columns=fixed%,
+  \lst@ifdisplaystyle\scriptsize\fi,%,
+  commentstyle=\Rcommentcolor\ttfamily,%
+  identifierstyle=,%
+  keywords=\bfseries,%
+  keywordstyle=\color[rgb]{0, 0.5, 0.5},
+  escapeinside={(*}{*)},
+  literate={~}{{$$\sim$$}}1{==}{{=\,=}}2{--}{{-\,-}}2,
+  alsoother={$$},
+  alsoletter={.<-},%
+  otherkeywords={!,!=,~,$$$$,*,\&,\%/\%,\%*\%,\%\%,<-,<<-,/},%
+  backgroundcolor=\Rbackground,%
+  numbers=left,%
+  %numberblanklines=false,%
+  stepnumber=5,
+  firstnumber=1,
+  numberstyle={\tiny}
+}%
+
+% Other options of interest:
+% frame=single,framerule=0.1pt,framesep=1pt,rulecolor=\color{blue},
+% numbers=left,numberstyle=\tiny,stepnumber=1,numbersep=7pt,
+% keywordstyle={\bf\Rcolor}
+
+\lstdefinestyle{Routput}{fancyvrb=false,
+  literate={~}{{$$\sim$$}}1{R^2}{{$$R^{2}$$}}2{^}{{$$^{\scriptstyle\wedge}$$}}1{R-squared}{{$$R^{2}$$}},%
+  basicstyle=\Routcolor\Routsize\ttfamily,%
+  backgroundcolor=\Routbackground,
+  language=R,
+  escapechar=`,
+  fancyvrb=false,%
+  tabsize=2,%
+  breaklines=true,
+  breakatwhitespace=true,%
+  captionpos=b,%
+  frame=single,%
+  framerule=0.2pt,%
+  framesep=1pt,%
+  showstringspaces=false,%
   columns=fixed%,
   \lst@ifdisplaystyle\scriptsize\fi,%
   identifierstyle=,%
@@ -142,12 +191,36 @@ footskip=2.5\baselineskip,
   alsoother={$$},
   alsoletter={.<-},%
   otherkeywords={!,!=,~,$$,*,\&,\%/\%,\%*\%,\%\%,<-,<<-,/},
-  backgroundcolor=\Rbackground,
   numbers=left,
+  %numberblanklines=false,%
+  stepnumber=5,
+  firstnumber=1,
   numberstyle={\tiny}
-}%
+}
 
-\lstset{style=Rstylecrmda}
+\renewenvironment{Schunk}{}{}
+\renewenvironment{Sinput}{}{}
+\let\Sinput\relax
+\let\Scode\relax
+\let\Soutput\relax
+\lstnewenvironment{Sinput}{\lstset{style=Rinput}}{}
+\lstnewenvironment{Scode}{\lstset{style=Rinput}}{}
+\lstnewenvironment{Soutput}{\lstset{style=Routput}}{}
+
+\lstset{tabsize=2, breaklines=true, style=Rinput, breakatwhitespace=true}
+
+\fvset{listparameters={\setlength{\topsep}{0em}}}
+
+\usepackage{xcolor}
+\definecolor{light-gray}{gray}{0.90}
+\usepackage{realboxes}
+\providecommand*{\code}[1]{\texttt{#1}}
+\renewcommand{\code}[1]{%
+\Colorbox{light-gray}{#1}%
+}%
+%%end paste in guidePreambleSweavel.tex
+
+
 
 \fvset{listparameters={\setlength{\topsep}{0em}}}
 
@@ -156,11 +229,15 @@ footskip=2.5\baselineskip,
 
 \usepackage{babel}
 \begin{document}
-
 \setlength{\tabcolsep}{1pt}
-\begin{tabular}{@{}|>{\centering}p{1.5in}>{\raggedright}p{3.5in}>{\raggedleft}p{1.5in}|}
-\hline 
-\begin{minipage}[c]{1.5in}%
+\arrayrulecolor{kublue81186}
+\begin{tabular}
+  {@{}%
+  |>{\centering}p{1.5in}>{\raggedright}p{3.5in}>{\raggedleft}p{1.5in}|%
+  }%
+  \hline
+  &&\tabularnewline
+  \begin{minipage}[c]{1.5in}%
   \begin{center}
     $if(logoleft)$\includegraphics[width=1.25in]{$logoleft$}$endif$
     \par
@@ -177,7 +254,7 @@ footskip=2.5\baselineskip,
         \textbf{\larger{}$title$$if(subtitle)$: $subtitle$$endif$}
       \end{center}
       \vspace{-15pt}
-      \rule[0ex]{1\linewidth}{1pt}%
+      \color{kublue81186}\rule[0ex]{1\linewidth}{1pt}%
     \end{minipage}
     \par\end{center}{\Huge \par}
 \begin{minipage}[t]{1\columnwidth}%
@@ -211,7 +288,7 @@ $if(logoright)$\includegraphics[width=1.25in]{$logoright$}$endif$
 \end{tabular}
 
 \medskip{}
-
+ 
 $body$
 
 \end{document}

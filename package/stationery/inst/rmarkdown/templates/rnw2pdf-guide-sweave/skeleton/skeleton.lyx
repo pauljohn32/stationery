@@ -408,32 +408,7 @@ logos <- c(logoleft = "logoleft.pdf",
 
 \begin_layout Plain Layout
 
-texfiles <- c("guidePreambleHeader.tex", 
-\end_layout
-
-\begin_layout Plain Layout
-
-              "preambleFooter.tex", 
-\end_layout
-
-\begin_layout Plain Layout
-
-              "guidePreambleSweavel.tex",
-\end_layout
-
-\begin_layout Plain Layout
-
-              "mlm.bib")
-\end_layout
-
-\begin_layout Plain Layout
-
 getFiles(logos, pkg = "stationery")
-\end_layout
-
-\begin_layout Plain Layout
-
-getFiles(texfiles, pkg = "stationery")
 \end_layout
 
 \begin_layout Plain Layout
@@ -683,7 +658,7 @@ mean(x)
 \begin_layout Standard
 \begin_inset CommandInset bibtex
 LatexCommand bibtex
-bibfiles "theme/mlm"
+bibfiles "theme/R"
 options "bibtotoc,apalike2"
 
 \end_inset

@@ -14,14 +14,19 @@ checked_by: "First Last"
 Note to Authors: please_dont_change_the_next 4 lines!
 date: "`r format(Sys.time(), '%b. %e %Y')`"
 output:
+  stationery::crmda_html_document:
+     toc: true
+     toc_depth: 2
+     highlight: haddock
+     theme: default
+     css: theme/kutils.css
+     template: theme/guide-boilerplate.html
   prettydoc::html_pretty: 
     theme: cayman 
 logoleft: theme/logoleft.png
 logoright: theme/logo-vert.png
-vignette: >
-  % \VignetteIndexEntry{Instructions for Rmd authors of Guide Documents}
-  % \VignetteEngine{knitr::rmarkdown}
-  % \VignetteEncoding{UTF-8}
+guide_number: 00
+header-includes: 
   \usepackage[utf8]{inputenc}
 ---
 
@@ -39,10 +44,15 @@ options(width = 70)
 
 For guides, we use a customized template and style sheet. 
 
-Unfortunately, this creates HUGE HTML files and the R
-package cannot tolerate it.  Hence, we are, at least
-for now, changing to a style that does not use the special
-features for this document. 
+Unfortunately, this creates HUGE HTML files. The files are HUGE
+because they include the bootstrap theme files provided by rmarkdown.
+We have benefitted from some of these special features, but the HUGE
+file is the price we pay. 
+
+By either setting "theme: null" in the document yaml header, or by
+changing to a different document processing function, the large
+file size can be avoided.  This document has yaml example for
+a couple of document output formats. 
 
 ```
 output:
@@ -50,16 +60,6 @@ output:
     css: theme/kutils.css
     template: theme/guide-boilerplate.html
 ```
-
-This has been a ridiculous experience. We thought
-we had good advice to create the template, but later
-we realized that if a template is specified, then the
-YAML header settings for table of contents are
-ignored.
-
-But the worst news was that the HTML output files
-are gigantic when we use our template and css. That
-is truly discouraging.
 
 # Try with the skeleton, it has the full header
 
@@ -75,7 +75,7 @@ output.
 In R, run
 
 ```
-init.writeup("rmd2html-guide")
+initWriteup("rmd2html-guide")
 ```
 
 That will create a directory "rmd2html-guide" in which the 
@@ -95,10 +95,7 @@ or the shell script that is provided with the `skeleton.Rmd` file:
 $ ./rmd2html.sh skeleton.Rmd
 ```
 
-The compiler is going to ignore many of the settings in your
-yaml header because we are using a document template. If you want
-to regulate these things (see `?rmd2html`), insert arguments
-
+The Rstudio pull-down menu knit should work as well.
 
 ```
 stationery::rmd2html("skeleton.Rmd", toc = TRUE, toc_depth = 1, keep_md = TRUE)
@@ -113,7 +110,6 @@ $ ./rmd2html.sh --toc=TRUE --toc_depth=1 --keep_md=TRUE skeleton.Rmd
 ```
 
 A full list of arguments is provided in `?rmd2html`.
-
 
 # Top Level Heading
 

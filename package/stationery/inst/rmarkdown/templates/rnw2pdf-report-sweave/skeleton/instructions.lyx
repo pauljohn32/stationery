@@ -297,48 +297,18 @@ library(stationery)
 
 \begin_layout Plain Layout
 
-## If theme directory does not have required images or TeX files
-\end_layout
-
-\begin_layout Plain Layout
-
-## we need to retrieve them and put them in "theme" directory.
+## If theme directory does not have required logos, retrieve.
  
 \end_layout
 
 \begin_layout Plain Layout
 
-logos <- c(logoright = "logo.pdf")
-\end_layout
-
-\begin_layout Plain Layout
-
-texfiles <- c("reportPreambleHeader.tex", 
-\end_layout
-
-\begin_layout Plain Layout
-
-              "preambleFooter.tex", 
-\end_layout
-
-\begin_layout Plain Layout
-
-              "addressFooter.tex",
-\end_layout
-
-\begin_layout Plain Layout
-
-              "reportPreambleSweavel.tex")
+logos <- c(logoright = "logo.pdf", "addressFooter.tex")
 \end_layout
 
 \begin_layout Plain Layout
 
 getFiles(logos, pkg = "stationery")
-\end_layout
-
-\begin_layout Plain Layout
-
-getFiles(texfiles, pkg = "stationery")
 \end_layout
 
 \begin_layout Plain Layout
@@ -2426,7 +2396,7 @@ par(par.orig)
 \begin_layout Standard
 \begin_inset CommandInset bibtex
 LatexCommand bibtex
-bibfiles "theme/mlm"
+bibfiles "theme/R"
 options "apalike2"
 
 \end_inset

@@ -9,7 +9,7 @@ pwd=`pwd`
 VERBOSE=0
 declare -A parms
 parms[toc]=TRUE
-parms[toc_depth]=2
+##parms[toc_depth]=2
 parms[purl]=TRUE
 parms[quiet]=TRUE 
 parms[keep_md]=FALSE

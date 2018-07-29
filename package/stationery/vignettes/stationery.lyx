@@ -270,7 +270,7 @@ texfiles <- c("reportPreambleHeader.tex",
 
 \begin_layout Plain Layout
 
-              "mlm.bib")
+              "R.bib")
 \end_layout
 
 \begin_layout Plain Layout

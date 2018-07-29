@@ -331,37 +331,17 @@ logos <- c(logoleft = "logoleft.pdf",
 
 \begin_layout Plain Layout
 
-           logoright = "logo-vert.pdf",
+           logoright = "logo-vert.pdf", 
 \end_layout
 
 \begin_layout Plain Layout
 
-           address = "preambleFooter.tex")
-\end_layout
-
-\begin_layout Plain Layout
-
-texfiles <- c("guidePreambleHeader.tex", 
-\end_layout
-
-\begin_layout Plain Layout
-
-              "guidePreambleKnitr.tex",
-\end_layout
-
-\begin_layout Plain Layout
-
-              "addressFooter.tex")
+           "preambleFooter.tex")
 \end_layout
 
 \begin_layout Plain Layout
 
 getFiles(logos, pkg = "stationery")
-\end_layout
-
-\begin_layout Plain Layout
-
-getFiles(texfiles, pkg = "stationery")
 \end_layout
 
 \begin_layout Plain Layout

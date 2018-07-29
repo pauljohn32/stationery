@@ -6,37 +6,32 @@
 ##'
 ##' Running this will be the same as running the rmd2html.sh script
 ##' within the directory.
-##' @param fn A file name. If not specified, then all Rmd documents
-##'     within directory are rendered.
+##' @param fn One or more filnames ending in "*.Rmd".
 ##' @param wd A working directory name of the Rmd file. If not
 ##'     specified, then the current working directory from R will be
 ##'     used.
+##' @param verbose The opposite of render(quiet = TRUE). Shows compile
+##'     commentary and pandoc command. Can be informative!
 ##' @param purl Default TRUE, synonym for tangle. Set either one, or
 ##'     set both same, result is same.
 ##' @param tangle Default TRUE, synonym for purl
-##' @param verbose The opposite of render(quiet = TRUE). Shows compile
-##'     commentary and pandoc command. Can be informative!
-##' @param type Type of output desired. Only acceptable value is
-##'     "guide" at current time. If type is "guide", then template
-##'     will be "theme/guide-boilerplate.html". To force the use of
-##'     template and css from compiler suite, set type as any value
-##'     except "guide" or "report".
+##' @param themedir Name of directory where theme resources are saved.
+##' @param package Defaults as "stationery" to find files in this package.
 ##' @param ... Arguments that will be passed to render and
 ##'     html_document. We usually have \code{css} and \code{template},
 ##'     but many others can be specified to change arguments for
 ##'     \code{rmarkdown::render} and \code{rmarkdown::html_documents}.
-##'     These arguments intended for \code{render()} are allowed:
-##'     c("output_file", "output_dir", "output_options",
-##'     "intermediates_dir", "knit_root_dir", "runtime", "clean",
-##'     "params", "knit_meta", "envir", "run_pandoc", "quiet",
-##'     "encoding").  These arguments intended for html_document are
-##'     allowed: \code{c("toc", "toc_depth", "toc_float",
-##'     "number_sections", "section_divs", "fig_width", "fig_height",
-##'     "fig_retina", "fig_caption", "dev", "df_print",
-##'     "code_folding", "code_download", "smart", "self_contained",
-##'     "theme", "highlight", "mathjax", "template",
+##'     These possible arguments for html_document: \code{c("toc",
+##'     "toc_depth", "toc_float", "number_sections", "section_divs",
+##'     "fig_width", "fig_height", "fig_retina", "fig_caption", "dev",
+##'     "df_print", "code_folding", "code_download", "smart",
+##'     "self_contained", "theme", "highlight", "mathjax", "template",
 ##'     "extra_dependencies", "css", "includes", "keep_md", "lib_dir",
-##'     "md_extensions", "pandoc_args")}.
+##'     "md_extensions", "pandoc_args")}. These arguments intended for
+##'     \code{render()} are allowed: c("output_file", "output_dir",
+##'     "output_options", "intermediates_dir", "knit_root_dir",
+##'     "runtime", "clean", "params", "knit_meta", "envir",
+##'     "run_pandoc", "quiet", "encoding").
 ##' @importFrom rmarkdown render
 ##' @importFrom rmarkdown html_document
 ##' @importFrom utils modifyList
@@ -52,29 +47,22 @@
 ##' rmd2html("skeleton.Rmd", wd = dirout)
 ##' list.files(dirout)
 ##' if(interactive()) browseURL(file.path(dirout, "skeleton.html"))
-rmd2html <- function(fn = NULL, wd = NULL, verbose = FALSE, purl = TRUE, tangle = purl, 
-                     type = "guide", ...) {
+rmd2html <- function(fn = NULL, wd = NULL, ..., verbose = FALSE,
+                     purl = TRUE, tangle = purl, themedir = "theme",
+                     package = "stationery") {
     if (!missing(tangle) && is.logical(tangle)) purl <- tangle
-   
+    
     if (!is.null(wd)){
         wd.orig <- getwd()
         setwd(wd)
     }
     dots <- list(...)
-    if (is.null(dots$template) && type %in% c("guide")){
-        templatename <- paste0(type, "-boilerplate.html")
-        dots$template <- file.path("theme", templatename)
-        getFiles(templatename, dn = "theme", pkg = "stationery")
+    if (!is.null(dots$template)){
+        if(!file.exists(dots$template)){
+            getFiles(basename(dots$template), dn = "theme", pkg = package)
+        }
     }
-    if (is.null(dots$css) && type %in% c("guide")){
-        css <-  "kutils.css"
-        getFiles(css, dn = "theme", pkg = "stationery")
-        dots$css <- "theme/kutils.css"
-    }
-    if (is.null(fn)) {
-        cat("Will render all *.Rmd files in current working directory\n")
-        fn <- list.files(pattern="Rmd$")
-    }
+
     if (length(fn) > 1){
         cl <- match.call()
         res <- c()
@@ -84,29 +72,29 @@ rmd2html <- function(fn = NULL, wd = NULL, verbose = FALSE, purl = TRUE, tangle 
         }
         return(res)
     }
-
-    dots <- list(...)
-    formals_html_document <- c("toc", "toc_depth", "toc_float",
-                               "number_sections", "section_divs",
-                               "fig_width", "fig_height",
-                               "fig_retina", "fig_caption", "dev",
-                               "df_print", "code_folding",
-                               "code_download", "smart",
-                               "self_contained", "theme", "highlight",
-                               "mathjax", "template",
-                               "extra_dependencies", "css",
-                               "includes", "keep_md", "lib_dir",
-                               "md_extensions", "pandoc_args")
-    dots_for_html_document <- dots[formals_html_document[formals_html_document %in% names(dots)]]
-  
+    
     formals_render <- c("output_file", "output_dir", "output_options",
                         "intermediates_dir", "knit_root_dir",
                         "runtime", "clean", "params", "knit_meta",
                         "envir", "run_pandoc", "quiet", "encoding")
-   
+    
     dots_for_render <- dots[formals_render[formals_render %in% names(dots)]]
-    html_args <- list(theme = NULL,
-                      toc = TRUE,
+
+    ## 20180729: change design to reclaim all unused arguments
+    ## formals_html_document <- c("toc", "toc_depth", "toc_float",
+    ##                            "number_sections", "section_divs",
+    ##                            "fig_width", "fig_height",
+    ##                            "fig_retina", "fig_caption", "dev",
+    ##                            "df_print", "code_folding",
+    ##                            "code_download", "smart",
+    ##                            "self_contained", "theme", "highlight",
+    ##                            "mathjax", "template",
+    ##                            "extra_dependencies", "css",
+    ##                            "includes", "keep_md", "lib_dir",
+    ##                            "md_extensions", "pandoc_args")
+    ## dots_for_html_document <- dots[formals_html_document[formals_html_document %in% names(dots)]]
+    dots_for_html_document <- dots[setdiff(names(dots), names(dots_for_render))]
+    html_args <- list(toc = TRUE,
                       mathjax = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML")
     
     html_argz <- utils::modifyList(html_args, dots_for_html_document, keep.null = TRUE)
@@ -158,23 +146,15 @@ crmda_html_document <- function(template = "theme/guide-boilerplate.html", ...) 
 ##'
 ##' Running this will be the same as running the rmd2pdf.sh script
 ##' within the directory.
-##' @param fn A file name. If not specified, then all Rmd documents
-##'     within directory are rendered.
+##' @param fn One or more filnames ending in "*.Rmd".
 ##' @param wd A working directory name of the Rmd file. If not
 ##'     specified, then the current working directory from R will be
 ##'     used.
 ##' @param verbose The opposite of render(quiet = TRUE). Shows compile
 ##'     commentary and pandoc command. Can be informative!
-##' @param type "report" or "guide". If "report" causes template to be
-##'     "theme/report-boilerplate.tex". If "guide", causes
-##'     "theme/guide-boilerplate.tex" to be used. If that file
-##'     does not exist, the directory "theme" is created and the
-##'     default template is copied from package.
 ##' @param purl Default TRUE
 ##' @param tangle Default TRUE, synonym for purl
-##' @param template Overrides the \code{type} parameter. An LaTeX
-##'     template file, such as "theme/report-boilerplate.tex" or
-##'     "theme/guide-boilerplate.tex" in this package.
+##' @param themedir Name of directory where theme resources are saved.
 ##' @param package Defaults as "stationery" to find files in this package.
 ##' @param ... Arguments that will be passed to \code{render} and
 ##'     \code{pdf_document}. Our defaults set a LaTeX template, toc =
@@ -203,33 +183,27 @@ crmda_html_document <- function(template = "theme/guide-boilerplate.html", ...) 
 ##' fmt <- "rmd2pdf-guide"
 ##' dir.new <- initWriteup(fmt)
 ##' setwd(dir.new)
-##' of1 <- rmd2pdf("skeleton.Rmd", type = "guide", output_dir = getwd())
+##' of1 <- rmd2pdf("skeleton.Rmd", output_dir = getwd())
 ##' if(interactive()) browseURL(of1[1])
-##' of2 <- rmd2pdf("skeleton.Rmd", type = "guide", toc = FALSE, output_dir = getwd())
+##' of2 <- rmd2pdf("skeleton.Rmd", toc = FALSE, output_dir = getwd())
 ##' if(interactive()) browseURL(of2[1])
 ##' setwd(wd.orig)
-rmd2pdf <- function(fn = NULL, wd = NULL, verbose = FALSE, type = "report",
+rmd2pdf <- function(fn = NULL, wd = NULL, ..., verbose = FALSE,
                     purl = TRUE, tangle = purl, themedir = "theme", 
-                    template, package = "stationery", ...){
+                    package = "stationery"){
     if(!missing(tangle) && is.logical(tangle)) purl <- tangle
-    
-    if (missing(template)){
-        template <- file.path(themedir, paste0(type, "-boilerplate.tex"))
-    }
-    
-    if(!file.exists(template)){
-        if(!file.exists(themedir)) dir.create(themedir)
-        try(getFiles(basename(template), dn = themedir, pkg = package))
-    }
     
     if (!is.null(wd)){
         wd.orig <- getwd()
         setwd(wd)
     }
         
-    if (is.null(fn)) {
-        cat("Will render all *.Rmd files in current working directory\n")
-        fn <- list.files(pattern="Rmd$")
+    dots <- list(...)
+    
+    if (!is.null(dots$template)){
+        if(!file.exists(dots$template)){
+            getFiles(basename(dots$template), dn = "theme", pkg = package)
+        }
     }
 
     if (length(fn) > 1){
@@ -241,30 +215,27 @@ rmd2pdf <- function(fn = NULL, wd = NULL, verbose = FALSE, type = "report",
         }
         return(res)
     }
-    
-    dots <- list(...)
 
-    formals_pdf_document <- c("toc", "toc_depth", "number_sections",
-                              "fig_width", "fig_height", "fig_crop",
-                              "fig_caption", "dev", "df_print",
-                              "highlight", "template", "keep_tex",
-                              "latex_engine", "citation_package",
-                              "includes", "md_extensions",
-                              "pandoc_args", "extra_dependencies")
-
-    dots_for_pdf_document <- dots[formals_pdf_document[formals_pdf_document %in%
-    names(dots)]]
-  
     formals_render <- c("output_format", "output_file", "output_dir",
                         "output_options", "intermediates_dir",
                         "knit_root_dir", "runtime", "clean", "params",
                         "knit_meta", "envir", "run_pandoc", "quiet",
                         "encoding")
-   
     dots_for_render <- dots[formals_render[formals_render %in% names(dots)]]
+
+    ## 20180729: change design to reclaim all unused arguments
+    ## formals_pdf_document <- c("toc", "toc_depth", "number_sections",
+    ##                           "fig_width", "fig_height", "fig_crop",
+    ##                           "fig_caption", "dev", "df_print",
+    ##                           "highlight", "template", "keep_tex",
+    ##                           "latex_engine", "citation_package",
+    ##                           "includes", "md_extensions",
+    ##                           "pandoc_args", "extra_dependencies")
+
+    ## dots_for_pdf_document <- dots[formals_pdf_document[formals_pdf_document %in%  names(dots)]]
+    dots_for_pdf_document <- dots[setdiff(names(dots), names(dots_for_render))]
        
     pdf_args <- list(highlight = "haddock",
-                     template = template,
                      pandoc_args = "--listings")
     pdf_argz <- utils::modifyList(pdf_args, dots_for_pdf_document)
     if(verbose) {print(paste("dots_for_pdf")); lapply(pdf_argz, print)}
@@ -327,10 +298,10 @@ rmd2pdf <- function(fn = NULL, wd = NULL, verbose = FALSE, type = "report",
 ##' of1 <- rnw2pdf("skeleton.Rnw", engine = "Sweave")
 ##' list.files()
 ##' setwd(wd.orig)
-rnw2pdf <- function(fn = NULL, wd = NULL, engine = "knitr", purl = TRUE,
-                    tangle = purl, clean = TRUE, verbose = FALSE, envir = parent.frame(),
-                    encoding = getOption("encoding"),
-                    ...) {
+rnw2pdf <- function(fn = NULL, wd = NULL, ..., engine = "knitr", purl = TRUE,
+                    tangle = purl, clean = TRUE, verbose = FALSE,
+                    envir = parent.frame(), encoding = getOption("encoding"))
+{
     if(!missing(tangle) && is.logical(tangle)) purl <- tangle
     if(tangle != purl) {
         MESSG <- "rnw2pdf: tangle and purl have the same effect. Just set 1 of them"
@@ -373,7 +344,7 @@ rnw2pdf <- function(fn = NULL, wd = NULL, engine = "knitr", purl = TRUE,
         rnwfile <- readLines(fnbackup)
         rnwfile[grep("SweaveOpts", rnwfile)] <- gsub("(split\\s*=)\\s*.*,", "\\1FALSE,",
                                                      rnwfile[grep("SweaveOpts", rnwfile)])
-        ## sets the prompt at ">"
+        ## sets the prompt at "> "
         rnwfile[grep("prompt", rnwfile)] <- gsub("prompt\\s*=.*\"", "prompt=\"> \"",
                                                  rnwfile[grep("prompt", rnwfile)])
         writeLines(rnwfile, con = fnbackup)

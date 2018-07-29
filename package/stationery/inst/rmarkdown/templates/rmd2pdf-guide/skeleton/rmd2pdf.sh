@@ -14,7 +14,6 @@ parms[purl]=TRUE
 parms[clean]=TRUE
 parms[quiet]=TRUE 
 parms[keep_md]=FALSE
-parms[type]=\"guide\"
 parms[template]=\"theme/guide-boilerplate.tex\"
 parms[output_dir]=\"$pwd\"
 

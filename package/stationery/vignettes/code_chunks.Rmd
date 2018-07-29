@@ -27,7 +27,7 @@ output:
     ]
     template:  theme/guide-boilerplate.tex
 fontsize: 11pt
-bibliography: theme/mlm.bib
+bibliography: theme/R.bib
 header-includes:
 -  \usepackage{xcolor}
 -  \usepackage{amsmath}

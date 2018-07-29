@@ -403,13 +403,22 @@ $endif$
 $endif$
 $endif$
 
-<div class="row" style="display:flex; align-items: center; border-top:
-						solid 6px #0051ba; border-left: none 0px #fff3c;
-						border-bottom: solid 5px #0051ba; border-right: none;">
+<div class="row" style="display:flex; align-items: center; 
+                        border-top: solid 1px #0051ba;
+                        border-left: solid 1px #0051ba;
+                        border-right: solid 1px #0051ba;
+						border-bottom: solid 1px #0051ba;">
 <div class="col-sm-3", style="text-align: left; width=15%;">
 $if(logoleft)$
 <img src="$logoleft$">
 $endif$
+$if(guide_number)$
+  <br />
+  <p style="text-align: left;">
+	<span style="font-weight:bold;">Guide No: $guide_number$</span>
+  </p>
+$endif$
+
 </div>
 <div class="col-sm-6" style="text-align: center; width=70%;">
 $if(title)$
@@ -420,7 +429,7 @@ $if(title)$
     margin-left: auto;
     margin-right: auto;
     border-style: solid;
-    border-width: 2px; 
+    border-width: 1px; 
     border-color: #0051ba;"></div>
 $for(author)$
 $if(author.name)$
@@ -448,7 +457,7 @@ $endif$
   $if(date)$
   <br />
   <p style="text-align: center;">
-	$date$
+  <span style="font-weight:bold;">$date$</span>
   <p>
 $endif$
   

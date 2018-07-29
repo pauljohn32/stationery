@@ -104,12 +104,7 @@ library(stationery)
 ## we need to retrieve them and put them in "theme" directory. 
 logos <- c(logoleft = "logoleft.pdf", 
             logoright = "logo-vert.pdf")
-texfiles <- c("guidePreambleHeader.tex", 
-              "preambleFooter.tex", 
-              "guidePreambleSweavel.tex",
-              "addressFooter.tex", "mlm.bib")
 getFiles(logos, pkg = "stationery")
-getFiles(texfiles, pkg = "stationery")
 @
 \begin{abstract}
 \noindent This shows how we use R \citep{RCore} to make guide documents
@@ -515,7 +510,7 @@ dataFrame <- data.frame(x1 = rnorm(100, m = 13, s = 23), x2 = rnorm(100, m = 13,
 \section{References}
 
 \bibliographystyle{apalike2}
-\bibliography{theme/mlm}
+\bibliography{theme/R}
 
 \section{Session Info\label{sec:Session-Info}}
 

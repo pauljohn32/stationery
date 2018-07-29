@@ -349,27 +349,7 @@ logos <- c(logoright = "logo.pdf", "addressFooter.tex")
 
 \begin_layout Plain Layout
 
-texfiles <- c("reportPreambleHeader.tex", 
-\end_layout
-
-\begin_layout Plain Layout
-
-              "preambleFooter.tex", 
-\end_layout
-
-\begin_layout Plain Layout
-
-              "reportPreambleKnitr.tex")
-\end_layout
-
-\begin_layout Plain Layout
-
 getFiles(logos, pkg = "stationery")
-\end_layout
-
-\begin_layout Plain Layout
-
-getFiles(texfiles, pkg = "stationery")
 \end_layout
 
 \begin_layout Plain Layout
