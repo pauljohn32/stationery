@@ -401,27 +401,26 @@ $endif$
 </div>
 
 $endif$
-
 $endif$
 
-<div class="row" style="display:flex; align-items: center; 
-            border-top: solid 5px #0051ba; border-left: none;
+<div class="row" style="display:flex; align-items: center; border-top:
+						solid 6px #0051ba; border-left: none 0px #fff3c;
 						border-bottom: solid 5px #0051ba; border-right: none;">
-<div class="col-sm-3" style="text-align: left;">
+<div class="col-sm-3", style="text-align: left; width=15%;">
 $if(logoleft)$
-<img src=$logoleft$ alt="left side logo" style="width:150; height:100;">
+<img src="$logoleft$">
 $endif$
 </div>
-<div class="col-sm-6" style="text-align: center;">
+<div class="col-sm-6" style="text-align: center; width=70%;">
 $if(title)$
 <h2 class="title toc-ignore" style="border: none;">$title$$if(subtitle)$: $subtitle$$endif$</h2>
-<div style=" display: block;
+<div style=" display: block; border-collapse: collapse;
     margin-top: 0.5em;
     margin-bottom: 0.5em;
     margin-left: auto;
     margin-right: auto;
-    border-style: inset;
-    border-width: 2px;
+    border-style: solid;
+    border-width: 2px; 
     border-color: #0051ba;"></div>
 $for(author)$
 $if(author.name)$
@@ -442,9 +441,9 @@ $if(keywords)$
 </p>
 $endif$
 </div>
-<div class="col-sm-3">
+<div class="col-sm-3" style="text-align: left; float: right; width=3in;">
   $if(logoright)$
-  <img src=$logoright$ alt="right side logo" style="width:323px; text-align:right;">
+  <img src="$logoright$">
   $endif$
   $if(date)$
   <br />
