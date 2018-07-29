@@ -12,6 +12,7 @@
 \usepackage{setspace}
 \usepackage{multicol}
 \usepackage{xcolor}
+\usepackage{colortbl}
 \usepackage[yyyymmdd,hhmmss]{datetime}
 \usepackage{lastpage}
 \usepackage{babel}
@@ -112,6 +113,9 @@ footskip=2.5\baselineskip,
 \definecolor{steelblue}{RGB}{70,130,180}
 \definecolor{antwhite}{RGB}{139,119,101}
 \definecolor{lightgray}{RGB}{240,240,240}
+\definecolor{darkblue}{HTML}{1e2277}
+\definecolor{kublue81186}{RGB}{0,81,186}
+\newdateformat{monddyyy}{\shortmonthname[\THEMONTH].~\THEDAY,~\THEYEAR}
 
 
 \def\Sweavesize{\scriptsize} 
@@ -152,36 +156,37 @@ footskip=2.5\baselineskip,
 \makeatother
 
 \begin{document}
-
-\begin{minipage}[t]{1\columnwidth}%
-\begin{center}
-\begin{tabular}[t]{>{\raggedright}p{4in}>{\centering}p{2.25in}}
-\hline 
-\medskip{}
-$if(title)$
-\textsc{\Large{}$title$$if(subtitle)$: $subtitle$$endif$}{\Large \par}
-$endif$
-
-\medskip{}  & \medskip{} $if(logo)$\includegraphics[width=2in]{$logo$}$endif$\tabularnewline
-\hline
-
-\multicolumn{2}{>{\raggedright}p{6in}}{\medskip{}
-$for(author)$$author.name$$if(author.description)$,
+\noindent\begin{minipage}[t]{6.5in}%
+  \begin{center}
+    \setlength{\tabcolsep}{2pt}
+    \setlength{\arrayrulewidth}{0.6pt}
+    \begin{tabular}[t]{@{}>{\raggedright}p{4in}>{\centering}p{2.5in}@{}}
+      \arrayrulecolor{kublue81186}\hline 
+      \medskip{}
+      $if(title)$
+      \textsc{\Large{}$title$$if(subtitle)$: $subtitle$$endif$}{\Large \par}
+      $endif$
+      \bigskip{}
+      \textcolor{kublue81186}{\rule[0.5ex]{3.25in}{0.6pt}}
+      & \medskip{} $if(logo)$\includegraphics[width=2in]{$logo$}$endif$\tabularnewline
+        \tabularnewline
+        \multicolumn{2}{>{\raggedright}p{6in}}{
+        $for(author)$$author.name$$if(author.description)$,
               $author.description$$endif$$if(author.affiliation)$,
               $author.affiliation$$endif$$if(author.email)$ <$author.email$>$endif$\\
-$endfor$
-
-\medskip{}
-\begin{singlespace}
-% \noindent 
-\raggedright{}{\today}
-\end{singlespace}
-}\tabularnewline
-\hline 
-\end{tabular}
-\par\end{center}
-\medskip{}
-
+        $endfor$
+        \par
+        \medskip
+        \begin{singlespace}
+          \raggedright{}{\monddyyy\today}
+        \end{singlespace}
+        }\tabularnewline
+        \hline 
+    \end{tabular}
+    \par
+  \end{center}
+  \medskip{}
+  % 
 \end{minipage}
 
 $body$
