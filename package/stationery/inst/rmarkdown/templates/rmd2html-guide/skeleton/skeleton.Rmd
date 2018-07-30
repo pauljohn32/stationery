@@ -22,9 +22,11 @@ output:
     toc_depth: 2
     highlight: haddock
     theme: default
+    citation_package: natbib
     css: theme/kutils.css
     template: theme/guide-boilerplate.html
 guide_number: 00
+bibliography: theme/R.bib
 logoleft: theme/logoleft.png
 logoright: theme/logo-vert.png
 ---
@@ -45,61 +47,30 @@ library(stationery)
 ## we need to retrieve them and put them in "theme" directory. 
 logos <- c(logoleft = "logoleft.png", 
            logoright = "logo-vert.png")
-files <- c("kutils.css", "guide-boilerplate.html")
 getFiles(logos, pkg = "stationery")
+files <- c("kutils.css", "guide-boilerplate.html")
 getFiles(files, pkg = "stationery")
 ```
 
 # Level 1 heading
 
+This is using R [@RCore] in a markdown document.
+
 ## Level 2 heading 
 
 # To compile
 
-Either use the R function
+See the "instructions" file with this document.
 
-```
-stationery::rmd2html("skeleton.Rmd")
-```
+# HTML Special Features
 
-or the shell script that is provided with the `skeleton.Rmd` file:
+The instructions document also has a brief reminder about
+how to specify highlighted call out sections and tabbed sections.
+Many more details are in the vignette, "HTML_special_features"
+distributed with the package.
 
-```
-$ ./rmd2html.sh skeleton.Rmd
-```
+# Equations and code chunks can be used too.
 
-# HTML Special Feature
-
-#### Colored callout at level 4 {.bs-callout .bs-callout-gray}
-
-## Tabbed sub-sections at level 2 {.tabset .tabset-fade}
-
-### <span style="color:red">First Tab Here</span>
-
-Content in first tab. 
-
-### <span style="color:orange">Second Tab Here</span>
-
-Second tab content. 
-
-### Third Tab Here
-
-# Equations
-
-Equations work if MathJax is available from Web server.
-
-\[
-y_i = \beta_0 + \beta_1 x1_i + \varepsilon_i
-\]
-
-
-# Chunks
-
-Use knitr style chunks.
-
-```{r myFirstPlot)}
-x <- rnorm(500)
-```
 
 [//]: (All guides must have this as the final stanza)
 
@@ -127,3 +98,5 @@ Available under
 [Created Commons license 3.0 <img src="http://crmda.dept.ku.edu/images/cc-3.0.png" alt="CC BY"
 style="width: 75px;height: 20px;"/>](http://creativecommons.org/licenses/by/3.0/)
 
+
+# References
