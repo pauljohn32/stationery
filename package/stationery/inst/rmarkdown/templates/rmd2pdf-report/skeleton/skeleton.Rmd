@@ -1,37 +1,36 @@
 ---
 title: "A Title for Skeleton Template"
-subtitle: "rmd2pdf-report"
+subtitle: "A report using R markdown to PDF"
 author:
-- name: First Author
-  affiliation: CRMDA
+- affiliation: CRMDA
   email: first@ku.edu
-- name:  Second Author
-  affiliation: CRMDA
+  name: First Author
+- affiliation: CRMDA
   email: second@ku.edu
-- name:  Third Author
-  affiliation: Institute
+  name: Second Author
+- affiliation: Institute
   email: third@ku.edu
-addr:
-    l1: address row 1
-    l2: address row 2
-    l3: City State Zipcode
-    r1: "Web: http://crmda.ku.edu"
-    r2: "Email: author@ku.edu"
-    r3: "Phone: 123-345-5678"
-logo: theme/logo.pdf
-output: 
-  pdf_document:
-    keep_tex: false
-    fig_caption: true
-    latex_engine: pdflatex
-    highlight: haddock
-    citation_package: natbib
-    pandoc_args: [
-      "--listings"
-    ]
+  name: Third Author
 fontsize: 12pt
+output:
+  pdf_document:
+    citation_package: natbib
+    fig_caption: yes
+    highlight: haddock
+    keep_tex: no
+    latex_engine: pdflatex
+    pandoc_args: --listings
+    template: "theme/report-boilerplate.tex"
+logo: theme/logo.pdf
 header-includes:
 - \usepackage{xcolor}
+addr:
+  l1: address row 1
+  l2: address row 2
+  l3: City State Zipcode
+  r1: 'Web: http://crmda.ku.edu'
+  r2: 'Email: author@ku.edu'
+  r3: 'Phone: 123-345-5678'
 ---
 
 ```{r setup, include=FALSE}

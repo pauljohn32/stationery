@@ -24,14 +24,10 @@ output:
     fig_caption: true
     latex_engine: pdflatex
     citation_package: natbib
-    template: theme/report-boilerplate.tex	
+    template: "theme/report-boilerplate.tex"
     pandoc_args: [
       "--listings"
     ]
-vignette: >
-    %\VignetteIndexEntry{Instructions for Reports}
-    %\VignetteEngine{knitr::rmarkdown}
-    %\VignetteEncoding{UTF-8}	
 table: true
 fontsize: 12pt
 header-includes:
@@ -69,34 +65,12 @@ address and the name of a logo file.
 The look and feel of the document will be controlled by a template
 file. It is specified in the header as "theme/report-boilerplate.tex".
  
-Until we were very far down the path which depended on the template
-file, we did not understand fully the limitations that the template
-imposes in markdown documents.  The template file will "take over"
-the document production and it will block the other settings that
-users might expect to adjust within the document. In particular, users
-are not allowed to adjust the **toc** settings in the YAML header
-because the template will overwhelm those settings.
+In July 2018, we learned how to selectively override settings
+from the document's yaml header.  These alternative parameters
+can be specified either as command line arguments to `rmd2pdf.sh`
+or as parameters in the R function call `rmd2pdf`. 
 
-However, the same parameters can be altered by specifying them
-in the functions that process the document. Our function `rmd2pdf`
-will allow all of the arguments and they will override the settings
-in the template. It is also possible to override those settings
-by command line parameters with our script `rmd2pdf.sh`, as we
-will explain in the next section.
-
-If this document is edited in Rstudio, the "knit" function will
-probably not work as intended because the users's settings in the YAML
-header will be ignored. The "knit" feature of Rstudio is not aware of
-the procedure needed to override the template settings.  In order to
-override the template, arguments to the compiler functions must be
-edited. Please see the next section for details.
-
-# To compile this document
-
-The document can be compiled either with a shell script that is
-provided with this document, `rmd2pdf.sh`, or by using a function of
-the same name that is included in the package.  The ins-and-outs of
-this are described more fully in the main vignette for the package.
+# Compile the document
 
 If the user starts an R session, she can run the `rmd2pdf` function
 with many optional arguments, as follows:
@@ -109,11 +83,21 @@ that is nearly identical
     $ ./rmd2pdf.sh --toc=FALSE --template='"theme/report-boilerplate.tex"' skeleton.Rmd
 	
 Note the single quotes protect the double quotes.
-Although our functions are designed to use our style, it is possible
-to compile a document with one's own template. By editing the
-"theme/report-boilerplate.tex" file, or by renaming that file and
-adjusting the previous argument, it fairly obvious how this can be
-customized.
+
+The template can, of course, be edited for your purposes. Tt fairly
+obvious how this can be customized. An important thing to remember is
+that a template file treats dollar signs `$` as special symbols, so if
+one intends to insert a literal dollar sign in the template, one
+enters two dollar signs (`$$`).
+
+If this document is edited in **Rstudio**, the "knit" menu sometimes does
+not work correctly. We notice that Rstudio will sometimes alter the
+document yaml header in a harmful way, but this does not always
+happen.  If you open the Rnw file in Rstudio, click "Knit" and choos
+"knit to pdf", it is very likely to work. However, if you accidentally
+choose "knit to HTML", then Rstudio will alter the header and the
+document will not compile correctly any more.  It seems like a mistake
+to allow the editor to alter the content of the header.
 
 Users who do not want to bother with the command line arguments can
 edit the `rmd2pdf.sh` script and change the defaults for the
@@ -135,10 +119,13 @@ This is not true only for math, but also other \LaTeX environments.
 This is explained in the `crmda` package vignette `Rmarkdown`. 
 Not all \LaTeX markup will work well, but most will. 
 
-Careful proof reading of output is essential.  The markdown to PDF
-conversion does not warn us of unrecognized LaTeX code.  The result is
-not an error, but rather "empty white space" where the user expects
-\LaTeX output.
+CAUTION: Some \LaTeX will fail without warning or error
+messages. Careful proof reading of output is essential.  The markdown
+to PDF conversion does not warn us of unrecognized LaTeX code.  The
+result is not an error, but rather "empty white space" where the user
+expects \LaTeX output.
+
+## Equations
 
 Use `\[` and `\[` for display equations. Do not use the 
 double dollar signs:
@@ -147,15 +134,20 @@ double dollar signs:
 \Sigma_{gt}=\Lambda_{gt}\Psi_{gt}\Lambda'_{gt}+\Theta_{gt}
 \]
 
+To create a numbered equation, do this
+
+\begin{equation}
+\Sigma_{gt}=\Lambda_{gt}\Psi_{gt}\Lambda'_{gt}+\Theta_{gt}\label{eq:sigma}
+\end{equation}
+
+and cross-reference that as equation (\ref{eq:sigma}).
+
 ## Document customization: essentials
 
-The function `rmd2pdf` (same as the script) supplies settings,
-including a \LaTeX template called "report-boilerplate.tex".  That
-boilerplate is available in the R package and a copy is placed in the
-`theme` folder when the document is compiled the first time (there is
-an R chunk above called `themecopy` which does that work).  After
-that, the author is allowed to revise the "report-boilerplate.tex"
-file and the revised version will be in effect.  The `themecopy`
+With the `stationery` package, we provide generic logos as
+placeholders.  Feel free to replace them with your own logos.
+Most of the example documents have a code chunk that copies
+the logo files from an R packages. That `themecopy`
 stanza can be removed after the document is compiled for the first
 time, it will not replace a user-edited file from the theme directory
 with a new copy.  We usually leave that chunk, so that we can 
