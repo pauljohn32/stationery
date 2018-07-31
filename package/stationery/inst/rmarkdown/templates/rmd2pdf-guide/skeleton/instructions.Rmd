@@ -30,6 +30,7 @@ addr:
     r3: "Email: crmda@ku.edu"
 logoleft: theme/logoleft.pdf
 logoright: theme/logo-vert.pdf
+guidenum: 00
 bibliography: theme/R.bib
 fontsize: 11pt
 
@@ -71,7 +72,21 @@ to get serious.
 
 To compile, either start R and use the function `rmd2pdf` or use the
 shell script `rmd2pdf.sh` that is in the same directory as the `Rmd`
-file. The function `rmd2pdf` (same as the script) supplies settings. The
+file. The function `rmd2pdf` (same as the script) will receive
+arguments that override the settings within the document header. For
+example, one could replace the template by specifying 
+
+```
+rmd2pdf("instructions.Rmd", template = "theme/myothertemplate.tex")
+```
+
+It is tricky to provide the same setting in the command line script
+because of quotation marks. One would run
+
+```
+./rmd2pdf.sh --template='"theme/myothertemplate.tex"' instructions.Rmd
+```
+supplies settings. The
 user can supply many arguments to control the table of contents and so
 forth.
 

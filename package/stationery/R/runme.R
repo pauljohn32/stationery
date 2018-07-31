@@ -276,6 +276,7 @@ rmd2pdf <- function(fn = NULL, wd = NULL, ..., verbose = FALSE,
 ##' @param clean Default TRUE. Remove intermediate LaTeX files when
 ##'     using texi2pdf
 ##' @param quiet Default = TRUE.  No output unless an error occurs.
+##'     Antonym for \code{verbose}.
 ##' @param verbose Default = \code{!quiet}. Antonym for
 ##'     \code{quiet}. Functions try to reduce amount of screen
 ##'     output. Knitr functions that use \code{quiet} flag will be set to
@@ -435,7 +436,7 @@ rnw2pdf <- function(fn = NULL, wd = NULL, ..., engine = "knitr", purl = TRUE,
                 ## out3 <- sysrun(cmd1)
                 ## out4 <- sysrun(cmd1)
                 ##}                       
-                if(clean) unlink(fntex)
+                ## if(clean) unlink(fntex)
                 fnpdf <- gsub("\\.Rnw$", ".pdf", x, ignore.case = TRUE)
             }
         }
