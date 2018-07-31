@@ -365,7 +365,7 @@ rnw2pdf <- function(fn = NULL, wd = NULL, ..., engine = "knitr", purl = TRUE,
         fnR
     }
 
-    compileme <- function(x, verbose, clean) {
+    compileme <- function(x) {
         if (length(grep("\\.lyx$", tolower(x)))){
             ## Let lyx compile to pdf
             cmd <- paste("lyx -e pdf2 ", x, if(!verbose) sysnull)
@@ -426,8 +426,7 @@ rnw2pdf <- function(fn = NULL, wd = NULL, ..., engine = "knitr", purl = TRUE,
                 fntex <- gsub("\\.Rnw$", ".tex", x, ignore.case = TRUE)
                 ## 20180731: Try built-in texi2pdf again, instead of home-made methld
                 ## if (!isWindoze){
-                tools::texi2pdf(fntex, pdf = TRUE,
-                                texi2dvi = "texi2pdf", clean = clean, quiet = quiet)
+                tools::texi2pdf(fntex, texi2dvi = "texi2pdf", clean = clean, quiet = quiet)
                 ## } else {
                 ## cmd1 <- paste0("pdflatex -interaction=batchmode \"", fntex, "\" ", if(!verbose) sysnull)
                 ## out1 <- sysrun(cmd1)
