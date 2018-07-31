@@ -449,7 +449,7 @@ rnw2pdf <- function(fn = NULL, wd = NULL, ..., engine = "knitr", purl = TRUE,
 
     res <- list()
     for(i in fn){
-        res[[i]] <- compileme(i, verbose = verbose)
+        res[[i]] <- compileme(i)
     }
     
     if (!is.null(wd)){
