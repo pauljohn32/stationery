@@ -62,6 +62,7 @@ getFiles(logos, pkg = "stationery")
 This is an abstract. Please include a terse, yet descriptive statement here of less than 200 words. It should avoid colloquialisms and polysyllabic profundities.
 \end{abstract}
 
+# Header Level 1 with a number
 
 # Header Level 1 without number {-}
 
@@ -73,24 +74,7 @@ compiler from inserting them.
 Fill in your name, title, email, tags.  Please don't change the
 pdf_document settings unless you know what you are doing.
 
-## See documentation {-}
 
-We have separate instructions in package vignettes.
-
-# LaTeX Syntax is allowed {-}
-
-\[
-\Sigma_{gt}=\Lambda_{gt}\Psi_{gt}\Lambda'_{gt}+\Theta_{gt}
-\]
-
-# `R` code chunks {-}
-
-This document includes R[@RCore] code chunks.
-
-```{r}
-x <- rnorm(100)
-mean(x)
-```
 
 
 [//]: (All guides must have this as the final stanza)
