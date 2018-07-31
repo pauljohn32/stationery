@@ -259,27 +259,30 @@ rmd2pdf <- function(fn = NULL, wd = NULL, ..., verbose = FALSE,
 
 
 
-##' Convert an Rnw or lyx file to PDF
+##' Convert (Sweave & compile) an Rnw or lyx file to PDF
 ##'
-##' Documents saved with suffic ".lyx" or ".Rnw" will be
-##' converted.  Note it is very important to specify the
-##' engine correctly, this can be either "Sweave" or "knitr".
+##' Documents saved with suffic ".lyx" or ".Rnw" will be converted.
+##' Note it is very important to specify the engine for the code
+##' chunks correctly, this can be either "Sweave" or "knitr".
 ##' 
-##' @param fn should end in either ".Rnw" or ".lyx"
+##' @param fn One or more file names, should end in either ".Rnw" or
+##'     ".lyx"
 ##' @param wd Directory in which the file to be converted
 ##'     exists. Leave NULL default if is in current working directory.
+##' @param ... Other parameters, not used at the moment.
 ##' @param engine "knitr" or "Sweave"
 ##' @param purl Default TRUE. Synonym of tangle: extract R code chunks
 ##' @param tangle Same as purl, both parameters have same result
 ##' @param clean Default TRUE. Remove intermediate LaTeX files when
 ##'     using texi2pdf
-##' @param verbose Default = FALSE. Functions try to reduce amount of
-##'     screen output. Knitr functions that use "quiet" flag will be
-##'     set to \code{!verbose}.
+##' @param quiet Default = TRUE.  No output unless an error occurs.
+##' @param verbose Default = \code{!quiet}. Antonym for
+##'     \code{quiet}. Functions try to reduce amount of screen
+##'     output. Knitr functions that use \code{quiet} flag will be set to
+##'     \code{!verbose}.
 ##' @param envir environment for evaluation, see \code{knitr}
 ##'     documents, defaults to parent.frame().
 ##' @param encoding character encoding, defaults from user options
-##' @param ... Other parameters
 ##' @return NULL
 ##' @export
 ##' @author Paul Johnson <pauljohn@@ku.edu>
@@ -296,10 +299,11 @@ rmd2pdf <- function(fn = NULL, wd = NULL, ..., verbose = FALSE,
 ##' dir.new <- initWriteup(fmt)
 ##' setwd(dir.new)
 ##' of1 <- rnw2pdf("skeleton.Rnw", engine = "Sweave")
+##' if(interactive()) browseURL(of1)
 ##' list.files()
 ##' setwd(wd.orig)
 rnw2pdf <- function(fn = NULL, wd = NULL, ..., engine = "knitr", purl = TRUE,
-                    tangle = purl, clean = TRUE, verbose = FALSE,
+                    tangle = purl, clean = TRUE, quiet = TRUE, verbose = !quiet,
                     envir = parent.frame(), encoding = getOption("encoding"))
 {
     if(!missing(tangle) && is.logical(tangle)) purl <- tangle
@@ -311,12 +315,9 @@ rnw2pdf <- function(fn = NULL, wd = NULL, ..., engine = "knitr", purl = TRUE,
         wd.orig <- getwd()
         setwd(wd)
     }
-    
-    if (is.null(fn)) {
-        cat("Will render all *.Rnw files in current working directory\n")
-        fn <- list.files(pattern="Rnw")
-    }  
 
+    dots <- list(...)
+    
     isWindoze <- if(Sys.info()[['sysname']] == "Windows") TRUE else FALSE
     sysnull <-  if(isWindoze) "> nul" else " > /dev/null"
     
@@ -363,7 +364,7 @@ rnw2pdf <- function(fn = NULL, wd = NULL, ..., engine = "knitr", purl = TRUE,
         fnR
     }
 
-    compileme <- function(x, verbose) {
+    compileme <- function(x, verbose, clean) {
         if (length(grep("\\.lyx$", tolower(x)))){
             ## Let lyx compile to pdf
             cmd <- paste("lyx -e pdf2 ", x, if(!verbose) sysnull)
@@ -422,17 +423,17 @@ rnw2pdf <- function(fn = NULL, wd = NULL, ..., engine = "knitr", purl = TRUE,
                 }
                 fnbase <- gsub("\\.Rnw$", "", x, ignore.case = TRUE)
                 fntex <- gsub("\\.Rnw$", ".tex", x, ignore.case = TRUE)
+                ## 20180731: Try built-in texi2pdf again, instead of home-made methld
                 ## if (!isWindoze){
-                ##      tools::texi2pdf(fntex,
-                ##                      texi2dvi = "texi2pdf", clean = clean,
-                ##                      quiet = !verbose)
+                tools::texi2pdf(fntex, pdf = TRUE,
+                                texi2dvi = "texi2pdf", clean = clean, quiet = quiet)
                 ## } else {
-                cmd1 <- paste0("pdflatex -interaction=batchmode \"", fntex, "\" ", if(!verbose) sysnull)
-                out1 <- sysrun(cmd1)
-                cmd2 <- paste0("bibtex \"", fnbase, "\" ", if(!verbose) sysnull)
-                out2 <- sysrun(cmd2)
-                out3 <- sysrun(cmd1)
-                out4 <- sysrun(cmd1)
+                ## cmd1 <- paste0("pdflatex -interaction=batchmode \"", fntex, "\" ", if(!verbose) sysnull)
+                ## out1 <- sysrun(cmd1)
+                ## cmd2 <- paste0("bibtex \"", fnbase, "\" ", if(!verbose) sysnull)
+                ## out2 <- sysrun(cmd2)
+                ## out3 <- sysrun(cmd1)
+                ## out4 <- sysrun(cmd1)
                 ##}                       
                 if(clean) unlink(fntex)
                 fnpdf <- gsub("\\.Rnw$", ".pdf", x, ignore.case = TRUE)
