@@ -1,0 +1,409 @@
+%% LyX 2.2.3 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[11pt,letterpaper,english]{extarticle}
+\usepackage{lmodern}
+\renewcommand{\sfdefault}{lmss}
+\renewcommand{\ttdefault}{lmtt}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\setlength{\parskip}{\medskipamount}
+\setlength{\parindent}{0pt}
+\usepackage[authoryear]{natbib}
+
+\makeatletter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
+\special{papersize=\the\paperwidth,\the\paperheight}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
+\providecommand*{\code}[1]{\texttt{#1}}
+
+\@ifundefined{date}{}{\date{}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+%\VignetteIndexEntry{Instructions for guides using knitted code chunks}
+%\VignetteEngine{knitr}
+%\VignetteBuilder{stationery::rnw2pdf}
+%\VignetteEncoding{UTF-8}
+
+
+\usepackage[includehead, includefoot,
+lmargin=1in,
+rmargin=1in,
+tmargin=0.75in,
+bmargin=1.0in,
+headheight=0pt,
+headsep=0pt,
+marginparwidth=0pt,
+footskip=1.5\baselineskip,
+]{geometry}
+
+\input{theme/guidePreambleHeader.tex}
+\input{theme/preambleFooter.tex}
+\input{theme/guidePreambleKnitr.tex}
+
+\makeatother
+
+\usepackage{babel}
+\usepackage{listings}
+\renewcommand{\lstlistingname}{\inputencoding{latin9}Listing}
+
+\begin{document}
+%% Fill in values of the arguments here, 
+%% If blanks are needed, must insert value " ~ "
+%% If comma needed inside value, wrap in {}.
+%% Delete secondauthor and thirdauthor if not needed
+\guidesetup{%
+  author={
+    lastname=Johnson, 
+    firstname=Paul~E., 
+    affiliation=Directior{,}~CRMDA,
+    email=pauljohn@ku.edu},
+  url={https://crmda.ku.edu/guides},
+  keywords={stationery, guide, knitr},
+  title={Instructions for guides using knitted code chunks},
+  leftlogo={theme/logoleft.pdf},
+  rightlogo={theme/logo-vert.pdf},
+  number=00,
+}
+\guidehdr
+
+<<Roptions, echo=FALSE>>=
+opts.orig <- options()
+options(width=75, prompt=" ", continue="  ")
+options(useFancyQuotes = FALSE) 
+set.seed(12345)
+pdf.options(onefile=FALSE,family="Times",pointsize=10)
+if(!dir.exists("tmpout")) dir.create("tmpout", showWarnings=FALSE)
+@
+
+<<knitropts, echo=FALSE>>=
+## Chunk output 
+library(knitr)
+opts_chunk$set(fig.path="tmpout/t-", split=FALSE, 
+               ae=FALSE, fig.height=3, fig.width=5, comment=NA)
+@
+
+<<texcopy, include=FALSE>>=
+library(stationery)
+## If theme directory does not have required images or TeX files
+## we need to retrieve them and put them in "theme" directory. 
+logos <- c(logoleft = "logoleft.pdf", 
+           logoright = "logo-vert.pdf",
+           "preambleFooter.tex")
+getFiles(logos, pkg = "stationery")
+@
+\begin{abstract}
+\noindent This shows how we use R \citep{RCore} to make guide documents
+using the CRMDA style. 
+
+\tableofcontents{}
+\end{abstract}
+
+\section{Introduction}
+
+Create a skeleton document by opening R and running
+
+<<eval=F>>=
+library(stationery)
+initWriteup("rnw2pdf-guide-knit")
+@
+
+That will create a folder ``writeup/rnw2pdf-guide-knit'' (unless
+you request otherwise by setting the dir argument). 
+
+We suggest you
+\begin{enumerate}
+\item Compile the skeleton document \emph{as is }to test your setup
+\item Make revisions incrementally, and re-compile often to make sure nothing
+has been broken.
+\end{enumerate}
+Don't make changes that you don't understand in the code chunks above
+or the last chunks below.
+
+\section{LyX: Cautions}
+
+The document preamble has manual settings for margins (geometry) as
+well as hyperlinks (PDF hyperref). Don't use the LyX pull down menu
+to revise them. Edit preamble or config files for that. Repeat \textbf{CAUTION}:
+Don't change the page margins or settings for hyperlinks with pull
+down menus.
+
+\section{What to edit}
+
+\subsection*{Title and author information}
+
+The first block in the document has the title and author information. 
+
+\subsection*{Footer information}
+
+The footer in this document uses data that is provided in a file named
+``addressFooter.tex''. After the document is compiled for the first
+time, that document should be available in the theme folder.
+
+\subsection*{About the theme folder}
+
+The theme folder should be empty when the \code{initWrite()} function
+is run. It will not be empty after the first compilation of the document.
+
+There is an R code chunk above called ``texcopy''. It will copy
+configuration files from the package into the theme folder. After
+running this for the first time, those files will not be automatically
+replaced by the scripts. 
+
+Authors are free to edit the theme files, to replace logo images and,
+of course, to insert their addresses. 
+
+If the author makes an error in editing a theme file, it is safe to
+delete the erroneous file and run the compile script again. That will
+copy a fresh version of the theme file into the directory.
+
+\section{Check our documentation}
+
+There are several vignettes distributed with this package. Please
+review them.
+\begin{enumerate}
+\item ``stationery'': the package framework overview
+\item ``code\_chunks'': discusses display of code in LaTeX documents
+\end{enumerate}
+
+\section{Compile the PDF document}
+
+The skeleton file is provided in 2 formats, LyX and Rnw. 
+
+In either case, please understand that compiling is a two step process.
+\begin{enumerate}
+\item knitting: Run R to do the calculations in the R code chunks and write
+out a LaTeX file
+\item compiling: Run a LaTeX program, such as pdflatex or xelatex to convert
+the LaTeX file to pdf. It is usually necessary to run the compiler
+two or more times, along with a separate bibliography program. If
+it is available, we suggest an aggregator named texi2pdf, which will
+handle this effort.
+\end{enumerate}
+
+\subsection*{Edit the LyX file.}
+
+There are 4 methods, we hope one will suit your workflow.
+\begin{enumerate}
+\item Use the LyX editor. The file can be compiled to PDF in LyX, just like
+any other LyX file. LyX handles conversion from LyX to Rnw to tex
+to PDF. This has the same effect as using LyX from the command line.
+The following will create the PDF file using pdflatex as the final
+comiler:
+
+\inputencoding{latin9}\begin{lstlisting}
+$ lyx -e pdf2 skeleton.lyx
+\end{lstlisting}
+\inputencoding{utf8}
+Because lyx uses a separate working directory for the compilation
+work, the project directory stays clean. None of the intermediate
+LaTeX files ({*}.log, {*}.log, {*}.bbl) will appear.
+\item Open an R session and make sure the working directory is the same
+as the project writeup.
+
+\inputencoding{latin9}\begin{lstlisting}
+rnw2pdf("skeleton.lyx")
+\end{lstlisting}
+\inputencoding{utf8}\item The shell script \code{rnw2pdf.sh} is provided in the same folder.
+It can be run in the shell as
+
+\inputencoding{latin9}\begin{lstlisting}
+$ ./rnw2pdf.sh skeleton.lyx
+\end{lstlisting}
+\inputencoding{utf8}
+In the discussion in the next sub section, we outline usage of additional
+arguments with rnw2pdf for the compilation of Rnw files. All of those
+arguments are equally applicable in this context.
+\item In case you want to track the steps of compiling one by one, open
+the file in LyX. Use the pull down menu \code{File} $\rightarrow$
+\code{Export} $\rightarrow$ \code{Rnw (knitr)}. That will create
+a file named ``skeleton.Rnw''. This is the equivalent of the command
+line statement
+
+\inputencoding{latin9}\begin{lstlisting}
+$ lyx -e knitr skeleton.lyx
+\end{lstlisting}
+\inputencoding{utf8}
+After that Rnw file is created, proceed as described in the next subsection.
+
+This two-step process is valuable for debugging. It makes it easier
+to spot trouble by focusing on the separate transitions.
+\end{enumerate}
+
+\subsection*{Edit the Rnw file}
+
+The Rnw file we provide is produced by LyX, it is an intermediate
+step in the document production sequence. A two step compilation procedure
+is necessary. First, one must convert the ``Rnw'' file to ``pdf''
+(with knit), and then the knitted tex file is compiled into pdf by
+pdflatex (or one of the other LaTeX compilers). 
+
+The work flow here will vary, depending on your experience and the
+editor you choose to use. Here are some possibilities:
+\begin{enumerate}
+\item You may have a ``noweb'' aware editor. Emacs, Rstudio, and others
+have menus that can initiate the work of knitting and rendering the
+document.
+\item Open an R session and make sure the working directory is the same
+as the project writeup.
+
+\inputencoding{latin9}\begin{lstlisting}
+rnw2pdf("skeleton.Rnw")
+\end{lstlisting}
+\inputencoding{utf8}
+Additional arguments can be used, mainly to control the verbosity
+of the output and the creation of subsidiary files. Our function,
+by default, will create and R file summary of the command chunks.
+This file is referred to as a ``purled'' or ``tangled'' file. 
+\item The shell script \code{rnw2pdf.sh} is provided in the same folder.
+It can be run in the shell as
+
+\inputencoding{latin9}\begin{lstlisting}
+$ ./rnw2pdf.sh skeleton.Rnw
+\end{lstlisting}
+\inputencoding{utf8}
+The command like script answers to all of the arguments followed by
+the R function \code{rnw2pdf}. The usage is nearly identical. Where
+the R function call would be 
+
+\inputencoding{latin9}\begin{lstlisting}
+rnw2pdf("skeleton.lyx", purl = FALSE, clean = FALSE, verbose = TRUE, keep_tex = TRUE)
+\end{lstlisting}
+\inputencoding{utf8}
+the shell command would be
+
+\inputencoding{latin9}\begin{lstlisting}[style=Rinput]
+$ ./rnw2pdf --purl=FALSE --clean=FALSE --keep_tex=TRUE --verbose=TRUE skeleton.lyx
+\end{lstlisting}
+\inputencoding{utf8}
+The only difference in usage arises when a quoted string must be passed
+through. Suppose the files are in a subdirectory named ``project''.
+Inside the R code, the quoted string to specify the directory where
+the file resides (the working directory) would be like so:
+
+\inputencoding{latin9}\begin{lstlisting}
+rnw2pdf("skeleton.lyx", wd = "project")
+\end{lstlisting}
+\inputencoding{utf8}
+the shell command would be
+
+\inputencoding{latin9}\begin{lstlisting}
+$ ./rnw2pdf --wd='"project"' skeleton.lyx
+\end{lstlisting}
+\inputencoding{utf8}
+Note the single quotes that are protecting the double quotes.
+\item Our shell script is not the only way to use command line tools to
+get this done. One can run shell commands such as:
+
+\inputencoding{latin9}\begin{lstlisting}
+$ R CMD knit skeleton.Rnw
+\end{lstlisting}
+\inputencoding{utf8}
+That will create \code{skeleton.tex}, which we compile with
+
+\inputencoding{latin9}\begin{lstlisting}
+$ texi2pdf skeleton.tex
+\end{lstlisting}
+\inputencoding{utf8}
+The major difference between running this and the script we provide
+is that our script will handle LyX files and it will, by default,
+will create a purled copy of the R code. 
+\end{enumerate}
+
+\section{Code Chunk Check}
+
+\subsection{knitr issues/features}
+
+The original R \citep{RCore} approach to combining code, output within
+the document is called Sweave. The knitr approach is an alternative
+package. knitr is helpful especially because it can be used with R
+markdown to produce HTML web pages. 
+
+Styling of knitr code chunks is different than Sweave. It appears
+we lose line-wrap entirely. I can't figure how to make Sweavel ``listings''
+environments take over the knitr presentation. This is what knitr
+forces on us for the R input chunk
+
+<<eval=F>>=
+library(stationery)
+initWriteup("rnw2pdf-guide-knit")
+@
+
+This is what we would rather have
+
+\inputencoding{latin9}\begin{lstlisting}[style=Rinput]
+library(stationery)
+initWriteup("rnw2pdf-guide-knit")
+\end{lstlisting}
+\inputencoding{utf8}
+We have not yet learned how to control the coloring of knitr code
+chunks, in other words. That is one reason to prefer the sweave-based
+templates we offer.
+
+\subsection{Code Chunks}
+
+If you choose to use knitr rather than Sweave as the chunk-processor–and
+by using this template that is what you did decide–you should study
+the knitr chunk options. These are discussed in some detail in the
+vignette on code chunks.
+
+Here is an example of a data frame being created and a glm is estimated:
+
+<<>>=
+set.seed(234234)
+dat <- data.frame(x = rnorm(100), y = rpois(100, lambda = 7))
+m1 <- glm(y ~ x, data = dat, family = "poisson")
+summary(m1)
+@
+
+Some code that might be used to create a regression table using outreg
+from the rockchalk package is the following. As you see, the output
+``splats'' into the document, it is not in a floating figure or
+table.
+
+<<pois10, eval=FALSE>>=
+library(rockchalk)
+or <- outreg(list("My Poisson"= m1), varLabels = c("x" = "A Normal Predictor"), tight = FALSE)
+cat(or, file="tmpout/t-pois15.tex")
+cat(or)
+@
+
+<<pois15, results='asis', echo=FALSE>>=
+<<pois10>>
+@
+
+It is possible, however, to input the same chunk into a table, as
+we have done in Table \ref{tab:A-Poisson-Regression}. That is the
+typically-preferred format for presentation of tables in guides.
+
+\begin{table}[h]
+\caption{A Poisson Regression\label{tab:A-Poisson-Regression}}
+
+\input{tmpout/t-pois15.tex}
+\end{table}
+
+\section{References}
+
+\bibliographystyle{apalike2}
+\bibliography{theme/R}
+
+\section{Replication Information\label{sec:Session-Info}}
+
+Please leave this section for guide documents. It is important for
+replication. 
+
+<<session10, echo=F>>=
+sessionInfo()
+if(!is.null(warnings())){
+    print("Warnings:")
+    warnings()}
+@
+
+<<session20, include=F>>=
+## Don't delete this. It puts the interactive session options
+## back the way they were. If this is compiled within a session
+## it is vital to do this.
+options(opts.orig)
+@
+\end{document}
