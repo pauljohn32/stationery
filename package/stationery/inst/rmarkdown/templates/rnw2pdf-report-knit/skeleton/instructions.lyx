@@ -1522,7 +1522,6 @@ Session Information
 
 \begin_layout Standard
 Leave the code chunks below.
- But the visible words and section name should be removed.
  Session Information is usually not written into a report, but an output
  file is created by the following pieces.
 \end_layout
