@@ -16,7 +16,7 @@ License: CC BY-SA 4.0
 Imports:
     kutils, rmarkdown, knitr
 Suggests:
-    rockchalk, xtable, lavaan, utils, psych, pander
+    rockchalk, xtable, lavaan, utils, psych, pander, R.rsp
 LazyData: TRUE
 RoxygenNote: 6.0.1
-VignetteBuilder: knitr, utils
+VignetteBuilder: R.rsp, knitr, utils

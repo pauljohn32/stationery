@@ -17,15 +17,15 @@ git ls-files . | tar cT - | tar -x -C "../${PACKAGE}.gitex"
 cd ..
 
 cd ${PACKAGE}.gitex
-## mkdir -p inst/doc
-## cp -f ../stationery/vignettes/*.pdf inst/doc
-## cp -f ../stationery/vignettes/*.html inst/doc
+mkdir -p inst/doc
+cp -f ../stationery/vignettes/*.pdf* inst/doc
+cp -f ../stationery/vignettes/*.html* inst/doc
 
 cd ..
 R --vanilla -f roxygenstationery.R
 
 
-## R CMD build --resave-data --no-build-vignettes ${PACKAGE}.gitex 
+##R CMD build --resave-data --no-build-vignettes ${PACKAGE}.gitex 
 R CMD build --resave-data ${PACKAGE}.gitex 
 
 
