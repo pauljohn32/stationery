@@ -30,9 +30,9 @@ abstract: |
 subtitle: KU CRMDA Markdown
 Note to Authors: please_dont_change_the_next lines!
 vignette: >
-  %\VignetteIndexEntry{Rmarkdown_HTML_Features} 
+  %\VignetteIndexEntry{Rmarkdown HTML Special Features} 
   %\VignetteEngine{knitr::rmarkdown} 
-  %\VignetteEncoding{UTF-8}
+  \usepackage[utf8]{inputenc}
 ---
 
 

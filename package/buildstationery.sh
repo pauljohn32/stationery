@@ -25,7 +25,9 @@ cd ..
 R --vanilla -f roxygenstationery.R
 
 
-R CMD build --resave-data --no-build-vignettes ${PACKAGE}.gitex 
+## R CMD build --resave-data --no-build-vignettes ${PACKAGE}.gitex 
+R CMD build --resave-data ${PACKAGE}.gitex 
+
 
 
 read -p "Run check: OK? (y or n)" result

@@ -18,7 +18,7 @@ output:
 fontsize: 12pt
 bibliography: theme/R.bib
 vignette: >
-    %\VignetteIndexEntry{Rmarkdown_Overview}
+    %\VignetteIndexEntry{Rmarkdown Overview}
     %\VignetteEngine{knitr::rmarkdown}
     %\VignetteEncoding{UTF-8}
 header-includes:
@@ -29,6 +29,7 @@ header-includes:
 -  \usepackage{calc}
 -  \usepackage{subfig}
 -  \usepackage[authoryear]{natbib}
+-  \usepackage[utf8]{inputenc}
 addr:
     l1: 1425 Jayhawk Blvd
     l2: Watson Library, Suite 470

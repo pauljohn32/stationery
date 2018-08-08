@@ -9,7 +9,9 @@
 \setlength{\parskip}{\medskipamount}
 \setlength{\parindent}{0pt}
 \usepackage{array}
+\usepackage{float}
 \usepackage{url}
+\usepackage{graphicx}
 \usepackage[authoryear]{natbib}
 
 \makeatletter
@@ -28,9 +30,9 @@
 
 \@ifundefined{date}{}{\date{}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
-% \VignetteIndexEntry{stationery}
-% \VignetteEngine{Sweave}
-% \VignetteBuilder{stationery::rnw2pdf}
+%\VignetteIndexEntry{stationery}
+%\VignetteEngine{Sweave}
+%\VignetteBuilder{stationery::rnw2pdf}
 
 \usepackage[includehead,includefoot,
 lmargin=1in,
@@ -51,6 +53,9 @@ footskip=1.5\baselineskip,
 \input{theme/preambleFooter.tex}
 \input{theme/reportPreambleSweavel.tex}
 
+\@ifundefined{showcaptionsetup}{}{%
+ \PassOptionsToPackage{caption=false}{subfig}}
+\usepackage{subfig}
 \makeatother
 
 \usepackage{babel}
@@ -103,239 +108,200 @@ options(SweaveHooks=list(fig=function() par(mar=pjmar, ps=10)))
 pdf.options(onefile=FALSE, family="Times", pointsize=10)
 @
 \begin{abstract}
-\noindent This document surveys methodologies for literate document
-preparation. It offers an overview for 8 document templates provided
-by the R package named \code{stationery}. The document compares LaTeX-based
-strategies (using the code chunk engines Sweave and knitr) with documents
-prepared with markdown. We discuss strengths and weaknesses of each
-method and then offer some advice about how authors should plan their
-projects.
+\noindent The stationery package offers working examples for preparation
+of ``reproducible research'' documents. It demonstrates how one
+can create and customize the style of both markdown and LaTeX documents.
+These formats utilize R's ``code chunk'' processing technology,
+so that code that creates figures and tables can be embedded into
+the document itself. The package includes 8 document templates. The
+vignettes that accompany the package provide elementary explanations
+of the formats and how they differ in practice.
 \end{abstract}
 
 \section{Introduction}
 
-Researchers who have been using word processors to prepare their research
-articles are understandably bewildered by recent talk about reproducible
-research documents (\citealp{leisch2002,xiedynamic,stodden_2013,xiebookdown}).
-The banner of ``reproducible documents'' hangs over scholars who
-combine code and analysis into a single authoring process. We are
-in a new era of emphasis on reproducible research and the integration
-of statistical analysis with report preparation is intended to enhance
-integrity and reduce the frequency of typographical (and other) errors.
+Reproducible research? A university administration recently exclaimed,
+``I have no idea what that means!'' It appears many members of the
+faculty have the same response. The stationery package for R, and
+the documentation provided with it, may help.
 
-Still, the majority response from most professors in the university
-seems to echo the exclamation of one university administrator: ``I
-have no idea what that means!'' In the \emph{old} \emph{way} of doing
-things, one prepares a document in a word processor program. While
-doing that, one types tables and pastes in graphs. One often types
-in a bibliography if the word processor does not integrate well with
-a bibliography manager. The old way is practiced by most social scientists
-and humanists today.
+Researchers who have been using word processors are used to copying
+and pasting graphs and tables from statistical output. Proponents
+of the \emph{reproducible research documents} movement (\citealp{leisch2002,xie_bookdown:_2016,xie_dynamic_2015,stodden_implementing_2014})
+ask us to change our workflow in a fundamental way. Make the software
+for statistical analysis work more seamlessly with the document authoring
+process. 
 
-In the \emph{new way} of doing things, we try to avoid typing tables
-or pasting in graphs. We want the analysis software to prepare article-ready
-tables and graphs that can be incorporated into the generation of
-a final report. In the ideal case, an entire article, lecture, or
-book can be generated in one single execution that conducts analysis,
-saves graphics, and assembles them together in a single output document.
-This is roughly along the lines of the ``literate programming''
-movement started by computer scientist Donald Knuth (\citeyear{knuth1984,knuth1989}),
-who also created the TeX document preparation system (1984), an accomplishment
-so massive that its impact on academic research can scarcely be comprehended.
-The statistical program R \citep{RCore} built its documentation framework
-on the literate programming philosophy, integrating Knuth's concepts
-of ``weaving'' and ``tangling'' to produce documents and extract
-code files \citep{leisch2002}. 
+In my experience, the benefits of this change are most apparent in
+class notes and slides. A chronic problem for teachers is a misalignment
+of computer code and output in course materials. It is easy to forget
+to paste in an updated graph or modify a table. With a reproducible
+document, there is no danger that the computer code being discussed
+will not match the output that is presented because they are all part
+of one piece. 
 
-Because researchers in mathematics, engineering, and natural sciences
-were more likely to be familiar with TeX, and its successor LaTeX,
-they were more amenable to concepts of reproducible document preparatoin.
-For social scientists and humanists, where LaTeX was unfamiliar, the
-idea of integrating code and document preparation did not seem tractable.
+For most word-processor-using researchers, the transition is jarring.
+First, the software for document authoring is being replaced. MS Word
+is not sufficient. Second, the format in which documents are stored
+and revised is replaced. Third, the methods of statistical analysis
+that used to seem separate from authoring (SAS, SPSS, etc) are now
+supposed to be integrated with authoring. 
 
-Then comes a rude shock. Immediately after one comprehends the general
-idea of ``code embedded within documents,'' then one is immediately
-slapped in the face by another grim reality: \emph{There are several
-competing formats for doing this kind of work}. Furthermore, no single
-approach is best for all eventualities. One can learn to live within
-one framework, and accept its limitations, or cultivate some experience
-with several methods, in danger of remaining a jack of all trades
-(and master of none).
+In the \emph{new way} of doing things, we avoid typing tables or pasting
+in graphs. The analysis software will prepare article-ready tables
+and graphs that can be put to use with no revision. In the ideal case,
+an entire article, lecture, or book can be generated in one single
+execution that conducts analysis, saves graphics, and assembles them
+together in the output document. This is in line with the ``literate
+programming'' movement started by computer scientist Donald Knuth
+(\citeyear{knuth_literate_1984,knuth_texbook_1984}), who also created
+the TeX document preparation system. The statistical program R \citep{RCore}
+built its documentation framework on the literate programming philosophy,
+integrating Knuth's concepts of ``weaving'' and ``tangling'' to
+produce documents and extract code files \citep{leisch2002}. 
 
-Some of the impediments that have made LaTeX document preparation
-difficult have been addressed over the years by the growth of the
-graphical user interface named LyX (http://www.lyx.org). This is a
-user-friendly with a look-and-feel of more common word processors,
-but it generates LaTeX documents that are then compiled by standard
-LaTeX software. When I say ``LaTeX document,'' I generally mean
-a document prepared with LyX and then exported to LaTeX. LyX is not
-a new program. I've been using LyX for 20 years to prepare course
-notes and slides. It is appealing because it is now available for
-all major operating systems. It is an open framework and it is also
-an free/open source software project.
+Once we understand that statistical code is to be embedded in a research
+report, then comes a series of rude shocks. The first shock is that
+\emph{there are several competing formats for doing this kind of work}.
+The stationery package includes working examples for several different
+file types. Our original work was done with LaTeX in mind. Authors
+can work in LaTeX or with LyX (http://www.lyx.org), a graphical user
+interface for LaTeX that works like a word processor. We also offer
+the markdown document format. Proponents claim that markdown is simpler
+and more human-readable, although we notice many limitations along
+the way. The leading voice has been John Gruber, whose Daring Fireball
+website (https://daringfireball.net/projects/markdown) offered the
+first working set of guidelines for markdown documents. The markdown
+movement gained ground in large part due to John MacFarlane's ambitious
+software program \code{pandoc} (https://johnmacfarlane.net/pandoc),
+a format translator that is used in all desktop computer systems for
+converting markdown documents to PDF and HTML. 
+
+The other shock coming for new users is that the quality of the output
+is generally unfamiliar, if not unacceptable. The \code{stationery}
+package is intended to ease the frustration. It offers working examples
+(and instructions) for generating output that is more compatible with
+our usual standards.
+
+A glossary of the most important terms is provided next.
+\begin{description}
+\item [{front~end:}] the format in which a document is prepared. We consider
+markdown and LaTeX-based formats. Markdown files are saved with a
+suffix .Rmd, while the LaTeX versions are often saved as .Rnw. 
+\item [{back~end:}] the delivered format.\footnote{In this context, it is a bit vague to say \emph{front end} because
+each document is converted through several formats in the compilation
+process. Any intermediate format that precedes another might be referred
+edited directly and treated as a front end by an author.} The back ends considered here are Adobe portable document format
+(PDF) and hypertext markup language (HTML). 
+\item [{code~chunk:}] A segment of R code that is embedded in a LaTeX
+or markdown document.
+\item [{style:}] the description of the back end's format. Our examples
+compare pedagogical guides, formal reports, and slides as styles.
+\item [{skeleton:}] a minimum working example that an author can revise
+into an essay.
+\item [{weave:}] to replace code chunks with output, preparing for compilation
+of a report (synonym of ``knit'').
+\item [{tangle:}] to extract code chunks into a free standing computer
+program (synonym of ``purl'').
+\end{description}
 
 \section{What Do You Get with stationery?}
 
-First, there document templates. Each document type is delivered in
-a fully working format that can be immediately compiled into a presentable
-document. Each one is delivered with an instructional guide that explains
-how to create a new skeleton file for editing and how to compile the
-document. 
+The \code{stationery} package includes examples for eight types of
+documents (see Table \ref{tab:Document-Types}). The document types
+result from ``mixing and matching'' of various front ends, back
+ends, and document styles. We hope that authors who are accustomed
+to writing on stationery, with a pleasant header and footer, will
+find satisfactory results. Each document style includes theme files
+that can be revised to suit the author's needs. While it is not easy
+to create these style templates, we believe it will be easier for
+others succeed if they start from the examples we offer. 
 
-Second, there are R functions that create new templates and assist
-in compiling them. Each template includes a compiler script, so that
-if one is partial to using the ``command line'' to handle repetitive
-jobs, then this will offer a dependable way to compile documents (and
-debug problems with them). It is not necessary to use the command
-line, however, as one can also compile the document using R functions.
-The LaTeX-based templates can also be compiled within LyX.
+The package also provides functions to initialize skeleton documents
+and convert them to a desired back end. 
 
-Third, there are vignettes, the first of which is the present document.
+Finally, there are vignettes, one of which is the present document,
+which serves as a package overview. In addition, we have vignettes
+named
 \begin{enumerate}
-\item stationery Package Overview: The package overview (this document)
-\item Code Chunks
-\item Rmarkdown
-\item HTML Special Features
+\item Code Chunks: compares Sweave and knitr style code chunks.
+\item Rmarkdown: explores key elements in the newest front end document
+framework.
+\item HTML Special Features: a tour of the promise and peril of using HTML
+as a back end for markdown documents.
 \end{enumerate}
 
 \subsection*{\protect\code{stationery} package document templates}
 
-The document types in the \code{stationery} package, and the labels
-we use for them, are provided in Table \ref{tab:Document-Types}.
-There are several types of documents because authors will make different
-choices about the document format and the tools covert the document
-into a presentable format. The formats in which documents are prepared
-are referred to as ``frontends''\footnote{In this context, it is a bit vague to say \emph{front end} because
-each document is converted through several formats in the compilation
-process. Any intermediate format that precedes another might be referred
-to as a frontend.} while the output formats–the ones intended for readers–are the ``backends''. 
-
-In Table \ref{tab:Document-Types}, readers will note that the templates
-have three-part names like ``\code{rnw2pdf-guide-sweave}''. The
-first part of the label an abbreviation for \emph{frontend}2\emph{backend.
-}The nicknames ``rnw'' and ``rmd'' represent the two primary frontends
-used in \code{stationery}. The two backends are portable document
-format (PDF) and hypertext markup language (HTML). By mixing and matching
-the front ends and the backends, we have identifiers like ``rnw2pdf''
-and ``rmd2pdf''. To avoid creating additional labels when it is
-not completely necessary, we use the label ``rnw'' to refer to documents
-that are prepared either as Rnw or LyX files (Since we use LyX to
-generate Rnw, this is not a harmful simplification). 
-
-The middle part of the format label is either ``guide'', ``report''
-or ``slides''. These will be discussed in the next section. 
-
-The final part of the template label represents the engine that is
-used to convert the embedded computer code into statistical output.
-This might be either ``sweave'' or ``knit''. These names refer
-to the code chunk engines, Sweave (\citealp{leisch2002}) and knitr
-(\citealt{xie2014,knitr}). Sweave and knitr are two, separate, not-entirely-compatible
-code frameworks. A possible source of confusion is that Sweave, which
-is the original engine, uses the term ``Sweave'' (an homage to Knuth's
-term ``weave'') to refer to the act of processing S or R code chunks
-in a LaTeX document, while the knitr package introduced a new term
-for this, ``knit''. 
-
-The markdown document movement is associated with the John Gruber's
-Daring Fireball website (https://daringfireball.net/projects/markdown)
-and John MacFarlane's ambitious software program \code{pandoc} (https://johnmacfarlane.net/pandoc).
-Gruber is credited with the main idea of this movement, which is to
-allow authors to prepare documents in a readable format which can
-then be converted into beautiful PDF, HTML, or other formats. pandoc
-is a Swiss army knife of format conversion and its implementation
-is what makes most of this actually work. 
-
-Because markdown is a movement, rather than a product, it allows the
-creation of specialized dialects. and its author's webpage () has
-been an effort to develop an alternative style of document markup
-that is not so ``ugly'' as HTML and not so difficult to learn as
-LaTeX. While the general idea of markdown is quite appealing, the
-devil is in the details, as usual. A host of competing dialects flowered
-almost immediately and now it is quite possible to write a document
-``in'' markdown that is not intelligible to a practitioner of another
-kind of markdown. Here, of course, we are interested mainly in R markdown,
-a variant of markdown that is associated with the knitr package for
-R.
-
-In the stationery package we now have 7 working document skeletons
-that are summarized in Table \ref{tab:Document-Types}. 
+In Table \ref{tab:Document-Types}, readers will note that the document
+formats have three-part names like ``\code{rnw2pdf-guide-sweave}''.
+The first part of the name has the format \emph{frontend}2\emph{backend.}
+The ``rnw'' prefix is for LaTeX files (suffixes to be explained
+below) and the ``pdf'' is the output type. The middle part of the
+format label is either ``guide'', ``report'' or ``slides''.
+For document types that can be used with either Sweave or knitr code
+chunks, it is necessary to add a third part in the name (R markdown
+documents cannot use the Sweave engine). 
 
 \begin{table}
 \caption{Document Types in Stationery\label{tab:Document-Types}}
 
 \begin{tabular}{ccccc>{\centering}p{1in}}
 \hline 
- & Template Label & Frontend & Backend & Format & Code Chunk Engine\tabularnewline
+ & Formats & Frontend & Backend & Style & Code Chunk Engine\tabularnewline
 \hline 
 1 & rmd2html-guide & Markdown & HTML & Guide & knitr\tabularnewline
-2 & rnw2pdf-guide-knit & Markdown & PDF & Guide & knitr\tabularnewline
-3 & rnw2pdf-guide-sweave & LaTeX/LyX & PDF & Guide & Sweave\tabularnewline
-4 &  rmd2pdf-report & Markdown & PDF & Report & knitr\tabularnewline
-5 & rnw2pdf-report-knit & LaTeX/LyX & PDF & Report & knitr\tabularnewline
-6 & rnw2pdf-report-sweave & LaTeX/LyX & PDF & Report & Sweave\tabularnewline
-7 & rnw2pdf-slides-sweave & LaTeX/LyX & PDF & Slides & Sweave\tabularnewline
+2 & rmd2pdf-guide & Markdown & PDF & Guide & knitr\tabularnewline
+3 &  rmd2pdf-report & Markdown & PDF & Report & knitr\tabularnewline
+4 & rnw2pdf-guide-knit & Markdown & PDF & Guide & knitr\tabularnewline
+5 & rnw2pdf-guide-sweave & LaTeX/LyX & PDF & Guide & Sweave\tabularnewline
+6 & rnw2pdf-report-knit & LaTeX/LyX & PDF & Report & knitr\tabularnewline
+7 & rnw2pdf-report-sweave & LaTeX/LyX & PDF & Report & Sweave\tabularnewline
+8 & rnw2pdf-slides-sweave & LaTeX/LyX & PDF & Slides & Sweave\tabularnewline
 \hline 
 \end{tabular}
 \end{table}
 
-\subsection*{Guides versus reports}
+\begin{figure}
+\caption{Compiling a Reproducible Research Document\label{fig:Compiling}}
 
-A \textbf{guide} is intended for students or other learners. A guide
-will generally include code and output excerpts. Preferrably, the
-codeexamples will have line numbers and syntax highlighting. In most
-cases, a guide format is not format suitable for reports to clients
-or for journal articles.
+\includegraphics{importfigs/docproc-01}
+\end{figure}
 
-A \textbf{report} is a more formal document. A report is suitable
-for a journal article or a technical report. A report has less (maybe
-no) code and almost never will it include \textquotedbl{}raw output\textquotedbl{}
-from a computer program. A report includes closer-to-publishable tables
-and figures. The style for \textquotedbl{}report\textquotedbl{} documents
-is fairly well settled. We have a header with the title, the logo,
-and author information. On page 1, we have contact information, in
-the style of a stationary footer. The style for \textquotedbl{}guide\textquotedbl{}
-documents is not well settled. It is one of the problems on our immediate
-agenda.
+The process of converting a reproducible document from front end to
+back end is referred to as compiling. It is always a multi-step process
+which we illustrate in Figure \ref{fig:Compiling}. Because the process
+can fail at any step, users are well advised to keep this fact in
+mind.
 
-The slide format we offer is based on LaTeX Beamer () slide format
-using a customized theme that we prefer. So far, the only code engine
-for which we have working examples in Sweave. We have experimented
-with many slide producing strategies using markdown code and none
-of them have been completely dependable (some of the challenges are
-discussed in later sections of this document and our vignette named
-``/??''. 
+Between the front end and the back end we have intermediate files
+that are created (and just as quickly erased). One of the aims in
+software development is to make the transition process into an automatic,
+seamless process. The software design challenge is to retain some
+flexibility and respect for user input. It seems, almost invariably,
+that the software designer's idea of making this into a seamless process
+is to impose limitations on the author's ability to format and customize
+the document.
 
-\subsection*{There are too many settings}
+LaTeX authors are used to editing .tex files, but .tex is usually
+an intermediate format in this work. When code chunks are included,
+a document is usually given the suffix .Rnw, which is then converted
+into a .tex file by the chunk converter. (If one is editing a \code{LyX}
+file, the converter will export to .Rnw as a first step.) The intermediate
+LaTeX must be compiled (usually by \code{pdflatex}, \code{texi2pdf},
+or similar programs). An R markdown document, which has the suffix
+.Rmd, can be prepared with various back ends in mind (we concentrate
+on PDF and HTML back ends, but \code{pandoc} can be used to convert
+markdown other formats, like MS Word.) 
 
-The `stationery` package has settings that work for our documents.
-Our compiler scripts leave open the possibility that users can supply
-additional command line arguments, arguments that have the same names
-as our R functions rmd2pdf, rmd2html, rnw2pdf, and rnw2html. Still,
-the number of options that can govern the production of the document,
-its transition through several formats, is, well, stupefying.
-
-The list of possible settings is immense partly because each document
-must be converted through several formats. Consider a document that
-is written with R markdown. In order to achieve success, the document
-must undergo these transitions
-\begin{enumerate}
-\item Rmd -> md. R code chunks are isolated, calculated, and replaced by
-R output. This creates a markdown document.
-\item md -> utf8.md. The markdown document's font encoding is homogenized
-to us Unicode (utf8).
-\item utf8.md -> tex. The markdown is converted into LaTeX. This work is
-handled by pandoc (>\textcompwordmark{}>)
-\item tex -> PDF. A LaTeX compiler is needed to do this conversion. Perhaps
-the most frequently used is ``pdflatex'', but there are others that
-are increasingly popular and compatible with additional fonts and
-character sets. If the document includes a bibliographic database,
-one of the companion programs, such as bibtex, biber, or biblatex
-must be called on to do its work.
-\end{enumerate}
-The transition from `utf8.md` to LaTeX, considered in isolation, is
-nearly overwhelming. When we compile a markdown document named ``crmda.Rmd'',
-we can investigate the details and the `pandoc` command is the following
-elaborate request.
+There is a meaningful difference between the programs that are used
+for compiling documents written in LaTeX and pandoc. The LaTeX programs
+do not provide command-line options to change the look-and-feel of
+results. In contrast, the \code{pandoc} program offers command line
+options that can over-ride many settings within the document. At the
+final stage of processing an R markdown document, for example, we
+usually arrive at a call to \code{pandoc} that has a somewhat elaborate
+format. 
 
 \inputencoding{latin9}\begin{lstlisting}[breaklines=true,tabsize=2]
 $ /usr/bin/pandoc +RTS -K512m -RTS crmda.utf8.md 
@@ -343,171 +309,439 @@ $ /usr/bin/pandoc +RTS -K512m -RTS crmda.utf8.md
 pdflatex --listings
 \end{lstlisting}
 \inputencoding{utf8}
-It is a little bit difficult to design a template that both allows
-some user customization while maintaining a consistent look and feel.
-We believe the default configuration in our document packages should
-\textquotedbl{}just work\textquotedbl{}. However, if specialized adjustment
-is necessary, we have not made this too difficult for most authors
-with a ``can do'' attitude.
+If one has created tens or 100s of documents, the ability to re-style
+them in a script, rather than revising each of the individual documents,
+is an advantage.
+
+\subsection*{Incorporating computer code}
+
+Whether one is editing in an LaTeX or a markdown file, there will
+be code chunks. One of the pivotal stages in document compilation
+is the conversion of code chunks into formats suitable for inclusion
+in the document. At this point, we arrive at a somewhat unhappy situation
+because there are competing programs and terminology. Knuth referred
+to the chunk conversion process as ``weaving''. The base R framework
+refer to chunk converion as ``Sweaving'' (because S was the precursor
+to R). The newer \code{knitr} package for R refers to the chunk-conversion
+process as ``knitting'', although it is doing the same work as Sweaving.
+Another problem in terminology is that Knuth used the unlikely term
+``tangle'' to refer to extraction of code chunks to create a ``free
+standing'' program (a program document separate from the commentary).
+Base R refers to that by the name ``Stangle'' while \code{knitr}
+package calls it ``purling''. 
+
+In LaTeX documents, computer code can be displayed via a variety of
+formats (referred to as environments in LaTeX). The traditional method
+was the LaTeX class for \code{Verbatim} output, but a newer, more
+desirable method uses the \code{Listings} class. Our PDF documents
+use the Listings class. Our style documents include example settings
+that authors can revise if they want to adjust the shading, line numbering,
+or other characteristics. 
+
+\section{Styling for Documents}
+
+\subsection*{Reports versus Guides}
+
+The stationery package includes two document styles, dubbed ``guide''
+and ``report''. A \textbf{guide} is a less formal document. The
+final presentation is likely to include computer code and output excerpts.
+The guide format is are usually intended for education and training,
+but it is possible to use the guide style for other types of document.
+The header is a three column structure with organizational and/or
+departmental logos on either side (see Figure \ref{fig:Markdown-Output}
+for an example). 
+
+A \textbf{report} is a more formal document. Its first page includes
+a header and a footer with organizational address information (see
+Figure Xb and Xc). The header and footer appear only on the first
+page. It is more is suitable for preparation of a report to clients
+or a draft of a journal article. A report typically has less (maybe
+no) code and almost never will it include \textquotedbl{}raw output\textquotedbl{}
+from a computer program. A report includes tables and figures that
+are in a (nearly) publishable format. 
+
+The slide format we offer is based on LaTeX Beamer () slide format
+using a customized theme that we prefer. Our slides use the Sweave
+engine. We have experimented with many slide producing strategies
+using markdown code and none of them have been dependable, so we set
+that aside for the moment.
+
+The stationery package document template are intended to have consistent
+``look and feel'' across formats. A guide document may be produced
+with an HTML back end, or in PDF using the Sweave and knitr chunk
+processing engines. These guides will be visually consistent. The
+same is true for report documents produced by Sweave and knitr.
+
+\subsection*{Distinctive Headers and Footers}
+
+In the stationery package, we provide enhanced headers (and footers
+where appropriate) that incorporate organizational graphics and address
+information. This is done by incorporating information in the beginning
+of the document which is later formatted by a template. We have created
+functions for LaTeX documents that mimic some features of markdown
+documents. 
+
+\begin{figure}
+
+\caption{Latex Output (Report Document)}
+
+\subfloat[Header]{
+
+\includegraphics[width=0.8\textwidth]{importfigs/rnw2pdf-report-header}}
+
+\subfloat[Footer]{
+
+\includegraphics[width=0.8\textwidth]{importfigs/rnw2pdf-report-footer}
+
+}
+
+\end{figure}
+
+In order to introduce our LaTeX modifications, we start with an example
+of a markdown prefix. As exemplified in Listing \ref{lis:markdown1},
+at the top of the markdown document, there is a section, written in
+YAML format. The names of the parameters can be drawn from a standard
+set specified by the pandoc program, but also there can be customized
+values specified by a document template. In this case, the parameters
+like \code{affiliation}, \code{email}, \code{l1} through \code{r3},
+and the logo image files, are specified by our template. Many additional
+details about working with markdown are spelled out in the \code{stationery}
+vignette ``Rmarkdown Basics.'' The header and footer created from
+the document are presented in Figure \ref{fig:Markdown-Output}.
+
+\inputencoding{latin9}\begin{lstlisting}[float=ht,caption={Beginning of a markdown preamble},label={lis:markdown1},captionpos=t]
+---
+title: "A Title for Template"
+subtitle: "rmd2pdf-guide"
+guidenum: 00
+guideurl: https://crmda.ku.edu/guides
+keywords: Rmarkdown, R, documents
+author:
+- name: First Author
+  affiliation: CRMDA
+  email: first@ku.edu
+- name:  Second Author
+  affiliation: CRMDA
+  email: second@ku.edu
+addr:
+    l1: address row 1
+    l2: address row 2
+    l3: City State Zipcode
+    r1: "Web: http://crmda.ku.edu"
+    r2: "Email: author@ku.edu"
+    r3: "Phone: 123-345-5678"
+logoleft: theme/logoleft.pdf
+logoright: theme/logo-vert.pdf
+\end{lstlisting}
+\inputencoding{utf8}
+\begin{figure}[H]
+
+\caption{Markdown Output (Guide Document) \label{fig:Markdown-Output}}
+
+\subfloat[Header]{
+
+\includegraphics[width=0.8\textwidth]{importfigs/rmd2pdf-header}}
+
+\subfloat[Footer]{
+
+\includegraphics[width=0.8\textwidth]{importfigs/rmd2pdf-footer}
+
+}
+\end{figure}
+
+The clarity of separation between the document header information
+and the document content is widely regarded as a benefit of the markdown
+document. Another benefit of the markdown system is that the header
+is flexible; one can insert names of additional co-authors in the
+obvious way.
+
+In LaTeX, it is somewhat difficult to achieve the same degree of flexibility,
+but the problem is solved by some LaTeX functions in our templates.
+These use recent innovations in the LaTeX programming interface (with
+the help of several LaTeX experts who answer questions in stackexchange).
+The top portion of the LaTeX document is illustrated in Listing \ref{lis:latex1}.
+The input format is designed to be as similar to the markdown format
+as possible, but there are slight differences due to inherent differences
+in technology. One way in which the LaTeX approach is preferable is
+that the address information in the footer can be stored in a separate
+file and re-used where necessary (which markdown does not allow).
+The output in the header and footer is displayed in Figure \ref{fig:LaTeX-Output}.
+
+\inputencoding{latin9}\begin{lstlisting}[float=h,caption={LaTeX header information},label={lis:latex1},captionpos={t}]
+\guidesetup{
+  author={
+    lastname=Author, 
+    firstname=First, 
+    affiliation=CRMDA,
+    email=first@ku.edu},
+  author={
+    lastname=Author, 
+    firstname=Second, 
+    affiliation=CRMDA, 
+    email=second@ku.edu}, 
+  url={https://crmda.ku.edu/guides},
+  keywords={single-authoring, just one},
+  title={A Title for Skeleton Template: rnw2pdf-guide-sweave},
+  leftlogo={theme/logoleft.pdf},
+  rightlogo={theme/logo-vert.pdf},
+  number=00,
+}
+\guidehdr
+%footer information in addressFooter.tex
+\footersetup{
+  leftside={
+    lone={Address line 1}, 
+    ltwo={Address line 2}, 
+    lthree={City State Zipcode}},
+  rightside={
+    rone=Web: \url{https://crmda.ku.edu},
+    rtwo=Email: \href{mailto:you@where.edu}{\url{you@where.edu}},
+    rthree=Phone: 123-345-5678}
+}
+\end{lstlisting}
+\inputencoding{utf8}
+\begin{figure}[h]
+\caption{LaTeX Output (Guide Document) \label{fig:LaTeX-Output}}
+
+\subfloat[Header]{
+
+\includegraphics[width=0.8\textwidth]{importfigs/rnw2pdf-guide-header}}
+
+\subfloat[Footer]{
+
+\includegraphics[width=0.8\textwidth]{importfigs/rnw2pdf-guide-footer}}
+\end{figure}
+
+How can users customize this? The most obvious user-customization
+is the replacement of the logo icons for guides and reports. In the
+beginning of all our basic documents, there is a function that retrieves
+logo files (graphics and the footer address information for LaTeX
+documents). As provided, the getFiles function will retrieve empty
+white graphics, but there are two ways to customize. The simple, but
+tedious method, is to replace the files ``theme/logoleft.png'' and
+``theme/logo-vert.png''. The slightly more tedious, but automatic
+way, is to create an R package to hold the logo information (we can
+supply a working example of a package named ``crmda''). Then to
+customize the document, the author will then alter the following code
+chun, replacing \code{pkg = stationery} to \code{pkg = \textquotedbl{}your\_pkg\_name\textquotedbl{}}. 
+
+\inputencoding{latin9}\begin{lstlisting}
+```{r themecopy, include = FALSE}
+library(stationery)
+logos <- c(logoleft = "logoleft.pdf", logoright = "logo-vert.pdf")
+getFiles(logos, pkg = "stationery")
+```
+\end{lstlisting}
+\inputencoding{utf8}
+\subsection*{}
 
 \section{Usage overview }
 
-Here we will illustrate the process of initiating a guide document
-that is to be prepared with Rmarkdown and will have the HTML backend.
-Start R in a folder where you would like to create a write-up and
-run
+\subsection{Create a starter ``skeleton'' document}
+
+The stationery package includes a function called \code{initWriteup}.
+This can create simple ready-to-compile examples for all document
+types. Here we will illustrate the process of initiating a guide document
+with Rmarkdown and will have the HTML backend. Start R in a folder
+where you would like to create a write-up and run
 
 \inputencoding{latin9}\begin{lstlisting}
-initWriteup("rmd2pdf-report")
+library(stationery)
+initWriteup(type = "rmd2pdf-report")
 \end{lstlisting}
 \inputencoding{utf8}
-No directory is specified, so the default setting creates a folder
-named \code{rmd2pdf-report}. It will be created in the R current
-working directory. Within the folder \code{rmd2pdf-report}, one should
+This creates a folder named \code{rmd2pdf-report} in which one should
 find 
 \begin{enumerate}
-\item a skeleton template (which the author should rename and edit), 
-\item an instructional guide (in either PDF or HTML format)
-\item a compiler script.
+\item a skeleton template, skeleton.Rmd (which the author should rename
+and edit), 
+\item an instructional guide, instructions.Rmd,
+\item a compiler script, \code{rmd2pdf.sh},
+\item a directory \code{theme}, in which a template and some other configuration
+files are copied
 \end{enumerate}
-One can specify the directory in which the documents will be written.
-For example,
-
-<<usage20,eval=F>>=
-dirname <- "wherever_you_say"
-dir.create(dirname)
-initWriteup("rmd2pdf-report", dir = dirname)
-@
-
 The output will tell you where the directory ended up, say:
 
 \begin{Soutput}
 [1] "/home/pauljohn/wherever_you_say/rmd2pdf-report"
 \end{Soutput}
 
-From within R, we can check for a list of files that were created:
+Most users will rename the file ``skeleton.Rmd'' and the subfolder
+\textquotedbl{}rmd2pdf-report\textquotedbl{} to something more relevant
+to a project. Here we might use the name \code{crmda.Rmd}.
 
-\begin{Soutput}
-> list.files(file.path(dirname, "rmd2pdf-report"))
-[1] "report-instructions.pdf" "report-instructions.Rmd"
-[3] "rmd2pdf.sh"              "skeleton.Rmd"
-\end{Soutput}
+There are other ways to create a document. We have formatted the folder
+structure of the package in a way that is consistent with the template
+format required by Rstudio (as specified by the package \code{rmarkdown}). 
 
-because I want my writeups to collect in the writeup folder of the
-project.
+For our markdown-based formats (sadly, not for the LaTeX based formats),
+the Rstudio graphical interface will work as well. A user can open
+the File menu, choose New File -> R Markdown -> From Template. The
+formats ``rmd2html guide'', ``rmd2pdf report'' and ``rmd2pdf
+guide'' should be available. The \code{rmarkdown} function \code{draft()}
+performs exactly the same purpose as our function \code{initWriteup}.
+One could run
 
-The first order of business is to rename the subfolder from \textquotedbl{}rmd2pdf-report\textquotedbl{}
-to something relevant to a writeup. There may be several reports for
-this project, choose a name that will help you guess which writeup
-is in which folder. Be aware that `initWriteup` will erase the files
-in that folder, if you don't rename it/them.
+\inputencoding{latin9}\begin{lstlisting}
+library(rmarkdown)
+draft("crmda.Rmd", template = "rmd2pdf-report", package = "stationery", create_dir = FALSE)
+\end{lstlisting}
+\inputencoding{utf8}
+\subsection{How to Compile a Document}
 
-Next, we need to make sure the build programs exist and work in your
-computer. Rename the file `report-template.Rmd` to match your purpose.
-My file name is \textquotedbl{}crmda.Rmd\textquotedbl{}.
+Users should try to compile our document before changing it. After
+making revisions, users are always urged to test the document.
 
-Test the build tools. Edit your document, insert your name or a title
-and save the document. Now try to compile it.
+The file can be compiled in several ways. 
 
-The file can be compiled in two ways. 
-
-1. Open an R session and use the function `rmd2pdf()` in the stationery
-package. I'll compile my file `crmda.Rmd`.
+1. Open an R session and use the function \code{rmd2pdf()} in the
+\code{stationery} package. For example, 
 
 <<usage100, eval=F>>=
 library(stationery)
 rmd2pdf("crmda.Rmd")
 @
 
-The function \code{rmd2pdf} is a \emph{wrapper} function. It does
-not do any real work, it just collects your file name and applies
-defaults that we have set. It calls the \code{render} and \code{pdf\_document}
-functions in the \code{rmarkdown}. Because \code{knitr} is the only
-method for handling code chunks in \code{Rmarkdown} documents, also
-involves the \code{knitr} package.
+The function \code{rmd2pdf} allows a great many possible parameters.
+This function orchestrates a two part process that goes on within
+the \code{rmarkdown} package. First, a document format object must
+be created. That function is handled by the \code{pdf\_document}
+in the \code{rmarkdown} package (or, for HTML output, \code{html\_document}).
+After that, the document is rendered by a process that harvests the
+document format values and sends the work to the pandoc function.
+The tricky part of this process is that the document itself may specify
+a parameter that is overridden by \code{pdf\_document} (or \code{html\_document}).
+For example, if the document header requests a table of contents by
+stating \code{toc: true}, running \code{pdf\_document} without specifying
+the parameter \code{toc = TRUE} will cause the default \code{toc = FALSE}
+to be used. These subtle issues are solved by the usage of the \code{rmd2pdf}
+and \code{rnw2pdf} function as the primary compiling tools.
 
-The \code{rmd2pdf} function allows the user to add arguments that
-are passed along to \code{render} and \code{pdf\_document}. This
-is explained in the help page for \code{rmd2pdf}. 
+The \code{rmd2pdf} function allows parameters to be selectively replaced
+without changing the document in question. As a use case, suppose
+we write 3 R markdown documents and we forget to specify the depth
+of the table of contents. Rather than editing each individual document
+to insert \code{toc\_depth: 1}, , we might instead specify the depth
+as an R function argument:
 
-2. Run a shell script provided with the template.
+<<usage110, eval=F>>=
+rmd2pdf(c("crmda1.Rmd", "crmda2.Rmd", "crmda3.Rmd"), toc = TRUE, toc_depth = 1)
+@
 
-It is not necessary to open R to compile the document. The output
-can also be generated by running a command line script that does the
-same work.
+This approach can be used to replace any of the parameters for which
+the \code{rmarkdown::pdf\_document} function is scanning. For R markdown,
+our template is \code{theme/report-boilerplate.tex}. To employ an
+alternative template, the argument \code{template = ``theme/report-newboilerplate.tex}''
+can be used.
+
+There are differences in format between the values in the markdown
+document preamble and the R function call. R uses \code{TRUE} and
+\code{FALSE} where markdown use \code{true} and \code{false}, for
+example.
+
+2. Run the shell script provided with the template.
+
+The document skeleton is provided with a compiler script. It can do
+the same work as \code{rmd2pdf} inside R. The same output can be
+generated by running a command line script that does the same work.
 
 \inputencoding{latin9}\begin{lstlisting}
 $ ./rmd2pdf.sh crmda.Rmd
 \end{lstlisting}
 \inputencoding{utf8}
-The rendered output will be a pdf file. The configuration inside \code{rmd2pdf.sh}
-indicates that output is written in the current working directory. 
-
-If one uses Rstudio as a text editor for an Rmd file, one may not
-obtain satisfactory output by compiling the document with the pull
-down menus.
-
-\subsection{About the shell scripts}
-
-In July, 2017, I decided to change the way that the shell scripts
-are designed. Users who inspect them should see the script runs R
-and launches a function in the \code{stationery} package. As a result,
-there should not be any difference in the result from running the
-script \code{rmd2pdf.sh} and the function inside R named \code{rmd2pdf}. 
-
-The only difference that might arise is when there are additional
-arguments supplied in the script that are not present in \code{rmd2pdf}. 
-
-One difference might be whether or not a table of contents is requested.
-The default arguments specified in the script are simple, but they
-do include the table of contents (this was inserted in this script
-in June 2017). The important line in \code{rmd2pdf.sh} is this: FIXME
-FIXME this is out of date
-
-This turns on the table of contents feature and asks for output in
-the current working directory. We have not worked on command-line
-argument processing in \code{rmd2pdf.sh}, so if a user wants to change
-the arguments passed along, it will be necessary to edit that script
-file and items
-
-in the `defaults` character string.
-
-A little lower in \code{rmd2pdf.sh}, one should see that the business-end
-of the project is a call to \code{Rscript} which supplies the file
-name, along with the `defaults` string, in a not-very-subtle way:
+The compiler script is designed to accept the same arguments as the
+function rmd2pdf, but in the command line it is a little tricky to
+specify the options because we have to protect quotation marks from
+interpretation. For example, here we enclose double quotes in single
+quotes:
 
 \inputencoding{latin9}\begin{lstlisting}
-Rscript -e "library(stationery); rmd2pdf(\"$filename\", $defaults)" 
+$ ./rmd2pdf.sh --toc=TRUE --toc_depth=1 --template='"theme/report-newboilerplate.tex"' crmda.Rmd
 \end{lstlisting}
 \inputencoding{utf8}
-The new arguments that users might insert in `defaults` should match
-the arguments that might be supplied to the \code{rmd2pdf} function
-in the \code{stationery} package. Hence, the help page for \code{rmd2pdf}
-should be consulted for details. Arguments that can be specified for
-the \code{render} and \code{pdf\_document} (or \code{html\_document}
-if we are creating HTML output) are spelled out. Any defaults specified
-in the script, or in the function call to \code{rmd2pdf} inside R,
-will override the other customizations that are place in the \code{stationery}
-package.
+3. If editing in \code{R studio}, there is a button ``Knit.'' This
+should be used with \emph{extreme caution}!
 
-Some of these argument can be specified in the document header. For
-example, the current document header has `\code{keep\_tex: false}`.
-The script setting `keep\_tex=TRUE` overrides that. The fact that
-settings can be specified several places-{}-in the document header,
-or in the processing script, or in the functions that handle documents-{}-is
-confusing. I don't think anybody can deny that.
+There is a small triangle beside the Knit button, and it offers a
+selection of document back ends. Be careful to choose the correct
+one. In this case, we choose ``Knit to PDF''.
 
-Inside R, using the function `rmd2pdf`, I achieve the same result
-by inserting the arguments into the function call:
+If the user makes a mistake and selects the wrong back end, then \code{R studio}
+does something that is quite unexpected. It alters the document preamble
+to insert its best guess about the desired format. The document header
+will be adjusted, sometimes mangled so that even ``Knit to PDF''
+will fail. 
 
-<<usage200, eval=F>>=
-rmd2html("guide-template.Rmd", toc=TRUE, output_dir="$pwd", 
-clean=FALSE, quiet=FALSE, template="theme/report-boilerplate.tex", 
-keep_tex=TRUE)
+\subsection{HTML themes and the file size problem}
+
+The output size of HTML files may be quite large, even if the document
+itself has almost no content. This problem arises because \code{rmarkdown}
+uses a theme set based on the bootstrap library (??). If the markdown
+preamble does not specify a theme, or it specifies any theme except
+``null'', then a boilerplate of javascript and cascading style sheets
+from bootstrap is inserted into the HTML header. 
+
+Rather than editing the document over-and-over to see the effects,
+we suggest instead either using the function or the compiler script.
+To prevent the use of a Bootstrap library theme, the \code{rmd2html}
+function can be run like so.
+
+<<eval=F>>=
+rmd2html("crmda.Rmd", theme=NULL)
 @
 
-The R help page for `rmd2pdf` should be helpful (or will be, eventually).
+On the command line, the parameter value NULL should not be quoted:
 
+\inputencoding{latin9}\begin{lstlisting}
+./rmd2html.sh --theme=NULL crmda.Rmd
+\end{lstlisting}
+\inputencoding{utf8}
+The nearly empty \code{skeleton.Rmd} provided with this package has
+a compiled size will be around 700KB. Preventing the insertion of
+the Bootstrap-based theme will reduce the HTML output file size to
+62KB. To achieve the same effect by editing the markdown document
+the correct syntax will be \code{theme: null} (neither capitalized
+nor quoted).
+
+Of course, the disadvantage of removing the theme is that the benefits
+of the theme are lost. In the accompanying vignette ``Rmarkdown HTML
+Special Features,'' we illustrate the use of some special features
+in the bootstrap theme. 
+
+The allowed bootstrap themes are listed in the help page for \code{rmarkdown::html\_document}.
+One can explore the impact of these themes on the final document by
+running, for example, 
+
+<<eval=F>>=
+rmd2html("crmda.Rmd", theme = "spacelab")
+@
+
+or, from the command line,
+
+\inputencoding{latin9}\begin{lstlisting}
+./rmd2html.sh --theme='"spacelab"' crmda.Rmd
+\end{lstlisting}
+\inputencoding{utf8}
+\subsection{Troubleshooting}
+
+Documents often fail to compile. There are many failure points and
+one might need to inspect the intermediate files and output at several
+stages. When there is trouble, it is recommended to recompile with
+parameter values \code{clean = FALSE}, \code{quiet = FALSE}, and
+either \code{keep\_md = TRUE} (for HTML output) or \code{keep\_tex = TRUE}
+(for PDF). By inspecting the intermediate files, editing them, and
+running the compiler commands again, we can usually find out what's
+wrong.
+
+When \code{quiet = FALSE}, one of the especially important parts
+of the verbose output is the full command that is sent to \code{pandoc}.
+For example, compiling our minimal skeleton crmda.Rmd yields this
+intimidating list of command line options
+
+\inputencoding{latin9}\begin{lstlisting}[basicstyle={\footnotesize},breaklines=true,tabsize=2]
+/usr/bin/pandoc +RTS -K512m -RTS crmda.utf8.md --to html4 --from markdown+autolink_bare_uris+ascii_identifiers+tex_math_single_backslash --output /tmp/pj3/Untitled/crmda.html --smart --email-obfuscation none --self-contained --standalone --section-divs --table-of-contents --toc-depth 2 --template theme/guide-boilerplate.html --highlight-style haddock --css theme/kutils.css --variable 'theme:bootstrap' --include-in-header /tmp/RtmpU3qSFQ/rmarkdown-str33e24223b3a.html --mathjax --variable 'mathjax-url:https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML' --filter /usr/bin/pandoc-citeproc
+\end{lstlisting}
+\inputencoding{utf8}
 \section{Working with LaTeX}
 
 Like so many other concepts and tools in this area, \TeX was a creation
@@ -528,6 +762,12 @@ not to implement it. A couple of the questions not considered in our
 Web page are the following.
 
 \section{Choosing among formats}
+
+We provide 8 document formats because there are several acceptable
+methods to achieve the same goal. At the current time, there is a
+considerable amount of enthusiasm about markdown document that generate
+HTML output. Our experience is that PDF output is considerably more
+dependable and one ?? ??
 
 \subsection{Which backend?}
 
@@ -613,6 +853,14 @@ is available. In my opinion, `LyX` makes preparing a  LaTeX  document
 much easier than it is to prepare
 
 a similarly complicated markdown document. 
+
+While working on the markdown documents in this package, we are struck
+by the fact that markdown is a movement, a \emph{frame of mind}, rather
+than a product. It is a rapidly moving target. Features are added
+and changed on a weekly basis, it is usually difficult to know what
+will work and what will not. That is to say, we are on the steeply
+sloped curve of technical innovation and there is no reason to expect
+it to stabilize in the near term. 
 
 
 \subsubsection{Important caution about Math in the HTML backend}
@@ -970,7 +1218,7 @@ style=\textquotedbl{}width: 75px;height: 20px;\textquotedbl{}/>{]}(http://creati
 \section*{References}
 
 \bibliographystyle{apalike2}
-\bibliography{theme/mlm}
+\bibliography{theme/R}
 
 \subsection*{}
 

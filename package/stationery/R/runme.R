@@ -40,6 +40,8 @@
 ##' @author Paul Johnson <pauljohn@@ku.edu>
 ##' @export
 ##' @examples
+##' \donttest{
+##' ## R Windows test system does not have pdflatex, cannot test
 ##' ## put some file name in
 ##' tdir <- tempdir()
 ##' dirout <- initWriteup("rmd2html-guide", dir = tdir)
@@ -47,6 +49,7 @@
 ##' rmd2html("skeleton.Rmd", wd = dirout)
 ##' list.files(dirout)
 ##' if(interactive()) browseURL(file.path(dirout, "skeleton.html"))
+##' }
 rmd2html <- function(fn = NULL, wd = NULL, ..., verbose = FALSE,
                      purl = TRUE, tangle = purl, themedir = "theme",
                      package = "stationery") {
