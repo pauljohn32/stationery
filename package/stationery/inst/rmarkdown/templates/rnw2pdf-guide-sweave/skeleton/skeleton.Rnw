@@ -67,14 +67,14 @@ footskip=1.5\baselineskip,
   author={
     lastname=Author,
     firstname=Third, 
-    affiliation=i,
+    affiliation=Some other Institute,
     email=third@ku.edu},
   url={https://crmda.ku.edu/guides},
   keywords={single-authoring, just one},
   title={A Title for Skeleton Template: rnw2pdf-guide-sweave},
   leftlogo={theme/logoleft.pdf},
   rightlogo={theme/logo-vert.pdf},
-  number=48,
+  number=0,
 }
 \guidehdr
 

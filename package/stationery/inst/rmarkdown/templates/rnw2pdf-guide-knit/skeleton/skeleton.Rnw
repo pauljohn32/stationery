@@ -1,3 +1,5 @@
+%% LyX 2.2.3 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
 \documentclass[11pt,letterpaper,english]{extarticle}
 \usepackage{lmodern}
 \renewcommand{\sfdefault}{lmss}
@@ -65,7 +67,7 @@ footskip=1.5\baselineskip,
   title={A Title for Skeleton Template: rnw2pdf-guide-knit},
   leftlogo={theme/logoleft.pdf},
   rightlogo={theme/logo-vert.pdf},
-  number={44}
+  number={0}
 }
 \guidehdr
 

@@ -1,7 +1,7 @@
 ---
 title: "A Title for Template"
 subtitle: "rmd2pdf-guide"
-guidenum: 48
+guidenum: 0
 guideurl: https://crmda.ku.edu/guides
 keywords: Rmarkdown, R, documents
 author:
@@ -12,7 +12,7 @@ author:
   affiliation: CRMDA
   email: second@ku.edu
 - name:  Third Author
-  affiliation: i
+  affiliation: Some other Institute
   email: third@ku.edu
 addr:
     l1: address row 1

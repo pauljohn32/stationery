@@ -201,7 +201,7 @@ guidesetup{%
 
 \begin_layout Plain Layout
 
-    affiliation=i,
+    affiliation=Some other Institute,
 \end_layout
 
 \begin_layout Plain Layout
@@ -236,7 +236,7 @@ guidesetup{%
 
 \begin_layout Plain Layout
 
-  number=48,
+  number=0,
 \end_layout
 
 \begin_layout Plain Layout
