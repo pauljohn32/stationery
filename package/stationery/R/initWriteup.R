@@ -98,11 +98,15 @@
 ##' list.files(file.path(tdir, "todaytest"), recursive = TRUE)
 ##' ## Compile one example in the rnw2pdf-report-sweave folder
 ##' list.files(file.path(tdir, "todaytest/rnw2pdf-report-sweave"))
+##' \donttest{
+##' ## requires pdflatex on system
 ##' rnw2pdf("skeleton.Rnw", wd = file.path(tdir, "todaytest/rnw2pdf-report-sweave"),
 ##'          engine = "Sweave")
 ##' ## Check the pdf was created
 ##' list.files(file.path(tdir, "todaytest/rnw2pdf-report-sweave"))
 ##' if(interactive()) browseURL(file.path(tdir, "todaytest/rnw2pdf-report-sweave", "skeleton.pdf"))
+##' unlink(file.path(tdir, "todaytest"), recursive = TRUE)
+##' }
 initWriteup <- function(type, dir = type)
 {
     wd <- getwd()
