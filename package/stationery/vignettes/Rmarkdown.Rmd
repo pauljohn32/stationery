@@ -14,11 +14,11 @@ output:
     pandoc_args: [
         --listings
     ]
-    template: theme/report-boilerplate.tex
+    template: "theme/report-boilerplate.tex"
 fontsize: 12pt
 bibliography: theme/R.bib
 vignette: >
-    %\VignetteIndexEntry{Rmarkdown Overview}
+    %\VignetteIndexEntry{Rmarkdown Basics}
     %\VignetteEngine{knitr::rmarkdown}
     %\VignetteEncoding{UTF-8}
 header-includes:

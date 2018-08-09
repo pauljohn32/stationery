@@ -9,6 +9,8 @@
 %\VignetteIndexEntry{stationery}
 %\VignetteEngine{Sweave}
 %\VignetteBuilder{stationery::rnw2pdf}
+% Don't remove next commented line, its needed to fool Sweave
+%\usepackage{Sweave}
 
 \usepackage[includehead,includefoot,
 lmargin=1in,
@@ -25,9 +27,9 @@ footskip=1.5\baselineskip,
 \usepackage{booktabs}
 
 
+\input{theme/reportPreambleSweavel.tex}
 \input{theme/reportPreambleHeader.tex}
 \input{theme/preambleFooter.tex}
-\input{theme/reportPreambleSweavel.tex}
 \end_preamble
 \use_default_options false
 \begin_modules
@@ -57,6 +59,15 @@ sweave
 \paperfontsize 11
 \spacing single
 \use_hyperref false
+\pdf_bookmarks true
+\pdf_bookmarksnumbered false
+\pdf_bookmarksopen false
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks false
+\pdf_pdfborder false
+\pdf_colorlinks false
+\pdf_backref false
+\pdf_pdfusetitle false
 \papersize letterpaper
 \use_geometry false
 \use_package amsmath 1
@@ -137,7 +148,7 @@ reportsetup{%
 
 \begin_layout Plain Layout
 
-    affiliation=Director{,} CRMDA,
+    affiliation=Director{,}~CRMDA,
 \end_layout
 
 \begin_layout Plain Layout
@@ -255,32 +266,17 @@ library(stationery)
 
 \begin_layout Plain Layout
 
-logos <- c(logoright = "logo.pdf", "addressFooter.tex", "preambleFooter.tex")
+logos <- c(logoright = "logo.pdf", 
 \end_layout
 
 \begin_layout Plain Layout
 
-texfiles <- c("reportPreambleHeader.tex", 
-\end_layout
-
-\begin_layout Plain Layout
-
-              "reportPreambleSweavel.tex",
-\end_layout
-
-\begin_layout Plain Layout
-
-              "R.bib")
+"addressFooter.tex", "preambleFooter.tex")
 \end_layout
 
 \begin_layout Plain Layout
 
 getFiles(logos, pkg = "stationery")
-\end_layout
-
-\begin_layout Plain Layout
-
-getFiles(texfiles, pkg = "stationery")
 \end_layout
 
 \begin_layout Plain Layout
@@ -400,7 +396,14 @@ Introduction
 \end_layout
 
 \begin_layout Standard
-Reproducible research? A university administration recently exclaimed, 
+\begin_inset Quotes eld
+\end_inset
+
+Reproducible research documents?
+\begin_inset Quotes erd
+\end_inset
+
+ A university administrator recently exclaimed, 
 \begin_inset Quotes eld
 \end_inset
 
@@ -408,14 +411,38 @@ I have no idea what that means!
 \begin_inset Quotes erd
 \end_inset
 
- It appears many members of the faculty have the same response.
- The stationery package for R, and the documentation provided with it, may
- help.
+ Many members of the faculty seem to have have the same response.
+ The 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+stationery
+\end_layout
+
+\end_inset
+
+ package for R may help would-be users to get started.
 \end_layout
 
 \begin_layout Standard
-Researchers who have been using word processors are used to copying and
- pasting graphs and tables from statistical output.
+The 
+\emph on
+big idea
+\emph default
+ is to replace the traditional 
+\begin_inset Quotes eld
+\end_inset
+
+cut and paste
+\begin_inset Quotes erd
+\end_inset
+
+ approach to creating research reports with a program-driven documentation
+ system that blends calculations with report preparation.
+ Researchers who have been using word processors are aware of the danger
+ that computer code, output tables, and graphs can fall out of alignment
+ over time.
  Proponents of the 
 \emph on
 reproducible research documents
@@ -427,9 +454,8 @@ key "leisch2002,xie_bookdown:_2016,xie_dynamic_2015,stodden_implementing_2014"
 
 \end_inset
 
-) ask us to change our workflow in a fundamental way.
- Make the software for statistical analysis work more seamlessly with the
- document authoring process.
+) ask us to change our workflow in a fundamental way, so that analysis,
+ code, and output work together more seamlessly.
  
 \end_layout
 
@@ -439,7 +465,7 @@ In my experience, the benefits of this change are most apparent in class
  A chronic problem for teachers is a misalignment of computer code and output
  in course materials.
  It is easy to forget to paste in an updated graph or modify a table.
- With a reproducible document, there is no danger that the computer code
+ With a reproducible document, there less danger that the computer code
  being discussed will not match the output that is presented because they
  are all part of one piece.
  
@@ -448,11 +474,10 @@ In my experience, the benefits of this change are most apparent in class
 \begin_layout Standard
 For most word-processor-using researchers, the transition is jarring.
  First, the software for document authoring is being replaced.
- MS Word is not sufficient.
+ MS Word is, simply put, insufficient.
  Second, the format in which documents are stored and revised is replaced.
  Third, the methods of statistical analysis that used to seem separate from
- authoring (SAS, SPSS, etc) are now supposed to be integrated with authoring.
- 
+ authoring (SAS, SPSS, etc) are now supposed to be integrated with it.
 \end_layout
 
 \begin_layout Standard
@@ -518,44 +543,18 @@ key "leisch2002"
 \end_layout
 
 \begin_layout Standard
-Once we understand that statistical code is to be embedded in a research
- report, then comes a series of rude shocks.
- The first shock is that 
+Once we understand that 
+\emph on
+big idea
+\emph default
+, then comes a series of rude shocks.
+ First, 
 \emph on
 there are several competing formats for doing this kind of work
 \emph default
 .
- The stationery package includes working examples for several different
- file types.
- Our original work was done with LaTeX in mind.
- Authors can work in LaTeX or with LyX (http://www.lyx.org), a graphical user
- interface for LaTeX that works like a word processor.
- We also offer the markdown document format.
- Proponents claim that markdown is simpler and more human-readable, although
- we notice many limitations along the way.
- The leading voice has been John Gruber, whose Daring Fireball website (https://
-daringfireball.net/projects/markdown) offered the first working set of guidelines
- for markdown documents.
- The markdown movement gained ground in large part due to John MacFarlane's
- ambitious software program 
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-pandoc
-\end_layout
-
-\end_inset
-
- (https://johnmacfarlane.net/pandoc), a format translator that is used in
- all desktop computer systems for converting markdown documents to PDF and
- HTML.
- 
-\end_layout
-
-\begin_layout Standard
-The other shock coming for new users is that the quality of the output is
- generally unfamiliar, if not unacceptable.
+ Not only do they want to change the way they work, but we have to decipher
+ several alternatives and select one.
  The 
 \begin_inset Flex Code
 status open
@@ -566,13 +565,79 @@ stationery
 
 \end_inset
 
- package is intended to ease the frustration.
- It offers working examples (and instructions) for generating output that
- is more compatible with our usual standards.
+ package tries to help with that, by offering working examples for several
+ different file types.
+ Our original work was done with LaTeX in mind.
+ We offer documents in both 
+\begin_inset Quotes eld
+\end_inset
+
+raw
+\begin_inset Quotes erd
+\end_inset
+
+ LaTeX and LyX (
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+url{http://www.lyx.org}
+\end_layout
+
+\end_inset
+
+), a graphical user interface for LaTeX.
+ We also explore opportunities in markdown format.
+ Proponents of markdown are attempting to develop a simpler, more human-readable
+ document format.
+ The leading voice has been John Gruber, whose Daring Fireball website (https://
+daringfireball.net/projects/markdown) offered the first working set of guidelines
+ for markdown documents.
+ The markdown movement was advanced significantly by John MacFarlane's ambitious
+ software program 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+pandoc
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset CommandInset citation
+LatexCommand citeyearpar
+key "MacFarlane"
+
+\end_inset
+
+, a format translator.
 \end_layout
 
 \begin_layout Standard
-A glossary of the most important terms is provided next.
+The other shock coming for new users is that the format of the output is
+ much more difficult to customize than we expect in word processor software.
+ The 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+stationery
+\end_layout
+
+\end_inset
+
+ package is intended to ease the frustration by providing templates that
+ are visually appealing.
+ These templates offer a starting point for customization of new styles.
+\end_layout
+
+\begin_layout Standard
+Before proceeding to the discussion of the package, some key terms should
+ be well understood.
 \end_layout
 
 \begin_layout Description
@@ -585,9 +650,27 @@ front
 end: 
 \series default
 the format in which a document is prepared.
- We consider markdown and LaTeX-based formats.
- Markdown files are saved with a suffix .Rmd, while the LaTeX versions are
- often saved as .Rnw.
+ Markdown files are saved with a suffix 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+.Rmd
+\end_layout
+
+\end_inset
+
+, while the LaTeX files that include code chunks are saved as 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+.Rnw
+\end_layout
+
+\end_inset
+
+.
  
 \end_layout
 
@@ -611,8 +694,8 @@ front end
 \emph default
  because each document is converted through several formats in the compilation
  process.
- Any intermediate format that precedes another might be referred edited
- directly and treated as a front end by an author.
+ Any intermediate format that precedes another might be edited directly
+ and treated as a front end by an author.
 \end_layout
 
 \end_inset
@@ -724,7 +807,7 @@ Code Chunks: compares Sweave and knitr style code chunks.
 \end_layout
 
 \begin_layout Enumerate
-Rmarkdown: explores key elements in the newest front end document framework.
+R markdown: explores key elements in the newest front end document framework.
 \end_layout
 
 \begin_layout Enumerate
@@ -824,9 +907,38 @@ slides
 \end_inset
 
 .
- For document types that can be used with either Sweave or knitr code chunks,
- it is necessary to add a third part in the name (R markdown documents cannot
- use the Sweave engine).
+ For document types that can be used with either 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+Sweave
+\end_layout
+
+\end_inset
+
+ or 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+knitr
+\end_layout
+
+\end_inset
+
+ code chunks, it is necessary to add a third part in the name (R markdown
+ documents cannot use the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+Sweave
+\end_layout
+
+\end_inset
+
+ engine).
  
 \end_layout
 
@@ -1533,25 +1645,34 @@ pandoc
 
 \begin_layout Standard
 \begin_inset listings
-lstparams "breaklines=true,tabsize=2"
+lstparams "breaklines=true,showstringspaces=false,tabsize=1"
 inline false
 status open
 
 \begin_layout Plain Layout
 
-$ /usr/bin/pandoc +RTS -K512m -RTS crmda.utf8.md 
+$ /usr/bin/pandoc +RTS -K512m -RTS crmda.utf8.md --to latex --from
 \end_layout
 
 \begin_layout Plain Layout
 
---to latex --from markdown+autolink_bare_uris+ascii_identifiers +tex_math_single
-_backslash --table-of-contents --toc-depth 2 --template theme/report-boilerplate.
-tex --highlight-style haddock --latex-engine 
+markdown+autolink_bare_uris+ascii_identifiers+tex_math_single_backslash
+ 
 \end_layout
 
 \begin_layout Plain Layout
 
-pdflatex --listings
+--table-of-contents --toc-depth 2 
+\end_layout
+
+\begin_layout Plain Layout
+
+--template theme/report-boilerplate.tex 
+\end_layout
+
+\begin_layout Plain Layout
+
+--highlight-style haddock --latex-engine pdflatex --listings
 \end_layout
 
 \end_inset
@@ -1572,8 +1693,67 @@ Incorporating computer code
 \begin_layout Standard
 Whether one is editing in an LaTeX or a markdown file, there will be code
  chunks.
- One of the pivotal stages in document compilation is the conversion of
- code chunks into formats suitable for inclusion in the document.
+ In markdown documents, code chunks are bracketed by tick marks:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+```{r chunkname, options}
+\end_layout
+
+\begin_layout Plain Layout
+
+code here
+\end_layout
+
+\begin_layout Plain Layout
+
+```
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In LaTeX documents, code chunks are represented differently:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=C"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+ <<chunkname, options>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+ code here
+\end_layout
+
+\begin_layout Plain Layout
+
+ @
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+One of the pivotal stages in document compilation is the conversion of code
+ chunks into formats suitable for inclusion in the document.
  At this point, we arrive at a somewhat unhappy situation because there
  are competing programs and terminology.
  Knuth referred to the chunk conversion process as 
@@ -1585,7 +1765,7 @@ weaving
 \end_inset
 
 .
- The base R framework refer to chunk converion as 
+ The base R framework refers to chunk conversion as 
 \begin_inset Quotes eld
 \end_inset
 
@@ -1593,7 +1773,14 @@ Sweaving
 \begin_inset Quotes erd
 \end_inset
 
- (because S was the precursor to R).
+ (because S was the precursor to R; 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "leisch2002"
+
+\end_inset
+
+).
  The newer 
 \begin_inset Flex Code
 status open
@@ -1601,6 +1788,13 @@ status open
 \begin_layout Plain Layout
 knitr
 \end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand citep
+key "xie_knitr"
 
 \end_inset
 
@@ -1661,9 +1855,8 @@ purling
 \end_layout
 
 \begin_layout Standard
-In LaTeX documents, computer code can be displayed via a variety of formats
- (referred to as environments in LaTeX).
- The traditional method was the LaTeX class for 
+In LaTeX documents, computer code can be displayed in various ways.
+ The traditional method was the LaTeX environment 
 \begin_inset Flex Code
 status open
 
@@ -1673,7 +1866,7 @@ Verbatim
 
 \end_inset
 
- output, but a newer, more desirable method uses the 
+, but a more flexible alternative is the 
 \begin_inset Flex Code
 status open
 
@@ -1683,7 +1876,7 @@ Listings
 
 \end_inset
 
- class.
+ package.
  Our PDF documents use the Listings class.
  Our style documents include example settings that authors can revise if
  they want to adjust the shading, line numbering, or other characteristics.
@@ -1691,11 +1884,1087 @@ Listings
 \end_layout
 
 \begin_layout Section
+Quick Start
+\end_layout
+
+\begin_layout Subsection
+Create a starter 
+\begin_inset Quotes eld
+\end_inset
+
+skeleton
+\begin_inset Quotes erd
+\end_inset
+
+ document
+\end_layout
+
+\begin_layout Standard
+The stationery package provides 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+initWriteup
+\end_layout
+
+\end_inset
+
+, a function to create simple ready-to-compile examples.
+ Here we will illustrate creation of an R markdown guide that will have
+ a HTML back end.
+ Start R in a folder where you would like to create a write-up and run
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+library(stationery)
+\end_layout
+
+\begin_layout Plain Layout
+
+initWriteup(type = "rmd2pdf-report")
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This creates a folder named 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+rmd2pdf-report
+\end_layout
+
+\end_inset
+
+ in which one should find 
+\end_layout
+
+\begin_layout Enumerate
+a skeleton template, 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+skeleton.Rmd
+\end_layout
+
+\end_inset
+
+,
+\end_layout
+
+\begin_layout Enumerate
+an instructional guide, 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+instructions.Rmd
+\end_layout
+
+\end_inset
+
+,
+\end_layout
+
+\begin_layout Enumerate
+a compiler script, 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+rmd2pdf.sh
+\end_layout
+
+\end_inset
+
+,
+\end_layout
+
+\begin_layout Enumerate
+a subdirectory 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+theme
+\end_layout
+
+\end_inset
+
+, in which a template and some other configuration files are to be copied.
+\end_layout
+
+\begin_layout Standard
+The return from 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+initWriteup
+\end_layout
+
+\end_inset
+
+ will indicate the full path to the new directory:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "style=Routput"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+[1] "/home/pauljohn/wherever_you_say/rmd2pdf-report"
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Most users will rename 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+skeleton.Rmd
+\end_layout
+
+\end_inset
+
+ to something more suitable.
+ Here we discuss an example named 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+crmda.Rmd
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+There are other ways to create a document.
+ We have formatted the folder structure of the package in a way that is
+ consistent with the template format required by RStudio (http://www.rstudio.com),
+ as specified by the package 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+rmarkdown
+\end_layout
+
+\end_inset
+
+; 
+\begin_inset CommandInset citation
+LatexCommand citealp
+key "Allaire_rmarkdown"
+
+\end_inset
+
+).
+ 
+\end_layout
+
+\begin_layout Standard
+For our markdown-based formats (sadly, not for the LaTeX based formats),
+ the RStudio graphical interface will work as well.
+ A user can open the File menu, choose New File -> R Markdown -> From Template.
+ The formats 
+\begin_inset Quotes eld
+\end_inset
+
+rmd2html guide
+\begin_inset Quotes erd
+\end_inset
+
+, 
+\begin_inset Quotes eld
+\end_inset
+
+rmd2pdf report
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+rmd2pdf guide
+\begin_inset Quotes erd
+\end_inset
+
+ should be available.
+ The 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+rmarkdown
+\end_layout
+
+\end_inset
+
+ function 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+draft()
+\end_layout
+
+\end_inset
+
+ performs exactly the same purpose.
+ One could run
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+library(rmarkdown)
+\end_layout
+
+\begin_layout Plain Layout
+
+draft("crmda.Rmd", template = "rmd2pdf-report", package = "stationery", create_di
+r = FALSE)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+How to Compile a Document
+\end_layout
+
+\begin_layout Standard
+While editing a document, authors are well advised to heed the advice:
+\end_layout
+
+\begin_layout Quote
+Compile early, compile often!
+\end_layout
+
+\begin_layout Standard
+Users should try to compile our document before changing it.
+ While revising the document, it is wise to compile often and notice errors
+ as soon as they are committed.
+\end_layout
+
+\begin_layout Standard
+The file can be compiled in several ways.
+ 
+\end_layout
+
+\begin_layout Enumerate
+Use shell commands
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+For the sake of completeness, we begin with the most basic method: run commands
+ in a terminal.
+ For a LaTeX file, such as 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+crmda.Rnw
+\end_layout
+
+\end_inset
+
+, this is straightforward.
+ First, convert the code chunks to R input:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+$ R CMD Sweave crmda.Rnw
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+That creates 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+crmda.tex
+\end_layout
+
+\end_inset
+
+, which is then converted to PDF output: 
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+$ texi2pdf crmda.tex
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The command line options to compile a file with knitr code chunks is a bit
+ more elaborate.
+ I generally use the R functions or shell scripts described next.
+ 
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Open an R session and use the functions 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+rmd2pdf()
+\end_layout
+
+\end_inset
+
+, 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+rmd2html()
+\end_layout
+
+\end_inset
+
+, and 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+rnw2pdf()
+\end_layout
+
+\end_inset
+
+ in the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+stationery
+\end_layout
+
+\end_inset
+
+ package.
+ 
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+These functions will compile files that are saved in the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+.lyx
+\end_layout
+
+\end_inset
+
+, 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+.Rnw
+\end_layout
+
+\end_inset
+
+, and 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+.Rmd
+\end_layout
+
+\end_inset
+
+ formats.
+ For example, 
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "style=Rinput"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+library(stationery)
+\end_layout
+
+\begin_layout Plain Layout
+
+rmd2pdf("crmda.Rmd")
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This orchestrates a two part process that involves functions in the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+rmarkdown
+\end_layout
+
+\end_inset
+
+ and 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+knitr
+\end_layout
+
+\end_inset
+
+ packages.
+ The document header is scanned and then a suitable document format object
+ is created.
+ The heavy lifting is done by the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+pdf_document
+\end_layout
+
+\end_inset
+
+ or 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+html_document
+\end_layout
+
+\end_inset
+
+ functions in the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+rmarkdown
+\end_layout
+
+\end_inset
+
+ package.
+ After that, intermediate documents must be rendered to the final result.
+ The benefit of using the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+stationery
+\end_layout
+
+\end_inset
+
+ functions is that they will review the in-document format settings, but
+ can override them with function parameters.
+ For example, one can control the creation of a table of contents by including
+ 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+toc: true
+\end_layout
+
+\end_inset
+
+ in the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+.Rmd
+\end_layout
+
+\end_inset
+
+ document, or by running 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+pdf_document
+\end_layout
+
+\end_inset
+
+ with the parameter 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+toc = TRUE
+\end_layout
+
+\end_inset
+
+.
+ Any of the document parameters can be selectively replaced.
+ 
+\end_layout
+
+\begin_layout Standard
+As a use case, suppose we write three R markdown documents and we forget
+ to specify the depth of the table of contents.
+ Rather than editing each individual document to insert 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+toc_depth:1
+\end_layout
+
+\end_inset
+
+, we might instead specify the depth as an R function argument:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<usage110, eval=F>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+rmd2pdf(c("crmda1.Rmd", "crmda2.Rmd", "crmda3.Rmd"), toc = TRUE, toc_depth
+ = 1)
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Similarly, a template can be substituted by employing the template argument,
+ such as 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+template = "theme/report-newboilerplate.tex"
+\end_layout
+
+\end_inset
+
+ .
+\end_layout
+
+\begin_layout Standard
+There are differences in format between the values in the markdown document
+ preamble and the R function call.
+ R uses 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+TRUE
+\end_layout
+
+\end_inset
+
+ , 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+FALSE
+\end_layout
+
+\end_inset
+
+ and 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+NULL
+\end_layout
+
+\end_inset
+
+ where markdown uses lower case 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+true
+\end_layout
+
+\end_inset
+
+ , 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+false
+\end_layout
+
+\end_inset
+
+, and 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+null
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Run the shell script provided with the template.
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+The document skeleton is provided with a compiler script.
+ It can do the same work as 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+rmd2pdf
+\end_layout
+
+\end_inset
+
+ inside R.
+ The same output can be generated by running a command line script that
+ does the same work.
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+$ ./rmd2pdf.sh crmda.Rmd
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The compiler script is designed to accept the same arguments as the function
+ rmd2pdf, but in the command line it is a little tricky to specify the options
+ because we have to protect quotation marks from interpretation.
+ For example, here we enclose double quotes in single quotes:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+$ ./rmd2pdf.sh --toc=TRUE --toc_depth=1 --template='"theme/report-newboilerplate.te
+x"' crmda.Rmd
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+If editing in 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+RStudio
+\end_layout
+
+\end_inset
+
+, there is a button 
+\begin_inset Graphics
+	filename importfigs/RStudio-knit.png
+	width 1.5cm
+
+\end_inset
+
+ that has a small triangular widget.
+ This should be used with 
+\emph on
+extreme caution
+\emph default
+ because it can alter the document preamble.
+ 
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+In the preamble of the markdown document, there will be an output stanza.
+ This if from our skeleton for 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+rmd2pdf
+\end_layout
+
+\end_inset
+
+ guide documents.
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+output: 
+\end_layout
+
+\begin_layout Plain Layout
+
+  pdf_document:
+\end_layout
+
+\begin_layout Plain Layout
+
+    citation_package: natbib
+\end_layout
+
+\begin_layout Plain Layout
+
+    fig_caption: yes
+\end_layout
+
+\begin_layout Plain Layout
+
+    latex_engine: pdflatex
+\end_layout
+
+\begin_layout Plain Layout
+
+    highlight: haddock
+\end_layout
+
+\begin_layout Plain Layout
+
+    pandoc_args: [
+\end_layout
+
+\begin_layout Plain Layout
+
+        --listings
+\end_layout
+
+\begin_layout Plain Layout
+
+    ]
+\end_layout
+
+\begin_layout Plain Layout
+
+    template:  theme/guide-boilerplate.tex
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+RStudio
+\end_layout
+
+\end_inset
+
+ triangular widget offers a selection of document back ends.
+ Be careful to choose 
+\begin_inset Quotes eld
+\end_inset
+
+Knit to PDF
+\begin_inset Quotes erd
+\end_inset
+
+.
+ If the user makes a mistake and selects, say, 
+\begin_inset Quotes eld
+\end_inset
+
+Knit to HTML
+\begin_inset Quotes erd
+\end_inset
+
+, then 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+RStudio
+\end_layout
+
+\end_inset
+
+ will replace the output stanza in the document.
+ It will insert its best guesses about settings for 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+html_document
+\end_layout
+
+\end_inset
+
+.
+ When 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+RStudio
+\end_layout
+
+\end_inset
+
+ inserts its best guess, it sometimes corrupts the format of the other output
+ types and the document will fail to compile.
+ 
+\end_layout
+
+\begin_layout Standard
+In our rmd2html documents, the output format is controlled by a function
+ in 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+stationery
+\end_layout
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+output:
+\end_layout
+
+\begin_layout Plain Layout
+
+  stationery::crmda_html_document:
+\end_layout
+
+\begin_layout Plain Layout
+
+    toc: true
+\end_layout
+
+\begin_layout Plain Layout
+
+    toc_depth: 2
+\end_layout
+
+\begin_layout Plain Layout
+
+    highlight: haddock
+\end_layout
+
+\begin_layout Plain Layout
+
+    theme: default
+\end_layout
+
+\begin_layout Plain Layout
+
+    citation_package: natbib
+\end_layout
+
+\begin_layout Plain Layout
+
+    css: theme/kutils.css
+\end_layout
+
+\begin_layout Plain Layout
+
+    template: theme/guide-boilerplate.html
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+New versions of 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+RStudio
+\end_layout
+
+\end_inset
+
+ will notice that the intended format is controlled by 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+crmda_html_document
+\end_layout
+
+\end_inset
+
+ and offer a choice 
+\begin_inset Quotes eld
+\end_inset
+
+Knit to crmda_html_document
+\begin_inset Quotes erd
+\end_inset
+
+.
+ 
+\end_layout
+
+\end_deeper
+\begin_layout Section
 Styling for Documents
 \end_layout
 
-\begin_layout Subsection*
+\begin_layout Subsection
 Reports versus Guides
+\end_layout
+
+\begin_layout Standard
+The 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+stationery
+\end_layout
+
+\end_inset
+
+ package document template are intended to have consistent 
+\begin_inset Quotes eld
+\end_inset
+
+look and feel
+\begin_inset Quotes erd
+\end_inset
+
+ across document fron ends.
+ A guide document may be produced with an HTML back end, or in PDF, with
+ either Sweave or knitr chunk processing engines.
+ The same is true for report documents produced by Sweave and knitr.
+ To the extent possible, the color schemes and arrangement of header and
+ footer information should be similar (if not identical).
+ 
 \end_layout
 
 \begin_layout Standard
@@ -1716,14 +2985,17 @@ report
 \end_inset
 
 .
+ The difference between these two is not hard-and-fast.
  A 
 \series bold
 guide
 \series default
- is a less formal document.
+ is usually prepared as a teaching document.
+ It may end up in a Webpage, where more color rather than less is expected.
+ It is usually a less formal document.
  The final presentation is likely to include computer code and output excerpts.
  The guide format is are usually intended for education and training, but
- it is possible to use the guide style for other types of document.
+ it is possible to use the guide style for other types of documents.
  The header is a three column structure with organizational and/or departmental
  logos on either side (see Figure 
 \begin_inset CommandInset ref
@@ -1743,7 +3015,14 @@ report
 \series default
  is a more formal document.
  Its first page includes a header and a footer with organizational address
- information (see Figure Xb and Xc).
+ information (see Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Latex-Report"
+
+\end_inset
+
+).
  The header and footer appear only on the first page.
  It is more is suitable for preparation of a report to clients or a draft
  of a journal article.
@@ -1751,46 +3030,45 @@ report
  "raw output" from a computer program.
  A report includes tables and figures that are in a (nearly) publishable
  format.
+ This document is prepared with the report template, but we do have some
  
+\begin_inset Quotes eld
+\end_inset
+
+raw
+\begin_inset Quotes erd
+\end_inset
+
+ code examples.
 \end_layout
 
 \begin_layout Standard
-The slide format we offer is based on LaTeX Beamer () slide format using
- a customized theme that we prefer.
+The slide format is based on LaTeX Beamer (??) slide format using a customized
+ theme that features the colors of our institution.
  Our slides use the Sweave engine.
  We have experimented with many slide producing strategies using markdown
  code and none of them have been dependable, so we set that aside for the
  moment.
 \end_layout
 
-\begin_layout Standard
-The stationery package document template are intended to have consistent
- 
-\begin_inset Quotes eld
-\end_inset
-
-look and feel
-\begin_inset Quotes erd
-\end_inset
-
- across formats.
- A guide document may be produced with an HTML back end, or in PDF using
- the Sweave and knitr chunk processing engines.
- These guides will be visually consistent.
- The same is true for report documents produced by Sweave and knitr.
-\end_layout
-
-\begin_layout Subsection*
+\begin_layout Subsection
 Distinctive Headers and Footers
 \end_layout
 
 \begin_layout Standard
-In the stationery package, we provide enhanced headers (and footers where
- appropriate) that incorporate organizational graphics and address information.
- This is done by incorporating information in the beginning of the document
- which is later formatted by a template.
- We have created functions for LaTeX documents that mimic some features
- of markdown documents.
+In the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+stationery
+\end_layout
+
+\end_inset
+
+ package, we provide enhanced headers (and footers where appropriate) that
+ incorporate organizational graphics and address information.
+ Document templates are provided for that purpose.
  
 \end_layout
 
@@ -1809,6 +3087,13 @@ status open
 
 \begin_layout Plain Layout
 Latex Output (Report Document)
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Latex-Report"
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -1904,8 +3189,8 @@ Footer
 \end_layout
 
 \begin_layout Standard
-In order to introduce our LaTeX modifications, we start with an example
- of a markdown prefix.
+The markdown format introduced some interesting concepts to streamline document
+ creation, so we begin with a markdown document's preamble.
  As exemplified in Listing 
 \begin_inset ERT
 status open
@@ -1919,11 +3204,20 @@ ref{lis:markdown1}
 
 \end_inset
 
-, at the top of the markdown document, there is a section, written in YAML
- format.
- The names of the parameters can be drawn from a standard set specified
- by the pandoc program, but also there can be customized values specified
- by a document template.
+, the markdown document begins with a section, written in YAML format, that
+ species the title.
+ A standard set of parameters is specified by 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+pandoc
+\end_layout
+
+\end_inset
+
+, but additional parameters can be provided by our template and also by
+ the R functions that compile the document.
  In this case, the parameters like 
 \begin_inset Flex Code
 status open
@@ -1980,7 +3274,7 @@ stationery
 \begin_inset Quotes eld
 \end_inset
 
-Rmarkdown Basics.
+R markdown Basics.
 \begin_inset Quotes erd
 \end_inset
 
@@ -2028,7 +3322,7 @@ guideurl: https://crmda.ku.edu/guides
 
 \begin_layout Plain Layout
 
-keywords: Rmarkdown, R, documents
+keywords: R markdown, R, documents
 \end_layout
 
 \begin_layout Plain Layout
@@ -2230,18 +3524,18 @@ Footer
 \end_layout
 
 \begin_layout Standard
-The clarity of separation between the document header information and the
- document content is widely regarded as a benefit of the markdown document.
- Another benefit of the markdown system is that the header is flexible;
- one can insert names of additional co-authors in the obvious way.
+One of the benefits of the markdown preamble is that one can specify a authors
+ in a flexible way, providing one or more names that are gracefully handled
+ during the rendering process.
 \end_layout
 
 \begin_layout Standard
-In LaTeX, it is somewhat difficult to achieve the same degree of flexibility,
- but the problem is solved by some LaTeX functions in our templates.
- These use recent innovations in the LaTeX programming interface (with the
- help of several LaTeX experts who answer questions in stackexchange).
- The top portion of the LaTeX document is illustrated in Listing 
+In LaTeX, the tools to specify title and author information are not as flexible.
+ The problem is solved by some LaTeX functions in our templates.
+ These use recent innovations in the LaTeX programming interface.
+ (Packages consistent with TexLive 2016 or newer will be required).
+ The top portion of the LaTeX document, where we expect the author to include
+ the metadata, is illustrated in Listing 
 \begin_inset ERT
 status open
 
@@ -2254,20 +3548,20 @@ ref{lis:latex1}.
 
 \end_inset
 
- The input format is designed to be as similar to the markdown format as
- possible, but there are slight differences due to inherent differences
- in technology.
- One way in which the LaTeX approach is preferable is that the address informati
-on in the footer can be stored in a separate file and re-used where necessary
- (which markdown does not allow).
- The output in the header and footer is displayed in Figure 
+ The input format is similar to the markdown format, but there are slight
+ differences due to inherent differences in technology.
+ However, the output is the same (see Figure 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:LaTeX-Output"
 
 \end_inset
 
-.
+).
+ The LaTeX format allows us to keep the footer information–the address–in
+ a separate file, so it need not be typed into each individual document
+ (markdown does not allow that).
+ 
 \end_layout
 
 \begin_layout Standard
@@ -2377,7 +3671,7 @@ guidehdr
 
 \begin_layout Plain Layout
 
-%footer information in addressFooter.tex
+%footer information in theme/addressFooter.tex
 \end_layout
 
 \begin_layout Plain Layout
@@ -2540,63 +3834,110 @@ Footer
 
 \end_layout
 
+\begin_layout Subsection
+Customization
+\end_layout
+
 \begin_layout Standard
-How can users customize this? The most obvious user-customization is the
- replacement of the logo icons for guides and reports.
- In the beginning of all our basic documents, there is a function that retrieves
- logo files (graphics and the footer address information for LaTeX documents).
- As provided, the getFiles function will retrieve empty white graphics,
- but there are two ways to customize.
- The simple, but tedious method, is to replace the files 
+Hopefully, authors do not have too much trouble filling in their names and
+ titles.
+ There are not too many 
 \begin_inset Quotes eld
 \end_inset
 
-theme/logoleft.png
+gotchas
 \begin_inset Quotes erd
 \end_inset
 
- and 
+, but the use of illegal symbols for the intended back end may cause trouble.
+ For example, LaTeX documents assign special meaning to symbols like 
 \begin_inset Quotes eld
 \end_inset
 
-theme/logo-vert.png
+%
 \begin_inset Quotes erd
 \end_inset
 
-.
- The slightly more tedious, but automatic way, is to create an R package
- to hold the logo information (we can supply a working example of a package
- named 
+, 
 \begin_inset Quotes eld
 \end_inset
 
-crmda
+$
 \begin_inset Quotes erd
 \end_inset
 
-).
- Then to customize the document, the author will then alter the following
- code chun, replacing 
+, and 
+\begin_inset Quotes eld
+\end_inset
+
+_
+\begin_inset Quotes erd
+\end_inset
+
+ and these will need to be protected by a backslash.
+ In documents intended for HTML, titles or author names that include reserved
+ symbols such as 
+\begin_inset Quotes eld
+\end_inset
+
+<
+\begin_inset Quotes erd
+\end_inset
+
+ ,
+\begin_inset Quotes erd
+\end_inset
+
+>
+\begin_inset Quotes erd
+\end_inset
+
+, or 
+\begin_inset Quotes eld
+\end_inset
+
+&
+\begin_inset Quotes erd
+\end_inset
+
+ are likely to cause trouble and should be avoided.
+ 
+\end_layout
+
+\begin_layout Standard
+As the example code illustrates, we assume the logo information is saved
+ in files with names like 
+\begin_inset Quotes eld
+\end_inset
+
+
 \begin_inset Flex Code
 status open
 
 \begin_layout Plain Layout
-pkg = stationery
+theme/logoleft.pdf
 \end_layout
 
 \end_inset
 
- to 
-\begin_inset Flex Code
-status open
 
-\begin_layout Plain Layout
-pkg = "your_pkg_name"
-\end_layout
-
+\begin_inset Quotes erd
 \end_inset
 
 .
+ Before first compiling our document, the author can copy image files into
+ the theme directory to replace our defaults.
+ If the author does not do so, the document compiler will retrieve the 
+\begin_inset Quotes eld
+\end_inset
+
+plain white
+\begin_inset Quotes erd
+\end_inset
+
+ image defaults and place them in the theme directory.
+ Within the document, look for a code chunk like this which retrieves logo
+ files.
  
 \end_layout
 
@@ -2639,887 +3980,51 @@ getFiles(logos, pkg = "stationery")
 
 \end_layout
 
-\begin_layout Subsection*
-\begin_inset Note Note
-status open
-
-\begin_layout Subsection*
-Altering output without revising documents
-\end_layout
-
-\begin_layout Plain Layout
-Inside each of the document types, authors can specify details.
- Authors who are working on markdown or LaTeX documents for the first time
- will feel overwhelmed by the number of settings available to control the
- final format.
- The number of settings is large because there are several stages involved
- in document compilation and new features become available at each stage.
- The programs like 
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-pdflatex
-\end_layout
-
-\end_inset
-
- and 
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-pandoc
-\end_layout
-
-\end_inset
-
- bring with them default settings and syntax that will change from time
- to time.
-\end_layout
-
-\begin_layout Plain Layout
-The default formats that are delivered with LaTeX or markdown document format
- are, well, unsuitable.
- It is difficult for users to learn the ins-and-outs in order to bring a
- document into a presentable format.
- The 
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-stationery
-\end_layout
-
-\end_inset
-
- package has settings that work for our documents and provides examples
- of template documents that authors can study and revise to meet their needs.
-\end_layout
-
-\begin_layout Plain Layout
-When we change the document format to R markdown, we inherit a slew of additiona
-l settings to keep in mind.
- Many settings are embedded in the documents themselves, while some can
- be supplied along with the commands that compile the documents.
- The document formats provided with the package have settings that meet
- out needs, but authors can adjust them to achieve their own purposes.
- 
-\end_layout
-
-\begin_layout Plain Layout
-COMMENTARY here
-\end_layout
-
-\begin_layout Plain Layout
-The compiler functions have options like 
+\begin_layout Standard
+If authors expect to create many documents, it is possible to automate this
+ process.
+ One can create an R package to hold the logo information (we can supply
+ a working example of a package named 
 \begin_inset Quotes eld
 \end_inset
 
-quiet = FALSE
-\begin_inset Quotes erd
-\end_inset
 
-, or 
-\begin_inset Quotes eld
-\end_inset
-
-verbose = TRUE
-\begin_inset Quotes erd
-\end_inset
-
-, or 
-\begin_inset Quotes eld
-\end_inset
-
-clean = FALSE
-\begin_inset Quotes erd
-\end_inset
-
-, which can be specified 
-\end_layout
-
-\begin_layout Plain Layout
-Our compiler scripts leave open the possibility that users can supply additional
- command line arguments, arguments that have the same names as our R functions
- rmd2pdf, rmd2html, rnw2pdf, and rnw2html.
- Still, the number of options that can govern the production of the document,
- its transition through several formats, is, well, stupefying.
-\end_layout
-
-\begin_layout Plain Layout
-Consider a document that is written with R markdown.
- In order to achieve success, the document must undergo these transitions
-\end_layout
-
-\begin_layout Plain Layout
-The transition from `utf8.md` to LaTeX, considered in isolation, is nearly
- overwhelming.
- It is a little bit difficult to design a template that both allows some
- user customization while maintaining a consistent look and feel.
- We believe the default configuration in our document packages should "just
- work".
- However, if specialized adjustment is necessary, we have not made this
- too difficult for most authors with a 
-\begin_inset Quotes eld
-\end_inset
-
-can do
-\begin_inset Quotes erd
-\end_inset
-
- attitude.
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Section
-Usage overview 
-\end_layout
-
-\begin_layout Subsection
-Create a starter 
-\begin_inset Quotes eld
-\end_inset
-
-skeleton
-\begin_inset Quotes erd
-\end_inset
-
- document
-\end_layout
-
-\begin_layout Standard
-The stationery package includes a function called 
 \begin_inset Flex Code
 status open
 
 \begin_layout Plain Layout
-initWriteup
-\end_layout
-
-\end_inset
-
-.
- This can create simple ready-to-compile examples for all document types.
- Here we will illustrate the process of initiating a guide document with
- Rmarkdown and will have the HTML backend.
- Start R in a folder where you would like to create a write-up and run
-\end_layout
-
-\begin_layout Standard
-\begin_inset listings
-inline false
-status open
-
-\begin_layout Plain Layout
-
-library(stationery)
-\end_layout
-
-\begin_layout Plain Layout
-
-initWriteup(type = "rmd2pdf-report")
+crmda
 \end_layout
 
 \end_inset
 
 
-\end_layout
-
-\begin_layout Standard
-This creates a folder named 
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-rmd2pdf-report
-\end_layout
-
-\end_inset
-
- in which one should find 
-\end_layout
-
-\begin_layout Enumerate
-a skeleton template, skeleton.Rmd (which the author should rename and edit),
- 
-\end_layout
-
-\begin_layout Enumerate
-an instructional guide, instructions.Rmd,
-\end_layout
-
-\begin_layout Enumerate
-a compiler script, 
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-rmd2pdf.sh
-\end_layout
-
-\end_inset
-
-,
-\end_layout
-
-\begin_layout Enumerate
-a directory 
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-theme
-\end_layout
-
-\end_inset
-
-, in which a template and some other configuration files are copied
-\end_layout
-
-\begin_layout Standard
-The output will tell you where the directory ended up, say:
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-begin{Soutput}
-\end_layout
-
-\begin_layout Plain Layout
-
-[1] "/home/pauljohn/wherever_you_say/rmd2pdf-report"
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-end{Soutput}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Most users will rename the file 
-\begin_inset Quotes eld
-\end_inset
-
-skeleton.Rmd
 \begin_inset Quotes erd
-\end_inset
-
- and the subfolder "rmd2pdf-report" to something more relevant to a project.
- Here we might use the name 
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-crmda.Rmd
-\end_layout
-
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-There are other ways to create a document.
- We have formatted the folder structure of the package in a way that is
- consistent with the template format required by Rstudio (as specified by
- the package 
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-rmarkdown
-\end_layout
-
 \end_inset
 
 ).
+ To pull logo information from the user's package, one will replace our
  
-\end_layout
-
-\begin_layout Standard
-For our markdown-based formats (sadly, not for the LaTeX based formats),
- the Rstudio graphical interface will work as well.
- A user can open the File menu, choose New File -> R Markdown -> From Template.
- The formats 
-\begin_inset Quotes eld
-\end_inset
-
-rmd2html guide
-\begin_inset Quotes erd
-\end_inset
-
-, 
-\begin_inset Quotes eld
-\end_inset
-
-rmd2pdf report
-\begin_inset Quotes erd
-\end_inset
-
- and 
-\begin_inset Quotes eld
-\end_inset
-
-rmd2pdf guide
-\begin_inset Quotes erd
-\end_inset
-
- should be available.
- The 
 \begin_inset Flex Code
 status open
 
 \begin_layout Plain Layout
-rmarkdown
+pkg = "stationery"
 \end_layout
 
 \end_inset
 
- function 
+ with 
 \begin_inset Flex Code
 status open
 
 \begin_layout Plain Layout
-draft()
-\end_layout
-
-\end_inset
-
- performs exactly the same purpose as our function 
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-initWriteup
+pkg = "your_pkg_name"
 \end_layout
 
 \end_inset
 
 .
- One could run
-\end_layout
-
-\begin_layout Standard
-\begin_inset listings
-inline false
-status open
-
-\begin_layout Plain Layout
-
-library(rmarkdown)
-\end_layout
-
-\begin_layout Plain Layout
-
-draft("crmda.Rmd", template = "rmd2pdf-report", package = "stationery", create_di
-r = FALSE)
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsection
-How to Compile a Document
-\end_layout
-
-\begin_layout Standard
-Users should try to compile our document before changing it.
- After making revisions, users are always urged to test the document.
-\end_layout
-
-\begin_layout Standard
-The file can be compiled in several ways.
- 
-\end_layout
-
-\begin_layout Standard
-1.
- Open an R session and use the function 
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-rmd2pdf()
-\end_layout
-
-\end_inset
-
- in the 
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-stationery
-\end_layout
-
-\end_inset
-
- package.
- For example, 
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-<<usage100, eval=F>>=
-\end_layout
-
-\begin_layout Plain Layout
-
-library(stationery)
-\end_layout
-
-\begin_layout Plain Layout
-
-rmd2pdf("crmda.Rmd")
-\end_layout
-
-\begin_layout Plain Layout
-
-@
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-The function 
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-rmd2pdf
-\end_layout
-
-\end_inset
-
- allows a great many possible parameters.
- This function orchestrates a two part process that goes on within the 
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-rmarkdown
-\end_layout
-
-\end_inset
-
- package.
- First, a document format object must be created.
- That function is handled by the 
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-pdf_document
-\end_layout
-
-\end_inset
-
- in the 
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-rmarkdown
-\end_layout
-
-\end_inset
-
- package (or, for HTML output, 
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-html_document
-\end_layout
-
-\end_inset
-
-).
- After that, the document is rendered by a process that harvests the document
- format values and sends the work to the pandoc function.
- The tricky part of this process is that the document itself may specify
- a parameter that is overridden by 
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-pdf_document
-\end_layout
-
-\end_inset
-
- (or 
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-html_document
-\end_layout
-
-\end_inset
-
-).
- For example, if the document header requests a table of contents by stating
- 
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-toc: true
-\end_layout
-
-\end_inset
-
-, running 
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-pdf_document
-\end_layout
-
-\end_inset
-
- without specifying the parameter 
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-toc = TRUE
-\end_layout
-
-\end_inset
-
- will cause the default 
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-toc = FALSE
-\end_layout
-
-\end_inset
-
- to be used.
- These subtle issues are solved by the usage of the 
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-rmd2pdf
-\end_layout
-
-\end_inset
-
- and 
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-rnw2pdf
-\end_layout
-
-\end_inset
-
- function as the primary compiling tools.
-\end_layout
-
-\begin_layout Standard
-The 
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-rmd2pdf
-\end_layout
-
-\end_inset
-
- function allows parameters to be selectively replaced without changing
- the document in question.
- As a use case, suppose we write 3 R markdown documents and we forget to
- specify the depth of the table of contents.
- Rather than editing each individual document to insert 
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-toc_depth: 1
-\end_layout
-
-\end_inset
-
-, , we might instead specify the depth as an R function argument:
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-<<usage110, eval=F>>=
-\end_layout
-
-\begin_layout Plain Layout
-
-rmd2pdf(c("crmda1.Rmd", "crmda2.Rmd", "crmda3.Rmd"), toc = TRUE, toc_depth
- = 1)
-\end_layout
-
-\begin_layout Plain Layout
-
-@
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-This approach can be used to replace any of the parameters for which the
- 
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-rmarkdown::pdf_document
-\end_layout
-
-\end_inset
-
- function is scanning.
- For R markdown, our template is 
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-theme/report-boilerplate.tex
-\end_layout
-
-\end_inset
-
-.
- To employ an alternative template, the argument 
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-template = 
-\begin_inset Quotes eld
-\end_inset
-
-theme/report-newboilerplate.tex
-\end_layout
-
-\end_inset
-
-
-\begin_inset Quotes erd
-\end_inset
-
- can be used.
-\end_layout
-
-\begin_layout Standard
-There are differences in format between the values in the markdown document
- preamble and the R function call.
- R uses 
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-TRUE
-\end_layout
-
-\end_inset
-
- and 
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-FALSE
-\end_layout
-
-\end_inset
-
- where markdown use 
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-true
-\end_layout
-
-\end_inset
-
- and 
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-false
-\end_layout
-
-\end_inset
-
-, for example.
-\end_layout
-
-\begin_layout Standard
-2.
- Run the shell script provided with the template.
-\end_layout
-
-\begin_layout Standard
-The document skeleton is provided with a compiler script.
- It can do the same work as 
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-rmd2pdf
-\end_layout
-
-\end_inset
-
- inside R.
- The same output can be generated by running a command line script that
- does the same work.
-\end_layout
-
-\begin_layout Standard
-\begin_inset listings
-inline false
-status open
-
-\begin_layout Plain Layout
-
-$ ./rmd2pdf.sh crmda.Rmd
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-The compiler script is designed to accept the same arguments as the function
- rmd2pdf, but in the command line it is a little tricky to specify the options
- because we have to protect quotation marks from interpretation.
- For example, here we enclose double quotes in single quotes:
-\end_layout
-
-\begin_layout Standard
-\begin_inset listings
-inline false
-status open
-
-\begin_layout Plain Layout
-
-$ ./rmd2pdf.sh --toc=TRUE --toc_depth=1 --template='"theme/report-newboilerplate.te
-x"' crmda.Rmd
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-3.
- If editing in 
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-R studio
-\end_layout
-
-\end_inset
-
-, there is a button 
-\begin_inset Quotes eld
-\end_inset
-
-Knit.
-\begin_inset Quotes erd
-\end_inset
-
- This should be used with 
-\emph on
-extreme caution
-\emph default
-!
-\end_layout
-
-\begin_layout Standard
-There is a small triangle beside the Knit button, and it offers a selection
- of document back ends.
- Be careful to choose the correct one.
- In this case, we choose 
-\begin_inset Quotes eld
-\end_inset
-
-Knit to PDF
-\begin_inset Quotes erd
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-If the user makes a mistake and selects the wrong back end, then 
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-R studio
-\end_layout
-
-\end_inset
-
- does something that is quite unexpected.
- It alters the document preamble to insert its best guess about the desired
- format.
- The document header will be adjusted, sometimes mangled so that even 
-\begin_inset Quotes eld
-\end_inset
-
-Knit to PDF
-\begin_inset Quotes erd
-\end_inset
-
- will fail.
  
 \end_layout
 
@@ -3540,24 +4045,53 @@ rmarkdown
 
 \end_inset
 
- uses a theme set based on the bootstrap library (??).
+ uses a theme set based on the bootstrap library ().
  If the markdown preamble does not specify a theme, or it specifies any
  theme except 
-\begin_inset Quotes eld
-\end_inset
+\begin_inset Flex Code
+status open
 
+\begin_layout Plain Layout
 null
-\begin_inset Quotes erd
+\end_layout
+
 \end_inset
 
-, then a boilerplate of javascript and cascading style sheets from bootstrap
- is inserted into the HTML header.
+, then a large amount of javascript and cascading style sheet data from
+ bootstrap is inserted into the HTML header.
+ This can take up to 700KB of storage.
+ All of the other elements in the document, including its graphs and features,
+ will take additional space.
+ An R package that includes three HTML vignettes will exceed the CRAN limit
+ on the size of packages.
  
 \end_layout
 
 \begin_layout Standard
-Rather than editing the document over-and-over to see the effects, we suggest
- instead either using the function or the compiler script.
+Rather than editing the document over-and-over to see the effects of themes,
+ we suggest instead either using the The 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+stationery
+\end_layout
+
+\end_inset
+
+ package document template are intended to have consistent 
+\begin_inset Quotes eld
+\end_inset
+
+look and feel
+\begin_inset Quotes erd
+\end_inset
+
+ across formats.
+ A guide document may be produced with an HTML back end, or in PDF, with
+ either Sweave or knitr chunk processing engines.
+ The same is true for report documents produced by Sweave and knitr.
+ function or the x script.
  To prevent the use of a Bootstrap library theme, the 
 \begin_inset Flex Code
 status open
@@ -3606,7 +4140,7 @@ status open
 
 \begin_layout Plain Layout
 
-./rmd2html.sh --theme=NULL crmda.Rmd
+$ ./rmd2html.sh --theme=NULL crmda.Rmd
 \end_layout
 
 \end_inset
@@ -3628,37 +4162,51 @@ skeleton.Rmd
  provided with this package has a compiled size will be around 700KB.
  Preventing the insertion of the Bootstrap-based theme will reduce the HTML
  output file size to 62KB.
- To achieve the same effect by editing the markdown document the correct
- syntax will be 
+ (Note the author can insert 
+\begin_inset Quotes eld
+\end_inset
+
+theme: null
+\begin_inset Quotes erd
+\end_inset
+
+ in the markdown to prevent the use of a bootstrap theme (note that 
 \begin_inset Flex Code
 status open
 
 \begin_layout Plain Layout
-theme: null
+null
 \end_layout
 
 \end_inset
 
- (neither capitalized nor quoted).
+ is neither capitalized nor quoted).
+ Of course, the disadvantage of removing the theme is that the benefits
+ of the theme are lost.
+ In the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+stationery
 \end_layout
 
-\begin_layout Standard
-Of course, the disadvantage of removing the theme is that the benefits of
- the theme are lost.
- In the accompanying vignette 
+\end_inset
+
+ package, there is a vignette 
 \begin_inset Quotes eld
 \end_inset
 
-Rmarkdown HTML Special Features,
+HTML Special Features,
 \begin_inset Quotes erd
 \end_inset
 
- we illustrate the use of some special features in the bootstrap theme.
- 
+ that explores these issues.
 \end_layout
 
 \begin_layout Standard
-The allowed bootstrap themes are listed in the help page for 
+It is worth mentioning that there are many bootstrap themes (they are listed
+ in the help page for 
 \begin_inset Flex Code
 status open
 
@@ -3668,7 +4216,7 @@ rmarkdown::html_document
 
 \end_inset
 
-.
+).
  One can explore the impact of these themes on the final document by running,
  for example, 
 \end_layout
@@ -3708,7 +4256,7 @@ status open
 
 \begin_layout Plain Layout
 
-./rmd2html.sh --theme='"spacelab"' crmda.Rmd
+$ ./rmd2html.sh --theme='"spacelab"' crmda.Rmd
 \end_layout
 
 \end_inset
@@ -3724,8 +4272,7 @@ Troubleshooting
 Documents often fail to compile.
  There are many failure points and one might need to inspect the intermediate
  files and output at several stages.
- When there is trouble, it is recommended to recompile with parameter values
- 
+ When there is trouble, recompile with parameter values 
 \begin_inset Flex Code
 status open
 
@@ -3767,7 +4314,9 @@ keep_tex = TRUE
 
  (for PDF).
  By inspecting the intermediate files, editing them, and running the compiler
- commands again, we can usually find out what's wrong.
+ commands again, one can usually find out what's wrong.
+ During this process, it is beneficial to remember that the rendering process
+ has separate stages, and each one can be run in isolation.
 \end_layout
 
 \begin_layout Standard
@@ -3793,8 +4342,17 @@ pandoc
 \end_inset
 
 .
- For example, compiling our minimal skeleton crmda.Rmd yields this intimidating
- list of command line options
+ For example, compiling our minimal skeleton 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+crmda.Rmd
+\end_layout
+
+\end_inset
+
+ yields this intimidating list of command line options
 \end_layout
 
 \begin_layout Standard
@@ -3806,12 +4364,12 @@ status open
 \begin_layout Plain Layout
 
 /usr/bin/pandoc +RTS -K512m -RTS crmda.utf8.md --to html4 --from markdown+autolink
-_bare_uris+ascii_identifiers+tex_math_single_backslash --output /tmp/pj3/Untitle
-d/crmda.html --smart --email-obfuscation none --self-contained --standalone
- --section-divs --table-of-contents --toc-depth 2 --template theme/guide-boilerp
-late.html --highlight-style haddock --css theme/kutils.css --variable 'theme:boots
-trap' --include-in-header /tmp/RtmpU3qSFQ/rmarkdown-str33e24223b3a.html --mathjax
- --variable 'mathjax-url:https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-A
+_bare_uris+ascii_identifiers+tex_math_single_backslash --output crmda.html
+ --smart --email-obfuscation none --self-contained --standalone --section-divs
+ --table-of-contents --toc-depth 2 --template theme/guide-boilerplate.html
+ --highlight-style haddock --css theme/kutils.css --variable 'theme:bootstrap'
+ --include-in-header /tmp/RtmpU3qSFQ/R markdown-str33e24223b3a.html --mathjax
+ --variable 'mathjax-url:https://mathjax.RStudio.com/latest/MathJax.js?config=TeX-A
 MS-MML_HTMLorMML' --filter /usr/bin/pandoc-citeproc
 \end_layout
 
@@ -3820,47 +4378,45 @@ MS-MML_HTMLorMML' --filter /usr/bin/pandoc-citeproc
 
 \end_layout
 
-\begin_layout Section
-Working with LaTeX
-\end_layout
-
 \begin_layout Standard
-Like so many other concepts and tools in this area, 
-\begin_inset ERT
+This converts an intermediate markdown document 
+\begin_inset Flex Code
 status open
 
 \begin_layout Plain Layout
-
-
-\backslash
-TeX
+crmda.utf8.md
 \end_layout
 
 \end_inset
 
- was a creation of Donald Knuth at Stanford.
- 
-\begin_inset ERT
+ into 
+\begin_inset Flex Code
 status open
 
 \begin_layout Plain Layout
-
-
-\backslash
-TeX
+crmda.html
 \end_layout
 
 \end_inset
 
- was the precursor to 
-\begin_inset ERT
+.
+ The help page for pandoc lists the document parameters than can be specified
+ in the command line (such as 
+\begin_inset Flex Code
 status open
 
 \begin_layout Plain Layout
+--template
+\end_layout
 
+\end_inset
 
-\backslash
-LaTeX
+ or 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+--table-of-contents
 \end_layout
 
 \end_inset
@@ -3868,168 +4424,205 @@ LaTeX
 .
 \end_layout
 
-\begin_layout Standard
-The CRMDA maintains a Web page about 
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-LaTeX
-\end_layout
-
-\end_inset
-
-: 
-\begin_inset Flex URL
-status open
-
-\begin_layout Plain Layout
-
-https://crmda.ku.edu/latex-help
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-That page has basic guides and information about the KU dissertation template.
- I prefer to work with 
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-LaTeX
-\end_layout
-
-\end_inset
-
- documents, for a number of reasons.
- The quality of the PDF output is nicer, in my opinion, and more predictable.
- However, the major reason I prefer 
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-LaTeX
-\end_layout
-
-\end_inset
-
- is that the Sweave option 
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-split=TRUE
-\end_layout
-
-\end_inset
-
- is allowed.
- That option creates separate 
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-*.tex
-\end_layout
-
-\end_inset
-
- output files, for each code chunk.
- The developers of the
-\end_layout
-
-\begin_layout Standard
-Rmarkdown documents framework disapprove of `split` and elected, consciously,
- not to implement it.
- A couple of the questions not considered in our Web page are the following.
-\end_layout
-
 \begin_layout Section
 Choosing among formats
 \end_layout
 
 \begin_layout Standard
-We provide 8 document formats because there are several acceptable methods
- to achieve the same goal.
+We provide 8 document formats because there are several acceptable methods.
+ Each one has strengths and weaknesses.
  At the current time, there is a considerable amount of enthusiasm about
- markdown document that generate HTML output.
- Our experience is that PDF output is considerably more dependable and one
- ?? ??
+ markdown document preparation system.
+ The markdown movement is the 
+\begin_inset Quotes eld
+\end_inset
+
+bleeding edge,
+\begin_inset Quotes erd
+\end_inset
+
+ literally, as the style for document markup and the development of software
+ to convert documents into the final format is currently underway.
+ The core program that handles markdown documents, 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+pandoc
+\end_layout
+
+\end_inset
+
+, is undergoing rapid development.
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+Frequent changes in 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+pandoc
+\end_layout
+
+\end_inset
+
+ caused the RStudio program distribution to include a snapshot of 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+pandoc
+\end_layout
+
+\end_inset
+
+ so that their example documents can be compiled in a predictable way.
+ We are warned that our templates for 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+pandoc
+\end_layout
+
+\end_inset
+
+ are likely to be made unworkable by revisions in the future and revisions
+ will be necessary.
+\end_layout
+
+\end_inset
+
+ On the other hand, the LaTeX-based approaches are time-tested and the compilers
+ for them have existed for years.
+ There are fewer surprises (bugs), but there are more details for authors
+ to learn.
+ 
+\end_layout
+
+\begin_layout Standard
+A long run goal in the development of markdown is to create a single document
+ that can be compiled into various formats.
+ At the current time, that is an 
+\emph on
+aspiration
+\emph default
+, not a reality.
+ Authors who prepare documents intended for one format will generally use
+ features that are fundamentally incompatible with the other formats.
+ As a result, the choice of the back end must be made first, and after that
+ one can choose among features in the front end that are compatible with
+ the desired result.
+ Where you want to end up determines where you start.
+\end_layout
+
+\begin_layout Standard
+To sort through these considerations, the right place to start is the actually
+ the desired end of the writing process.
+ After we figure out the end, we can concentrate on the beginning.
 \end_layout
 
 \begin_layout Subsection
-Which backend?
+Which back end?
 \end_layout
 
 \begin_layout Standard
 Should I end up with HTML or PDF? The answer depends on the intended audience/cl
 ient.
- If a "paper" must be submitted, obviously choose PDF.
+ If a "paper" must be submitted, choose PDF.
  If the document needs numbered equations, cross references, and "floating"
  tables and figures, choose PDF.
- If the document is intended for a Webpage, then HTML is the obvious choice
- (unless you simply want to convey a PDF document via the Web).
- Our HTML template includes a cascading style sheet feature that allows
- both color-highlighted sections and tabbed sub-sections.
+ If the document is intended for a Webpage, then choose HTML (although we
+ prefer to PDF document via the Web in many cases).
+ 
 \end_layout
 
 \begin_layout Standard
-There is concern about mathematics in HTML documents that deserves mention.
- For many years, the inability of Web pages to display equations was a major
- problem.
- Many tedious, ugly methods were developed.
- A more-or-less workable solution was developed, a framework called MathJax.
- MathJax allows inclusion of math markup in the page which--when the conditions
- are right--can be converted by the Web
+HTML documents have hidden benefits and hidden costs.
+ There is no free lunch.
+ One can have features, but at the cost of large file sizes and (sometimes)
+ unpredictable user experiences.
+ Web browsers differ in their implementation of guidelines, javascript,
+ and cascading style sheets.
+ If one intends to convey a document in a replicable way to a wide audience
+ using various kinds of computers, then PDF is the recommended format.
+ The equations and figures are 
+\begin_inset Quotes eld
+\end_inset
+
+in
+\begin_inset Quotes erd
+\end_inset
+
+ the document and the author can be highly confident that they will have
+ the same appearance across systems.
 \end_layout
 
 \begin_layout Standard
-browser to look like equations.
+There are other limitations in HTML.
+ There is no built-in method for display of mathematical equations.
+ There have been efforts to ameliorate that problem over the years, the
+ most recent of which is called MathJax (??).
+ MathJax is a Web program that can be called when a user opens an HTML document.
+ MathJax displays markup in a way that is similar to LaTeX output.
+ However, in order for this to work, the conditions must be 
+\begin_inset Quotes eld
+\end_inset
+
+just right
+\begin_inset Quotes erd
+\end_inset
+
+.
+ First, if the remote server that provides MathJax is unavailable, then
+ the math in the document will not be rendered.
+ Second, some special care is required to allow MathJax equations in HTML
+ documents that are based on markdown templates.
+ The stationery package includes a special document format function, 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+crmda_html_document
 \end_layout
 
-\begin_layout Standard
-If the user is offline, or if the MathJax server is not available, then
- the HTML document's math will not display.
- If one wants to put math into a document, using HTML is inherently risky.
- If one needs to be 100% sure that math will display as intended, choose
- to create PDF documents.
+\end_inset
+
+, that circumvents the limitations.
 \end_layout
 
 \begin_layout Subsection
-Which Frontend? Write in LaTeX or Rmarkdown?
+Which Frontend? Write in LaTeX or R markdown?
 \end_layout
 
 \begin_layout Standard
-This will be the answer:
+The original version of this document was prepared in R markdown that was
+ compiled into HTML.
+ There were several show-stopping flaws.
+ The document was changed to LaTeX and PDF.
+ Some features failed to compile, and some errors in my own code were silently
+ ignored by the version of 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+pandoc
 \end_layout
 
-\begin_layout Quote
-When choosing the frontend, consider the backend.
- Where you want to end up determines where you start.
+\end_inset
+
+ that was available in 2017.
+ When the back end format changed to PDF, several special features of the
+ HTML back end had to be removed.
+ (Again, there is no free lunch.)
 \end_layout
 
 \begin_layout Standard
-While working on this document, I prepared an original version in Rmarkdown
- that was compiled into HTML.
- Because some features failed to compile, I changed the backend to PDF in
- the report style.
- As a result, several features that are unique to the HTML backend had to
- be removed.
- HTML offers access to some special document formatting features that are
- simply not available in PDF, and the converse isalso true.
+Similarly, R packages that can generate output that works well in HTML do
+ not generate similarly good LaTeX output.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -4037,74 +4630,197 @@ I believe the following are good conclusions:
 \end_layout
 
 \begin_layout Enumerate
-1.
- If one intends to export as HTML, then markdown is, *by far*, the most
- reasonable choice for a frontend.
+If one intends to export as HTML, then markdown is, *by far*, the most reasonabl
+e choice for a frontend.
  Markdown was developed, first and foremost, as a simpler way to generate
  Web pages.
+ There are converters that try to go from LaTeX to HTML, but in my experience,
+ none of them preserve all of the features that are likely to exist in an
+ even moderately complicated LaTeX document.
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+Tables and equations with cross references are almost always damaged in
+ conversion.
+\end_layout
+
+\end_inset
+
+ 
 \end_layout
 
 \begin_layout Enumerate
-2.
- If one intends to export to PDF, then markdown or  LaTeX  can be useful.
+If one intends to export to PDF, then markdown or  LaTeX  can be useful.
  But  LaTeX  is probably better.
   LaTeX  is primarily intended for the creation of publication-quality documents
  in PDF format.
- Conversion from  LaTeX  to HTML is less decidedly less unsatisfactory.
+ 
 \end_layout
 
 \begin_layout Standard
-Since one can put much  LaTeX  markup into a markdown document, perhaps
- the difference is not so great as it seems.
- The Rmarkdown compilation process (see Appendix 
-\backslash
-ref{appendix1}) generates a  LaTeX  file at an intermediate stage, so in
- some sense the same PDF result ought to be possible with Markdown or  LaTeX
-  document preparation.
- However, in practice, we find differences in conveniences for authors.
+Since one can put much (not all) LaTeX  markup into a markdown document,
+ perhaps the difference is not so great as it seems.
+ Because a markdown documents must be knitted, and then converted to LaTeX,
+ and then to PDF, there is an 
+\begin_inset Quotes eld
+\end_inset
+
+extra step
+\begin_inset Quotes erd
+\end_inset
+
+ in translation that may corrupt some features.
+ 
 \end_layout
 
 \begin_layout Standard
-I would summarize the situation with a poem:
-\end_layout
-
-\begin_layout Quote
-Markdown documents intended for HTML allow some  LaTeX  code.
-\end_layout
-
-\begin_layout Quote
-Markdown documents intended for PDF allow more  LaTeX  code.
-\end_layout
-
-\begin_layout Quote
-Almost all HTML code is tolerated well in a Markdown document intended for
- HTML.
-\end_layout
-
-\begin_layout Quote
-No HTML code is tolerated in a document intended for PDF.
-\end_layout
-
-\begin_layout Standard
-The main point is that if one writes a markdown document, using special
- features intended for the backend, then it is generally not possible to,
- at the last minute, change the output format from HTML to PDF, or vice
- versa.
+The fact of life, at least at the current time, is that it is not painless
+ to change the output format without making wholesale changes in the document
+ fron tend.
+ If one writes a markdown document, using special features intended for
+ the back end, then it is generally not possible to, at the last minute,
+ change the output format.
  HTML output has advantages in Web style features, while PDF documents have
  advantages in "on paper" presentations.
 \end_layout
 
-\begin_layout Standard
-For novices,  LaTeX  seems more difficult than markdown.
- Perhaps this is not such a big hurdle as it used to be because [LyX](http://www.
-lyx.org) is available.
- In my opinion, `LyX` makes preparing a  LaTeX  document much easier than
- it is to prepare
+\begin_layout Subsection
+Where does my editor fit into this?
 \end_layout
 
 \begin_layout Standard
-a similarly complicated markdown document.
+We need an editor that allows the insertion of code chunks and has the ability
+ to compile documents (recall Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Compiling"
+
+\end_inset
+
+).
+ Microsoft Word is not a workable alternative, which is a source of concern
+ for may social scientists.
+\end_layout
+
+\begin_layout Standard
+I recommend LyX (http://www.lyx.org) to many LaTeX novices.
+ It is a graphical interface for preparation of LaTeX documents.
+ LyX can export LaTeX files and it offers some good tools to learn about
+ how to write LaTeX.
+ LyX was used to create the skeletons provided with 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+stationery
+\end_layout
+
+\end_inset
+
+.
+ We prepare the documents as .lyx files, and then export to an equivalent
+ .Rnw file.
  
+\end_layout
+
+\begin_layout Standard
+LyX offers many benefits, but it has one limitation (which all LaTeX editors
+ will share).
+ LyX allows us to enter code chunks in the document, but it does not offer
+ a convenient way to test chunks and interact with an R session while we
+ are writing the document.
+ If one is editing in LyX (or in a LaTeX editor), the following shell commands
+ can be used to convert the current document, 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+stationery.lyx
+\end_layout
+
+\end_inset
+
+, to pdf:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+$ lyx -e sweave stationery.lyx # creates a Rnw file
+\end_layout
+
+\begin_layout Plain Layout
+
+$ R CMD Sweave stationery.Rnw # creates a tex file
+\end_layout
+
+\begin_layout Plain Layout
+
+$ texi2pdf stationery.tex # creates pdf, could use pdflatex
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Compiling the LyX document has an 
+\begin_inset Quotes eld
+\end_inset
+
+all or nothing
+\begin_inset Quotes erd
+\end_inset
+
+ feel, where errors in R code will cause compilation to fail.
+ One can edit an .Rnw file in any editor intended for LaTeX, of course, but
+ those editors will have the same limitation that one cannot test R code
+ chunks interactively.
+\end_layout
+
+\begin_layout Standard
+One can instead edit the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+.Rnw
+\end_layout
+
+\end_inset
+
+ or 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+.Rmd
+\end_layout
+
+\end_inset
+
+ files with editors have an 
+\begin_inset Quotes eld
+\end_inset
+
+inferior mode
+\begin_inset Quotes erd
+\end_inset
+
+ that can start an interactive R session.
+ The author can create a code chunk and test it interactively before trying
+ to compile the whole document.
+ There are several editors that have that ability.
+ The venerable editor Emacs (??) offers ESS (Emacs Speaks Statistics) which
+ is popular with experts for a number of reasons.
+ Perceiving Emacs to be difficult to use, many novices enjoy RStudio, which
+ has the ability to work with markdown or LaTeX files.
 \end_layout
 
 \begin_layout Standard
@@ -4122,672 +4838,203 @@ frame of mind
  
 \end_layout
 
+\begin_layout Subsection
+Should one prefer Sweave or knitr?
+\end_layout
+
 \begin_layout Standard
-\begin_inset Note Note
+In R markdown, 
+\begin_inset Flex Code
 status open
 
 \begin_layout Plain Layout
-<!-- Rstudio alters the document header, using its best guesses about -->
-\end_layout
-
-\begin_layout Plain Layout
-<!-- settings suitable for PDF or HTML, *without warning the author*.
- If -->
-\end_layout
-
-\begin_layout Plain Layout
-<!-- one opens an Rmarkdown document that can be compiled into PDF, and
- -->
-\end_layout
-
-\begin_layout Plain Layout
-<!-- then chooses "knit to HTML", the document header will often be -->
-\end_layout
-
-\begin_layout Plain Layout
-<!-- destroyed.
- Noticing that the output is not what the expected, the -->
-\end_layout
-
-\begin_layout Plain Layout
-<!-- author then thinks, "I'll reverse that mistake by choosing 'knit to
- -->
-\end_layout
-
-\begin_layout Plain Layout
-<!-- PDF', but that replaces the document header with another set of -->
-\end_layout
-
-\begin_layout Plain Layout
-<!-- guesses preferred by the Rstudio team.
- As a result, a document that -->
-\end_layout
-
-\begin_layout Plain Layout
-<!-- did compile from Rmd into PDF has lost the settings that it needs.
- -->
+knitr
 \end_layout
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Subsubsection
-Important caution about Math in the HTML backend
+ is the only available method to process code chunks.
+ There is no Sweave chunk engine for markdown.
 \end_layout
 
 \begin_layout Standard
-Math is not incorporated in HTML in the same way as PDF.
- Compiling a document into PDF uses a program like `pdflatex` to put the
- equations "in" the document.
- They are displayed in (more or less) the same way on various browsers and
- operating systems.
- The same is not true for math in HTML documents.
- Simply put, **math is not
+For LaTeX docuements, we have the choice between the older 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+Sweave
 \end_layout
 
-\begin_layout Standard
-allowed in HTML**.
- We think it is allowed--our eyes tells us it is
+\end_inset
+
+ chunk framework or the newer 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+knitr
 \end_layout
 
-\begin_layout Standard
-allowed--because we browse Web pages that show equations.
- However,
-\end_layout
+\end_inset
 
-\begin_layout Standard
-this is an illusion achieved by extraordiary measures involving
-\end_layout
-
-\begin_layout Standard
-Javascript and third party servers.
- The beautifully formatted 
-\backslash
-LaTeX
-\end_layout
-
-\begin_layout Standard
-equation is not "embedded" in the HTML, it is instead delivered as
-\end_layout
-
-\begin_layout Standard
-code "available for rendering" in the Web browser.
- The HTML code is
-\end_layout
-
-\begin_layout Standard
-converted, via javascript and functions supplied interactively from
-\end_layout
-
-\begin_layout Standard
-the MathJax Web server.
-\end_layout
-
-\begin_layout Subsubsection*
-Markdown to HTML allows most valid HTML markup, but Markdown to PDF does
- not allow all LaTeX.
-\end_layout
-
-\begin_layout Standard
-This is a somewhat surprising difference.
- All HTML markup I've tried
-\end_layout
-
-\begin_layout Standard
-works well in an Rmarkdown document that aims to go into HTML.
-\end_layout
-
-\begin_layout Standard
-However, not all  LaTeX  markdown is allowed in an Rmarkdown document
-\end_layout
-
-\begin_layout Standard
-going to PDF.
- And even less  LaTeX  code works well if the intended
-\end_layout
-
-\begin_layout Standard
-backend is HTML.
- One cannot insert italics with  LaTeX  in a document
-\end_layout
-
-\begin_layout Standard
-intended for HTML.
- For example, writing `
-\backslash
-emph{italics}` or bold
-\end_layout
-
-\begin_layout Standard
-`
-\backslash
-textbf{bold}` in the style of  LaTeX  code will have no effect in an
-\end_layout
-
-\begin_layout Standard
-HTML document.
- However, if PDF output is used, then both of those
-\end_layout
-
-\begin_layout Standard
- LaTeX  codes work.
- As evidence, note I get 
-\backslash
-emph{italics} and bold
-\end_layout
-
-\begin_layout Standard
-
-\backslash
-textbf{bold} in this PDF document.
+ framework.
  
 \end_layout
 
-\begin_layout Subsection
-Should one prefer `Sweave` or `knitr`?
+\begin_layout Standard
+knitr introduced a more fine-grained set of options for the chunks (see
+ 
+\begin_inset Quotes eld
+\end_inset
+
+knitr code chunk options,
+\begin_inset Quotes erd
+\end_inset
+
+ 
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+https://yihui.name/knitr/options
+\end_layout
+
+\end_inset
+
+).
+ 
 \end_layout
 
 \begin_layout Standard
-This question is meaningful only in `noweb`/ LaTeX  documents.
- In Rmarkdown, `knitr` is the only available method to process code chunks.
- In `noweb`, one can choose between `Sweave` and `knitr`.
- Perhaps that suggests that, if one must learn one set of chunk options,
- then `knitr` options are the right place to start (since they can be used
- in documents intended for HTML or PDF).
- The chunk options allowed the original `Sweave` were `echo` (include code
- with output?), `eval` (run the chunk calculations?), `include` (display
- the chunk in the document?), `fig` (code generates a figure?) and `results`
- (output in  LaTeX  is handled differently than raw 
-\backslash
-TeX).
- There are a few others, but that is most of the story.
- `knitr` honored most of the Sweave options and then added many more (see
- [knitr code chunk options](https://yihui.name/knitr/options)).
+One benefit of R markdown with 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+knitr
 \end_layout
 
-\begin_layout Standard
-One benefit of Rmarkdown with `knitr` is that it is possible to make documents
- about other programs (not just R).
+\end_inset
+
+ is that it is possible to make documents about other programs (not just
+ R).
  I've explored knitr to weave documents about BASH shell programming, for
  example.
 \end_layout
 
 \begin_layout Section
-Troubleshooting
+Conclusion
 \end_layout
 
 \begin_layout Standard
-The first step is understanding the trouble.
- The trouble stems from the fact that each document must be transformed
- through several stages to reach the final result.
- Understanding that, and learning about the problems that appear at each
- stage, can help with the troubleshooting strategies that we recommend.
+The 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+stationery
 \end_layout
 
-\begin_layout Subsection
-Compilation Stages
-\backslash
-label{appendix1}
-\end_layout
+\end_inset
 
-\begin_layout Standard
-Steps to compile documents break down into 2 phases.
-\end_layout
-
-\begin_layout Standard
-1.
- Handle code chunks
-\end_layout
-
-\begin_layout Standard
-2.
- render the resulting document.
-\end_layout
-
-\begin_layout Standard
-A noweb file is converted from Rnw into PDF by a sequence of transitions.
-\end_layout
-
-\begin_layout Standard
-1.
- `Rnw -> tex`.
- This is called "weaving" or "knitting", depending on whether Sweave or
- knitr is the code processing engine.
- R finds the code in the Rnw file and inserts results into a new LaTeX file.
- The difference between weaving and knitting will be explained below.
-\end_layout
-
-\begin_layout Standard
-2.
- `tex -> pdf`.
- The default is `pdflatex` for this step, but the alternative `xelatex`
- is growing in popularity because it more gracefully handles Unicode characters
- (utf8).
- If the document is edited with [LyX](http://www.lyx.org), there is an
-\end_layout
-
-\begin_layout Standard
-implicit step 0,
-\end_layout
-
-\begin_layout Standard
-0.
- `LyX -> Rnw`.
+ package is a snapshot survey of what is practical, here and now, for the
+ preparation of reproducible research reports.
+ There are some authors who take an extreme position that an entire research
+ project, all phases in the analysis of data, should be wrapped together
+ into a tightly wrapped bundle.
+ At the current time, there are practical problems that prevent us from
+ achieving this goal with perfect fidelity, but we can take some significant
+ steps forward to integrate code and results into professionally acceptable
+ guides and reports.
  
 \end_layout
 
 \begin_layout Standard
-In the LyX pull down menu system, this is represented by Export -> Sweave.
+Authors who have used LaTeX, or written with LyX, will have some advantages
+ as they enter this area.
+ For those authors, it will be relatively easy to learn to insert code chunks
+ and insert an extra step in the document compilation process.
+ For authors that do not have LaTeX background, it seems certain that the
+ R markdown format will be more appealing.
+ It is easier to produce a rudimentary document with R markdown.
+ That is to be expected, of course, since the markdown movement is propelled
+ by a generalized rejection of ugly, tedious markup documents (either LaTeX
+ or HTML).
 \end_layout
 
 \begin_layout Standard
-A markdown file is converted from Rmd to HTML by this sequence of transitions
+Taking the details into account, however, we expect that authors that start
+ with 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+.Rnw
 \end_layout
 
-\begin_layout Standard
-1.
- `Rmd -> md`.
- The "knitting" process replaces code chunks by R input and output, converting
- the R markdown file into an ordinary markdown file.
- In my system, an "md" file is generated, and then a second "utf8.md" is
- generated to clean up the file encoding.
+\end_inset
+
+ or 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+.Rmd
 \end_layout
 
-\begin_layout Standard
-2.
- `md -> HTML`.
- Currently, most people use the program `pandoc` for this.
- A version of `pandoc` is distributed with Rstudio for the convenience of
+\end_inset
+
+ files will likely encounter plenty of trouble as they try to integrate
+ many appealing features.
+ LaTeX equations, for example, can be included in either document format,
+ but preparing them correctly is not easy.
+ It is often frustrating to find that features that work well in one format
+ are either unavailable or more difficult in the other framework.
+ While there are many Websites touting examples of 
+\begin_inset Quotes eld
+\end_inset
+
+pretty
+\begin_inset Quotes erd
+\end_inset
+
+ or 
+\begin_inset Quotes eld
+\end_inset
+
+elegant
+\begin_inset Quotes erd
+\end_inset
+
+ documents, the these pages sometimes obscure the fact that their authors
+ understand the compilation problems on a deeper level than the ordinary
  users.
- Linux users probably have `pandoc` available as standard system packages
- and the Rstudio version be removed.
+ Those authors can more easily avoid pitfalls simply because they know,
+ ahead of time, what will and won't work.
+ This is especially true in the markdown community, because the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+pandoc
+\end_layout
+
+\end_inset
+
+ program has a relatively long list of idiosyncrasies that the experts understan
+d and avoid, while others are not so fortunate.
 \end_layout
 
 \begin_layout Standard
-The production of PDF from markdown, involves an additional transition.
-\end_layout
-
-\begin_layout Standard
-1.
- `Rmd -> md`.
- Knitting converts code chunks into R input and output that is inserted
- into an `md` file created in the `pandoc` markdown style.
-\end_layout
-
-\begin_layout Standard
-2.
- `md -> tex`.
- A  LaTeX  file is created by `pandoc`.
- In the header of the `md` document, one can set a number of parameters
- to alter the  LaTeX  generation process.
- For troubleshooting, "keep_tex: yes" to keep the `tex` file.
-\end_layout
-
-\begin_layout Standard
-3.
- `tex -> pdf`.
- The default program for this has been `pdflatex`.
- It may be important to know that a  LaTeX  document may need to be run
- through `pdflatex` several times because cross-references among pages and
- equations need to be made consistent.
-\end_layout
-
-\begin_layout Standard
-The R packages `rmarkdown` and `knitr` orchestrate the process that builds
- the instructions to `pandoc`.
- In `rmarkdown`, the function `render` orchestrates all of the work.
- It calls chunk calculator and assigns work among the various conversion
- programs.
- The functions in the stationery package named `rmd2pdf` or `rmd2html` are
- "wrapper" functions that adjust settings sent to `render`.
-\end_layout
-
-\begin_layout Subsection
-Avoiding compilation trouble
-\end_layout
-
-\begin_layout Standard
-The document production phase can fail at many steps (see Appendix 
-\backslash
-ref{appendix1}).
- While editing a document, authors are well advised to heed the advice:
-\end_layout
-
-\begin_layout Standard
-
-\backslash
-begin{quote}
-\end_layout
-
-\begin_layout Standard
-
-\backslash
-textbf{Compile early, compile often!}
-\end_layout
-
-\begin_layout Standard
-
-\backslash
-end{quote}
-\end_layout
-
-\begin_layout Standard
-When a mistake is inserted, it is best to find it as soon as possible.
-\end_layout
-
-\begin_layout Subsection
-When debugging, check intermediate files
-\end_layout
-
-\begin_layout Standard
-The compiler scripts may erase intermediate files.
- While debugging a document, we want to disable that clean-up step so that
- we can see what goes wrong.
- In an Rmd document that ends up in PDF, for example, we should be able
- to inspect an `md` file and a `tex` file.
- We can not only inspect those files, but we can also attempt to compile
- them in isolation so that we can see what is going wrong.
+The experience in developing the examples provided with the package is that
+ compiler tool chains are generally fragile and errors can be difficult
+ to isolate and solve.
+ The LyX authoring environment offers a very convenient way to rapidly move
+ up the LaTeX learning curve, while it frustrates the author who wants to
+ test code chunks while drafting a document.
  
-\end_layout
-
-\begin_layout Standard
-This document includes the header argument `keep_tex: true`, which means
- we save a copy of "reports_and_guides.tex".
-\end_layout
-
-\begin_layout Standard
-While developing this document, some of the problems with backend-specific
- code have come to the forefront.
- The HTML backend allows pleasant color-coded section headings which included
- in the PDF output.
- Tables that work well in PDF documents don't work in HTML, and vice versa.
- Some HTML tables that are legal HTMLdon't cooperate with `pandoc`.
- 
-\end_layout
-
-\begin_layout Standard
-It is also worth mentioning that error messages are not always informative.
- In fact, we sometimes don't get error messages when we should.
- Rather, we simply receive bad output.
- While developing this document I noticed that when a user includes erroneous
-  LaTeX  code in a markdown document, a flawed HTML output is generated
- without error or warning.
- On the other hand, changing the intended backend to PDF causes the compiler
- to fail and issue an error message.
- If one is exporting to HTML, then, a very careful proofreading of the output
- to check conversion of  LaTeX  code into HTML is necessary.
-\end_layout
-
-\begin_layout Section
-What do we Really, Really Need?
-\end_layout
-
-\begin_layout Standard
-## Things we wish we could have in HTML output (that we can get in PDF output)
-\end_layout
-
-\begin_layout Standard
-Numbered equations, easy cross references, numbered tables and figures
-\end_layout
-
-\begin_layout Standard
-## Things we wish we could have in PDF output (that we can get in HTML)
-\end_layout
-
-\begin_layout Standard
-A splash of color, mainly.
- This is possible in PDF, but more
-\end_layout
-
-\begin_layout Standard
-difficult, at least on the surface.
-\end_layout
-
-\begin_layout Subsection
-Math
-\end_layout
-
-\begin_layout Standard
-We are a Center focused on methodology.
- It is necessary to be able to
-\end_layout
-
-\begin_layout Standard
-write about math, preferably with a standard, uniform mathematical
-\end_layout
-
-\begin_layout Standard
-markup language, such as 
-\backslash
-LaTeX.
-\end_layout
-
-\begin_layout Standard
-Many social scientists are not familiar with  LaTeX  document
-\end_layout
-
-\begin_layout Standard
-preparation.
- That was a hurdle that kept many authors with Microsoft
-\end_layout
-
-\begin_layout Standard
-Word, even when they were frustrated with it.
- The difficulty of using
-\end_layout
-
-\begin_layout Standard
- LaTeX  was solved, to a significant extent, by LyX, an open source
-\end_layout
-
-\begin_layout Standard
-graphical interface.
- With LyX, or other editors that could generate
-\end_layout
-
-\begin_layout Standard
- LaTeX  output (such as Scientific Word, TexMacs, or Abiword), authors
-\end_layout
-
-\begin_layout Standard
-who were not computer programmers could learn enough  LaTeX  to finish
-\end_layout
-
-\begin_layout Standard
-their projects.
-\end_layout
-
-\begin_layout Subsection
-Literate documents: include code and output
-\end_layout
-
-\begin_layout Standard
-We need to be able to write about computer code.
- The "old fashioned"
-\end_layout
-
-\begin_layout Standard
-way is to copy/paste code and output into documents.
- That's somewhat
-\end_layout
-
-\begin_layout Standard
-error prone and difficult to keep up-to-date.
-\end_layout
-
-\begin_layout Standard
-Donald Knuth, a famous Stanford professor of computer science, proposed
- strategies to integrate the production of documents with the development
- of computer code.
- Rather than creating code in one file, and documentation in another, the
- idea was that the two parts of our work should be blended in a "literate
- programming" exercise.
- 
-\end_layout
-
-\begin_layout Standard
-The literate programming idea is more a general way of life than it is a
- particular document production strategy.
- It is, partly, aimed at programmers who don't like to write instruction
- manuals.
- In the end, however, it may have more impact on non-programmers who need
- to prepare technical reports that include computer code examples.
-\end_layout
-
-\begin_layout Standard
-In computer programming, one of the biggest impacts of literate programming
- is the proliferation of systems for preparation of documentation within
- code files.
- In the 1990s and early 2000s, when I was working on the Swarm Simulation
- System, we used a framework called Autodoc that allowed us to write instruction
-s into Objective-C code
-\end_layout
-
-\begin_layout Standard
-that were later harvested and turned into instructional manuals.
- See, for example, the documentation for the [Opinion Formation model]
-\end_layout
-
-\begin_layout Standard
-(http://pj.freefaculty.org/Swarm/MySwarmCode/OpinionFormation/Opinion-Docs).
- The
-\end_layout
-
-\begin_layout Standard
-Autodoc program was poorly documented and not easy to get, but soon after
- that, a new coding system called Doxygen became widely available.
- Doxygen, developed for creation of instruction manuals for C++ programs,
- was a major success in computer programming.
- Like Autodoc, Doxygen gave programmers a relatively convenient method to
- explain what they were doing without wasting too much time.
-\end_layout
-
-\begin_layout Standard
-In the modern experience of most CRMDA staffers, the "documentation inside
- code" approach is visible in the Roxygen markup method used for functions
- in R documents.
- Any function worth using should have Roxygen markup.
-\end_layout
-
-\begin_layout Subsection
-Where we have been
-\end_layout
-
-\begin_layout Standard
-In order to embrace the importance of using either markdown or 
-\backslash
-LaTeX, one must first abandon the idea that Microsoft Word can ever be useful
- for serious authorship.
- That's a big step for many graduate students and professors.
-\end_layout
-
-\begin_layout Standard
-If we look past GUI "what you see is what you get" (*wyswig*) word processors,
- where do we go? For a long time, the only answer was 
-\backslash
-LaTeX.
- However, there was a fatal weakness in 
-\backslash
-LaTeX.
- It is intended for PDF output, not Web pages.
- Exports into HTML were problematic.
-  LaTeX  was not only difficult for some to use, but it also did not benefit
- from fancy features that were becomming available in the Internet, especially
- cascading style sheets and Javascript.
-\end_layout
-
-\begin_layout Standard
-This gap in the document production process created a need for a new methods.
- In the 1990s, there was quite a bit of effort to make user friendly Web
- page editors, so that authors could have a Word-like experience that would
- generate HTML.
- The end result, generally, was difficult-to-maintain HTML documents.
- It was generally not feasible to edit and revise documents, the HTML generated
- was both extremly complicated and generally unsatisfactory.
-\end_layout
-
-\begin_layout Standard
-Another strategy was the development of alternative markup languages.
- In a way similar to 
-\backslash
-LaTeX, these markup languages (e.g., `docbook`) drop the idea that the user
- should have a *wyswig* experience.
- Instead, the author would again become a programmer who would insert symbols
- to create sections.
-\end_layout
-
-\begin_layout Standard
-Markdown was developed as a rejection of both ugly markup documents (either
- LaTeX or HTML) and *wyswig* editors.
- The idea is that documents should be text files that are readable *as is*
- but also convertible into other backends.
- The "markdown" movement seeks to deliver an easier-to-edit, less difficult-to-r
-ead, and easier-to-convert format.
- The leader is John Gruber, whose Website is boldly named ["daringfireball"](htt
-ps://daringfireball.net/projects/markdown).
-\end_layout
-
-\begin_layout Standard
-Markdown is intended to be easy-to-read, so that even if it is not compiled
- into a backend, it might be presentable to an audience of non-programmers.
- That general idea seems unrealistic to me, there is almost never going
- to be an audience (for CRMDA, at least), which is eager to look at a markdown
- file.
- The dropback argument is that a markdown file is more easily produced by
- a novice who does not want to learn to use 
-\backslash
-LaTeX.
- This seems more persuasive.
-\end_layout
-
-\begin_layout Standard
-The strength of markdown is that it makes it fairly easy to produce HTML
- documents that utilize some (not all) of the strengths of the World Wide
- Web's most commonly used method of communication.
-\end_layout
-
-\begin_layout Standard
-Where markdown is not capable, one can still write "raw HTML" in the middle
- of a markdown document.
-\end_layout
-
-\begin_layout Section
-Required footer 
-\end_layout
-
-\begin_layout Standard
-The guide documents we require authors include a final chunk that includes
- the session information, to be used in bug-tracking.
- 
-\end_layout
-
-\begin_layout Standard
-Reports do not include raw output, so it is not recommended to insert that
- raw output in the report.
- Instead, we ask report writers toinclude a final R chunk that saves the
- session information in a file in the same directory as the pdf output.
-\end_layout
-
-\begin_layout Standard
-```{r session, include=F}
-\end_layout
-
-\begin_layout Standard
-zz <- "stationery-sessionInfo.Rout"
-\end_layout
-
-\begin_layout Standard
-capture.output(warnings(), file = zz)
-\end_layout
-
-\begin_layout Standard
-capture.output(sessionInfo(), file = zz, append = TRUE)
-\end_layout
-
-\begin_layout Standard
-```
 \end_layout
 
 \begin_layout Standard

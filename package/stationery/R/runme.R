@@ -180,6 +180,7 @@ crmda_html_document <- function(template = "theme/guide-boilerplate.html", ...) 
 ##' @author Paul Johnson <pauljohn@@ku.edu>
 ##' @export
 ##' @examples
+##' \donttest{
 ##' wd.orig <- getwd()
 ##' dir.tmp <- tempdir()
 ##' setwd(dir.tmp)
@@ -191,6 +192,7 @@ crmda_html_document <- function(template = "theme/guide-boilerplate.html", ...) 
 ##' of2 <- rmd2pdf("skeleton.Rmd", toc = FALSE, output_dir = getwd())
 ##' if(interactive()) browseURL(of2[1])
 ##' setwd(wd.orig)
+##' }
 rmd2pdf <- function(fn = NULL, wd = NULL, ..., verbose = FALSE,
                     purl = TRUE, tangle = purl, themedir = "theme", 
                     package = "stationery"){
@@ -296,6 +298,7 @@ rmd2pdf <- function(fn = NULL, wd = NULL, ..., verbose = FALSE,
 ##' @importFrom utils Stangle
 ##' @importFrom tools texi2pdf
 ##' @examples
+##' \donttest{
 ##' wd.orig <- getwd()
 ##' dir.tmp <- tempdir()
 ##' setwd(dir.tmp)
@@ -306,6 +309,7 @@ rmd2pdf <- function(fn = NULL, wd = NULL, ..., verbose = FALSE,
 ##' if(interactive()) browseURL(of1)
 ##' list.files()
 ##' setwd(wd.orig)
+##' }
 rnw2pdf <- function(fn = NULL, wd = NULL, ..., engine = "knitr", purl = TRUE,
                     tangle = purl, clean = TRUE, quiet = TRUE, verbose = !quiet,
                     envir = parent.frame(), encoding = getOption("encoding"))
