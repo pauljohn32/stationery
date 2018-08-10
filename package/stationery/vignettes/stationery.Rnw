@@ -211,9 +211,9 @@ to re-style the output to match user-driven specifications. The \code{stationery
 package reflects the accumulated effort (and frustration) of several
 generations of graduate research assistants who have struggled to
 reconcile the reproducible document idea into demands of an organization
-that wants to issue a visually consistent guides and reports.\footnote{Special thanks to Brent Kaplan, Ben Kite, and Charles Redmon.}
+that wants to issue visually consistent guides and reports.\footnote{Special thanks to Brent Kaplan, Ben Kite, and Charles Redmon.}
 Others who want to create their own distinctive styles can take the
-offerings here evidence that there is light at the end of the tunnel. 
+offerings here as evidence that there is light at the end of the tunnel. 
 
 Before proceeding to the discussion of the package, some key terms
 should be well understood.
@@ -533,7 +533,7 @@ $ ./rmd2pdf.sh --template='"theme/report-newtemplate.tex"' --toc=TRUE --toc_dept
 \end{lstlisting}
 \inputencoding{utf8}
 We have made special effort to implement GNU style two-dash command
-like arguments (spaces are not allowed on either side of the equal
+line arguments (spaces are not allowed on either side of the equal
 sign).
 \item Our LaTeX skeletons are provided with both \code{.lyx} and \code{.Rnw}
 files. The \code{.lyx} file can be opened with LyX. Compilation to
@@ -601,11 +601,12 @@ in RStudio.
 \subsection{Reports versus Guides}
 
 The \code{stationery} package document templates are intended to
-have consistent ``look and feel'' across document front ends. A
-guide document may be produced with an HTML back end, or in PDF, with
-either Sweave or knitr chunk processing engines. To the extent possible,
-the color schemes and arrangement of header and footer information
-should be similar (if not identical). 
+have consistent ``look and feel'' across document types. Reports
+created with markdown or LaTeX should look the same. Results created
+by documents using either Sweave or knitr for chunk processing should
+have a similar appearance. To the extent possible, the color schemes
+and arrangement of header and footer information should be similar
+(if not identical). 
 
 The stationery package includes two document styles, dubbed ``guide''
 and ``report''. The difference between these two is not hard-and-fast.
@@ -891,18 +892,17 @@ or \code{-{}-table-of-contents}.
 
 We provide 8 document formats because there are several acceptable
 methods. Each one has strengths and weaknesses. At the current time,
-there is a considerable amount of enthusiasm about markdown document
-preparation system. The markdown movement is the ``bleeding edge,''
-literally, as the style for document markup and the development of
-software to convert documents into the final format is currently underway.
-The core program that handles markdown documents, \code{pandoc},
-is undergoing rapid development.\footnote{Frequent changes in \code{pandoc} caused the RStudio program distribution
+there is a considerable amount of enthusiasm about markdown. The markdown
+movement is the ``bleeding edge,'' literally, as the style for document
+markup and the development of software to convert documents into the
+final format is currently underway. The core program that handles
+markdown documents, \code{pandoc}, is undergoing rapid development.\footnote{Frequent changes in \code{pandoc} caused the RStudio program distribution
 to include a snapshot of \code{pandoc} so that their example documents
 can be compiled in a predictable way. We are warned that our templates
 for \code{pandoc} are likely to be made unworkable by revisions in
 the future and revisions will be necessary.} On the other hand, the LaTeX-based approaches are time-tested and
 the compilers for them have existed for years. There are fewer surprises
-(bugs), but there are more details for authors to learn. 
+(bugs), but there are more details for authors to learn.
 
 A long run goal in the development of markdown is to create a single
 document that can be compiled into various formats. At the current
@@ -915,8 +915,7 @@ the desired result. Where you want to end up determines where you
 start.
 
 To sort through these considerations, the right place to start is
-the actually the desired end of the writing process. After we figure
-out the end, we can concentrate on the beginning.
+the end. After we figure out the end, we can concentrate on the beginning.
 
 \subsection{Which back end?}
 
@@ -935,8 +934,8 @@ in their implementation of guidelines, javascript, and cascading style
 sheets. If one intends to convey a document in a replicable way to
 a wide audience using various kinds of computers, then PDF is the
 recommended format. The equations and figures are ``in'' the document
-and the author can be highly confident that they will have the same
-appearance across systems.
+and the author can be confident that they will have the same appearance
+across systems.
 
 There are other limitations in HTML. There is no built-in method for
 display of mathematical equations. There have been efforts to ameliorate
@@ -951,13 +950,13 @@ to allow MathJax equations in HTML documents that are based on markdown
 templates. The stationery package includes a special document format
 function, \code{crmda\_html\_document}, that circumvents the limitations.
 
-\subsection{What do the formats have in common?}
+\subsection{What do the front end formats have in common?}
 
 First, each one offers a method to include R code chunks. The formats
 and options differ, but the functionality is similar. 
 
 Second, all of these formats allow authors to include LaTeX expressions
-for math. Many, but not all, LaTeX code will work in either format.
+for math. Much, but not all, LaTeX code will work in either format.
 Inline and display equations can work well in either, while many of
 the attendant features (numbered equations, cross references) are
 not available when the back end is HTML.
@@ -983,41 +982,43 @@ their display width or height in markdown code. To work around that,
 we inserted native HTML code to resize graphics. Several years later
 \code{pandoc} markdown introduced parameters to resize markdown images.
 
-\subsection{Which Frontend? Write in LaTeX or R markdown?}
+\subsection{What considerations differentiate the front ends?}
 
 The original version of this document was prepared in R markdown that
-was compiled into HTML. There were several show-stopping flaws. The
-document was changed to LaTeX and PDF. Some features failed to compile,
-and some errors in my own code were silently ignored by the version
-of \code{pandoc} that was available in 2017. When the back end format
+was compiled into HTML. There were several show-stopping flaws. Some
+features failed to compile, and some errors in my own code were silently
+ignored by the version of \code{pandoc} that was available in 2017.
+The document was changed to LaTeX and PDF. When the back end format
 changed to PDF, several special features of the HTML back end had
 to be removed. (Again, there is no free lunch.)
 
-Similarly, R packages that can generate output that works well in
-HTML do not generate similarly good LaTeX output. 
-
-I believe the following are good conclusions:
+I believe the following are reasonable conclusions:
 \begin{enumerate}
-\item If one intends to export as HTML, then markdown is, {*}by far{*},
-the most reasonable choice for a frontend. Markdown was developed,
+\item If one intends to export as HTML, then markdown is, \emph{by far},
+the most reasonable choice for a front end. Markdown was developed,
 first and foremost, as a simpler way to generate Web pages. There
-are converters that try to go from LaTeX to HTML, but in my experience,
-none of them preserve all of the features that are likely to exist
-in an even moderately complicated LaTeX document.\footnote{Tables and equations with cross references are almost always damaged
-in conversion.} 
-\item If one intends to export to PDF, then markdown or  LaTeX  can be useful.
-But  LaTeX  is probably better.  LaTeX  is primarily intended for
-the creation of publication-quality documents in PDF format. 
+are special features in the HTML back end that can only be exploited
+in markdown documents. There are always some proponents of LaTeX that
+would have us convert to HTML, but none of the suggested avenues preserve
+equations and tables (in my experience) as well as markdown to HTML
+conversion. 
+\item If one intends to export to PDF, then either markdown or LaTeX can
+be useful. But  LaTeX  is probably better.  LaTeX  is primarily intended
+for the creation of publication-quality documents in PDF format. While
+it is true that markdown documents can benefit from insertion of LaTeX
+equations and some structures, they lack the ability to exploit many
+of the strengths in LaTeX document preparation.
 \end{enumerate}
-Since one can put much (not all) LaTeX  markup into a markdown document,
-perhaps the difference is not so great as it seems. Because a markdown
-documents must be knitted, and then converted to LaTeX, and then to
-PDF, there is an ``extra step'' in translation that may corrupt
-some features. 
+Another concern is that R markdown implies an ``extra step'' in
+the compilation process. \code{.Rmd} is knitted into \code{.md},
+which then must be converted to \code{.tex}, from which PDF is created.
+In contrast, a document prepared in \code{.Rnw} format will be converted
+straight to \code{.tex}. The ``extra step'' of translation (from
+.md to .tex) is avoided in LaTeX.
 
 The fact of life, at least at the current time, is that it is not
 painless to change the output format without making wholesale changes
-in the document fron tend. If one writes a markdown document, using
+in the document front end. If one writes a markdown document, using
 special features intended for the back end, then it is generally not
 possible to, at the last minute, change the output format. HTML output
 has advantages in Web style features, while PDF documents have advantages
@@ -1030,15 +1031,14 @@ the ability to compile documents (recall Figure \ref{fig:Compiling}).
 Microsoft Word is not a workable alternative. One must either use
 a general purpose programmer's file editor and then compile the document
 using the R functions or command line scripts outlined above, or one
-may use an editor that has some of the features associated with an
-integrated development environment. 
+may use an integrated development environment. 
 
 I recommend LyX (http://www.lyx.org) to many LaTeX learners. It is
 a graphical interface for preparation of LaTeX documents. LyX can
 export LaTeX files and it offers some good tools to learn about how
 to write LaTeX. LyX was used to create the skeletons provided with
-\code{stationery}. We prepare the documents as .lyx files, and then
-export to an equivalent .Rnw file. 
+\code{stationery}. We prepare the documents as \code{.lyx} files,
+and then export to an equivalent \code{.Rnw} file. 
 
 LyX offers many benefits, but it has one limitation (which all LaTeX
 editors will share). LyX allows us to enter code chunks in the document,
@@ -1058,9 +1058,9 @@ $ texi2pdf stationery.tex # creates pdf, could use pdflatex
 \inputencoding{utf8}
 When this succeeds, the result is fine, but when it fails, finding
 errors can be difficult. Compiling the LaTeX or LyX document has an
-``all or nothing'' feel. One can edit an .Rnw file in any editor
-intended for LaTeX, of course, but those editors will have the same
-limitation that one cannot test R code chunks interactively.
+``all or nothing'' feel. One can edit an \code{.Rnw} file in any
+editor intended for LaTeX, of course, but those editors will have
+the same limitation that one cannot test R code chunks interactively.
 
 As an alternative workflow, one can instead edit the \code{.Rnw}
 or \code{.Rmd} files with editors have an ``inferior mode'' that
@@ -1084,14 +1084,13 @@ I extend an apology and salute to users of Emacs Org mode, which is
 an entirely different implementation of the same ideas as markdown
 (Org existed first). Org mode has a document header that is very similar
 to markdown, and it also has code chunks. We used Org mode to prepare
-a series of tutorials about Mplus programming (http://gitlab.crmda.ku.edu/crmda/semexample)
-and the look-and-feel is rather similar to markdown. The main reason
+a series of tutorials about Mplus programming\footnote{\url{http://gitlab.crmda.ku.edu/crmda/semexample}}
+and the editing process is rather similar to markdown. The main reason
 that I do not emphasize it in this context is that the number of Emacs
 Org mode users is quite small compared to either LaTeX or markdown
-at the current time. The development effort on Org mode is unpredictable
-from time-to-time. It is much more difficult to find accurate information
-about how to customize output from Org mode files than it is to find
-examples for either LaTeX or markdown.
+at the current time. The development effort on Org mode is unpredictable.
+It is much more difficult to find accurate information about how to
+customize output from Org mode files.
 
 \subsection{Should one prefer Sweave or knitr?}
 
@@ -1108,6 +1107,12 @@ One benefit of R markdown with \code{knitr} is that it is possible
 to make reproducible documents about other programming languages.
 I've explored markdown with knitr to weave documents about BASH shell
 programming, for example.
+
+The major reason why I resist \code{knitr} is that the format of
+the output is very difficult to control. Over the years, I have used
+the Listings class in LaTeX with Sweave to customize the appearance
+of code input and output. So far, at least, I've not had success customizing
+the output from \code{knitr}.
 
 \section{Conclusion}
 

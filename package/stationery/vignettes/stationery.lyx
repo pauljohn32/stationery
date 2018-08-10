@@ -680,7 +680,7 @@ stationery
 
  package reflects the accumulated effort (and frustration) of several generation
 s of graduate research assistants who have struggled to reconcile the reproducib
-le document idea into demands of an organization that wants to issue a visually
+le document idea into demands of an organization that wants to issue visually
  consistent guides and reports.
 \begin_inset Foot
 status collapsed
@@ -692,7 +692,7 @@ Special thanks to Brent Kaplan, Ben Kite, and Charles Redmon.
 \end_inset
 
  Others who want to create their own distinctive styles can take the offerings
- here evidence that there is light at the end of the tunnel.
+ here as evidence that there is light at the end of the tunnel.
  
 \end_layout
 
@@ -2873,7 +2873,7 @@ $ ./rmd2pdf.sh --template='"theme/report-newtemplate.tex"' --toc=TRUE --toc_dept
 \end_layout
 
 \begin_layout Standard
-We have made special effort to implement GNU style two-dash command like
+We have made special effort to implement GNU style two-dash command line
  arguments (spaces are not allowed on either side of the equal sign).
 \end_layout
 
@@ -3264,9 +3264,10 @@ look and feel
 \begin_inset Quotes erd
 \end_inset
 
- across document front ends.
- A guide document may be produced with an HTML back end, or in PDF, with
- either Sweave or knitr chunk processing engines.
+ across document types.
+ Reports created with markdown or LaTeX should look the same.
+ Results created by documents using either Sweave or knitr for chunk processing
+ should have a similar appearance.
  To the extent possible, the color schemes and arrangement of header and
  footer information should be similar (if not identical).
  
@@ -4749,7 +4750,7 @@ Choosing among formats
 We provide 8 document formats because there are several acceptable methods.
  Each one has strengths and weaknesses.
  At the current time, there is a considerable amount of enthusiasm about
- markdown document preparation system.
+ markdown.
  The markdown movement is the 
 \begin_inset Quotes eld
 \end_inset
@@ -4816,7 +4817,6 @@ pandoc
  for them have existed for years.
  There are fewer surprises (bugs), but there are more details for authors
  to learn.
- 
 \end_layout
 
 \begin_layout Standard
@@ -4836,8 +4836,7 @@ aspiration
 \end_layout
 
 \begin_layout Standard
-To sort through these considerations, the right place to start is the actually
- the desired end of the writing process.
+To sort through these considerations, the right place to start is the end.
  After we figure out the end, we can concentrate on the beginning.
 \end_layout
 
@@ -4873,8 +4872,8 @@ in
 \begin_inset Quotes erd
 \end_inset
 
- the document and the author can be highly confident that they will have
- the same appearance across systems.
+ the document and the author can be confident that they will have the same
+ appearance across systems.
 \end_layout
 
 \begin_layout Standard
@@ -4922,7 +4921,7 @@ crmda_html_document
 \end_layout
 
 \begin_layout Subsection
-What do the formats have in common?
+What do the front end formats have in common?
 \end_layout
 
 \begin_layout Standard
@@ -4934,7 +4933,7 @@ First, each one offers a method to include R code chunks.
 \begin_layout Standard
 Second, all of these formats allow authors to include LaTeX expressions
  for math.
- Many, but not all, LaTeX code will work in either format.
+ Much, but not all, LaTeX code will work in either format.
  Inline and display equations can work well in either, while many of the
  attendant features (numbered equations, cross references) are not available
  when the back end is HTML.
@@ -4994,14 +4993,13 @@ pandoc
 \end_layout
 
 \begin_layout Subsection
-Which Frontend? Write in LaTeX or R markdown?
+What considerations differentiate the front ends?
 \end_layout
 
 \begin_layout Standard
 The original version of this document was prepared in R markdown that was
  compiled into HTML.
  There were several show-stopping flaws.
- The document was changed to LaTeX and PDF.
  Some features failed to compile, and some errors in my own code were silently
  ignored by the version of 
 \begin_inset Flex Code
@@ -5014,55 +5012,44 @@ pandoc
 \end_inset
 
  that was available in 2017.
+ The document was changed to LaTeX and PDF.
  When the back end format changed to PDF, several special features of the
  HTML back end had to be removed.
  (Again, there is no free lunch.)
 \end_layout
 
 \begin_layout Standard
-Similarly, R packages that can generate output that works well in HTML do
- not generate similarly good LaTeX output.
- 
-\end_layout
-
-\begin_layout Standard
-I believe the following are good conclusions:
+I believe the following are reasonable conclusions:
 \end_layout
 
 \begin_layout Enumerate
-If one intends to export as HTML, then markdown is, *by far*, the most reasonabl
-e choice for a frontend.
+If one intends to export as HTML, then markdown is, 
+\emph on
+by far
+\emph default
+, the most reasonable choice for a front end.
  Markdown was developed, first and foremost, as a simpler way to generate
  Web pages.
- There are converters that try to go from LaTeX to HTML, but in my experience,
- none of them preserve all of the features that are likely to exist in an
- even moderately complicated LaTeX document.
-\begin_inset Foot
-status collapsed
-
-\begin_layout Plain Layout
-Tables and equations with cross references are almost always damaged in
- conversion.
-\end_layout
-
-\end_inset
-
+ There are special features in the HTML back end that can only be exploited
+ in markdown documents.
+ There are always some proponents of LaTeX that would have us convert to
+ HTML, but none of the suggested avenues preserve equations and tables (in
+ my experience) as well as markdown to HTML conversion.
  
 \end_layout
 
 \begin_layout Enumerate
-If one intends to export to PDF, then markdown or  LaTeX  can be useful.
+If one intends to export to PDF, then either markdown or LaTeX can be useful.
  But  LaTeX  is probably better.
   LaTeX  is primarily intended for the creation of publication-quality documents
  in PDF format.
- 
+ While it is true that markdown documents can benefit from insertion of
+ LaTeX equations and some structures, they lack the ability to exploit many
+ of the strengths in LaTeX document preparation.
 \end_layout
 
 \begin_layout Standard
-Since one can put much (not all) LaTeX  markup into a markdown document,
- perhaps the difference is not so great as it seems.
- Because a markdown documents must be knitted, and then converted to LaTeX,
- and then to PDF, there is an 
+Another concern is that R markdown implies an 
 \begin_inset Quotes eld
 \end_inset
 
@@ -5070,14 +5057,74 @@ extra step
 \begin_inset Quotes erd
 \end_inset
 
- in translation that may corrupt some features.
+ in the compilation process.
  
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+.Rmd
+\end_layout
+
+\end_inset
+
+ is knitted into 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+.md
+\end_layout
+
+\end_inset
+
+, which then must be converted to 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+.tex
+\end_layout
+
+\end_inset
+
+, from which PDF is created.
+ In contrast, a document prepared in 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+.Rnw
+\end_layout
+
+\end_inset
+
+ format will be converted straight to 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+.tex
+\end_layout
+
+\end_inset
+
+.
+ The 
+\begin_inset Quotes eld
+\end_inset
+
+extra step
+\begin_inset Quotes erd
+\end_inset
+
+ of translation (from .md to .tex) is avoided in LaTeX.
 \end_layout
 
 \begin_layout Standard
 The fact of life, at least at the current time, is that it is not painless
  to change the output format without making wholesale changes in the document
- fron tend.
+ front end.
  If one writes a markdown document, using special features intended for
  the back end, then it is generally not possible to, at the last minute,
  change the output format.
@@ -5102,8 +5149,7 @@ reference "fig:Compiling"
  Microsoft Word is not a workable alternative.
  One must either use a general purpose programmer's file editor and then
  compile the document using the R functions or command line scripts outlined
- above, or one may use an editor that has some of the features associated
- with an integrated development environment.
+ above, or one may use an integrated development environment.
  
 \end_layout
 
@@ -5123,8 +5169,27 @@ stationery
 \end_inset
 
 .
- We prepare the documents as .lyx files, and then export to an equivalent
- .Rnw file.
+ We prepare the documents as 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+.lyx
+\end_layout
+
+\end_inset
+
+ files, and then export to an equivalent 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+.Rnw
+\end_layout
+
+\end_inset
+
+ file.
  
 \end_layout
 
@@ -5178,9 +5243,18 @@ all or nothing
 \end_inset
 
  feel.
- One can edit an .Rnw file in any editor intended for LaTeX, of course, but
- those editors will have the same limitation that one cannot test R code
- chunks interactively.
+ One can edit an 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+.Rnw
+\end_layout
+
+\end_inset
+
+ file in any editor intended for LaTeX, of course, but those editors will
+ have the same limitation that one cannot test R code chunks interactively.
 \end_layout
 
 \begin_layout Standard
@@ -5263,15 +5337,32 @@ I extend an apology and salute to users of Emacs Org mode, which is an entirely
  Org mode has a document header that is very similar to markdown, and it
  also has code chunks.
  We used Org mode to prepare a series of tutorials about Mplus programming
- (http://gitlab.crmda.ku.edu/crmda/semexample) and the look-and-feel is rather
- similar to markdown.
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+http://gitlab.crmda.ku.edu/crmda/semexample
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ and the editing process is rather similar to markdown.
  The main reason that I do not emphasize it in this context is that the
  number of Emacs Org mode users is quite small compared to either LaTeX
  or markdown at the current time.
- The development effort on Org mode is unpredictable from time-to-time.
+ The development effort on Org mode is unpredictable.
  It is much more difficult to find accurate information about how to customize
- output from Org mode files than it is to find examples for either LaTeX
- or markdown.
+ output from Org mode files.
 \end_layout
 
 \begin_layout Subsection
@@ -5363,6 +5454,33 @@ knitr
  languages.
  I've explored markdown with knitr to weave documents about BASH shell programmi
 ng, for example.
+\end_layout
+
+\begin_layout Standard
+The major reason why I resist 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+knitr
+\end_layout
+
+\end_inset
+
+ is that the format of the output is very difficult to control.
+ Over the years, I have used the Listings class in LaTeX with Sweave to
+ customize the appearance of code input and output.
+ So far, at least, I've not had success customizing the output from 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+knitr
+\end_layout
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Section
