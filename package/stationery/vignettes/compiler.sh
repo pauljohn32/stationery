@@ -6,9 +6,13 @@
 ## For LyX files, must extract to Rnw
 
 ./rmd2pdf.sh --template='"theme/report-boilerplate.tex"' --purl=FALSE Rmarkdown.Rmd
+
 ./rmd2pdf.sh --template='"theme/guide-boilerplate.tex"' --purl=FALSE code_chunks.Rmd
+R -e "tools::compactPDF('"code_chunks.pdf"', gs_quality = '"ebook"')"
+
 lyx -e sweave stationery.lyx
 ./rnw2pdf.sh --engine='"Sweave"' --tangle=FALSE stationery.Rnw
+R -e "tools::compactPDF('"stationery.pdf"', gs_quality = \"ebook\")"
 
 ./rmd2html.sh --template='"theme/guide-boilerplate.html"' --purl=FALSE HTML_special_features.Rmd
 

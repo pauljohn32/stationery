@@ -1,8 +1,8 @@
 Package: stationery 
 Type: Package
 Title: The KU Literate Document Set 
-Version: 0.89
-Date: 2018-08-09
+Version: 0.90
+Date: 2018-08-10
 Authors@R: c(person("Paul", "Johnson", role = c("aut", "cre"), email = "pauljohn@ku.edu"),
              person("Brent", "Kaplan", role = c("ctb"), email = "bkaplan4@ku.edu"),
              person("Meghan", "Sullivan", role = c("ctb"), email = "meg.sullivan@ku.edu"),
