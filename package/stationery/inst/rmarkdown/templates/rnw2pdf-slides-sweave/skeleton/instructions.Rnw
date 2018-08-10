@@ -1,3 +1,5 @@
+%% LyX 2.2.3 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
 \documentclass[10pt,english,aspectratio=1609]{beamer}
 \usepackage{lmodern}
 \renewcommand{\sfdefault}{lmss}
@@ -471,10 +473,10 @@ Don't use LyX menus, use the preamble to edit.
 as FALSE for variety.
 
 \inputencoding{latin9}\begin{lstlisting}
-< <data10, include=FALSE, echo=FALSE>>=
-x <- rnorm(100)
-mean(x)
-@
+ <<data10, include=FALSE, echo=FALSE>>=
+ x <- rnorm(100)
+ mean(x)
+ @
 \end{lstlisting}
 \inputencoding{utf8}\end{itemize}
 \end{itemize}

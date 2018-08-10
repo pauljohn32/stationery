@@ -13,7 +13,6 @@
 \usepackage{float}
 \usepackage{url}
 \usepackage{graphicx}
-\usepackage[authoryear]{natbib}
 \usepackage[unicode=true,
  bookmarks=true,bookmarksnumbered=false,bookmarksopen=false,
  breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false]
@@ -45,6 +44,8 @@
 % Don't remove next commented line, its needed to fool Sweave
 %\usepackage{Sweave}
 
+
+
 \usepackage[includehead,includefoot,
 lmargin=1in,
 rmargin=1in,
@@ -63,6 +64,11 @@ footskip=1.5\baselineskip,
 \input{theme/reportPreambleSweavel.tex}
 \input{theme/reportPreambleHeader.tex}
 \input{theme/preambleFooter.tex}
+
+%Some eager users of APA6 style want this
+\usepackage[natbibapa]{apacite}
+%\renewcommand{\doiprefix}{doi:\kern-1pt}
+%\setlength{\bibsep}{10pt}
 
 \@ifundefined{showcaptionsetup}{}{%
  \PassOptionsToPackage{caption=false}{subfig}}
@@ -134,7 +140,7 @@ package for R is here to help. It offers working examples that new
 users may explore to find out what works.
 
 The big idea of the \emph{reproducible research documents} movement
-(\citealp{leisch2002,xie_bookdown:_2016,xie_dynamic_2015,stodden_implementing_2014})
+(\cite{leisch2002,xie_bookdown:_2016,xie_dynamic_2015,stodden_implementing_2014})
 is to replace the traditional ``cut and paste'' research reports
 with a program-driven documentation system that blends calculations
 with report preparation. Researchers who use word processors have
@@ -158,11 +164,11 @@ In the ideal case, an entire article, lecture, or book can be generated
 in one single execution that conducts analysis, saves graphics, and
 assembles them together in the output document. This is in line with
 the ``literate programming'' movement started by computer scientist
-Donald Knuth (\citeyear{knuth_literate_1984,knuth_texbook_1984}),
-who also created the TeX document preparation system. The statistical
-program R \citep{RCore} built its documentation framework on the
-literate programming philosophy, integrating Knuth's concepts of ``weaving''
-and ``tangling'' into the R system for creating documentation \citep{leisch2002}. 
+Donald Knuth (\cite{knuth_literate_1984,knuth_texbook_1984}), who
+also created the TeX document preparation system. The statistical
+program R \cite{RCore} built its documentation framework on the literate
+programming philosophy, integrating Knuth's concepts of ``weaving''
+and ``tangling'' into the R system for creating documentation \cite{leisch2002}. 
 
 For most word-processor-using researchers, the transition will be
 jarring. First, the tools for statistical analysis (e.g., SAS, SPSS,
@@ -188,7 +194,7 @@ offered the first working set of guidelines for markdown documents.
 Markdown is more like a movement than language, since there are many
 competing versions (called ``flavors'') of the language specification.
 The success of markdown depends, in a very practical way, on the success
-of John MacFarlane's ambitious software program \code{pandoc} \citeyearpar{MacFarlane},
+of John MacFarlane's ambitious software program \code{pandoc} \cite{MacFarlane},
 a translator and compiler.
 
 In my experience, it is relatively easy to build a simple document
@@ -350,14 +356,14 @@ At this point, we arrive at a somewhat unhappy situation because there
 are competing programs and terminology. Knuth referred to the chunk
 conversion process as ``weaving''. The base R framework refers to
 chunk conversion as ``Sweaving'' (because S was the precursor to
-R; \citet{leisch2002}). The newer \code{knitr}\citep{xie_knitr}
-package for R refers to the chunk-conversion process as ``knitting'',
-although it is doing the same work as Sweaving. Another problem in
-terminology is that Knuth used the unlikely term ``tangle'' to refer
-to extraction of code chunks to create a ``free standing'' program
-(a program document separate from the commentary about it). Base R
-refers to that by the name ``Stangle'' while \code{knitr} package
-calls it ``purling''. 
+R; \cite{leisch2002}). The newer \code{knitr}\cite{xie_knitr} package
+for R refers to the chunk-conversion process as ``knitting'', although
+it is doing the same work as Sweaving. Another problem in terminology
+is that Knuth used the unlikely term ``tangle'' to refer to extraction
+of code chunks to create a ``free standing'' program (a program
+document separate from the commentary about it). Base R refers to
+that by the name ``Stangle'' while \code{knitr} package calls it
+``purling''. 
 
 In LaTeX documents, computer code can be displayed in various ways.
 The traditional method was the LaTeX environment \code{Verbatim},
@@ -402,7 +408,7 @@ Here we discuss an example named \code{crmda.Rmd}.
 There are other ways to create a document. We have formatted the folder
 structure of the package in a way that is consistent with the template
 format required by RStudio (http://www.rstudio.com), as specified
-by the package \code{rmarkdown}; \citealp{Allaire_rmarkdown}). For
+by the package \code{rmarkdown}; \cite{Allaire_rmarkdown}). For
 markdown-based formats (sadly, not for the LaTeX based formats), the
 RStudio graphical interface will work well. A user can open the File
 menu, choose New File -> R Markdown -> From Template. The formats
@@ -505,27 +511,32 @@ and \code{null}.
 \item Run the shell script provided with the template.
 
 The document skeleton is provided with a compiler script. It can do
-the same work as \code{rmd2pdf} inside R. The same output can be
-generated by running a command line script that does the same work.
+the same work as \code{rmd2pdf} inside R. 
 
 \inputencoding{latin9}\begin{lstlisting}
 $ ./rmd2pdf.sh crmda.Rmd
 \end{lstlisting}
 \inputencoding{utf8}
 The compiler script is designed to accept the same arguments as the
-function rmd2pdf, but in the command line it is a little tricky to
-specify the options because we have to protect quotation marks from
-interpretation. For example, here we enclose double quotes in single
-quotes:
+function \code{rmd2pdf}, but in the command line it is a little tricky
+to specify the options because character variables require quotation
+marks, and quotation marks need to be protected from interpretation
+by the shell. Here we protect double quotes in single quotes:
 
 \inputencoding{latin9}\begin{lstlisting}
-$ ./rmd2pdf.sh --toc=TRUE --toc_depth=1 --template='"theme/report-newboilerplate.tex"' crmda.Rmd
+$ ./rmd2pdf.sh --template='"theme/report-newboilerplate.tex"' --toc=TRUE --toc_depth=1 crmda.Rmd
 \end{lstlisting}
-\inputencoding{utf8}\item If editing one of our skeletons for which there is a LyX file, the
-compilation will be handled automatically by LyX. The LyX document
-has settings which indicate whether the code chunks will be handled
-by Sweave or knitr. LyX files can also be handled by the function
-\code{rnw2pdf} and the shell script of the same name.
+\inputencoding{utf8}
+We have made special effort to implement GNU style two-dash command
+like arguments (spaces are not allowed on either side of the equal
+sign).
+\item Our LaTeX skeletons are provided with both \code{.lyx} and \code{.Rnw}
+files. The \code{.lyx} file can be opened with LyX. Compilation to
+PDF (via pdflatex) will be handled automatically by LyX. The LyX document
+has internal settings which indicate whether the code chunks will
+be handled by \code{Sweave} or \code{knitr}. LyX files can also
+be handled by the function \code{rnw2pdf} and the shell script of
+the same name.
 \item If editing in \code{RStudio}, there is a button \includegraphics[width=1.5cm]{importfigs/RStudio-knit}
 that has a small triangular widget. This should be used with \emph{extreme
 caution} because it can alter the document preamble. 
@@ -547,7 +558,7 @@ output:
     template:  theme/guide-boilerplate.tex
 \end{lstlisting}
 \inputencoding{utf8}
-The \code{RStudio} triangular widget offers a selection of document
+The \code{RStudio} Knit triangular widget offers a selection of document
 back ends. Be careful to choose ``Knit to PDF''. If the user makes
 a mistake and selects, say, ``Knit to HTML'', then \code{RStudio}
 will replace the output stanza in the document. It will insert its
@@ -555,8 +566,9 @@ best guesses about settings for \code{html\_document}. When \code{RStudio}
 inserts its best guess, it sometimes corrupts the format of the other
 output types and the document will fail to compile. 
 
-In our rmd2html documents, the output format is controlled by a function
-in \code{stationery}. 
+In our \code{rmd2html} documents, the output format is controlled
+by a function in \code{stationery} called \code{crmda\_html\_document}
+. 
 
 \inputencoding{latin9}\begin{lstlisting}
 output:
@@ -570,9 +582,8 @@ output:
     template: theme/guide-boilerplate.html
 \end{lstlisting}
 \inputencoding{utf8}
-New versions of \code{RStudio} will notice that the intended format
-is controlled by \code{crmda\_html\_document} and offer a choice
-``Knit to crmda\_html\_document''. 
+New versions of \code{RStudio} will notice that output format and
+offer a choice ``Knit to crmda\_html\_document''. 
 
 RStudio is also able to edit .Rnw files, but its File -> New setup
 is not customized for LaTeX files. Authors will need to create the
@@ -584,24 +595,21 @@ in RStudio.
 
 \subsection{Reports versus Guides}
 
-The \code{stationery} package document template are intended to have
-consistent ``look and feel'' across document fron ends. A guide
-document may be produced with an HTML back end, or in PDF, with either
-Sweave or knitr chunk processing engines. The same is true for report
-documents produced by Sweave and knitr. To the extent possible, the
-color schemes and arrangement of header and footer information should
-be similar (if not identical). 
+The \code{stationery} package document templates are intended to
+have consistent ``look and feel'' across document front ends. A
+guide document may be produced with an HTML back end, or in PDF, with
+either Sweave or knitr chunk processing engines. To the extent possible,
+the color schemes and arrangement of header and footer information
+should be similar (if not identical). 
 
 The stationery package includes two document styles, dubbed ``guide''
 and ``report''. The difference between these two is not hard-and-fast.
 A \textbf{guide} is usually prepared as a teaching document. It may
 end up in a Webpage, where more color rather than less is expected.
 It is usually a less formal document. The final presentation is likely
-to include computer code and output excerpts. The guide format is
-are usually intended for education and training, but it is possible
-to use the guide style for other types of documents. The header is
-a three column structure with organizational and/or departmental logos
-on either side (see Figure \ref{fig:Markdown-Output} for an example). 
+to include computer code and output excerpts. The header is a three
+column structure with organizational and/or departmental logos on
+either side (see Figure \ref{fig:Markdown-Output} for an example). 
 
 A \textbf{report} is a more formal document. Its first page includes
 a header and a footer with organizational address information (see
@@ -614,9 +622,9 @@ and figures that are in a (nearly) publishable format. This document
 is prepared with the report template, but we do have some ``raw''
 code examples.
 
-The slide format is based on LaTeX Beamer (??) slide format using
-a customized theme that features the colors of our institution. Our
-slides use the Sweave engine. We have experimented with many slide
+The slide format is based on LaTeX Beamer (\cite{Tantau2016}) slide
+format using a customized theme that features the colors of our institution.
+Our slides use the Sweave engine. We have experimented with many slide
 producing strategies using markdown code and none of them have been
 dependable, so we set that aside for the moment.
 
@@ -938,6 +946,38 @@ in HTML documents that are based on markdown templates. The stationery
 package includes a special document format function, \code{crmda\_html\_document},
 that circumvents the limitations.
 
+\subsection{What do the formats have in common?}
+
+First, each one offers a method to include R code chunks. The formats
+and options differ, but the functionality is similar. 
+
+Second, all of these formats allow authors to include LaTeX expressions
+for math. Many, but not all, LaTeX code will work in either format.
+Inline and display equations can work well in either, while many of
+the attendant features (numbered equations, cross references) are
+not available when the back end is HTML.
+
+Third, one can freely use ``native'' code that is suitable for back
+end. In a markdown document for which the back end is HTML, one can
+insert HTML code. It will be passed through without alteration to
+the back end in most cases. If the back end is PDF (via pdflatex),
+any legal LaTeX code can be inserted in a markdown document. To an
+considerable degree, this solves the problem that ``there is no markdown
+for that.'' R functions that can write output in LaTeX or HTML format
+can be exploited in this way. There is no need to write a new function
+to create regression tables. One can shop among the alternatives,
+knowing only that the output format must be suited to the back end.
+
+Nevertheless, the inclusion of native code in a markdown document
+is viewed as something of a defeat. Markdown enthusiasts would be
+more enthusiastic if we would either 1) live within the limitations
+of their framework, or 2) do the work to broaden the framework itself.
+For the first few years after markdown was introduced, it was possible
+to insert graphics in the document, but it was not possible to resize
+their display width or height in markdown code. To work around that,
+we inserted native HTML code to resize graphics. Several years later
+\code{pandoc} markdown introduced parameters to resize markdown images.
+
 \subsection{Which Frontend? Write in LaTeX or R markdown?}
 
 The original version of this document was prepared in R markdown that
@@ -982,10 +1022,13 @@ in \textquotedbl{}on paper\textquotedbl{} presentations.
 
 We need an editor that allows the insertion of code chunks and has
 the ability to compile documents (recall Figure \ref{fig:Compiling}).
-Microsoft Word is not a workable alternative, which is a source of
-concern for may social scientists.
+Microsoft Word is not a workable alternative. One must either use
+a general purpose programmer's file editor and then compile the document
+using the R functions or command line scripts outlined above, or one
+may use an editor that has some of the features associated with an
+integrated development environment. 
 
-I recommend LyX (http://www.lyx.org) to many LaTeX novices. It is
+I recommend LyX (http://www.lyx.org) to many LaTeX learners. It is
 a graphical interface for preparation of LaTeX documents. LyX can
 export LaTeX files and it offers some good tools to learn about how
 to write LaTeX. LyX was used to create the skeletons provided with
@@ -994,10 +1037,13 @@ export to an equivalent .Rnw file.
 
 LyX offers many benefits, but it has one limitation (which all LaTeX
 editors will share). LyX allows us to enter code chunks in the document,
-but it does not offer a convenient way to test chunks and interact
-with an R session while we are writing the document. If one is editing
-in LyX (or in a LaTeX editor), the following shell commands can be
-used to convert the current document, \code{stationery.lyx}, to pdf:
+but it does not offer a convenient way to test chunks interactively.
+Rather, one must compile the whole document. I recommend running LyX
+from a terminal so that the R error messages will be easy to review,
+but that is only a modicum of relief. If one is editing in LyX (or
+in a LaTeX editor) and saves a file, the shell script rnw2pdf.sh will
+be able to compile the file. It will execute a sequence of steps roughly
+as follows:
 
 \inputencoding{latin9}\begin{lstlisting}
 $ lyx -e sweave stationery.lyx # creates a Rnw file
@@ -1005,98 +1051,129 @@ $ R CMD Sweave stationery.Rnw # creates a tex file
 $ texi2pdf stationery.tex # creates pdf, could use pdflatex
 \end{lstlisting}
 \inputencoding{utf8}
-Compiling the LyX document has an ``all or nothing'' feel, where
-errors in R code will cause compilation to fail. One can edit an .Rnw
-file in any editor intended for LaTeX, of course, but those editors
-will have the same limitation that one cannot test R code chunks interactively.
+When this succeeds, the result is fine, but when it fails, finding
+errors can be difficult. Compiling the LaTeX or LyX document has an
+``all or nothing'' feel. One can edit an .Rnw file in any editor
+intended for LaTeX, of course, but those editors will have the same
+limitation that one cannot test R code chunks interactively.
 
-One can instead edit the \code{.Rnw} or \code{.Rmd} files with editors
-have an ``inferior mode'' that can start an interactive R session.
-The author can create a code chunk and test it interactively before
-trying to compile the whole document. There are several editors that
-have that ability. The venerable editor Emacs (??) offers ESS (Emacs
-Speaks Statistics) which is popular with experts for a number of reasons.
-Perceiving Emacs to be difficult to use, many novices enjoy RStudio,
-which has the ability to work with markdown or LaTeX files.
+As an alternative workflow, one can instead edit the \code{.Rnw}
+or \code{.Rmd} files with editors have an ``inferior mode'' that
+can start an interactive R session. The author can create a code chunk
+and test it interactively before trying to compile the whole document.
+There are several editors that have that ability. The venerable editor
+Emacs (??) offers ESS (Emacs Speaks Statistics) which is popular with
+experts for a number of reasons. Perceiving Emacs to be difficult
+to use, many novices enjoy RStudio, which has the ability to work
+with markdown or LaTeX files. Neither Emacs nor RStudio make the creation
+of LaTeX markup especially easy, however.
 
 While working on the markdown documents in this package, we are struck
 by the fact that markdown is a movement, a \emph{frame of mind}, rather
-than a product. It is a rapidly moving target. Features are added
-and changed on a weekly basis, it is usually difficult to know what
-will work and what will not. That is to say, we are on the steeply
-sloped curve of technical innovation and there is no reason to expect
-it to stabilize in the near term. 
+than a product. It is a rapidly moving target with several competing
+sets of idioms. Features are added and changed on a weekly basis.
+That is to say, we are on the steeply sloped curve of technical innovation.
+
+I extend an apology and salute to users of Emacs Org mode, which is
+an entirely different implementation of the same ideas as markdown
+(Org existed first). Org mode has a document header that is very similar
+to markdown, and it also has code chunks. We used Org mode to prepare
+a series of tutorials about Mplus programming (http://gitlab.crmda.ku.edu/crmda/semexample)
+and the look-and-feel is rather similar to markdown. The main reason
+that I do not emphasize it in this context is that the number of Emacs
+Org mode users is quite small compared to either LaTeX or markdown
+at the current time. The development effort on Org mode is unpredictable
+from time-to-time. It is much more difficult to find accurate information
+about how to customize output from Org mode files than it is to find
+examples for either LaTeX or markdown.
 
 \subsection{Should one prefer Sweave or knitr?}
 
 In R markdown, \code{knitr} is the only available method to process
 code chunks. There is no Sweave chunk engine for markdown.
 
-For LaTeX docuements, we have the choice between the older \code{Sweave}
-chunk framework or the newer \code{knitr} framework. 
-
-knitr introduced a more fine-grained set of options for the chunks
-(see ``knitr code chunk options,'' \url{https://yihui.name/knitr/options}). 
+For LaTeX documents, we have the choice between the older \code{Sweave}
+chunk framework or the newer \code{knitr} framework. The syntax can
+be very similar, but \code{knitr} introduced a more fine-grained
+set of options for the chunks (see ``knitr code chunk options,''
+\url{https://yihui.name/knitr/options}). 
 
 One benefit of R markdown with \code{knitr} is that it is possible
-to make documents about other programs (not just R). I've explored
-knitr to weave documents about BASH shell programming, for example.
+to make reproducible documents about other programming languages.
+I've explored markdown with knitr to weave documents about BASH shell
+programming, for example.
 
 \section{Conclusion}
 
 The \code{stationery} package is a snapshot survey of what is practical,
 here and now, for the preparation of reproducible research reports.
+It seems likely that both LaTeX and R markdown documents will continue
+to exist (and compete for user loyalty) into the indefinite future.
+Neither of these authoring frameworks is without flaws, but each is
+workable. 
+
 There are some authors who take an extreme position that an entire
 research project, all phases in the analysis of data, should be wrapped
-together into a tightly wrapped bundle. At the current time, there
-are practical problems that prevent us from achieving this goal with
-perfect fidelity, but we can take some significant steps forward to
-integrate code and results into professionally acceptable guides and
-reports. 
+together into a single document. At the current time, there are practical
+problems that prevent us from achieving this goal with perfect fidelity.
+While the software to render regression tables has improved during
+the past 10 years, none of the available programs will offer a perfectly
+finalized presentation for all kinds of models. Rather, it appears
+we do need to leave room for some ``hand editing'' of tables that
+are exported from R. In the production graphs for figures we are considerably
+closer to the perfectly presentable standard, of course, and tables
+may approach that standard at some point.
 
-Authors who have used LaTeX, or written with LyX, will have some advantages
-as they enter this area. For those authors, it will be relatively
-easy to learn to insert code chunks and insert an extra step in the
-document compilation process. For authors that do not have LaTeX background,
-it seems certain that the R markdown format will be more appealing.
-It is easier to produce a rudimentary document with R markdown. That
-is to be expected, of course, since the markdown movement is propelled
-by a generalized rejection of ugly, tedious markup documents (either
-LaTeX or HTML).
+The transition to a reproducible document framework will present challenges
+for new users. Authors who have used LaTeX, or written with LyX, will
+find this more familiar. For those authors, it will be relatively
+easy to learn to insert code chunks and re-think the document compilation
+process. For authors that do not have LaTeX background, it seems certain
+that the LyX versions of the rnw2pdf templates, or perhaps the R markdown
+formats, will be more appealing than raw LaTeX. It is easier to produce
+a rudimentary document from scratch with R markdown, but using the
+skeletons we provide, it seems that all of these documents should
+be equally convenient. General opinion among the younger crowd on
+the Internet seems to more enthusiastically endorse R markdown, while
+the more experienced (dare I say ``traditional''?) crowd prefers
+LaTeX. 
 
-Taking the details into account, however, we expect that authors that
-start with \code{.Rnw} or \code{.Rmd} files will likely encounter
-plenty of trouble as they try to integrate many appealing features.
+It is perhaps not honest to predict that new users will find any of
+this to be easy or as convenient as a word processor. It is more likely
+to be correct and reproducible, but it is not easy. One can expect
+that authors, whether they start with \code{.Rnw} or \code{.Rmd}
+files, will hit bugs as they add features which seem natural and obvious.
 LaTeX equations, for example, can be included in either document format,
-but preparing them correctly is not easy. It is often frustrating
-to find that features that work well in one format are either unavailable
-or more difficult in the other framework. While there are many Websites
-touting examples of ``pretty'' or ``elegant'' documents, the these
-pages sometimes obscure the fact that their authors understand the
-compilation problems on a deeper level than the ordinary users. Those
-authors can more easily avoid pitfalls simply because they know, ahead
-of time, what will and won't work. This is especially true in the
-markdown community, because the \code{pandoc} program has a relatively
-long list of idiosyncrasies that the experts understand and avoid,
-while others are not so fortunate.
+but preparing them correctly is not easy. Features that work well
+in one format are either unavailable or more difficult in the other.
+While there are many Websites touting examples of ``pretty'' or
+``elegant'' documents, it seems certain that new visitors to the
+reproducible documents will find bugs where the experts never dreamed
+them to venture. Experts know what won't work, but they don't usually
+emphasize the difficulties as much as the victories. Although the
+markdown community has many eager, outspoken proponents, I have to
+admit that every markdown project on which I've worked hit one or
+more deep, unsolvable bugs that required re-engineering of a presentation.
+One source of change/trouble is \code{pandoc} itself, which is evolving
+so rapidly that software distributors cannot keep up.
 
-The experience in developing the examples provided with the package
-is that compiler tool chains are generally fragile and errors can
-be difficult to isolate and solve. The LyX authoring environment offers
-a very convenient way to rapidly move up the LaTeX learning curve,
-while it frustrates the author who wants to test code chunks while
-drafting a document. 
-
-Available under
-
-{[}Created Commons license 3.0 <img src=\textquotedbl{}http://crmda.dept.ku.edu/images/cc-3.0.png\textquotedbl{}
-alt=\textquotedbl{}CC BY\textquotedbl{}
-
-style=\textquotedbl{}width: 75px;height: 20px;\textquotedbl{}/>{]}(http://creativecommons.org/licenses/by/3.0/)
+One issue that users should be aware of is that the compiler tool
+chains are generally fragile. Slight changes that ``seem safe''
+can cause compilation failures with vague error messages. This is
+partly due to the fact that the LaTeX compiler has its own layer of
+difficult-to-understand errors. Also, the process of Sweaving/knitting
+will stumble on errors in R code and sometimes the weaved output file
+will cause errors in the LaTeX compiler. The LyX authoring environment
+offers a very convenient way to rapidly move up the LaTeX learning
+curve; some difficulties can be avoided. However, LyX does not have
+a convenient way to test code interactively, which makes the R work
+more frustrating. On the other hand, an authoring environment that
+allows one to interact with R more directly, such as Emacs or RStudio,
+places the LaTeX learning curve as an obstacle at the outset.
 
 \section*{References}
 
-\bibliographystyle{apalike2}
+\bibliographystyle{apacite}
 \bibliography{theme/R}
 
 \subsection*{}

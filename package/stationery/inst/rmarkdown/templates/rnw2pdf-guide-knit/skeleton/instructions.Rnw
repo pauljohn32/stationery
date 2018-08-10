@@ -8,7 +8,14 @@
 \usepackage[utf8]{inputenc}
 \setlength{\parskip}{\medskipamount}
 \setlength{\parindent}{0pt}
+\usepackage{color}
+\usepackage{babel}
 \usepackage[authoryear]{natbib}
+\usepackage[unicode=true,pdfusetitle,
+ bookmarks=true,bookmarksnumbered=false,bookmarksopen=false,
+ breaklinks=true,pdfborder={0 0 0},pdfborderstyle={},backref=false,colorlinks=true]
+ {hyperref}
+\usepackage{breakurl}
 
 \makeatletter
 
@@ -44,7 +51,6 @@ footskip=1.5\baselineskip,
 
 \makeatother
 
-\usepackage{babel}
 \usepackage{listings}
 \renewcommand{\lstlistingname}{\inputencoding{latin9}Listing}
 

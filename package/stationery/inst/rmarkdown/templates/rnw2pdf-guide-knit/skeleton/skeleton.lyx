@@ -51,7 +51,7 @@ knitr
 \index_command default
 \paperfontsize 11
 \spacing single
-\use_hyperref false
+\use_hyperref true
 \pdf_bookmarks true
 \pdf_bookmarksnumbered false
 \pdf_bookmarksopen false
@@ -435,7 +435,7 @@ The code chunks above this, and the one in the final section, are important.
 \end_layout
 
 \begin_layout Standard
-Don't change margins, geometry, or hyperlink options with Lyx pull down
+Don't change margins, geometry, or hyperlink options with LyX pull down
  menus or the document won't compile.
  Edit preamble for that.
 \end_layout

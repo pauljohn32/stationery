@@ -1748,22 +1748,22 @@ status open
 
 \begin_layout Plain Layout
 
-< <data10, include=FALSE, echo=FALSE>>=
+ <<data10, include=FALSE, echo=FALSE>>=
 \end_layout
 
 \begin_layout Plain Layout
 
-x <- rnorm(100)
+ x <- rnorm(100)
 \end_layout
 
 \begin_layout Plain Layout
 
-mean(x)
+ mean(x)
 \end_layout
 
 \begin_layout Plain Layout
 
-@
+ @
 \end_layout
 
 \end_inset

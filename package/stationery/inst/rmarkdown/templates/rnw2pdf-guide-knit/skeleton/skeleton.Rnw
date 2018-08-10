@@ -8,6 +8,13 @@
 \usepackage[utf8]{inputenc}
 \setlength{\parskip}{\medskipamount}
 \setlength{\parindent}{0pt}
+\usepackage{color}
+\usepackage{babel}
+\usepackage[unicode=true,pdfusetitle,
+ bookmarks=true,bookmarksnumbered=false,bookmarksopen=false,
+ breaklinks=true,pdfborder={0 0 0},pdfborderstyle={},backref=false,colorlinks=true]
+ {hyperref}
+\usepackage{breakurl}
 
 \makeatletter
 
@@ -37,7 +44,6 @@ footskip=1.5\baselineskip,
 
 \makeatother
 
-\usepackage{babel}
 \usepackage{listings}
 \renewcommand{\lstlistingname}{\inputencoding{latin9}Listing}
 
@@ -110,7 +116,7 @@ Do put your title \& name in the top block.
 The code chunks above this, and the one in the final section, are
 important. Don't change them unless you know what you are doing.
 
-Don't change margins, geometry, or hyperlink options with Lyx pull
+Don't change margins, geometry, or hyperlink options with LyX pull
 down menus or the document won't compile. Edit preamble for that.
 
 \section{Check our instructions manuals}

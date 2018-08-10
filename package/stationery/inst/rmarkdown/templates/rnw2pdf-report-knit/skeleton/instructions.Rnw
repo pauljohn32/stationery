@@ -9,7 +9,13 @@
 \setlength{\parskip}{\medskipamount}
 \setlength{\parindent}{0pt}
 \usepackage[active]{srcltx}
+\usepackage{babel}
 \usepackage{url}
+\usepackage[unicode=true,pdfusetitle,
+ bookmarks=true,bookmarksnumbered=false,bookmarksopen=false,
+ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false]
+ {hyperref}
+\usepackage{breakurl}
 
 \makeatletter
 
@@ -57,7 +63,6 @@ footskip=1.5\baselineskip,
 
 \makeatother
 
-\usepackage{babel}
 \usepackage{listings}
 \addto\captionsamerican{\renewcommand{\lstlistingname}{\inputencoding{latin9}Listing}}
 \addto\captionsenglish{\renewcommand{\lstlistingname}{\inputencoding{latin9}Listing}}
@@ -434,9 +439,8 @@ output tables.
 
 \section{Session Information}
 
-Leave the code chunks below. But the visible words and section name
-should be removed. Session Information is usually not written into
-a report, but an output file is created by the following pieces.
+Leave the code chunks below. Session Information is usually not written
+into a report, but an output file is created by the following pieces.
 
 <<session, include=F>>=
 zz <- gsub("Rnw", "Rout", knitr::current_input())
