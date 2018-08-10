@@ -17,21 +17,22 @@
 ##' @param tangle Default TRUE, synonym for purl
 ##' @param themedir Name of directory where theme resources are saved.
 ##' @param package Defaults as "stationery" to find files in this package.
-##' @param ... Arguments that will be passed to render and
-##'     html_document. We usually have \code{css} and \code{template},
-##'     but many others can be specified to change arguments for
+##' @param ... Arguments that will be passed to \code{rmarkdown::render} and
+##'     \code{rmarkdown::html_document}. We usually have customizations
+##'     via parameters \code{css} and \code{template},
+##'     but many other parameters can be specified to change arguments for
 ##'     \code{rmarkdown::render} and \code{rmarkdown::html_documents}.
-##'     These possible arguments for html_document: \code{c("toc",
+##'     These possible arguments for \code{html_document}: \code{c("toc",
 ##'     "toc_depth", "toc_float", "number_sections", "section_divs",
 ##'     "fig_width", "fig_height", "fig_retina", "fig_caption", "dev",
 ##'     "df_print", "code_folding", "code_download", "smart",
 ##'     "self_contained", "theme", "highlight", "mathjax", "template",
 ##'     "extra_dependencies", "css", "includes", "keep_md", "lib_dir",
 ##'     "md_extensions", "pandoc_args")}. These arguments intended for
-##'     \code{render()} are allowed: c("output_file", "output_dir",
+##'     \code{render()} are allowed: \code{c("output_file", "output_dir",
 ##'     "output_options", "intermediates_dir", "knit_root_dir",
 ##'     "runtime", "clean", "params", "knit_meta", "envir",
-##'     "run_pandoc", "quiet", "encoding").
+##'     "run_pandoc", "quiet", "encoding")}.
 ##' @importFrom rmarkdown render
 ##' @importFrom rmarkdown html_document
 ##' @importFrom utils modifyList
@@ -159,8 +160,8 @@ crmda_html_document <- function(template = "theme/guide-template.html", ...) {
 ##' @param tangle Default TRUE, synonym for purl
 ##' @param themedir Name of directory where theme resources are saved.
 ##' @param package Defaults as "stationery" to find files in this package.
-##' @param ... Arguments that will be passed to \code{render} and
-##'     \code{pdf_document}. Our defaults set a LaTeX template, toc =
+##' @param ... Arguments that will be passed to \code{rmarkdown::render} and
+##'     \code{rmarkdown::pdf_document}. Our defaults set a LaTeX template, toc =
 ##'     TRUE, and the pandoc_args includes use of the listings class.
 ##'     Users may override by specifying named arguments for
 ##'     \code{render()}: \code{c("output_file", "output_dir",

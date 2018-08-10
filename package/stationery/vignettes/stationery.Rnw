@@ -31,9 +31,7 @@
 \providecommand{\tabularnewline}{\\}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
-<<echo=F>>=
-  if(exists(".orig.enc")) options(encoding = .orig.enc)
-@
+\usepackage[natbibapa]{apacite}
 \providecommand*{\code}[1]{\texttt{#1}}
 
 \@ifundefined{date}{}{\date{}}
@@ -65,10 +63,12 @@ footskip=1.5\baselineskip,
 \input{theme/reportPreambleHeader.tex}
 \input{theme/preambleFooter.tex}
 
+
+
 %Some eager users of APA6 style want this
-\usepackage[natbibapa]{apacite}
-%\renewcommand{\doiprefix}{doi:\kern-1pt}
-%\setlength{\bibsep}{10pt}
+%\usepackage[natbibapa]{apacite}
+\renewcommand{\doiprefix}{doi:\kern-1pt}
+\setlength{\bibsep}{10pt}
 
 \@ifundefined{showcaptionsetup}{}{%
  \PassOptionsToPackage{caption=false}{subfig}}
@@ -135,17 +135,17 @@ of the formats and how they differ in practice.
 
 ``Reproducible research documents?'' A university administrator
 recently exclaimed, ``I have no idea what that means!'' Many members
-of the faculty seem to have have the same response. The \code{stationery}
+of the faculty seem to have the same response. The \code{stationery}
 package for R is here to help. It offers working examples that new
 users may explore to find out what works.
 
 The big idea of the \emph{reproducible research documents} movement
-(\cite{leisch2002,xie_bookdown:_2016,xie_dynamic_2015,stodden_implementing_2014})
-is to replace the traditional ``cut and paste'' research reports
-with a program-driven documentation system that blends calculations
-with report preparation. Researchers who use word processors have
-long been aware of the danger that computer code and output tables
-fall into misalignment. Hand edited tables are often incorrect, misplacing
+(\citealp{leisch2002,xie_bookdown:_2016,xie_dynamic_2015,stodden_implementing_2014})
+is to replace traditional ``cut and paste'' research reports with
+a program-driven documentation system that blends calculations with
+report preparation. Researchers who use word processors have long
+been aware of the danger that computer code and output tables fall
+into misalignment. Hand edited tables are often incorrect, misplacing
 decimal points and parameter names. Proponents of reproducible documents
 ask us to change our workflow in a fundamental way. 
 
@@ -154,7 +154,7 @@ notable in class notes, slides, and small to medium sized reports.
 A chronic problem for teachers is a misalignment of computer code
 and output in course materials. It is easy to forget to paste in an
 updated graph or modify a table. With a reproducible document, there
-less danger that the computer code being discussed will not match
+is less danger that the computer code being discussed will not match
 the output. 
 
 In the \emph{new way} of doing things, we avoid typing tables or pasting
@@ -164,11 +164,11 @@ In the ideal case, an entire article, lecture, or book can be generated
 in one single execution that conducts analysis, saves graphics, and
 assembles them together in the output document. This is in line with
 the ``literate programming'' movement started by computer scientist
-Donald Knuth (\cite{knuth_literate_1984,knuth_texbook_1984}), who
-also created the TeX document preparation system. The statistical
-program R \cite{RCore} built its documentation framework on the literate
-programming philosophy, integrating Knuth's concepts of ``weaving''
-and ``tangling'' into the R system for creating documentation \cite{leisch2002}. 
+Donald Knuth (\citeyear{knuth_literate_1984,knuth_texbook_1984}),
+who also created the TeX document preparation system. The statistical
+program R \citep{RCore} built its documentation framework on the
+literate programming philosophy, integrating Knuth's concepts of ``weaving''
+and ``tangling'' into the R system for creating documentation \citep{leisch2002}. 
 
 For most word-processor-using researchers, the transition will be
 jarring. First, the tools for statistical analysis (e.g., SAS, SPSS,
@@ -180,21 +180,27 @@ priority on the integration of code and output within documents.
 
 Once we understand that \emph{big idea}, then comes another series
 of rude shocks. First, \emph{there are several competing formats }for
-creating reproducible documents. Our original work was done with LaTeX
-in mind, but we have introduced a set of examples based on R markdown
-as well. The examples include code for ``raw'' LaTeX and LyX (a
-graphical interface for LaTeX document preparation, \url{http://www.lyx.org}). 
+creating reproducible documents. The first examples prepared for this
+package were done with LaTeX in mind, but we have introduced a set
+of examples based on R markdown as well. The examples include code
+for ``raw'' LaTeX and LyX (a graphical interface for LaTeX document
+preparation, \url{http://www.lyx.org}). 
 
 Markdown document formats are, at least superficially, simpler. Their
-content is often less obscured by formatting code. Markdown is a reasonably
-legible format that can be understood \emph{as is}, and yet the final
-result can be as nice as LaTeX. The leading voice for markdown has
-been John Gruber, whose Daring Fireball website (https://daringfireball.net/projects/markdown)
-offered the first working set of guidelines for markdown documents.
-Markdown is more like a movement than language, since there are many
-competing versions (called ``flavors'') of the language specification.
-The success of markdown depends, in a very practical way, on the success
-of John MacFarlane's ambitious software program \code{pandoc} \cite{MacFarlane},
+content may seem less obscured by formatting code. For example, in
+LaTeX to insert a bold font, one would write
+
+\code{\textbackslash{}textbf\{this is bold\}}, but in most dialects
+of markdown, a simpler \code{{*}{*}this is bold{*}{*}} would get
+the job done. Markdown is a reasonably legible format \emph{as is},
+and yet it can be compiled into more professional output formats.
+The leading voice for markdown has been John Gruber, whose Daring
+Fireball website (https://daringfireball.net/projects/markdown) offered
+the first working set of guidelines for markdown documents. Markdown
+is more like a movement than language, since there are many competing
+versions (called ``flavors'') of the language specification. The
+success of markdown depends, in a very practical way, on the success
+of John MacFarlane's ambitious software program \code{pandoc} \citeyearpar{MacFarlane},
 a translator and compiler.
 
 In my experience, it is relatively easy to build a simple document
@@ -356,14 +362,14 @@ At this point, we arrive at a somewhat unhappy situation because there
 are competing programs and terminology. Knuth referred to the chunk
 conversion process as ``weaving''. The base R framework refers to
 chunk conversion as ``Sweaving'' (because S was the precursor to
-R; \cite{leisch2002}). The newer \code{knitr}\cite{xie_knitr} package
-for R refers to the chunk-conversion process as ``knitting'', although
-it is doing the same work as Sweaving. Another problem in terminology
-is that Knuth used the unlikely term ``tangle'' to refer to extraction
-of code chunks to create a ``free standing'' program (a program
-document separate from the commentary about it). Base R refers to
-that by the name ``Stangle'' while \code{knitr} package calls it
-``purling''. 
+R; \citet{leisch2002}). The newer \code{knitr}\citep{xie_knitr}
+package for R refers to the chunk-conversion process as ``knitting'',
+although it is doing the same work as Sweaving. Another problem in
+terminology is that Knuth used the unlikely term ``tangle'' to refer
+to extraction of code chunks to create a ``free standing'' program
+(a program document separate from the commentary about it). Base R
+refers to that by the name ``Stangle'' while \code{knitr} package
+calls it ``purling''. 
 
 In LaTeX documents, computer code can be displayed in various ways.
 The traditional method was the LaTeX environment \code{Verbatim},
@@ -408,7 +414,7 @@ Here we discuss an example named \code{crmda.Rmd}.
 There are other ways to create a document. We have formatted the folder
 structure of the package in a way that is consistent with the template
 format required by RStudio (http://www.rstudio.com), as specified
-by the package \code{rmarkdown}; \cite{Allaire_rmarkdown}). For
+by the package \code{rmarkdown}; \citealp{Allaire_rmarkdown}). For
 markdown-based formats (sadly, not for the LaTeX based formats), the
 RStudio graphical interface will work well. A user can open the File
 menu, choose New File -> R Markdown -> From Template. The formats
@@ -476,21 +482,20 @@ library(stationery)
 rmd2pdf("crmda.Rmd")
 \end{lstlisting}
 \inputencoding{utf8}
-This orchestrates a two part process that involves functions in the
+This orchestrates a two-part process that involves functions in the
 \code{rmarkdown} and \code{knitr} packages. The document header
 is scanned and then a suitable document format object is created.
 The heavy lifting is done by the \code{pdf\_document} or \code{html\_document}
 functions in the \code{rmarkdown} package. The code chunks in the
 .Rmd file will be converted to output chunks in an intermediate file
 named \code{crmda.utf8.md}. After that, intermediate documents must
-be rendered to the final result. The 
-
-benefit of using the \code{stationery} functions is that they will
-review the in-document format settings, but can override them with
-function parameters. For example, one can control the creation of
-a table of contents by including \code{toc: true} in the \code{.Rmd}
-document, or by running \code{pdf\_document} with the parameter \code{toc = TRUE}.
-Any of the document parameters can be selectively replaced. 
+be rendered to the final result. The benefit of using the \code{stationery}
+functions is that they will review the in-document format settings,
+but can override them with function parameters. For example, one can
+control the creation of a table of contents by including \code{toc: true}
+in the \code{.Rmd} document, or by running \code{pdf\_document}
+with the parameter \code{toc = TRUE}. Any of the document parameters
+can be selectively replaced. 
 
 As a use case, suppose we write three R markdown documents and we
 forget to specify the depth of the table of contents. Rather than
@@ -622,11 +627,11 @@ and figures that are in a (nearly) publishable format. This document
 is prepared with the report template, but we do have some ``raw''
 code examples.
 
-The slide format is based on LaTeX Beamer (\cite{Tantau2016}) slide
-format using a customized theme that features the colors of our institution.
-Our slides use the Sweave engine. We have experimented with many slide
-producing strategies using markdown code and none of them have been
-dependable, so we set that aside for the moment.
+The slide format is based on LaTeX Beamer (\citealt{Tantau2016})
+slide format using a customized theme that features the colors of
+our institution. Our slides use the Sweave engine. We have experimented
+with many slide producing strategies using markdown code and none
+of them have been dependable, so we set that aside for the moment.
 
 \subsection{Distinctive Headers and Footers}
 
@@ -803,14 +808,14 @@ our \code{pkg = \textquotedbl{}stationery\textquotedbl{}} with \code{pkg = \text
 
 The output size of HTML files may be quite large, even if the document
 itself has almost no content. This problem arises because \code{rmarkdown}
-uses a theme set based on the bootstrap library (). If the markdown
-preamble does not specify a theme, or it specifies any theme except
-\code{null}, then a large amount of javascript and cascading style
-sheet data from bootstrap is inserted into the HTML header. This can
-take up to 700KB of storage. All of the other elements in the document,
-including its graphs and features, will take additional space. An
-R package that includes three HTML vignettes will exceed the CRAN
-limit on the size of packages. 
+uses a theme set based on the bootstrap library \citep{bootstrap}.
+If the markdown preamble does not specify a theme, or it specifies
+any theme except \code{null}, then a large amount of javascript and
+cascading style sheet data from bootstrap is inserted into the HTML
+header. This can take up to 700KB of storage. All of the other elements
+in the document, including its graphs and features, will take additional
+space. An R package that includes three HTML vignettes will exceed
+the CRAN limit on the size of packages. 
 
 Rather than editing the document over-and-over to see the effects
 of themes, we suggest instead either using the The \code{stationery}
@@ -936,15 +941,15 @@ appearance across systems.
 There are other limitations in HTML. There is no built-in method for
 display of mathematical equations. There have been efforts to ameliorate
 that problem over the years, the most recent of which is called MathJax
-(??). MathJax is a Web program that can be called when a user opens
-an HTML document. MathJax displays markup in a way that is similar
-to LaTeX output. However, in order for this to work, the conditions
-must be ``just right''. First, if the remote server that provides
-MathJax is unavailable, then the math in the document will not be
-rendered. Second, some special care is required to allow MathJax equations
-in HTML documents that are based on markdown templates. The stationery
-package includes a special document format function, \code{crmda\_html\_document},
-that circumvents the limitations.
+(\url{http://www.mathjax.org}). MathJax is a Web program that can
+be called when a user opens an HTML document. MathJax displays markup
+in a way that is similar to LaTeX output. However, in order for this
+to work, the conditions must be ``just right''. First, if the remote
+server that provides MathJax is unavailable, then the math in the
+document will not be rendered. Second, some special care is required
+to allow MathJax equations in HTML documents that are based on markdown
+templates. The stationery package includes a special document format
+function, \code{crmda\_html\_document}, that circumvents the limitations.
 
 \subsection{What do the formats have in common?}
 
@@ -1062,11 +1067,12 @@ or \code{.Rmd} files with editors have an ``inferior mode'' that
 can start an interactive R session. The author can create a code chunk
 and test it interactively before trying to compile the whole document.
 There are several editors that have that ability. The venerable editor
-Emacs (??) offers ESS (Emacs Speaks Statistics) which is popular with
-experts for a number of reasons. Perceiving Emacs to be difficult
-to use, many novices enjoy RStudio, which has the ability to work
-with markdown or LaTeX files. Neither Emacs nor RStudio make the creation
-of LaTeX markup especially easy, however.
+Emacs (\url{http://emacs.org}) offers Emacs Speaks Statistics (ESS;
+\url{https://ess.r-project.org}) which is popular with experts for
+a number of reasons. Perceiving Emacs to be difficult to use, many
+novices enjoy RStudio, which has the ability to work with markdown
+or LaTeX files. Neither Emacs nor RStudio make the creation of LaTeX
+markup especially easy, however.
 
 While working on the markdown documents in this package, we are struck
 by the fact that markdown is a movement, a \emph{frame of mind}, rather
@@ -1173,12 +1179,12 @@ places the LaTeX learning curve as an obstacle at the outset.
 
 \section*{References}
 
-\bibliographystyle{apacite}
+\bibliographystyle{apacitex}
 \bibliography{theme/R}
 
 \subsection*{}
 
-<<sessioninfo, include=F>>=
+<<sessioninfo, include=F, echo=F, result='hide'>>=
 zz <- "stationery.Rout"
 capture.output(sessionInfo(), file = zz, append = FALSE)
 if (!is.null(warnings())){

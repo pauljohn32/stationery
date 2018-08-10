@@ -33,15 +33,18 @@ footskip=1.5\baselineskip,
 \input{theme/reportPreambleHeader.tex}
 \input{theme/preambleFooter.tex}
 
+
+
 %Some eager users of APA6 style want this
-\usepackage[natbibapa]{apacite}
-%\renewcommand{\doiprefix}{doi:\kern-1pt}
-%\setlength{\bibsep}{10pt}
+%\usepackage[natbibapa]{apacite}
+\renewcommand{\doiprefix}{doi:\kern-1pt}
+\setlength{\bibsep}{10pt}
 \end_preamble
 \use_default_options false
 \begin_modules
 logicalmkup
 sweave
+natbibapa
 \end_modules
 \maintain_unincluded_children false
 \language english
@@ -90,8 +93,8 @@ sweave
 \use_package stackrel 0
 \use_package stmaryrd 0
 \use_package undertilde 0
-\cite_engine basic
-\cite_engine_type default
+\cite_engine natbib
+\cite_engine_type authoryear
 \biblio_style plain
 \use_bibtopic false
 \use_indices false
@@ -421,7 +424,7 @@ I have no idea what that means!
 \begin_inset Quotes erd
 \end_inset
 
- Many members of the faculty seem to have have the same response.
+ Many members of the faculty seem to have the same response.
  The 
 \begin_inset Flex Code
 status open
@@ -449,7 +452,7 @@ key "leisch2002,xie_bookdown:_2016,xie_dynamic_2015,stodden_implementing_2014"
 
 \end_inset
 
-) is to replace the traditional 
+) is to replace traditional 
 \begin_inset Quotes eld
 \end_inset
 
@@ -474,7 +477,7 @@ In my experience, the benefits of this new approach are especially notable
  A chronic problem for teachers is a misalignment of computer code and output
  in course materials.
  It is easy to forget to paste in an updated graph or modify a table.
- With a reproducible document, there less danger that the computer code
+ With a reproducible document, there is less danger that the computer code
  being discussed will not match the output.
  
 \end_layout
@@ -563,8 +566,8 @@ big idea
 there are several competing formats 
 \emph default
 for creating reproducible documents.
- Our original work was done with LaTeX in mind, but we have introduced a
- set of examples based on R markdown as well.
+ The first examples prepared for this package were done with LaTeX in mind,
+ but we have introduced a set of examples based on R markdown as well.
  The examples include code for 
 \begin_inset Quotes eld
 \end_inset
@@ -592,12 +595,38 @@ url{http://www.lyx.org}
 
 \begin_layout Standard
 Markdown document formats are, at least superficially, simpler.
- Their content is often less obscured by formatting code.
- Markdown is a reasonably legible format that can be understood 
+ Their content may seem less obscured by formatting code.
+ For example, in LaTeX to insert a bold font, one would write
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+
+\backslash
+textbf{this is bold}
+\end_layout
+
+\end_inset
+
+, but in most dialects of markdown, a simpler 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+**this is bold**
+\end_layout
+
+\end_inset
+
+ would get the job done.
+ Markdown is a reasonably legible format 
 \emph on
 as is
 \emph default
-, and yet the final result can be as nice as LaTeX.
+, and yet it can be compiled into more professional output formats.
  The leading voice for markdown has been John Gruber, whose Daring Fireball
  website (https://daringfireball.net/projects/markdown) offered the first
  working set of guidelines for markdown documents.
@@ -2525,7 +2554,7 @@ rmd2pdf("crmda.Rmd")
 \end_layout
 
 \begin_layout Standard
-This orchestrates a two part process that involves functions in the 
+This orchestrates a two-part process that involves functions in the 
 \begin_inset Flex Code
 status open
 
@@ -2592,11 +2621,7 @@ crmda.utf8.md
 
 .
  After that, intermediate documents must be rendered to the final result.
- The 
-\end_layout
-
-\begin_layout Standard
-benefit of using the 
+ The benefit of using the 
 \begin_inset Flex Code
 status open
 
@@ -2838,8 +2863,8 @@ status open
 
 \begin_layout Plain Layout
 
-$ ./rmd2pdf.sh --template='"theme/report-newtemplate.tex"' --toc=TRUE --toc_dept
-h=1 crmda.Rmd
+$ ./rmd2pdf.sh --template='"theme/report-newtemplate.tex"' --toc=TRUE --toc_depth=1
+ crmda.Rmd
 \end_layout
 
 \end_inset
@@ -4330,7 +4355,14 @@ rmarkdown
 
 \end_inset
 
- uses a theme set based on the bootstrap library ().
+ uses a theme set based on the bootstrap library 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "bootstrap"
+
+\end_inset
+
+.
  If the markdown preamble does not specify a theme, or it specifies any
  theme except 
 \begin_inset Flex Code
@@ -4651,11 +4683,11 @@ status open
 /usr/bin/pandoc +RTS -K512m -RTS crmda.utf8.md --to html4 --from markdown+autolink
 _bare_uris+ascii_identifiers+tex_math_single_backslash --output crmda.html
  --smart --email-obfuscation none --self-contained --standalone --section-divs
- --table-of-contents --toc-depth 2 --template theme/guide-template.html
- --highlight-style haddock --css theme/kutils.css --variable 'theme:bootstrap'
- --include-in-header /tmp/RtmpU3qSFQ/R markdown-str33e24223b3a.html --mathjax
- --variable 'mathjax-url:https://mathjax.RStudio.com/latest/MathJax.js?config=TeX-A
-MS-MML_HTMLorMML' --filter /usr/bin/pandoc-citeproc
+ --table-of-contents --toc-depth 2 --template theme/guide-template.html --highlig
+ht-style haddock --css theme/kutils.css --variable 'theme:bootstrap' --include-in
+-header /tmp/RtmpU3qSFQ/R markdown-str33e24223b3a.html --mathjax --variable
+ 'mathjax-url:https://mathjax.RStudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTML
+orMML' --filter /usr/bin/pandoc-citeproc
 \end_layout
 
 \end_inset
@@ -4849,7 +4881,18 @@ in
 There are other limitations in HTML.
  There is no built-in method for display of mathematical equations.
  There have been efforts to ameliorate that problem over the years, the
- most recent of which is called MathJax (??).
+ most recent of which is called MathJax (
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+http://www.mathjax.org
+\end_layout
+
+\end_inset
+
+).
  MathJax is a Web program that can be called when a user opens an HTML document.
  MathJax displays markup in a way that is similar to LaTeX output.
  However, in order for this to work, the conditions must be 
@@ -5173,8 +5216,29 @@ inferior mode
  The author can create a code chunk and test it interactively before trying
  to compile the whole document.
  There are several editors that have that ability.
- The venerable editor Emacs (??) offers ESS (Emacs Speaks Statistics) which
- is popular with experts for a number of reasons.
+ The venerable editor Emacs (
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+http://emacs.org
+\end_layout
+
+\end_inset
+
+) offers Emacs Speaks Statistics (ESS; 
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+https://ess.r-project.org
+\end_layout
+
+\end_inset
+
+) which is popular with experts for a number of reasons.
  Perceiving Emacs to be difficult to use, many novices enjoy RStudio, which
  has the ability to work with markdown or LaTeX files.
  Neither Emacs nor RStudio make the creation of LaTeX markup especially
@@ -5471,7 +5535,7 @@ References
 \begin_inset CommandInset bibtex
 LatexCommand bibtex
 bibfiles "theme/R"
-options "apacite"
+options "apacitex"
 
 \end_inset
 
@@ -5503,7 +5567,7 @@ status open
 
 \begin_layout Plain Layout
 
-<<sessioninfo, include=F>>=
+<<sessioninfo, include=F, echo=F, result='hide'>>=
 \end_layout
 
 \begin_layout Plain Layout
