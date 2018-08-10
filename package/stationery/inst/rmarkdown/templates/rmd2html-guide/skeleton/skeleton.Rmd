@@ -24,7 +24,7 @@ output:
     theme: default
     citation_package: natbib
     css: theme/kutils.css
-    template: theme/guide-boilerplate.html
+    template: theme/guide-template.html
 guide_number: 00
 bibliography: theme/R.bib
 logoleft: theme/logoleft.png
@@ -48,7 +48,7 @@ library(stationery)
 logos <- c(logoleft = "logoleft.png", 
            logoright = "logo-vert.png")
 getFiles(logos, pkg = "stationery")
-files <- c("kutils.css", "guide-boilerplate.html")
+files <- c("kutils.css", "guide-template.html")
 getFiles(files, pkg = "stationery")
 ```
 

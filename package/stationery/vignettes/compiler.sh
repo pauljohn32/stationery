@@ -5,16 +5,16 @@
 ## Rebuilds Vignettes:
 ## For LyX files, must extract to Rnw
 
-./rmd2pdf.sh --template='"theme/report-boilerplate.tex"' --purl=FALSE Rmarkdown.Rmd
+./rmd2pdf.sh --template='"theme/report-template.tex"' --purl=FALSE Rmarkdown.Rmd
 
-./rmd2pdf.sh --template='"theme/guide-boilerplate.tex"' --purl=FALSE code_chunks.Rmd
+./rmd2pdf.sh --template='"theme/guide-template.tex"' --purl=FALSE code_chunks.Rmd
 R -e "tools::compactPDF('"code_chunks.pdf"', gs_quality = '"ebook"')"
 
 lyx -e sweave stationery.lyx
 ./rnw2pdf.sh --engine='"Sweave"' --tangle=FALSE stationery.Rnw
 R -e "tools::compactPDF('"stationery.pdf"', gs_quality = \"ebook\")"
 
-./rmd2html.sh --template='"theme/guide-boilerplate.html"' --purl=FALSE HTML_special_features.Rmd
+./rmd2html.sh --template='"theme/guide-template.html"' --purl=FALSE HTML_special_features.Rmd
 
 rm -rf Rplots*.pdf
 cleanLatex.sh . 
@@ -37,9 +37,9 @@ cleanLatex.sh .
 # ./rnw2pdf.sh --tangle=FALSE --engine='"knitr"' --keep_tex=FALSE instructions-rnw2pdf-guide-knit.Rnw
 
 
-# ./rmd2pdf.sh --template='"theme/report-boilerplate.tex"' --tangle=FALSE instructions-rmd2pdf-report.Rmd
+# ./rmd2pdf.sh --template='"theme/report-template.tex"' --tangle=FALSE instructions-rmd2pdf-report.Rmd
 
-# ./rmd2pdf.sh --template='"theme/guide-boilerplate.tex"' --tangle=FALSE instructions-rmd2pdf-guide.Rmd
+# ./rmd2pdf.sh --template='"theme/guide-template.tex"' --tangle=FALSE instructions-rmd2pdf-guide.Rmd
 
 
 

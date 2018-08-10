@@ -20,7 +20,7 @@ output:
     keep_tex: no
     latex_engine: pdflatex
     pandoc_args: --listings
-    template: "theme/report-boilerplate.tex"
+    template: "theme/report-template.tex"
 logo: theme/logo.pdf
 header-includes:
 - \usepackage{xcolor}
@@ -49,7 +49,7 @@ library(stationery)
 ## If theme directory does not have required images or TeX files
 ## we need to retrieve them and put them in "theme" directory. 
 logos <- c(logoright = "logo.pdf")
-files <- c("report-boilerplate.tex")
+files <- c("report-template.tex")
 getFiles(logos, pkg = "stationery")
 getFiles(files, pkg = "stationery")
 ```

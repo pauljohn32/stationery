@@ -101,10 +101,10 @@ usage() {
 	echo "Any arguments described in documentation for $scriptname R function are allowed."
 	echo "CAUTION"
     echo "Arguments that are quoted strings, such as"
-    echo "--template=\"guide-boilerplate.tex\" need special care when entered from command line."
+    echo "--template=\"guide-template.tex\" need special care when entered from command line."
     echo "It is necessary to 'protect' (escape) the quotation marks."
     echo "We suggest this style:"
-    echo "--template='\"guide-boilerplate.tex\"'"
+    echo "--template='\"guide-template.tex\"'"
 }
 
 

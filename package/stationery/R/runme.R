@@ -133,7 +133,7 @@ rmd2html <- function(fn = NULL, wd = NULL, ..., verbose = FALSE,
 ##' @importFrom utils modifyList
 ##' @export
 ##' @author Paul Johnson
-crmda_html_document <- function(template = "theme/guide-boilerplate.html", ...) {
+crmda_html_document <- function(template = "theme/guide-template.html", ...) {
     base_format <- rmarkdown::html_document(...)
     template_arg <- which(base_format$pandoc$args == "--template") + 1L
     base_format$pandoc$args[template_arg] <- template

@@ -12,7 +12,7 @@ output:
   stationery::crmda_html_document:
     css: theme/kutils.css
     highlight: haddock
-    template: theme/guide-boilerplate.html
+    template: theme/guide-template.html
     theme: default 
     toc: yes
     toc_depth: 2
@@ -51,7 +51,7 @@ library(stationery)
 logos <- c(logoleft = "logoleft.png", 
            logoright = "logo-vert.png")
 files <- c("kutils.css", 
-           "guide-boilerplate.html")
+           "guide-template.html")
 getFiles(logos, pkg = "stationery")
 getFiles(files, pkg = "stationery")
 ```

@@ -431,7 +431,7 @@ file within the larger scheme. The \code{rmd2pdf-report} document
 skeleton, for example, specifies a template file in the document preamble: 
 
 \inputencoding{latin9}\begin{lstlisting}
-template: "theme/report-boilerplate.tex"
+template: "theme/report-template.tex"
 \end{lstlisting}
 \inputencoding{utf8}
 \subsection{How to Compile a Document\label{subsec:How-to-Compile}}
@@ -502,7 +502,7 @@ rmd2pdf(c("crmda1.Rmd", "crmda2.Rmd", "crmda3.Rmd"), toc = TRUE, toc_depth = 1)
 @
 
 Similarly, a template can be substituted by employing the template
-argument, such as \code{template = \textquotedbl{}theme/report-newboilerplate.tex\textquotedbl{}}.
+argument, such as \code{template = \textquotedbl{}theme/report-newtemplate.tex\textquotedbl{}}.
 
 There are differences in format between the values in the markdown
 document preamble and the R function call. R uses \code{TRUE} , \code{FALSE}
@@ -524,7 +524,7 @@ marks, and quotation marks need to be protected from interpretation
 by the shell. Here we protect double quotes in single quotes:
 
 \inputencoding{latin9}\begin{lstlisting}
-$ ./rmd2pdf.sh --template='"theme/report-newboilerplate.tex"' --toc=TRUE --toc_depth=1 crmda.Rmd
+$ ./rmd2pdf.sh --template='"theme/report-newtemplate.tex"' --toc=TRUE --toc_depth=1 crmda.Rmd
 \end{lstlisting}
 \inputencoding{utf8}
 We have made special effort to implement GNU style two-dash command
@@ -555,7 +555,7 @@ output:
     pandoc_args: [
         --listings
     ]
-    template:  theme/guide-boilerplate.tex
+    template:  theme/guide-template.tex
 \end{lstlisting}
 \inputencoding{utf8}
 The \code{RStudio} Knit triangular widget offers a selection of document
@@ -579,7 +579,7 @@ output:
     theme: default
     citation_package: natbib
     css: theme/kutils.css
-    template: theme/guide-boilerplate.html
+    template: theme/guide-template.html
 \end{lstlisting}
 \inputencoding{utf8}
 New versions of \code{RStudio} will notice that output format and
@@ -874,7 +874,7 @@ For example, compiling our minimal skeleton \code{crmda.Rmd} yields
 this intimidating list of command line options
 
 \inputencoding{latin9}\begin{lstlisting}[basicstyle={\footnotesize},breaklines=true,tabsize=2]
-/usr/bin/pandoc +RTS -K512m -RTS crmda.utf8.md --to html4 --from markdown+autolink_bare_uris+ascii_identifiers+tex_math_single_backslash --output crmda.html --smart --email-obfuscation none --self-contained --standalone --section-divs --table-of-contents --toc-depth 2 --template theme/guide-boilerplate.html --highlight-style haddock --css theme/kutils.css --variable 'theme:bootstrap' --include-in-header /tmp/RtmpU3qSFQ/R markdown-str33e24223b3a.html --mathjax --variable 'mathjax-url:https://mathjax.RStudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML' --filter /usr/bin/pandoc-citeproc
+/usr/bin/pandoc +RTS -K512m -RTS crmda.utf8.md --to html4 --from markdown+autolink_bare_uris+ascii_identifiers+tex_math_single_backslash --output crmda.html --smart --email-obfuscation none --self-contained --standalone --section-divs --table-of-contents --toc-depth 2 --template theme/guide-template.html --highlight-style haddock --css theme/kutils.css --variable 'theme:bootstrap' --include-in-header /tmp/RtmpU3qSFQ/R markdown-str33e24223b3a.html --mathjax --variable 'mathjax-url:https://mathjax.RStudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML' --filter /usr/bin/pandoc-citeproc
 \end{lstlisting}
 \inputencoding{utf8}
 This converts an intermediate markdown document \code{crmda.utf8.md}

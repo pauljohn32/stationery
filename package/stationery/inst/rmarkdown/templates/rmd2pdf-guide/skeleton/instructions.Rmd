@@ -17,7 +17,7 @@ output:
     keep_tex: true
     fig_caption: true
     latex_engine: pdflatex
-    template:  "theme/guide-boilerplate.tex"
+    template:  "theme/guide-template.tex"
     pandoc_args: [
       "--listings"
     ]
@@ -97,10 +97,10 @@ version of the code chunks in the document.
 
 
 The document header depends on a \LaTeX template called
-"guide-boilerplate.tex".  That will be copied to the theme directory
+"guide-template.tex".  That will be copied to the theme directory
 the first time a document is compiled in this directory. If you do
-want to edit the theme boilerplate, edit
-theme/guide-boilerplate.tex. Make sure the compiler uses that
+want to edit the theme template, edit
+theme/guide-template.tex. Make sure the compiler uses that
 document.  If you use our compiler script or the R function rmd2pdf,
 it is necessary to supply the template argument with the function
 call.
@@ -151,7 +151,7 @@ That's equation (\ref{eq:reg}).
 ## Additional LaTeX packages
 
 In addition, if you insert \LaTeX features that require packages
-that are not currently in the report-boilerplate.tex, then those
+that are not currently in the report-template.tex, then those
 packages can be inserted into the preamble by YAML header markup like
 so:
 

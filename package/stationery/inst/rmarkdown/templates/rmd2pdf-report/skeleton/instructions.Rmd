@@ -24,7 +24,7 @@ output:
     fig_caption: true
     latex_engine: pdflatex
     citation_package: natbib
-    template: "theme/report-boilerplate.tex"
+    template: "theme/report-template.tex"
     pandoc_args: [
       "--listings"
     ]
@@ -47,7 +47,7 @@ library(stationery)
 ## If theme directory does not have required images or TeX files
 ## we need to retrieve them and put them in "theme" directory. 
 logos <- c(logoright = "logo.pdf")
-files <- c("report-boilerplate.tex")
+files <- c("report-template.tex")
 getFiles(logos, pkg = "stationery")
 getFiles(files, pkg = "stationery")
 ```
@@ -63,7 +63,7 @@ address and the name of a logo file.
 # We use a template file
 
 The look and feel of the document will be controlled by a template
-file. It is specified in the header as "theme/report-boilerplate.tex".
+file. It is specified in the header as "theme/report-template.tex".
  
 In July 2018, we learned how to selectively override settings
 from the document's yaml header.  These alternative parameters
@@ -75,12 +75,12 @@ or as parameters in the R function call `rmd2pdf`.
 If the user starts an R session, she can run the `rmd2pdf` function
 with many optional arguments, as follows:
 
-    > rmd2pdf("skeleton.Rmd", toc=FALSE, template="theme/report-boilerplate.tex")
+    > rmd2pdf("skeleton.Rmd", toc=FALSE, template="theme/report-template.tex")
 
 From the command line, the same file can be compiled using notation
 that is nearly identical
 
-    $ ./rmd2pdf.sh --toc=FALSE --template='"theme/report-boilerplate.tex"' skeleton.Rmd
+    $ ./rmd2pdf.sh --toc=FALSE --template='"theme/report-template.tex"' skeleton.Rmd
 	
 Note the single quotes protect the double quotes.
 
@@ -157,7 +157,7 @@ is compiled.
 ## Customizations requiring more \LaTeX packages
 
 In addition, if you insert \LaTeX features that require packages that
-are not currently in the template `report-boilerplate.tex`, then those
+are not currently in the template `report-template.tex`, then those
 packages can be inserted into the preamble by YAML header markup like
 so:
 

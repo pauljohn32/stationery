@@ -14,7 +14,7 @@ output:
     pandoc_args: [
         --listings
     ]
-    template: "theme/report-boilerplate.tex"
+    template: "theme/report-template.tex"
 fontsize: 12pt
 bibliography: theme/R.bib
 vignette: >
@@ -94,7 +94,7 @@ output:
     pandoc_args: [
         --listings
     ]
-    template: theme/report-boilerplate.tex
+    template: theme/report-template.tex
 fontsize: 12pt
 vignette: >
     %\VignetteIndexEntry{stationery}

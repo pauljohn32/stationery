@@ -10,7 +10,7 @@ advertise: >
 keywords: guide, Rmarkdown
 abstract: >
     This document is just a little reminder.  The vignettes have all
-	of the details.
+       of the details.
 checked_by: "First Last"
 Note to Authors: please_dont_change_the_next 4 lines!
 date: "`r format(Sys.time(), '%b. %e %Y')`"
@@ -21,7 +21,7 @@ output:
      highlight: haddock
      theme: default
      css: theme/kutils.css
-     template: theme/guide-boilerplate.html
+     template: theme/guide-template.html
   prettydoc::html_pretty: 
     theme: cayman 
 logoleft: theme/logoleft.png
@@ -113,7 +113,7 @@ are specified in the document header.
 output:
   stationery::crmda_html_document:
     css: theme/kutils.css
-    template: theme/guide-boilerplate.html
+    template: theme/guide-template.html
 	theme: default
 ```
 
@@ -125,7 +125,7 @@ can be run to get them:
 library(stationery)
 ## If theme directory does not have required images or TeX files
 ## we need to retrieve them and put them in "theme" directory. 
-files <- c("kutils.css", "guide-boilerplate.html")
+files <- c("kutils.css", "guide-template.html")
 getFiles(files, pkg = "stationery")
 logos <- c(logoleft = "logoleft.png", 
            logoright = "logo-vert.png")

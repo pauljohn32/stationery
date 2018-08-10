@@ -25,7 +25,7 @@ output:
     pandoc_args: [
         --listings
     ]
-    template:  theme/guide-boilerplate.tex
+    template:  theme/guide-template.tex
 fontsize: 11pt
 bibliography: theme/R.bib
 header-includes:
@@ -55,7 +55,7 @@ options(width = 70)
 library(stationery)
 ## If theme directory does not have required images or TeX files
 ## we need to retrieve them and put them in "theme" directory. 
-files <- c("logo.pdf", "report-boilerplate.tex", "mlm.bib")
+files <- c("logo.pdf", "report-template.tex", "mlm.bib")
 getFiles(files, pkg = "crmda")
 ```
 

@@ -13,7 +13,7 @@ parms[toc_depth]=2
 parms[purl]=TRUE
 parms[quiet]=TRUE 
 parms[keep_md]=FALSE
-parms[template]=\"theme/guide-boilerplate.html\"
+parms[template]=\"theme/guide-template.html\"
 parms[output_dir]=\"$pwd\" 
 
 scriptname=`basename $0 .sh`
@@ -103,10 +103,10 @@ usage() {
     echo "Any arguments described in documentation for $scriptname R function are allowed."
     echo "CAUTION"
     echo "Arguments that are quoted strings, such as"
-    echo "--template=\"guide-boilerplate.tex\" need special care in command line."
+    echo "--template=\"guide-template.tex\" need special care in command line."
     echo "'Protect' (escape) the quotation marks."
     echo "We suggest this style:"
-    echo "--template='\"guide-boilerplate.tex\"'"
+    echo "--template='\"guide-template.tex\"'"
 }
 
 optspec=":vh-:"

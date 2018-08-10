@@ -2301,7 +2301,7 @@ status open
 
 \begin_layout Plain Layout
 
-template: "theme/report-boilerplate.tex"
+template: "theme/report-template.tex"
 \end_layout
 
 \end_inset
@@ -2702,7 +2702,7 @@ Similarly, a template can be substituted by employing the template argument,
 status open
 
 \begin_layout Plain Layout
-template = "theme/report-newboilerplate.tex"
+template = "theme/report-newtemplate.tex"
 \end_layout
 
 \end_inset
@@ -2838,7 +2838,7 @@ status open
 
 \begin_layout Plain Layout
 
-$ ./rmd2pdf.sh --template='"theme/report-newboilerplate.tex"' --toc=TRUE --toc_dept
+$ ./rmd2pdf.sh --template='"theme/report-newtemplate.tex"' --toc=TRUE --toc_dept
 h=1 crmda.Rmd
 \end_layout
 
@@ -3017,7 +3017,7 @@ output:
 
 \begin_layout Plain Layout
 
-    template:  theme/guide-boilerplate.tex
+    template:  theme/guide-template.tex
 \end_layout
 
 \end_inset
@@ -3173,7 +3173,7 @@ output:
 
 \begin_layout Plain Layout
 
-    template: theme/guide-boilerplate.html
+    template: theme/guide-template.html
 \end_layout
 
 \end_inset
@@ -4651,7 +4651,7 @@ status open
 /usr/bin/pandoc +RTS -K512m -RTS crmda.utf8.md --to html4 --from markdown+autolink
 _bare_uris+ascii_identifiers+tex_math_single_backslash --output crmda.html
  --smart --email-obfuscation none --self-contained --standalone --section-divs
- --table-of-contents --toc-depth 2 --template theme/guide-boilerplate.html
+ --table-of-contents --toc-depth 2 --template theme/guide-template.html
  --highlight-style haddock --css theme/kutils.css --variable 'theme:bootstrap'
  --include-in-header /tmp/RtmpU3qSFQ/R markdown-str33e24223b3a.html --mathjax
  --variable 'mathjax-url:https://mathjax.RStudio.com/latest/MathJax.js?config=TeX-A
