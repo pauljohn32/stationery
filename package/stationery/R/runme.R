@@ -6,7 +6,7 @@
 ##'
 ##' Running this will be the same as running the rmd2html.sh script
 ##' within the directory.
-##' @param fn One or more filnames ending in "*.Rmd".
+##' @param fn One or more filenames ending in "*.Rmd".
 ##' @param wd A working directory name of the Rmd file. If not
 ##'     specified, then the current working directory from R will be
 ##'     used.
@@ -150,7 +150,7 @@ crmda_html_document <- function(template = "theme/guide-template.html", ...) {
 ##'
 ##' Running this will be the same as running the rmd2pdf.sh script
 ##' within the directory.
-##' @param fn One or more filnames ending in "*.Rmd".
+##' @param fn One or more filenames ending in "*.Rmd".
 ##' @param wd A working directory name of the Rmd file. If not
 ##'     specified, then the current working directory from R will be
 ##'     used.
@@ -267,7 +267,7 @@ rmd2pdf <- function(fn = NULL, wd = NULL, ..., verbose = FALSE,
 
 ##' Convert (Sweave & compile) an Rnw or lyx file to PDF
 ##'
-##' Documents saved with suffic ".lyx" or ".Rnw" will be converted.
+##' Documents saved with suffix ".lyx" or ".Rnw" will be converted.
 ##' Note it is very important to specify the engine for the code
 ##' chunks correctly, this can be either "Sweave" or "knitr".
 ##' 
@@ -352,8 +352,9 @@ rnw2pdf <- function(fn = NULL, wd = NULL, ..., engine = "knitr", purl = TRUE,
         fnbackup <- gsub("(.*)(\\..*$)", paste0("\\1", bak, "\\2"), x)
         file.copy(x, fnbackup, overwrite = TRUE)
         rnwfile <- readLines(fnbackup)
-        rnwfile[grep("SweaveOpts", rnwfile)] <- gsub("(split\\s*=)\\s*.*,", "\\1FALSE,",
-                                                     rnwfile[grep("SweaveOpts", rnwfile)])
+        rnwfile[grep("SweaveOpts", rnwfile)] <-
+            gsub("(split\\s*=)\\s*.*,", "\\1FALSE,",
+                 rnwfile[grep("SweaveOpts", rnwfile)])
         ## sets the prompt at "> "
         rnwfile[grep("prompt", rnwfile)] <- gsub("prompt\\s*=.*\"", "prompt=\"> \"",
                                                  rnwfile[grep("prompt", rnwfile)])
