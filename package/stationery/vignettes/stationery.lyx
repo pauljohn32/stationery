@@ -5146,7 +5146,27 @@ extra step
 \begin_inset Quotes erd
 \end_inset
 
- of translation (from .md to .tex) is avoided in LaTeX.
+ of translation (from 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+.md
+\end_layout
+
+\end_inset
+
+ to 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+.tex
+\end_layout
+
+\end_inset
+
+) is avoided in LaTeX.
 \end_layout
 
 \begin_layout Standard
@@ -5413,7 +5433,7 @@ knitr
 \end_layout
 
 \begin_layout Standard
-For LaTeX documents, we have the choice between the older 
+For LaTeX documents, we have the choice between the traditional 
 \begin_inset Flex Code
 status open
 
@@ -5448,7 +5468,17 @@ knitr
 \begin_inset Quotes eld
 \end_inset
 
-knitr code chunk options,
+
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+knitr
+\end_layout
+
+\end_inset
+
+ code chunk options,
 \begin_inset Quotes erd
 \end_inset
 

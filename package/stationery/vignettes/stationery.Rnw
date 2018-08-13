@@ -140,14 +140,15 @@ package for R is here to help. It offers working examples that new
 users may explore to find out what works.
 
 The big idea of the \emph{reproducible research documents} movement
-(\citealp{leisch2002,xie_bookdown:_2016,xie_dynamic_2015,stodden_implementing_2014})
-is to replace traditional ``cut and paste'' research reports with
-a program-driven documentation system that blends calculations with
-report preparation. Researchers who use word processors have long
-been aware of the danger that computer code and output tables fall
-into misalignment. Hand edited tables are often incorrect, misplacing
-decimal points and parameter names. Proponents of reproducible documents
-ask us to change our workflow in a fundamental way. 
+(\citealp{leisch2002}; \citealp{stodden_implementing_2014}; \citealp{xie_dynamic_2015},
+\citeyear{xie_bookdown:_2016}) is to replace traditional ``cut and
+paste'' research reports with a program-driven documentation system
+that blends calculations with report preparation. Researchers who
+use word processors have long been aware of the danger that computer
+code and output tables fall into misalignment. Hand edited tables
+are often incorrect, misplacing decimal points and parameter names.
+Proponents of reproducible documents ask us to change our workflow
+in a fundamental way. 
 
 In my experience, the benefits of this new approach are especially
 notable in class notes, slides, and small to medium sized reports.
@@ -164,7 +165,7 @@ In the ideal case, an entire article, lecture, or book can be generated
 in one single execution that conducts analysis, saves graphics, and
 assembles them together in the output document. This is in line with
 the ``literate programming'' movement started by computer scientist
-Donald Knuth (\citeyear{knuth_literate_1984,knuth_texbook_1984}),
+Donald Knuth (\citeyear{knuth_literate_1984}, \citeyear{knuth_texbook_1984}),
 who also created the TeX document preparation system. The statistical
 program R \citep{RCore} built its documentation framework on the
 literate programming philosophy, integrating Knuth's concepts of ``weaving''
@@ -200,7 +201,7 @@ the first working set of guidelines for markdown documents. Markdown
 is more like a movement than language, since there are many competing
 versions (called ``flavors'') of the language specification. The
 success of markdown depends, in a very practical way, on the success
-of John MacFarlane's ambitious software program \code{pandoc} \citeyearpar{MacFarlane},
+of John MacFarlane's ambitious software program \code{pandoc} \citep{MacFarlane},
 a translator and compiler.
 
 In my experience, it is relatively easy to build a simple document
@@ -628,11 +629,11 @@ and figures that are in a (nearly) publishable format. This document
 is prepared with the report template, but we do have some ``raw''
 code examples.
 
-The slide format is based on LaTeX Beamer (\citealt{Tantau2016})
-slide format using a customized theme that features the colors of
-our institution. Our slides use the Sweave engine. We have experimented
-with many slide producing strategies using markdown code and none
-of them have been dependable, so we set that aside for the moment.
+The slide format is based on LaTeX Beamer \citep{Tantau2016} slide
+format using a customized theme that features the colors of our institution.
+Our slides use the Sweave engine. We have experimented with many slide
+producing strategies using markdown code and none of them have been
+dependable, so we set that aside for the moment.
 
 \subsection{Distinctive Headers and Footers}
 
@@ -1014,7 +1015,7 @@ the compilation process. \code{.Rmd} is knitted into \code{.md},
 which then must be converted to \code{.tex}, from which PDF is created.
 In contrast, a document prepared in \code{.Rnw} format will be converted
 straight to \code{.tex}. The ``extra step'' of translation (from
-.md to .tex) is avoided in LaTeX.
+\code{.md} to \code{.tex}) is avoided in LaTeX.
 
 The fact of life, at least at the current time, is that it is not
 painless to change the output format without making wholesale changes
@@ -1097,10 +1098,10 @@ customize output from Org mode files.
 In R markdown, \code{knitr} is the only available method to process
 code chunks. There is no Sweave chunk engine for markdown.
 
-For LaTeX documents, we have the choice between the older \code{Sweave}
+For LaTeX documents, we have the choice between the traditional \code{Sweave}
 chunk framework or the newer \code{knitr} framework. The syntax can
 be very similar, but \code{knitr} introduced a more fine-grained
-set of options for the chunks (see ``knitr code chunk options,''
+set of options for the chunks (see ``\code{knitr} code chunk options,''
 \url{https://yihui.name/knitr/options}). 
 
 One benefit of R markdown with \code{knitr} is that it is possible
@@ -1181,8 +1182,6 @@ a convenient way to test code interactively, which makes the R work
 more frustrating. On the other hand, an authoring environment that
 allows one to interact with R more directly, such as Emacs or RStudio,
 places the LaTeX learning curve as an obstacle at the outset.
-
-\section*{References}
 
 \bibliographystyle{apacitex}
 \bibliography{theme/R}

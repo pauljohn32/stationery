@@ -28,6 +28,7 @@ footskip=1.5\baselineskip,
 \begin_modules
 logicalmkup
 knitr
+natbibapa
 \end_modules
 \maintain_unincluded_children false
 \language english
@@ -73,8 +74,8 @@ knitr
 \use_package stackrel 0
 \use_package stmaryrd 0
 \use_package undertilde 0
-\cite_engine basic
-\cite_engine_type default
+\cite_engine natbib
+\cite_engine_type authoryear
 \biblio_style plain
 \use_bibtopic false
 \use_indices false
@@ -449,7 +450,7 @@ Brief instruction sheet in same folder as this skeleton:
 \begin_inset Quotes eld
 \end_inset
 
-rnw2pdf-guide-knitr
+instructions
 \begin_inset Quotes erd
 \end_inset
 
@@ -457,10 +458,19 @@ rnw2pdf-guide-knitr
 \end_layout
 
 \begin_layout Enumerate
-The vignettes in the crmda package.
- 
+The vignettes in the crmda package
 \end_layout
 
+\begin_deeper
+\begin_layout Enumerate
+stationery 
+\end_layout
+
+\begin_layout Enumerate
+code chunks
+\end_layout
+
+\end_deeper
 \begin_layout Section
 Write Sections & Subsections
 \end_layout
@@ -475,7 +485,15 @@ R Code Chunks Work
 \end_layout
 
 \begin_layout Standard
-Listing objects differ in output from R code chunks-
+Listing objects differ in output from R
+\begin_inset CommandInset citation
+LatexCommand citep
+key "RCore"
+
+\end_inset
+
+ code chunks.
+ Here is listing output.
 \end_layout
 
 \begin_layout Standard
@@ -630,6 +648,17 @@ par(par.orig)
 
 @
 \end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset bibtex
+LatexCommand bibtex
+bibfiles "theme/R"
+options "apacitex"
 
 \end_inset
 

@@ -31,6 +31,7 @@ footskip=1.5\baselineskip,
 \begin_modules
 logicalmkup
 knitr
+natbibapa
 \end_modules
 \maintain_unincluded_children false
 \language english
@@ -421,7 +422,7 @@ That will create a folder
 \begin_inset Quotes eld
 \end_inset
 
-writeup/rnw2pdf-guide-knit
+rnw2pdf-guide-knit
 \begin_inset Quotes erd
 \end_inset
 
@@ -504,18 +505,9 @@ About the theme folder
 \end_layout
 
 \begin_layout Standard
-The theme folder should be empty when the 
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-initWrite()
-\end_layout
-
-\end_inset
-
- function is run.
- It will not be empty after the first compilation of the document.
+The theme folder should will have copies of the theme files, but the logo
+ files are not copied until the document is compiled for the first times.
+ It is done that way to preserve the author's customizations.
 \end_layout
 
 \begin_layout Standard
@@ -528,7 +520,8 @@ texcopy
 \end_inset
 
 .
- It will copy configuration files from the package into the theme folder.
+ In previous versions, it copied the configuration It will copy configuration
+ files from the package into the theme folder.
  After running this for the first time, those files will not be automatically
  replaced by the scripts.
  
@@ -1375,7 +1368,7 @@ References
 \begin_inset CommandInset bibtex
 LatexCommand bibtex
 bibfiles "theme/R"
-options "apalike2"
+options "apacitex"
 
 \end_inset
 
