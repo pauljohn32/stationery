@@ -448,7 +448,28 @@ reproducible research documents
  movement (
 \begin_inset CommandInset citation
 LatexCommand citealp
-key "leisch2002,xie_bookdown:_2016,xie_dynamic_2015,stodden_implementing_2014"
+key "leisch2002"
+
+\end_inset
+
+; 
+\begin_inset CommandInset citation
+LatexCommand citealp
+key "stodden_implementing_2014"
+
+\end_inset
+
+; 
+\begin_inset CommandInset citation
+LatexCommand citealp
+key "xie_dynamic_2015"
+
+\end_inset
+
+, 
+\begin_inset CommandInset citation
+LatexCommand citeyear
+key "xie_bookdown:_2016"
 
 \end_inset
 
@@ -504,7 +525,14 @@ literate programming
  movement started by computer scientist Donald Knuth (
 \begin_inset CommandInset citation
 LatexCommand citeyear
-key "knuth_literate_1984,knuth_texbook_1984"
+key "knuth_literate_1984"
+
+\end_inset
+
+, 
+\begin_inset CommandInset citation
+LatexCommand citeyear
+key "knuth_texbook_1984"
 
 \end_inset
 
@@ -653,7 +681,7 @@ pandoc
 
  
 \begin_inset CommandInset citation
-LatexCommand citeyearpar
+LatexCommand citep
 key "MacFarlane"
 
 \end_inset
@@ -3347,15 +3375,15 @@ raw
 \end_layout
 
 \begin_layout Standard
-The slide format is based on LaTeX Beamer (
+The slide format is based on LaTeX Beamer 
 \begin_inset CommandInset citation
-LatexCommand citealt
+LatexCommand citep
 key "Tantau2016"
 
 \end_inset
 
-) slide format using a customized theme that features the colors of our
- institution.
+ slide format using a customized theme that features the colors of our instituti
+on.
  Our slides use the Sweave engine.
  We have experimented with many slide producing strategies using markdown
  code and none of them have been dependable, so we set that aside for the
@@ -5643,10 +5671,6 @@ seem safe
  On the other hand, an authoring environment that allows one to interact
  with R more directly, such as Emacs or RStudio, places the LaTeX learning
  curve as an obstacle at the outset.
-\end_layout
-
-\begin_layout Section*
-References
 \end_layout
 
 \begin_layout Standard
