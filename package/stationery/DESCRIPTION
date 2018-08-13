@@ -1,7 +1,7 @@
 Package: stationery 
 Type: Package
 Title: Working Examples for Reproducible Research Documents 
-Version: 0.95
+Version: 0.96
 Date: 2018-08-13
 Authors@R: c(person("Paul", "Johnson", role = c("aut", "cre"), email = "pauljohn@ku.edu"),
              person("Brent", "Kaplan", role = c("ctb"), email = "bkaplan4@ku.edu"),

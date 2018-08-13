@@ -54,7 +54,10 @@ headsep=0pt,
 marginparwidth=0pt,
 footskip=2.5\baselineskip,
 }
-
+$if(listings)$
+\usepackage{listings}
+\newcommand{\passthrough}[1]{#1}
+$endif$
 \usepackage{fancyhdr}
 \lhead{}
 \chead{}

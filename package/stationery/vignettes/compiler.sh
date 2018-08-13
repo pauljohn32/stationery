@@ -6,6 +6,7 @@
 ## For LyX files, must extract to Rnw
 
 ./rmd2pdf.sh --template='"theme/report-template.tex"' --purl=FALSE Rmarkdown.Rmd
+R -e "tools::compactPDF('"Rmarkdown.pdf"', gs_quality = '"ebook"')"
 
 ./rmd2pdf.sh --template='"theme/guide-template.tex"' --purl=FALSE code_chunks.Rmd
 R -e "tools::compactPDF('"code_chunks.pdf"', gs_quality = '"ebook"')"
