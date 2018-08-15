@@ -53,9 +53,11 @@ options(width = 70)
 
 ```{r themecopy, include = FALSE}
 ## not needed b/c this vignette has custom files in theme folder
-## library(stationery)
-## files <- c("logo.pdf", "report-template.tex", "mlm.bib")
-## getFiles(files, pkg = "stationery")
+library(stationery)
+files1 <- c("logoleft.pdf", "logo-vert.pdf",  "report-template.tex", "R.bib")
+getFiles(files1, pkg = "stationery")
+files2 <- c("guide-template.tex")
+getFiles(files2, pkg = "stationery")
 ```
 
 \begin{abstract}
@@ -747,6 +749,37 @@ In conclusion, the "automatic" "self-documenting" report is almost
 never exactly correct. It requires some "finger painting", if only to
 regain control of the position and size of figures. By saving the
 chunks, we give ourselves a degree of control.
+
+#Regression Tables
+
+There are many programs for creating regression tables. Every
+author will have to test to find out if the results are desirable.
+
+Here we test the `outreg` function in the rockchalk package. `outreg`
+can generate output in either LaTeX or HTML, and the former is needed
+for a document that is compiled into a PDF document.
+ 
+ ```{r outreg, results='asis'}
+set.seed(234234)
+dat <- data.frame(x1 = rnorm(100), x2 = rnorm(100), y = rnorm(100))
+library(rockchalk)
+m1 <- lm(y ~ x1, data = dat)
+m2 <- lm(y ~ x1 + x2, data = dat)
+vl <- c("x1" = "Excellent Predictor", "x2" = "Adequate Predictor")
+outreg(list("First Model" = m1, "Second Model" = m2), varLabels = vl,
+       tight = FALSE, type = "latex")
+```
+
+There are many other regression-table-making functions available
+today. I made some lecture notes about it for the R summer workshops
+that we offer at KU
+(http://pj.freefaculty.org/guides/Rcourse/regression-tables-1). 
+
+In the CRMDA, we have devoted a good deal of effort to the creation of
+a program that can create good-looking tables to summarize structural
+equation models (SEM). Please try the function `semTable` in the
+`kutils` package (when finished, that function will probably be moved
+to a package named `semTable`).
 
 #Listings, not Verbatim
 
