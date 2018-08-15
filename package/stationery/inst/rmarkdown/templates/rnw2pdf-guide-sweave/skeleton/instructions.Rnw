@@ -126,8 +126,8 @@ library(stationery)
 initWriteup("rnw2pdf-guide-sweave")
 @
 
-That will create a folder ``\code{writeup/rnw2pdf-guide-sweave}''
-(unless you request otherwise by setting the \code{dir} argument). 
+That will create a folder ``\code{rnw2pdf-guide-sweave}'' (unless
+you request otherwise by setting the \code{dir} argument). 
 
 We suggest you
 \begin{enumerate}
@@ -179,9 +179,8 @@ copy a fresh version of the theme file into the directory.
 There are several vignettes distributed with this package. Please
 review them.
 \begin{enumerate}
-\item ``crmda'': the package framework overview
-\item ``code\_chunks'': discusses display of code in LaTeX documents
-\item ``instructions-rnw2pdf-guide-sweave''
+\item ``stationery'': the package framework overview
+\item ``code\_chunks'': discusses use and display of code
 \end{enumerate}
 
 \section{Compile as usual with LyX, or with rnw2pdf}
@@ -199,15 +198,13 @@ it is available, we suggest an aggregator named texi2pdf, which will
 handle this effort.
 \end{enumerate}
 
-\subsection*{Edit the LyX file.}
+\subsection*{Compile a LyX file.}
 
 There are 4 methods, we hope one will suit your workflow.
 \begin{enumerate}
-\item Use the LyX editor. The file can be compiled to PDF in LyX, just like
-any other LyX file. LyX handles conversion from LyX to Rnw to tex
-to PDF. This has the same effect as using LyX from the command line.
-The following will create the PDF file using pdflatex as the final
-comiler:
+\item Use the menus in the LyX editor. The file can be compiled to PDF in
+LyX, just like any other LyX file. 
+\item Run LyX from the command line:
 
 \inputencoding{latin9}\begin{lstlisting}
 $ lyx -e pdf2 skeleton.lyx
@@ -215,7 +212,8 @@ $ lyx -e pdf2 skeleton.lyx
 \inputencoding{utf8}
 Because lyx uses a separate working directory for the compilation
 work, the project directory stays clean. None of the intermediate
-LaTeX files ({*}.log, {*}.log, {*}.bbl) will appear.
+LaTeX files ({*}.log, {*}.log, {*}.bbl) will clutter up the current
+working directory.
 \item Open an R session and make sure the working directory is the same
 as the project writeup.
 
@@ -228,11 +226,7 @@ It can be run in the shell as
 \inputencoding{latin9}\begin{lstlisting}
 $ ./rnw2pdf.sh --engine='"Sweave"' skeleton.lyx
 \end{lstlisting}
-\inputencoding{utf8}
-In the discussion in the next sub section, we outline usage of additional
-arguments with rnw2pdf for the compilation of Rnw files. All of those
-arguments are equally applicable in this context.
-\item In case you want to track the steps of compiling one by one, open
+\inputencoding{utf8}\item In case you want to track the steps of compiling one by one, open
 the file in LyX. Use the pull down menu \code{File} $\rightarrow$
 \code{Export} $\rightarrow$ \code{Sweave}. That will create a file
 named ``skeleton.Rnw''. This is the equivalent of the command line

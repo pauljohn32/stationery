@@ -8,7 +8,13 @@
 \usepackage[utf8]{inputenc}
 \setlength{\parskip}{\medskipamount}
 \setlength{\parindent}{0pt}
+\usepackage{babel}
 \usepackage[authoryear]{natbib}
+\usepackage[unicode=true,pdfusetitle,
+ bookmarks=true,bookmarksnumbered=false,bookmarksopen=false,
+ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false]
+ {hyperref}
+\usepackage{breakurl}
 
 \makeatletter
 
@@ -47,7 +53,6 @@ footskip=1.5\baselineskip,
 
 \makeatother
 
-\usepackage{babel}
 \begin{document}
 %% Fill in values of the arguments here, 
 %% If blanks are needed, must insert value " ~ "
@@ -159,12 +164,11 @@ mean(x)
 @
 
 \bibliographystyle{apalike2}
-\addcontentsline{toc}{section}{\refname}\bibliography{theme/R}
+\phantomsection\addcontentsline{toc}{section}{\refname}\bibliography{theme/R}
 
-\section*{Session Info\label{sec:Session-Info}}
+\section*{Replication Information\label{sec:Session-Info}}
 
-Please leave this section \ref{sec:Session-Info} as it is for guide
-documents. 
+Please leave this next code chunk if you are producing a guide document. 
 
 <<session, echo=F>>=
 sessionInfo()

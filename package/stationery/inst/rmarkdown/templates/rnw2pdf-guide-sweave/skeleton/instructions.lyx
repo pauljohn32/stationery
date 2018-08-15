@@ -471,7 +471,7 @@ That will create a folder
 status open
 
 \begin_layout Plain Layout
-writeup/rnw2pdf-guide-sweave
+rnw2pdf-guide-sweave
 \end_layout
 
 \end_inset
@@ -612,7 +612,7 @@ There are several vignettes distributed with this package.
 \begin_inset Quotes eld
 \end_inset
 
-crmda
+stationery
 \begin_inset Quotes erd
 \end_inset
 
@@ -627,18 +627,7 @@ code_chunks
 \begin_inset Quotes erd
 \end_inset
 
-: discusses display of code in LaTeX documents
-\end_layout
-
-\begin_layout Enumerate
-\begin_inset Quotes eld
-\end_inset
-
-instructions-rnw2pdf-guide-sweave
-\begin_inset Quotes erd
-\end_inset
-
-
+: discusses use and display of code
 \end_layout
 
 \begin_layout Section
@@ -669,7 +658,7 @@ compiling: Run a LaTeX program, such as pdflatex or xelatex to convert the
 \end_layout
 
 \begin_layout Subsection*
-Edit the LyX file.
+Compile a LyX file.
 \end_layout
 
 \begin_layout Standard
@@ -677,11 +666,13 @@ There are 4 methods, we hope one will suit your workflow.
 \end_layout
 
 \begin_layout Enumerate
-Use the LyX editor.
+Use the menus in the LyX editor.
  The file can be compiled to PDF in LyX, just like any other LyX file.
- LyX handles conversion from LyX to Rnw to tex to PDF.
- This has the same effect as using LyX from the command line.
- The following will create the PDF file using pdflatex as the final comiler:
+ 
+\end_layout
+
+\begin_layout Enumerate
+Run LyX from the command line:
 \end_layout
 
 \begin_deeper
@@ -703,7 +694,8 @@ $ lyx -e pdf2 skeleton.lyx
 \begin_layout Standard
 Because lyx uses a separate working directory for the compilation work,
  the project directory stays clean.
- None of the intermediate LaTeX files (*.log, *.log, *.bbl) will appear.
+ None of the intermediate LaTeX files (*.log, *.log, *.bbl) will clutter up
+ the current working directory.
 \end_layout
 
 \end_deeper
@@ -758,12 +750,6 @@ $ ./rnw2pdf.sh --engine='"Sweave"' skeleton.lyx
 \end_inset
 
 
-\end_layout
-
-\begin_layout Standard
-In the discussion in the next sub section, we outline usage of additional
- arguments with rnw2pdf for the compilation of Rnw files.
- All of those arguments are equally applicable in this context.
 \end_layout
 
 \end_deeper
