@@ -105,6 +105,8 @@ library(stationery)
 logos <- c(logoright = "logo.pdf", 
 "addressFooter.tex", "preambleFooter.tex")
 getFiles(logos, pkg = "stationery")
+texfiles <- c("reportPreambleSweavel.tex", "reportPreambleHeader.tex", "preambleFooter.tex", "addressFooter.tex", "R.bib")
+getFiles(texfiles, pkg = "stationery")
 @
 
 % Please leave this chunk

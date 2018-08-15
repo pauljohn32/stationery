@@ -42,6 +42,7 @@ outdir <- paste0("tmpout")
 if (!file.exists(outdir)) dir.create(outdir, recursive = TRUE)
 knitr::opts_chunk$set(echo=TRUE, comment=NA, fig.path=paste0(outdir, "/p-"))
 options(width = 70)
+set.seed(123123)
 ```
 
 ```{r themecopy, include = FALSE}
@@ -102,8 +103,6 @@ A colored callout must begin as a level-4 markdown heading.  The
 syntax begins with `####`, and then after that some syntax that is,
 actually, HTML style code, is included. The colors for which we have
 provided are "gray", "red", "orange", "blue", and "green".
-
-
 
 ### Demonstrating callouts
 

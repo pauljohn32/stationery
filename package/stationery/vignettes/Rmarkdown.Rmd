@@ -1,5 +1,5 @@
 --- 
-title: "Rmarkdown Basics"
+title: "R Markdown Basics"
 author:
 - affiliation: Director, CRMDA
   email: pauljohn@ku.edu
@@ -18,7 +18,7 @@ output:
 fontsize: 12pt
 bibliography: theme/R.bib
 vignette: >
-    %\VignetteIndexEntry{Rmarkdown Basics}
+    %\VignetteIndexEntry{R Markdown Basics}
     %\VignetteEngine{knitr::rmarkdown}
     %\VignetteEncoding{UTF-8}
 header-includes:
@@ -51,34 +51,66 @@ knitr::opts_chunk$set(echo=TRUE,
 options(width = 70)
 ```
 
-\begin{abstract}
-This discusses the basics of Rmarkdown that are important for
-authors who want to formulate their strategies for document
-preparation. In our center, we expect all authors who prepare
-documents with Rmarkdown should understand the issues.
-\end{abstract}
+```{r themecopy, include = FALSE}
+## not needed b/c this vignette has custom files in theme folder
+library(stationery)
+files1 <- c("logo.pdf", "report-template.tex", "R.bib")
+getFiles(files1, pkg = "stationery")
+files2 <- c("guide-template.tex")
+getFiles(files2, pkg = "stationery")
+```
+
+\begin{abstract} This discusses the basics of `R markdown` that are
+important for authors who want to prepare documents that go beyond the
+bare rudiments of markdown. In our Center, we expect all authors who
+prepare documents with `R markdown` should understand the potential
+and limitations of markdown when they use it \end{abstract}
 
 # Introduction: Terminology
 
-`Rmarkdown` is a style of markdown document used for preparing guides
-and reports about R.  It is not the same as "markdown," for which
-there are many different dialects, and will Rmarkdown does not always
-follow the same syntax.  The general framework to which it is closest
-is `pandoc` markdown because the program `pandoc` is used in several
-parts of the document compilation process.
+Markdown (John Gruber, https://daringfireball.net/projects/markdown)
+began as a replacement for HTML code used in Websites. Because HTML
+and LaTeX `markup` was tedious and unreadable, he proposed instead a
+`markdown` language. The intention was to have documents that are
+understandable for non-technical readers, but capable of re-formatting
+as beautiful Web pages.  The idea that documents might be written in
+simpler format caught the imagination of many. The aspirations of the
+markdown community are now considerably broader. There are efforts
+to generalize the document format to allow it to be compiled into PDF,
+Open Document, Microsoft Word, and many other formats.
+
+`R markdown` is a particular kind of markdown document. It is saved in
+a file with the suffix `.Rmd`. `R markdown` can be used for preparing
+guides and reports about projects conducted with `R`.  The
+distinguishing feature of `R markdown` is that it cooperates with R.
+Authors can embed `R` code. When the document is compiled, the code is
+executed in R and results are tabulated into the output ("knitting"
+the chunks).  The chunk conversion process creates an intermediate
+file format, usually a `pandoc` markdown file, often with a suffix
+like `.utf8.md`.  That markdown document is then converted to the
+eventual back end format through one or more additional transitions.
+
+It is important to remember that `R markdown` is not the same as
+"markdown," for which there are many different dialects.  The markdown
+standard to which `R markdown` is closest is `pandoc` markdown because
+the program `pandoc` is widely used to convert the `.utf8.md` file
+into HTML or PDF. However, that is not necessarily the case. On many
+Web servers, a program called Jekyl (???) is used to convert markdown
+files to HTML pages.
 
 
 # Document-wide options
 
 In the beginning of a markdown document, there is a header written in
 the YAML format (YAML, which originally meant *Yet Another Markup
-Language* but its developers now prefer *YAML Ain't Markup Language*). 
+Language*, now stands for *YAML Ain't Markup Language*; see 
+[The Official YAML Web Site](http://yaml.org)). 
 
 The header for the document you are reading now in PDF is:
 
 ```
 --- 
-title: "Rmarkdown Basics"
+title: "R Markdown Basics"
 author:
 - affiliation: CRMDA
   description: Director
@@ -94,7 +126,7 @@ output:
     pandoc_args: [
         --listings
     ]
-    template: theme/report-template.tex
+    template: "theme/report-template.tex"
 fontsize: 12pt
 vignette: >
     %\VignetteIndexEntry{stationery}
@@ -115,16 +147,21 @@ addr:
     r2: "Web: http://crmda.ku.edu"
     r3: "Email: crmda@ku.edu"
 logo: theme/logo.pdf
-keywords: guides, report, pandoc, Rmarkdown, sweave, knitr
+keywords: guides, report, pandoc, R markdown, sweave, knitr
 ---
 ```
 
-What do we have there? Main sections that begin with keywords `title`,
-`author`, `output`, `header-includes`, and `keywords`. The output
-spection specifies `pdf_document`, which means that the `Rmarkdown`
-file will be converted from `Rmarkdown` to `markdown`, then into
-\LaTeX, then PDF.  The `header-includes` section is relevant only to the
-\LaTeX stage of document preparation.
+What do we have there? Flush-left values are either top-level
+parameters (`title`, `date`, `fontsize`) or initiators of metadata
+blocks.  The output spection specifies `pdf_document`, which means
+that the `R markdown` file will be converted from `R markdown` to
+`markdown`, then into \LaTeX, then PDF.  The `header-includes` section
+is relevant only to the \LaTeX stage of document preparation. It is
+handled by the pdf_document function in the `rmarkdown` package.  The
+structure of the `author` and `addr` blocks is unique to the template
+that governs the publication of this document (the template is
+specified in the output block). With different templates, the format
+of the `key:value` author information may be altered.
 
 #### Observations about YAML
 
@@ -135,46 +172,190 @@ file will be converted from `Rmarkdown` to `markdown`, then into
     and ends with
     
     `---`
-2. The format of the YAML header is **VERY** sensitive. Errors in
+    
+1. Parameter and values (`key:value` pairs) are separated by `:`, a
+   colon, rather than equal sign. Logical values are specified by
+   lowercase, unquoted `true`, `false`, or `null`. If a value (say, a
+   document title) includes a colon, quotation marks should be used.
+   
+    The `key: value` pairs in the header are meaningful only if the
+    document processing software takes them into account. It is
+    difficult for authors to know which values will be used, mainly 
+    because there are several different programs and functions that
+    might notice the parameters and put them to use (or not).
+
+    The packages `knitr` and `rmarkdown` provide functions required to
+    convert code chunks and create the intermediate markdown
+    document. The free-standing program `pandoc` does the final
+    conversion.
+   
+1. The back end format, primarily HTML or PDF, can be specified in the
+   `output` stanza.
+   
+    The parameters that are useful in the `output` stanza are 
+    specified in the documentation of functions in the `rmarkdown`
+    package for `R` and the `pandoc` program.
+
+    Be aware that a moderately complex PDF output document will not
+    gracefully be exported to HTML (the converse is also true).
+    This is so because author customizations for the PDF (or HTML)
+    output cannot be converted on the fly.
+    
+    RStudio pulldown button Knit can be misleading. It create the
+    impression that one can choose freely between "Knit to PDF" or
+    "Knit to HTML," but that will usually fail. Be warned also that
+    Rstudio will revise the content of the document header, possibly
+    corrupting its formatting.
+          
+1. The format of the YAML header is **VERY** sensitive. Errors in
    formatting are fatal.
 
-    A. Subsections are represented by indentation
+    A. Subsections are represented by indentation. The leading users of
+	R markdown prefer indentation using 2 spaces, not 4 as in base R code.
+	We folow that in this example.
 
-    B. Use spaces to intend, NEVER tabs. Use an editor that displays
-    in fixed width fonts, so that the number of spaces is apparent.
-
-3. Parameter and value are separated by `:`, a colon, rather than
-   equal sign.
-4. The backend, either HTML or PDF, is specified here. This choice
-   determines the other settings that are allowed.
+    B. Using tabs to indent YAML code leads to a ***fatal
+    error***. Thankfully, the error messages point directly at the
+    offending line in the header. Inserting a tab before `highlight:
+    haddock` results in this error:
+	
+    ```
+    Error in yaml::yaml.load(string, ...) :
+      Scanner error: while scanning a plain scalar at line 10, column 19 
+    found a tab character that violate intendation(sic) at line 11, column 1
+    Calls: rmd2pdf ... parse_yaml_front_matter -> yaml_load_utf8 -> <Anonymous>
+    Execution halted
+    ```
  
-    Beyond the very simple headers, be aware that it is generally NOT
-    possible to change from a PDF to HTML backend without making a lot
-    of changes in the header. Please be warned that the Rstudio
-    pulldown menu that says "Knit to PDF" or "Knit to HTML" is
-    deceptive, implying one can easily choose between backends and that the
-    document will work well in either output format. This is decidedly
-    untrue. Be warned also that Rstudio will revise the content of the
-    document header, possibly corrupting its formatting.
-5. The package `rmarkdown` provides a function named `render`. This
-    function is the orchestrator of the document production process. R
-    code chunks are processed (knitted) into the markdown document,
-    then it is "compiled" into HTML or PDF.  The `render` function
-    allows arguments that can override the YAML header arguments.  They
-    generally have the same name.
+    
+# `render` equals `knitr` + `pandoc`
 
-    For example, the header setting `keep_tex: true`, will be
-    overridden by argument `keep_tex=FALSE` given to the render function.
+Many users ask "what is the difference between `rmarkdown` and
+`pandoc`?" The two are tightly intertwined in practice today, but this
+was not always the case. A brief history might help.
+
+In the olden days, say 2014, we could write R markdown documents that
+did not require the `rmarkdown` package.  The workflow was simple.
+
+### 1. Create a bare minimum YAML header {-}
+
+I once wrote a slide show called "Rmd on Rmd" and called the file
+`rmdonrmd.Rmd`, so lets use that example.
+
+The only elements included were the parameters that we were sure could
+be understood by `pandoc`. 
+
+```
+---
+title: "Rmd on Rmd"
+author: "Paul E. Johnson"
+output: slidy_presentation
+---
+```
+The third line is a bit of a distraction, as we shall see.
+### 2. Use the `knitr` package to convert R code chunks into a markdown document.{-}
+In the terminal, run
+   
+```{}
+R CMD knit rmdonrmd.Rmd
+```
+That created a new file, `rmdonrmd.utf8.md`.
+
+### 3. Use `pandoc`, with desired command line options, to create the final result.{-}
+ 
+The desired format to convert to, specified by `-t`, is S5, a then-current format for slides in web pages.
+
+```
+$ pandoc rmdonrmd.Rmd -t S5 -o rmdonrmd.html
+```
+   
+That asked for a If we want a PDF Beamer slide show as the
+   result, we might change the output format "-t", 
+
+```
+$ pandoc rmdonrmd.utf8.md -t beamer -V theme:Warsaw -o rmdonrmd.pdf
+```
+
+In the olden days, that sometimes worked. The major danger, which
+still exists today, is that the output file might be created, but some
+of the document elements that we are counting on would fail to
+appear. Incorrect \LaTeX markup results in "blank spots" in Web
+output, for example.
+
+The knit command in step 2 fails today.  Because of changes in `knitr`
+and the `rmarkdown` package, the following error message results
+today:
+
+```
+Error: It seems you should call rmarkdown::render() instead of 
+knitr::knit2html() because rmdonrmd.Rmd appears to be an R Markdown 
+v2 document.
+Execution halted
+```
+    
+We can follow that advice from the command line. Watch what happens:
+
+```sh
+$ R -e "library(knitr); library(rmarkdown); rmarkdown::render('"rmdonrmd.Rmd"')"
+
+R version 3.5.1 (2018-07-02) -- "Feather Spray"
+Copyright (C) 2018 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> library(knitr); library(rmarkdown); rmarkdown::render('rmdonrmd.Rmd')
+
+processing file: rmdonrmd.Rmd
+  |......................                                           |  33%
+  ordinary text without R code
+
+  |...........................................                      |  67%
+label: unnamed-chunk-1 (with options)
+List of 1
+ $ comment: logi NA
+
+  |.................................................................| 100%
+  ordinary text without R code
 
 
-# Preparing an Rmarkdown Document
+output file: rmdonrmd.knit.md
+
+/usr/bin/pandoc +RTS -K512m -RTS rmdonrmd.utf8.md --to slidy --from markdown+autolink_bare_uris+ascii_identifiers+tex_math_single_backslash --output rmdonrmd.html --smart --email-obfuscation none --self-contained --template /usr/local/lib/R/site-library/rmarkdown/rmd/slidy/default.html --include-in-header /tmp/RtmpAa6kai/rmarkdown-str2de413c62f71.html --mathjax --variable 'mathjax-url:https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML' --highlight-style pygments
+
+Output created: rmdonrmd.html
+```
+    
+Note the last phase of that compilation output. The `pandoc` function
+is called to convert `rmdonrmd.uft8.md` to HTML, but there are many
+command line parameters that we did not expect. 
+
+In a nutshell, we need the `rmarkdown` package because it can deal with 
+the immense complexity of `pandoc`.  The  `rmarkdown` package has document
+output format objects that specify a large family of sensible settings that
+are sent to `pandoc`.
+
+
+# Preparing an R Markdown Document
 	
 ## Use a text editor
 
-An R markdown file is suffixed ".Rmd", *not* ".rmd". It is a "raw
+An `R markdown` file is suffixed ".Rmd". It is a "raw
 text" file. Don't edit it with MS Word.  Instead, use a programmers
-file editor, such as Emacs, Notepad++, or an integrated development
-environment, such as Rstudio, to edit the file.
+file editor, such as `Emacs`, `Notepad++`, or an integrated development
+environment, such as `RStudio`, to edit the file.
 
 Remember that the markdown philosophy is that a document should look
 reasonably nice, even before it is compiled.  That means authors
@@ -184,19 +365,19 @@ paragraphs. Lines should generally be 80 characters or less.
 
 ## Document body has markdown, plus
 
-The body of the Rmarkdown document can include both "markdown" syntax,
+The body of the `R markdown` document can include both "markdown" syntax,
 which we hope is compatible with either PDF or HTML backends, as well
 as a selection of backend-specific code input. In a document with an
 HTML backend, authors can write "raw" HTML when they can't find
-Rmarkdown syntax that works.
+R markdown syntax that works.
 
 In our experience, it is also *mostly* workable to include \LaTeX\
-code in `Rmarkdown` documents. Recall that documents in `Rmarkdown`
-are converted from `Rmd` to `md` by the knitting process, and then into
-\LaTeX\ by `pandoc`, and then into PDF by a \LaTeX\ compiler
-(`pdflatex` or `xetex`). As a result, one can insert quite a bit of
-\LaTeX\ code and it will often be successfully post-processed in the
-last stage of document compilation.
+code in `R markdown` documents. Recall that documents in `R markdown`
+are converted from `Rmd` to `md` by the knitting process, and then
+into \LaTeX\ by `pandoc`, and then into PDF by a \LaTeX\ compiler
+(`pdflatex`, `xetex` or similar). As a result, one can insert quite a
+bit of \LaTeX\ code and it will often be successfully post-processed
+in the last stage of document compilation.
 
 We have found that some \LaTeX\ code does not work well, however, so
 it is not possible at the current time to say "everything
@@ -204,27 +385,19 @@ works". However, many things do work.
 
 As in \LaTeX\ itself, when an author wants to add features, it is
 generally necessary to add `\usepackage{}` statements in the \LaTeX\
-document preamble. Note that, as we insert \LaTeX\ code in this
-document, we need to insert \LaTeX\ `\usepackage code` to make the
-features available to the compiler. These appear in the YAML header 
-like so.
-
+document preamble.  We use a \LaTeX\ template for this document; it
+includes many packages. Packages that are not included in the template
+can be tucked into the YAML preamble:
 ```
 header-includes:
 -  \usepackage{amsmath}
 ```
 
-That one was needed when some math expressions were inserted in the
-document.  
-
-We use a \LaTeX\ template for this document.  That template creates a
-document style and it also can include `\usepackage{}`
-statements. Packages that are not included in the template (where we
-include packages that we *always* expect to use) are tucked into the
-document header.
+We did not realize that `amsmath` was necessary until an author typed in 
+a valid formula that ended up with missing characters in the output file.
 
 
-# Basic Rmarkdown
+# Basic R Markdown
 
 These are the most frequently used markdown idioms that work well in
 both HTML and PDF backends. These things work well in either backend
@@ -234,18 +407,18 @@ the `markdown` document into either \LaTeX\ or HTML.
 1. Character styling. 
     *  *Italics* result from asterisks (`*italics*`)
     *  **bold face** results from two asterisks (`**boldface**`).
-    *  `computer code` should be a typewriter fixed width font produced by
+    *  Inline `computer code` should be a typewriter fixed width font produced by
     using two "backticks" ($^\backprime \textrm{computer code} ^\backprime$) 
 1. Section headers. 
     *  `#` is level 1 header
     *  `##` is level 2 subheading
     *  levels below are used differently in HTML and PDF.  The ability of
    html documents to include specialized subsections is one of the
-   advantages of that backend. In markdown, they provide for 6 levels
-   of headings.
+   advantages of that backend. In R markdown,6 levels
+   of headings are allowed.
 1. Paragraph styling
     * Paragraphs are created by blank lines
-    * Single-spaced line: Two blank spaces at end of line signify new
+    * Single-spaced line: Two blank spaces at end of line signify a new
     line without creating new paragraph (blank line) below.
     *  Indented material like this:
 
@@ -280,7 +453,7 @@ the `markdown` document into either \LaTeX\ or HTML.
     *  Lists can be nested by typing four blank spaces for each level
        of nesting.
     *  Question About lists: how do we insert separate paragraphs
-       under list headings and then re-continue the list in Rmarkdown
+       under list headings and then re-continue the list in R markdown
        ?? ??.
 
 1. Hyperlinks, such as [CRMDA](https://crmda.ku.edu), for which the
@@ -305,7 +478,7 @@ will have at least one backend-specific feature.
 ## Math in Markdown documents
 
 There's a fairly broad range of mathematical markup that will work in
-Rmarkdown documents intended for PDF and HTML. So far as we can tell,
+R markdown documents intended for PDF and HTML. So far as we can tell,
 documents intended for PDF (which can add \LaTeX\ packages) can
 exploit all of the mathematical features, while HTML documents do not
 have that same bragging point. There are other weaknesses in the math
@@ -397,10 +570,10 @@ to inspect \LaTeX\ coding for equations.
 
 Code chunks are discussed in a separate vignette that is available
 with the `stationery` package, "Code Chunks".  Code chunks are allowed in
-`Rmarkdown` documents intended for either HTML or PDF.
+`R markdown` documents intended for either HTML or PDF.
 
-In `Rmarkdown` documents intended for HTML output, `knitr` is the only
-chunk-processing technology that is available.  In `Rmarkdown`
+In `R markdown` documents intended for HTML output, `knitr` is the only
+chunk-processing technology that is available.  In `R markdown`
 documents, the outer boundaries of a chunk are demarcated by three
 back ticks, along with squiggly braces and the letter "r", which
 designates the language being processed (`knitr` can handle several
@@ -596,13 +769,13 @@ generate just about any kind of table.
 
 ## Warnings, cautions and other hysterical statements
 
-Rmarkdown is similar to, but the exactly
+R markdown is similar to, but the exactly
 the same, as the
 [general markdown specification](https://daringfireball.net/projects/markdown).
 It is different from other specialized dialects, such as
 the [GitHub Flavored Markdown](https://github.github.com/gfm) and
 other variants. Be cautious about using style guides that are not
-intended explicitly for Rmarkdown documents. There is a good chance
+intended explicitly for `R markdown` documents. There is a good chance
 their advice is irrelevant. Google searches will sometimes lead to the
 wrong answer for a particular form of Markdown.
 
@@ -629,13 +802,13 @@ current time, it appears to be necessary to process all HTML markup
 that goes into the markdown document to remove spaces in the beginning
 of lines.
 
-In our experimentation with Rmarkdown, we have noticed another quirk.  I
+In our experimentation with R markdown, we have noticed another quirk.  I
 document intended for PDF, one writes `\LaTeX` to produce \LaTeX. On
 the other, in a document intended for HTML, writing `\LaTeX` produces
 one of those empty spaces previously mentioned.  Instead, in the
 document intended for HTML one must insert `$\LaTeX$`, as if this were
 a valid mathematical expression, which it is not. Inserting `$\LaTeX$`
-in Rmarkdown intended for PDF results in an error message:
+in `R markdown` intended for PDF results in an error message:
 
 \begin{lstlisting}
 ! You can't use `\spacefactor' in math mode.
@@ -669,7 +842,7 @@ their names, we insert a `-` sign. It is also possible to
 refer to a group of projects [@hsiao_analysis_2014;
 @fitzmaurice_applied_2011; @mccullagh_nelder_1983].
 
-It is a little bit frustrating that the Rmarkdown idea requires the
+It is a little bit frustrating that the `R markdown` idea requires the
 references to be in the very last header of the document. I would
 rather place them myself, where I want them. They want us to insert
 
@@ -683,7 +856,7 @@ appear at the very last part of the document, but the word
 `References` will appear where you put it.
 
 The style of the bibliography will not match what we generally
-want. Is close, the Chicago author-year format. We need a "CSL" file
+want. What we get is close, the Chicago author-year format. We need a "CSL" file
 to alter the style of the output. See 
 [authoring_bibliographies_and_citations](http://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html).
 
@@ -708,7 +881,7 @@ On the other hand,
 > should be used.
 
 
-# Reading Material about Rmarkdown
+# Reading Material about R Markdown
 
 1. [*R Markdown Reference Guide*](https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf)
 2. [*R Markdown Cheatsheet*](https://www.rstudio.com/wp-content/uploads/2016/03/rmarkdown-cheatsheet-2.0.pdf)
@@ -718,11 +891,11 @@ Raton, Florida: Chapman Hall/CRC. http://yihui.name/knitr.  On July 7,
 Books and Technical Documents with R Markdown*]
 (https://bookdown.org/yihui/bookdown).
 
-User-friendly overviews and tutorials on Rmarkdown usage are
+User-friendly overviews and tutorials on `R markdown` usage are
 available.
 
 1. [*Markdown Basics*](http://rmarkdown.rstudio.com/authoring_basics.html). See
- also the Rmarkdown page at Rstudio corporation, http://rmarkdown.rstudio.com, which offers a  
+ also the `R markdown` page at Rstudio corporation, http://rmarkdown.rstudio.com, which offers a  
 ["Get Started" Tutorial](http://rmarkdown.rstudio.com/lesson-1.html).
 2. Cosma Shalizi, "Using R Markdown for Class Reports",
    http://www.stat.cmu.edu/~cshalizi/rmarkdown.

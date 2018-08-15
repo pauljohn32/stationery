@@ -294,6 +294,17 @@ getFiles(logos, pkg = "stationery")
 
 \begin_layout Plain Layout
 
+texfiles <- c("reportPreambleSweavel.tex", "reportPreambleHeader.tex", "preambleFo
+oter.tex", "addressFooter.tex", "R.bib")
+\end_layout
+
+\begin_layout Plain Layout
+
+getFiles(texfiles, pkg = "stationery")
+\end_layout
+
+\begin_layout Plain Layout
+
 @
 \end_layout
 
