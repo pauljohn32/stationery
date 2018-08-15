@@ -73,7 +73,7 @@ footskip=1.5\baselineskip,
   author={
     lastname=Author, 
     firstname=Third, 
-    affiliation=i, 
+    affiliation=Some other Institute, 
     email=third@ku.edu}, 
   title={A Title for Skeleton Template: rnw2pdf-report-sweave},
   rightlogo={theme/logo.pdf},
@@ -82,7 +82,8 @@ footskip=1.5\baselineskip,
 
 % tmpout directory must exist first
 <<tmpout, echo=FALSE, include=FALSE, results=hide>>=
-if(!dir.exists("tmpout")) dir.create("tmpout", showWarnings=FALSE)
+tdir <- "tmpout"
+if(!dir.exists(tdir)) dir.create(tdir, showWarnings=FALSE)
 @
 % Please leave this code: In document Latex options:
 \fvset{listparameters={\setlength{\topsep}{0em}}}
@@ -90,7 +91,6 @@ if(!dir.exists("tmpout")) dir.create("tmpout", showWarnings=FALSE)
 
 % Please leave this chunk
 <<Roptions, echo=F, include=F, results=hide>>=
-if(!dir.exists("tmpout"))dir.create("tmpout", recursive = TRUE)
 opts.orig <- options()
 options(device = pdf)
 options(width=160, prompt=" ", continue="  ")
@@ -114,12 +114,21 @@ statement here of less than 200 words. It should avoid colloquialisms
 and polysyllabic profundities.
 \end{abstract}
 
+\section{Introduction}
+
+How to write reports with R \citep{RCore} using the \code{Sweave}
+code chunk engine.
+
+Please see the guide documents which are distributed with the stationery
+package. The guide ``code chunks'' provides an overview of Sweave
+and knitr.
+
 \section*{Section with no number}
 
-How to write reports with R \citep{RCore} using the Sweave code chunk
-engine.
-
-Please see the guide documents which are distributed with the package.
+Whether a section or subsection is numbered in LaTeX output is determined
+by environment used. The markup \code{\textbackslash{}section\{\}}
+asks for a numbered section, while the insertion of an asterix \code{\textbackslash{}section{*}\{\}}
+prevents numbering. 
 
 \subsection*{Make minimal changes to the top part}
 
@@ -127,16 +136,29 @@ Make small changes, test whether the document compiles.
 
 Start by putting your title \& name in the top block.
 
+\subsection*{LyX warning}
+
 Reminder: Don't change document margins with LyX menus. You need to
 edit the preamble for that.
 
-\subsection*{\protect\code{R} Code Chunks}
+\section{\protect\code{R} Code Chunks}
+
+Code chunks begin with ``<\textcompwordmark{}<>\textcompwordmark{}>=''
+and end with a last line ``@''. 
+
+When inserting code chunks in LyX, I type them in LaTeX code boxes,
+because that keeps them visually separate. The LyX team has created
+a code chunk environment (see the pull down menu) but I have not benefitted
+from it.
 
 Our report documents ALMOST NEVER show ``raw'' R code to readers.
-Write chunks the generate figures or legal LaTeX output, which are
-then included with LaTeX macros like \textbackslash{}include or \textbackslash{}includegrphics.
+Write chunks that generate results, figures or legal LaTeX output,
+but do not display them. Then results are included with LaTeX macros
+like \code{\textbackslash{}include} or \code{\textbackslash{}includegraphics}.
 
-\section*{References}
+This document uses the Sweave parameter split=TRUE to separate the
+code chunks in files saved in tmpout. There is discussion of splitting
+in the ``code chunks'' vignette distributed with this package.
 
 \bibliographystyle{apalike2}
 \bibliography{theme/R}

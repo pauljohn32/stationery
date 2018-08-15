@@ -9,7 +9,6 @@
 \setlength{\parskip}{\medskipamount}
 \setlength{\parindent}{0pt}
 \usepackage{babel}
-\usepackage{url}
 \usepackage[authoryear]{natbib}
 \usepackage[unicode=true,pdfusetitle,
  bookmarks=true,bookmarksnumbered=false,bookmarksopen=false,
@@ -27,6 +26,16 @@
 <<echo=F>>=
   if(exists(".orig.enc")) options(encoding = .orig.enc)
 @
+\newenvironment{lyxcode}
+{\par\begin{list}{}{
+\setlength{\rightmargin}{\leftmargin}
+\setlength{\listparindent}{0pt}% needed for AMS classes
+\raggedright
+\setlength{\itemsep}{0pt}
+\setlength{\parsep}{0pt}
+\normalfont\ttfamily}%
+ \item[]}
+{\end{list}}
 \providecommand*{\code}[1]{\texttt{#1}}
 
 \@ifundefined{date}{}{\date{}}
@@ -92,6 +101,11 @@ footskip=1.5\baselineskip,
 }
 \reporthdr
 
+% tmpout directory must exist first
+<<tmpout, echo=FALSE, include=FALSE, results=hide>>=
+tdir <- "tmpout"
+if(!dir.exists(tdir)) dir.create(tdir, showWarnings=FALSE)
+@
 % Please leave this code: In document Latex options:
 \fvset{listparameters={\setlength{\topsep}{0em}}}
 \SweaveOpts{prefix.string=tmpout/t, split=FALSE, ae=FALSE, height=5, width=6}
@@ -106,185 +120,153 @@ getFiles(logos, pkg = "stationery")
 % Please leave this chunk
 <<Roptions, echo=F, include=FALSE,results=hide>>=
 opts.orig <- options()
-options(width=160, prompt=" ", continue="  ")
+options(width=65, prompt=" ", continue="  ")
 options(useFancyQuotes = FALSE) 
 set.seed(12345)
 par.orig <- par(no.readonly=TRUE) 
 pjmar <- c(5.1, 5.1, 1.5, 2.1) 
 options(SweaveHooks=list(fig=function() par(mar=pjmar, ps=10)))
-
 pdf.options(onefile=FALSE, family="Times", pointsize=10)
 if(!dir.exists("tmpout"))dir.create("tmpout", recursive = TRUE)
 @
 \begin{abstract}
 \noindent This shows how we use R \citep{RCore} to make report documents
-using the CRMDA style. This is a LaTeX ``noweb'' guide document
-generated with the knitr code chunk engine.
+using the CRMDA style. This is a LaTeX ``noweb'' report document
+using the Sweave code chunk engine.
 \end{abstract}
 
 \section{Introduction}
 
-This is a LaTeX ``noweb'' report generated with the Sweave engine. 
+This is a LaTeX ``noweb'' report generated with the Sweave engine.
+We use R \citet{RCore} to do statistical analysis. 
 
-Create a skeleton document by opening R and running
+\section*{Please Check our documentation}
 
-<<eval=F>>=
+There are several vignettes distributed with the \code{stationery}
+package. The ones that are pertinent to this document are
+\begin{enumerate}
+\item ``stationery'': a package overview
+\item ``code\_chunks'': comparing Sweave and knitr code chunk usage
+\end{enumerate}
+
+\section{Create a New Report Skeleton Folder}
+
+If you did not do this yet, create a fresh skeleton document by opening
+R and running
+
+<<eval=T, results=hide>>=
 library(stationery)
 initWriteup("rnw2pdf-report-sweave")
 @
 
-That will create a folder ``\code{writeup/rnw2pdf-report-sweave}''
-(unless you request otherwise by setting the \code{dir} argument).
-We can compare it to the very similar document produced with ``knitr''
-(in the companion folder rnw2pdf-report-knitr). 
+That will create a folder ``\code{rnw2pdf-report-sweave}''. That
+folder will have the following files:
+
+<<echo=F>>=
+list.files("rnw2pdf-report-sweave", recursive = TRUE)
+@
 
 We suggest you
 \begin{enumerate}
-\item Compile this document \emph{as is }to test your setup
-\item Make revisions incrementally, and re-compile often to make sure nothing
-has been broken.
+\item Test with documents \emph{as they are }to make sure your computer
+is correctly configured
+\item Make revisions incrementally, and re-compile often to test your changes
 \end{enumerate}
-Don't make changes that you don't understand in the code chunks above
-or the last chunks below.
-
-\section{LyX: Cautions}
-
-The document preamble has manual settings for margins (geometry) as
-well as hyperlinks (PDF hyperref). Don't use the LyX pull down menu
-to revise them. Edit preamble or config files for that. Repeat \textbf{CAUTION}:
-Don't change the page margins or settings for hyperlinks with pull
-down menus.
-
-\section{What to edit}
-
-\section*{Title and author information}
-
-The first block in the document has the title and author information.
-
-\subsection*{Footer information}
-
-The footer in this document uses data that is provided in a file named
-``addressFooter.tex''. After the document is compiled for the first
-time, that document should be available in the theme folder.
 
 \subsection*{About the theme folder}
 
-The theme folder should be empty when the initProject() function is
-run. 
+The theme folder has files needed to produce the document. In the
+stationery project, the various document types have different requirements,
+and some share ``boilerplate'' code that we include in several document
+types. In stationery version 0.91, we decided to copy the boilerplate
+files into the theme folder when the \code{initWriteup()} function
+is called.
 
-There is an R code chunk above called ``texcopy''. It will copy
-configuration files from the package into the theme folder. After
-running this for the first time, those files will not be automatically
-replaced by the scripts. 
+The theme folder will also need files for the organizational logos
+or address information (\code{addressFooter.tex}). These are not
+copied into the folder automatically. There is an R code chunk above
+called ``texcopy''. It will copy configuration files from a package
+into the theme folder. The vignette ``stationery'' describes the
+approach and how it can be customized.
 
 That means authors are free to edit them to fit their needs.
 
-If the author makes an error in editing a theme file, it is safe to
-delete the erroneous file and run the compile script again. That will
-copy a fresh version of the theme file into the directory.
+If the author makes an error in editing a theme file, the original
+version of the theme is available in the package's install folder.
+The files are in the top level folder named ``\code{theme}''.
 
-\section{Check our documentation}
+\section{LyX}
 
-There are several vignettes distributed with this package. Please
-review them.
+The files named \code{skeleton.lyx} and \code{instructions.lyx}
+can be edited with the editor LyX. Benefits and limitations of using
+LyX are discussed in the vignette ``stationery''. 
+
+If using LyX, the file can be compiled by the usual methods to create
+PDF output. Note also the File -> Export -> Sweave menu sequence can
+create a fresh \code{.Rnw} file. 
+
+\subsection{LyX caution}
+
+The document preamble and theme files have settings for margins (geometry)
+as well as hyperlinks (PDF hyperref). Don't use the LyX pull down
+menu to revise them. Repeat \textbf{CAUTION}: Don't change the page
+margins or settings for hyperlinks with pull down menus.
+
+\subsection{Other ways to compile a LyX document}
 \begin{enumerate}
-\item ``crmda'': the package framework overview
-\item ``code\_chunks'': discusses display of code in LaTeX documents
-\item ``instructions-rnw2pdf-report-sweave''
-\end{enumerate}
-
-\section{Compile as usual, or with rnw2pdf}
-
-The skeleton file is provided in 2 formats, LyX and Rnw. 
-
-In either case, please understand that compiling is a two step process.
-\begin{enumerate}
-\item knitting: Run R to do the calculations in the R code chunks and write
-out a LaTeX file
-\item compiling: Run a LaTeX program, such as pdflatex or xelatex to convert
-the LaTeX file to pdf. It is usually necessary to run the compiler
-two or more times, along with a separate bibliography program. If
-it is available, we suggest an aggregator named texi2pdf, which will
-handle this effort.
-\end{enumerate}
-
-\subsection*{Edit the LyX file.}
-
-There are 4 methods, we hope one will suit your workflow.
-\begin{enumerate}
-\item Use the LyX editor. The file can be compiled to PDF in LyX, just like
-any other LyX file. LyX handles conversion from LyX to Rnw to tex
-to PDF. This has the same effect as using LyX from the command line.
-The following will create the PDF file using pdflatex as the final
-comiler:
+\item In R, run.
 
 \inputencoding{latin9}\begin{lstlisting}
-$ lyx -e pdf2 skeleton.lyx
+> library(stationery)
+> rnw2pdf("skeleton.lyx", engine = "Sweave")
 \end{lstlisting}
-\inputencoding{utf8}
-Because lyx uses a separate working directory for the compilation
-work, the project directory stays clean. None of the intermediate
-LaTeX files ({*}.log, {*}.log, {*}.bbl) will appear.
-\item Open an R session and make sure the working directory is the same
-as the project writeup.
-
-\inputencoding{latin9}\begin{lstlisting}
-rnw2pdf("skeleton.lyx", engine = "Sweave")
-\end{lstlisting}
-\inputencoding{utf8}\item The shell script \code{rnw2pdf.sh} is provided in the same folder.
-It can be run in the shell as
+\inputencoding{utf8}\item Use the shell script \code{rnw2pdf.sh}: 
 
 \inputencoding{latin9}\begin{lstlisting}
 $ ./rnw2pdf.sh --engine='"Sweave"' skeleton.lyx
 \end{lstlisting}
-\inputencoding{utf8}
-In the discussion in the next sub section, we outline usage of additional
-arguments with rnw2pdf for the compilation of Rnw files. All of those
-arguments are equally applicable in this context.
-\item In case you want to track the steps of compiling one by one, open
+\inputencoding{utf8}\item In case you want to track the steps of compiling one by one, open
 the file in LyX. Use the pull down menu \code{File} $\rightarrow$
 \code{Export} $\rightarrow$ \code{Sweave}. That will create a file
-named ``skeleton.Rnw''. This is the equivalent of the command line
-statement
+named ``\code{skeleton.Rnw}''. This is the equivalent of the command
+line statement
 
 \inputencoding{latin9}\begin{lstlisting}
 $ lyx -e sweave skeleton.lyx
 \end{lstlisting}
 \inputencoding{utf8}
-After that Rnw file is created, proceed as described in the next subsection.
-
-This two-step process is valuable for debugging. It makes it easier
-to spot trouble by focusing on the separate transitions.
-\end{enumerate}
-
-\subsection*{Edit the Rnw file}
-
-The Rnw file we provide is produced by LyX, it is an intermediate
-step in the document production sequence. A two step compilation procedure
-is necessary. First, one must convert the ``Rnw'' file to ``pdf''
-(with Sweave), and then the weaved tex file is compiled into pdf by
-pdflatex (or one of the other LaTeX compilers). 
-
-The work flow here will vary, depending on your experience and the
-editor you choose to use. Here are some possibilities:
-\begin{enumerate}
-\item You may have a ``noweb'' aware editor. Emacs, Rstudio, and others
-have menus that can initiate the work of weaving and rendering the
-document.
-\item Open an R session and make sure the working directory is the same
-as the project writeup.
+After that \code{.Rnw} file is created, run
 
 \inputencoding{latin9}\begin{lstlisting}
-rnw2pdf("skeleton.Rnw", engine = "Sweave")
+$ R CMD Sweave skeleton.Rnw
+\end{lstlisting}
+\inputencoding{utf8}
+That creates a LaTeX file and errors are usually easy to diagnose.
+\end{enumerate}
+
+\section{Compiling when editing the Rnw file}
+
+This is explained in more depth in the ``stationery'' vignette.
+Editing the \code{.Rnw} file in a Emacs or RStudio will make it possible
+to test individual chunks one at a time. 
+
+Note: there is no perfectly safe ``round trip'' conversion of .Rnw
+to .lyx formats, so if you work in the .Rnw file, it is necessary
+to stay with that format.
+
+\subsection*{Compile the .Rnw file}
+\begin{enumerate}
+\item In R, run
+
+\inputencoding{latin9}\begin{lstlisting}
+> library(stationery)
+> rnw2pdf("skeleton.Rnw", engine = "Sweave")
 \end{lstlisting}
 \inputencoding{utf8}
 Additional arguments can be used, mainly to control the verbosity
-of the output and the creation of subsidiary files. Our function,
-by default, will create and R file summary of the command chunks.
-This file is referred to as a ``tangled'' (if using knitr, it is
-referred to as a purled file). 
-\item The shell script \code{rnw2pdf.sh} is provided in the same folder.
-It can be run in the shell as
+of the output to preserve intermediate files. For debugging, we use
+parameters \code{-{}-verbose=FALSE} \code{-{}-clean=FALSE}.
+\item The shell script \code{rnw2pdf.sh}:
 
 \inputencoding{latin9}\begin{lstlisting}
 $ ./rnw2pdf.sh --engine='"Sweave"' skeleton.Rnw
@@ -295,33 +277,19 @@ R function \code{rnw2pdf}. The usage is nearly identical. Where the
 R function call would be 
 
 \inputencoding{latin9}\begin{lstlisting}
-rnw2pdf("skeleton.Rnw", purl = FALSE, clean = FALSE, verbose = TRUE, keep_tex = TRUE)
+> rnw2pdf("skeleton.Rnw", purl = FALSE, clean = FALSE, verbose = TRUE, keep_tex = TRUE)
 \end{lstlisting}
 \inputencoding{utf8}
 the shell command would be
 
 \inputencoding{latin9}\begin{lstlisting}
-$ ./rnw2pdf --purl=FALSE --clean=FALSE --keep_tex=TRUE --verbose=TRUE skeleton.Rnw
+$ ./rnw2pdf -engine='"Sweave"' --purl=FALSE --clean=FALSE --keep_tex=TRUE --verbose=TRUE skeleton.Rnw
 \end{lstlisting}
 \inputencoding{utf8}
-The only difference in usage arises when a quoted string must be passed
-through. Suppose the files are in a subdirectory named ``project''.
-Inside the R code, the quoted string to specify the directory where
-the file resides (the working directory) would be like so:
-
-\inputencoding{latin9}\begin{lstlisting}
-rnw2pdf("skeleton.lyx", engine="Sweave" wd = "project")
-\end{lstlisting}
-\inputencoding{utf8}
-the shell command would be
-
-\inputencoding{latin9}\begin{lstlisting}
-$ ./rnw2pdf --engine='"Sweave"' --wd='"project"' skeleton.Rnw
-\end{lstlisting}
-\inputencoding{utf8}
-Note the single quotes that are protecting the double quotes.
-\item Our shell script is not the only way to use command line tools to
-get this done. One can run shell commands such as:
+Note the trick to include a parameter \code{\textquotedbl{}Sweave\textquotedbl{}}
+that is a quoted string. The single quotes that are protecting the
+double quotes in the command line.
+\item Manual command line interactions using R and shell functions. 
 
 \inputencoding{latin9}\begin{lstlisting}
 $ R CMD Sweave skeleton.Rnw
@@ -332,214 +300,176 @@ That will create \code{skeleton.tex}, which we compile with
 \inputencoding{latin9}\begin{lstlisting}
 $ texi2pdf skeleton.tex
 \end{lstlisting}
-\inputencoding{utf8}
-The major difference between running this and the script we provide
-is that our script will handle LyX files and it will, by default,
-will create a purled copy of the R code.
-\end{enumerate}
-If you are editing these files in LyX, it is sufficient to simply
-compile as usual. That will handle the chore of converting a sequence
-of document types to arrive at PDF.
+\inputencoding{utf8}\end{enumerate}
 
 \section{Code Chunk Check}
 
-What is the difference between a guide and a report? Simply put, a
-report document does not reveal source code and it should not distract
-the reader with code or ``raw'' output. A report document might
-just as well be typed by hand, if we could be sure all the numbers
-would be typed correctly and they could easily revised. In our report
-style, the author will not generally insert visible code chunks, so
-almost always the chunk will have the flag `include=FALSE` or, if
-the chunk is included, the code will not be echoed, but perhaps a
-\textbackslash{}LaTeX mark-up table or a figure may be placed into
-the document.
-
 Our report documents ALMOST NEVER show ``raw'' R code to readers
 and very seldom will they display ``raw'' R output. Almost always,
-code chunks will have the flag ``include=F'' set and the document,
-when it reveals results, will, again, almost always, display a LaTeX
-formatted table that is placed inside a floating table or a figure
-that is placed inside a floating figure object.
-
-It is a matter of style and author preference to decide how to include
-output within the report document. One approach is to use the chunk
-flags that directly display LaTeX output in the document. One must
-take special care to assure that the table is fully presentable. The
-alternative is to write the nearly presentable table on disk and then
-edit by hand to finalize the formats (usually we need to fix column
-and row names). 
+code chunks will not be echoed into the document, but they may create
+output files and graphics that are inserted. 
 
 \subsection*{\protect\code{R} Code Chunks}
 
-We use R \citet{RCore} to do statistical analysis. We'd like to be
-as close as possible to the ``reproducible document'' idea. If R
-functions can produce perfectly presentable LaTeX output, then we
-use it. 
+We'd like to be as close as possible to the ``reproducible document''
+idea. If R functions can produce perfectly presentable LaTeX output,
+then we use it. On the other hand, one might write the output files
+that need some minor manual re-formatting. Call these ``intermediate
+files.'' After cleaning up the files, we can use them them in the
+document. 
 
-On the other hand, one might write the output files and then manually
-insert them into the document. In our documents, we almost always
-have the global parameter `split=TRUE`, so that the code input and
-output chunks are saved in a directory we call `tmpout`. Another LaTeX
-document can insert those chunks. We will demonstrate that here.
+We don't mean to say that it is desirable to write output files and
+then manually edit them. It is, however, often necessary in practice.
+We expect it will be necessary, in practice, for almost any medium-to-large
+sized report. 
 
-\subsubsection*{One document-weaving tip: save something for later.}
+In the next sections, we discuss practical methods for getting this
+done. 
 
-In the usual ``weave'' documentation, a user is told to type in
+\subsection*{Sweave's split feature}
+
+Sweave has a feature called ``split'', which means that the individual
+code chunks, their output, and graphics will be saved into separate
+files in an intermediate output folder. In the top of the .Rnw file,
+there will be a LaTeX macro:
+\begin{lyxcode}
+\textbackslash{}SweaveOpts\{prefix.string=tmpout/t,~split=TRUE,~ae=FALSE,~height=5,~width=6\}
+\end{lyxcode}
+In our case, the pieces are saved into a folder named ``\code{tmpout}''.
+These chunk files will be created while the document is being compiled.
+We choose to have the letter ``t'' prepended with each chunk name.
+(Below we will list the contents of the \code{tmpout} folder.)
+
+The attraction of splitting the chunks is that the individual pieces
+can be used in several ways. First, we may want to keep a document
+``clean'' by concentrating the code chunks in a section at the top
+of the file, and then insert the results in later sections where desired.
+Second, we may need to create a presentation or brief overview document
+that uses some of the chunks. If we have a research report and a client
+asks for a 10 minute slide show, we might write the slide show and
+then integrate a few of the code chunks for the presentation \emph{without
+re-running} all of the analysis in the larger report. Third, if tables
+created by R need some minor enhancements, we can isolate their files
+easily and make manual corrections.
+
+Using \code{split=TRUE} causes a complication in tangling the code
+chunks. If we want to generate one R document to accumulate all of
+the code, then it is necessary to change \code{split=TRUE} to \code{split=FALSE}
+in the document. The function \code{stationery::rnw2pdf} has a sub-routine
+that handles that ``smart tangling'' problem, so the author does
+not need to change the split setting in the document itself.
+
+Splitting goes against the grain of some advice about reproducible
+documents. In the typical documentation, a user is told to type in
 a chunk and then the output plops into the document ``right there''.
-I don't use that so often anymore, instead what I do very often is
-a trick I learned from Duncan Murdoch in the r-help email list. 
+If the output from the chunk is not perfectly correct, then one ought
+to revise the software to fix the chunk output. Theoretically, that
+is sound advice. It is simply not practical at the current time. 
 
-Make sure that the document options are set with \code{split=T}.
-This works in LaTeX documents using Sweave or knitr to handle the
-code chunks. This causes each chunk's input and output to be saved
-to a separate file. This includes graphs and tables. 
+Possibly for reasons mentioned in the previous paragraph, the \code{knitr}
+code chunk system does not allow splitting. In addition, the R CRAN
+archive will not accept package vignettes that use chunk splitting. 
 
-If I make a figure, the chunk will look like this
+\subsubsection*{If Split is Forbidden}
 
-\inputencoding{latin9}\begin{lstlisting}[style=Rinput]
- <<chunkfig, eval=F, include=F, echo=F, fig=T>>=
- # R code for figure here
- @
-\end{lstlisting}
-\inputencoding{utf8}
-A file named ``\code{tmpout/t-chunkfig.pdf}'' will be created in
-the \code{tmpout} directory. The ``\code{t-}'' at the front of
-the file name is inserted because in the document setup, I chose the
-global prefix for output files as ``t-''. (Because documents can
-have different prefixes, it is possible then to have several R programs
-that output files into the same output folder. But I rarely do that
-because I don't want to get too confused about what file came from
-which program.) To insert that graphic in the document, I will write
-a LaTeX statement
+If policy does not allow splitting code chunks, then one can use R
+built-in functions to export text files, such as cat. The \code{xtable}
+package includes a function \code{print }that can write into files.
+Many regression-table writing packages have a file-export parameter.
+
+\subsubsection*{How to Hide code chunks}
+
+The Sweave chunk option \code{include=FALSE} conceals a graph that
+is created by the chunk (i.e., it is only relevant when ``\code{fig=TRUE}'').
+Even if \code{include=FALSE}, the current behavior of Sweave is to
+both echo the chunk code and to insert any text results from the chunk.
+Hence, to have a truly quiet code chunk in Sweave, one must insert
+\code{echo=FALSE} and \code{results=hide} (note, there are no quotation
+marks around \code{hide} in Sweave chunks). If a figure is produced,
+\code{include=FALSE} is also needed. 
+
+If you see nothing in the output document before ``it means'' on
+the next line,
+
+<<chunkfig, fig=T, include=F, echo=F, results=hide>>=
+x <- rnorm(1000)
+hist(x)
+@
+
+it means that the chunk is invisible. However, the code chunk does
+generate a figure, ``\code{tmpout/t-chunkfig.pdf}''.
+
+To insert that graphic in the document, write a LaTeX statement such
+as:
 
 \inputencoding{latin9}\begin{lstlisting}[style=Rinput]
 \includegraphics[width=5in]{tmpout/t-chunkfig}
 \end{lstlisting}
 \inputencoding{utf8}
-Note I don't put ``.pdf'' on the end of the file name, LaTeX finds
-the file named ``t-chunkfig.pdf''. I could use the LyX pull down
-Insert -> Graphics as well.
+Note: don't put ``\code{.pdf}'' on the end of the file name, LaTeX
+finds the file named ``\code{t-chunkfig.pdf}''. 
 
-If the code makes a LaTeX table, I'll have this instead
+If the code makes a LaTeX table that is presentable as is, then we
+can include that in the document at the suitable point. 
 
-\inputencoding{latin9}\begin{lstlisting}[style=Rinput]
- <<chunktable, include=F, results=tex>>=
- # R code here
- @
-\end{lstlisting}
-\inputencoding{utf8}
-That creates a file named ``tmpout/t-chunktable.tex''. Then put
-that into the document where you want with: 
+\subsection*{Tables that are close, but not ready}
 
-\inputencoding{latin9}\begin{lstlisting}[style=Rinput]
- \input{tmpout/t-chunktable.tex}
-\end{lstlisting}
-\inputencoding{utf8}
-Why do this? Why separate chunk output creation from inclusion in
-a document? The simple answer is that I might want to use that chunk
-in a different document. If I save a copy in the separate folder,
-then it is very convenient to come along later and make a separate
-slide show document displaying the same tables and/or figures. Or
-I might need to edit the chunk output before inserting it in the document.
- 
+The key issue is that the table output from an R function is not perfectly
+ready for inclusion in a report. The row and column names might need
+beautification. That is why, realistically, it is generally easier
+to write those tables into tex files and revise them by hand, and
+then use LaTeX ``\code{\textbackslash{}input\{\}}'' to include
+them in the document where appropriate.
 
-The automatic ``stick this output in where the chunk is placed''
-approach works great with lecture notes and guides because these things
-are easy to update and re-run.
+We'd manually copy it to another folder (to protect it from being
+over-written) and manually revise it. 
+
+\subsection*{Assume Floating Tables and Figures are Used}
+
+If this were a training guide document, we might want graphics and
+tables to print ``right here''. In a report, we almost always want
+tabular and graphical items to float. A result that is a tabular object
+should be enclosed in a LaTeX table object, and graphics should be
+enclosed in figure objects. Tables and Figures should have proper
+captions and labels for cross referencing.
 
 \subsection*{Make Nice Looking Tables}
 
-The aim in R code is to generate ``final'' tables that are in LaTeX
-format and they are as close as possible to the final, presentable
-tables that a client can review in a report. We don't want the report
-reader to see ugly output:
+We don't want the report reader to see ugly output:
 
 <<Rsummary, echo=F>>=
+set.seed(234234)
 dat <- data.frame(x = rnorm(100), y = rnorm(100))
+@
+
+<<tab0, echo=FALSE>>=
 summary(dat)
 @
 
-In R, there are many (many!) packages and functions that can be used
-to generate acceptable LaTeX output. The bewildering diversity of
-these things is a problem. There are a host of packages that generate
-results that are nearly presentable, perhaps requiring only a minor
-adjustment of labels.
+Instead, we want to refer the reader to a numbered Table \ref{tab:summ}
+(using a LaTeX cross-references), where a more-or-less acceptable
+table is presented.
 
-\subsubsection*{Summary statistics tables}
-
-\subsubsection*{xtable}
-
-Here is an example that uses rockchalk::summarize to gather summary
-statistics, which are then reformatted as a LaTeX table by xtable.
-Here's an xtable that displays most of the rows in the output from
-\code{rockchalk::summarizeNumerics}:
-
-<<tab0, results=hide>>=
+<<tab1a, echo=F, results=hide>>=
+## results hidden to prevent ugly raw output
 tab1 <- rockchalk::summarize(dat)
 @
 
 <<tab1, echo=F, results=tex>>=
-tab1.x <- xtable::xtable(tab1$numericsfmt)
-print(tab1.x, floating = FALSE)
+tab1.x <- xtable::xtable(tab1$numericsfmt, caption = "Floating Table with Summary Statistics", label = "tab:summ")
+print(tab1.x, caption.placement = "top")
 @
 
-To regulate the values in the rows, it is possible to choose explicitly,
-but the summarize function in rockchalk was revised to allow uses
-to more easily pin-point particular summary values.
-
-It may be that people want the output rotated, so that the variable
-names are on the rows and the summary stats are in the columns. That's
-possible:
-
-<<tab3, echo=F,results=tex>>=
-tab3.x <- xtable::xtable(tab1$numerics)
-print(tab3.x, floating = FALSE)
-@
-
-The key issue is that the table is not perfectly ready for inclusion
-in a report. The row and column names might need beautification. That
-is why, realistically, it is generally easier to write those tables
-into tex files and revise them by hand, and then use LaTeX ``\textbackslash{}input\{\}''
-to include them in the document where appropriate.
-
-\subsubsection*{knitr::kable}
-
-The following is a result from \code{kable} in the \code{knitr}
-package:
-
-<<tab4, echo=F, results=tex>>=
-tab4.x <- knitr::kable(tab1$numerics, format = "latex")
-## keep file copy because vignette cannot use split
-cat(tab4.x, file = "tmpout/t-tab4.tex") 
-cat(tab4.x)
-@
-
-The \code{kable} function is offered as a simple, usually robust
-table writer that will not deal with much ``fancy'' formatting.
-.
-
-The \code{kable} function assumes that if the user specifies a title
-for the table, then it must mean that the user wants to have the table
-set as a floating table object. The same code that made the previous
-table is changed just slightly to produce a floating object. Look
-around in this document for a table named ``In \code{kable}, I added
-the caption argument and got this unexpected float''. (I found this
-frustrating because the \code{kable} function does not include documentation
-for insertion of a label that can be used for cross referencing.)
-
-<<tab5, echo=F,results=tex>>=
-tab5.x <- knitr::kable(tab1$numerics, format = "latex", caption = "In kable, I added the caption argument and got this unexpected float")
-cat(tab5.x)
-@
-
-I'd rather not have kable insert the table float for me, I'd rather
-do it manually, as we can see in Table \ref{tab:kable-output}
-
-\begin{table}[h]
-\caption{kable output in a float I created manually\label{tab:kable-output}}
-
-\input{tmpout/t-tab4.tex}
-\end{table}
+There are several packages in R that can be used to generate LaTeX
+tables. Some of them can also create HTML or other formats suitable
+for other output document types. Here we used the time-tested classic
+\code{xtable}, which has many fine-grained settings that can be adjusted
+(see the help pages for \code{xtable} and \code{print.xtable}. There
+are, we should mention, many other packages that can generate presentable
+tables. In the \code{knitr} package, there is a function called \code{kable}
+intended to produce simple tables in various formats. There are also
+many eager adherents of the packages \code{pander}, \code{Hmisc},
+\code{memisc}, and many others.
 
 \subsection*{Regression output}
 
@@ -551,12 +481,12 @@ save the LaTeX markup in a file named ``tmpout/t-outreg1.tex''.
 in the stationery package and the split=TRUE flag is not allowed in
 vignettes for packages on CRAN).
 
-<<outreg1, results=hide>>=
+<<outreg1, include=F, echo=F, results=hide>>=
 library(rockchalk)
 m1 <- lm(y ~ x, data = dat)
 vl <- c("x" = "Excellent Predictor")
 or <- outreg(list("First Model" = m1), varLabels = vl, tight = FALSE)
-cat(or, file="tmpout/t-outreg1.tex")
+cat(or, file = "tmpout/t-outregtest.tex")
 @
 
 After the file is created, we then incorporate it in the usual way,
@@ -565,21 +495,17 @@ embedding it in a floating object, Table \ref{tab:A-Regression}.
 \begin{table}
 \caption{A Regression from \protect\code{outreg}\label{tab:A-Regression}}
 
-\input{tmpout/t-outreg1.tex}
+\input{tmpout/t-outregtest.tex}
 \end{table}
 
-There are many other regression-table-making functions available today.
-I made some lecture notes about it for the R summer workshops that
-we offer at KU (\url{http://pj.freefaculty.org/guides/Rcourse/regression-tables-1}). 
+There are many other regression-table-making functions available today. 
 
 \subsection*{Structural equation models}
 
 In the good looking table department, we also need to display structural
-equation models. This has been a long term objective in CRMDA and
-it is, for the most part, a solved problem. 
-
-In the \code{kutils} package, we made a function \code{semTable}
-that is intended to help. Please see Table \ref{tab:A-Confirmatory-Factor}. 
+equation models. This has been a long term objective in CRMDA. In
+the \code{kutils} package, we made a function \code{semTable}. Please
+see example output in Table \ref{tab:A-Confirmatory-Factor}. 
 
 <<include=F>>=
 library(kutils)
@@ -591,8 +517,7 @@ HS.model <- 'visual  =~ x1 + x2 + x3
 textual =~ x4 + x5 + x6
 speed   =~ x7 + x8 + x9'
 output1 <- cfa(HS.model, data = HolzingerSwineford1939, std.lv = TRUE)
-cfa1 <- semTable(output1, fits = "rmsea", paramSets = c("loadings", "latentvariances"), type = "latex")
-cat(cfa1, file = "tmpout/t-cfa1.tex")
+cfa1 <- semTable(output1, fits = "rmsea", paramSets = c("loadings", "latentvariances"), type = "latex", print.results=FALSE)
 @
 
 \begin{table}
@@ -601,7 +526,35 @@ cat(cfa1, file = "tmpout/t-cfa1.tex")
 \input{tmpout/t-cfa1.tex}
 \end{table}
 
-\section{Session Information}
+A warning is in order. Some R packages will export a table in using
+the \code{longtable} package. We noticed that longtable objects cannot
+be included in LaTeX floating tables. Instead, a longtable provides
+its own caption and label arguments, and longtable objects will thus
+float on their own.
+
+\subsubsection*{Finally, check the tmp out folder}
+
+After compiling this document, the files we have in the \code{tmpout}
+folder are:
+
+<<tmpprint, echo=F>>=
+list.files(tdir)
+unlink("rnw2pdf-report-sweave", recursive = TRUE)
+@
+
+We see here one of the reasons why we suggest that all chunks should
+have names. It is easier to find them in the output directory if they
+have meaningful names.
+
+As we complete this document, we will delete the test document folder
+\code{rnw2pdf-report-sweave} at this point, but will leave \code{tmpout}
+for user inspection.
+
+<<rnwdirclean, echo=F>>=
+unlink("rnw2pdf-report-sweave", recursive = TRUE)
+@
+
+\section{Replication Information}
 
 Leave the code chunks below. But the visible words and section name
 should be removed. Session Information is usually not written into

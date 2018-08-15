@@ -215,7 +215,7 @@ reportsetup{%
 
 \begin_layout Plain Layout
 
-    affiliation=i, 
+    affiliation=Some other Institute, 
 \end_layout
 
 \begin_layout Plain Layout
@@ -266,7 +266,12 @@ status open
 
 \begin_layout Plain Layout
 
-if(!dir.exists("tmpout")) dir.create("tmpout", showWarnings=FALSE)
+tdir <- "tmpout"
+\end_layout
+
+\begin_layout Plain Layout
+
+if(!dir.exists(tdir)) dir.create(tdir, showWarnings=FALSE)
 \end_layout
 
 \begin_layout Plain Layout
@@ -314,11 +319,6 @@ status open
 \begin_layout Plain Layout
 
 <<Roptions, echo=F, include=F, results=hide>>=
-\end_layout
-
-\begin_layout Plain Layout
-
-if(!dir.exists("tmpout"))dir.create("tmpout", recursive = TRUE)
 \end_layout
 
 \begin_layout Plain Layout
@@ -424,8 +424,8 @@ This is an abstract.
  It should avoid colloquialisms and polysyllabic profundities.
 \end_layout
 
-\begin_layout Section*
-Section with no number
+\begin_layout Section
+Introduction
 \end_layout
 
 \begin_layout Standard
@@ -436,11 +436,66 @@ key "RCore"
 
 \end_inset
 
- using the Sweave code chunk engine.
+ using the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+Sweave
+\end_layout
+
+\end_inset
+
+ code chunk engine.
 \end_layout
 
 \begin_layout Standard
-Please see the guide documents which are distributed with the package.
+Please see the guide documents which are distributed with the stationery
+ package.
+ The guide 
+\begin_inset Quotes eld
+\end_inset
+
+code chunks
+\begin_inset Quotes erd
+\end_inset
+
+ provides an overview of Sweave and knitr.
+\end_layout
+
+\begin_layout Section*
+Section with no number
+\end_layout
+
+\begin_layout Standard
+Whether a section or subsection is numbered in LaTeX output is determined
+ by environment used.
+ The markup 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+
+\backslash
+section{}
+\end_layout
+
+\end_inset
+
+ asks for a numbered section, while the insertion of an asterix 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+
+\backslash
+section*{}
+\end_layout
+
+\end_inset
+
+ prevents numbering.
+ 
 \end_layout
 
 \begin_layout Subsection*
@@ -455,12 +510,16 @@ Make small changes, test whether the document compiles.
 Start by putting your title & name in the top block.
 \end_layout
 
+\begin_layout Subsection*
+LyX warning
+\end_layout
+
 \begin_layout Standard
 Reminder: Don't change document margins with LyX menus.
  You need to edit the preamble for that.
 \end_layout
 
-\begin_layout Subsection*
+\begin_layout Section
 \begin_inset Flex Code
 status open
 
@@ -474,6 +533,34 @@ R
 \end_layout
 
 \begin_layout Standard
+Code chunks begin with 
+\begin_inset Quotes eld
+\end_inset
+
+<<>>=
+\begin_inset Quotes erd
+\end_inset
+
+ and end with a last line 
+\begin_inset Quotes eld
+\end_inset
+
+@
+\begin_inset Quotes erd
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+When inserting code chunks in LyX, I type them in LaTeX code boxes, because
+ that keeps them visually separate.
+ The LyX team has created a code chunk environment (see the pull down menu)
+ but I have not benefitted from it.
+\end_layout
+
+\begin_layout Standard
 Our report documents ALMOST NEVER show 
 \begin_inset Quotes eld
 \end_inset
@@ -483,16 +570,47 @@ raw
 \end_inset
 
  R code to readers.
- Write chunks the generate figures or legal LaTeX output, which are then
- included with LaTeX macros like 
+ Write chunks that generate results, figures or legal LaTeX output, but
+ do not display them.
+ Then results are included with LaTeX macros like 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+
 \backslash
-include or 
-\backslash
-includegrphics.
+include
 \end_layout
 
-\begin_layout Section*
-References
+\end_inset
+
+ or 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+
+\backslash
+includegraphics
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+This document uses the Sweave parameter split=TRUE to separate the code
+ chunks in files saved in tmpout.
+ There is discussion of splitting in the 
+\begin_inset Quotes eld
+\end_inset
+
+code chunks
+\begin_inset Quotes erd
+\end_inset
+
+ vignette distributed with this package.
 \end_layout
 
 \begin_layout Standard
