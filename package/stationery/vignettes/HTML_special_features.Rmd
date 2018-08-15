@@ -8,6 +8,7 @@ author:
   email: zroman@ku.edu
   name: Zack Roman
 date: "`r format(Sys.time(), '%B %d %Y')`"
+bibliography: "theme/R.bib"
 output:
   stationery::crmda_html_document:
     css: theme/kutils.css
@@ -50,17 +51,26 @@ library(stationery)
 ## If theme directory does not have required images or TeX files
 ## we need to retrieve them and put them in "theme" directory. 
 logos <- c(logoleft = "logoleft.png", 
-           logoright = "logo-vert.png")
+           logoright = "logo-vert.png",
+           "R.bib")
 files <- c("kutils.css", 
            "guide-template.html")
 getFiles(logos, pkg = "stationery")
 getFiles(files, pkg = "stationery")
 ```
 
-# Rmarkdown Basics
+# Introduction
 
-The `stationery` package includes a vignette that introduces the `markdown`
-philosophy and the `Rmarkdown` version of it. 
+This is about preparing Rmarkdown documents that exploit the
+special features available in Web pages. It is a work in progress.
+
+
+# First, Study the Rmarkdown Basics
+
+The `stationery` package includes a vignette that introduces the
+`markdown` philosophy and the `Rmarkdown` version of it. It shows how
+to use R [@RCore] code chunks. This document is focused on the
+special features that might be obtained with HTML documents.
 
 # How to Compile the Document
 
