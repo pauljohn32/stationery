@@ -227,7 +227,7 @@ mean(x)
 
 [//]: (All guides must have this as the final stanza)
 
-## R Session Info
+## Replication Information
 ```{r sessionInfo, echo = FALSE}
 sessionInfo()
 ```

@@ -71,6 +71,8 @@ distributed with the package.
 
 # Equations and code chunks can be used too.
 
+The usage of equations is discussed in the vignette "R markdown". 
+The usage of R code chunks is discussed in the vignette "code chunks".
 
 [//]: (All guides must have this as the final stanza)
 
@@ -97,6 +99,3 @@ par(par.orig)
 Available under
 [Created Commons license 3.0 <img src="http://crmda.dept.ku.edu/images/cc-3.0.png" alt="CC BY"
 style="width: 75px;height: 20px;"/>](http://creativecommons.org/licenses/by/3.0/)
-
-
-# References
