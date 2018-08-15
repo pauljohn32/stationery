@@ -366,59 +366,81 @@ box, the compile will fail if you do not declare the frame with ``containsverbat
 \end{frame}
 
 \begin{frame}[allowframebreaks]
+\frametitle{"allowframebreaks" can be very convenient}
+\begin{itemize}
+\item While authors are developing content, and are not worried about the
+separation of items among slides, the allowframebreaks option may
+be just what the Doctor ordered.
+\item The document will be automatically broken up into slides. All of the
+slide titles will be the same, of course, but otherwise it is a nice
+way to get some work done and not worry about the fine details.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[allowframebreaks]
 \frametitle{Slide with "allowframebreaks" can spill onto several slides}
 
-Some filler that causes the spill onto another slide. Note confusing
-equation labels
+Some filler that causes the spill onto another slide. The equation
+numbers are requested for some, but not all of the equations. The
+numbers become somewhat confusing when only some equations are numbered.
+
+Some authors will adjust the LyX keyboard so that all displayed equations
+have numbers by default to avoid this problem.
 \begin{itemize}
-\item onefile
+\item Item one. Please gaze in wonder at the equation
 
 \begin{equation}
 1\times1\label{eq:one}
 \end{equation}
-\item two
+\item The second equation is not numbered
 
 \[
 2\times1
 \]
-\item three
+\item But the author numbered the third equation, we are not sure why
 
 \begin{equation}
 3\times1\label{eq:three}
 \end{equation}
-\item four 
+\item The fourth equation is
 
 \[
 4\times1
 \]
-\item five
+\item But equation five is numbered
 
-\[
-5\times1
-\]
-\item six
+\begin{equation}
+5\times1\label{eq:five}
+\end{equation}
+\item Equation six
 
-\[
-6\times1
-\]
-\item seven
+\begin{equation}
+6\times1\label{eq:six}
+\end{equation}
+\item Equation seven
 
 \[
 7\times1
 \]
 \end{itemize}
+One can ask lyx to automatically number displayed equations by changing
+the shortcut key associated with C-S-m to have the same effect as
+the pull down menu \code{Insert} -> \code{Math} -> \code{Numbered Formula}.
+
 \end{frame}
 
 \begin{frame}[allowframebreaks,containsverbatim]
 \frametitle{Using "allowframebreaks" and "containsverbatim"}
 \begin{itemize}
-\item I usually use both \textquotedbl{}allowframebreaks\textquotedbl{}
-and \textquotedbl{}containsverbatim\textquotedbl{} on most slides.
-\item ``allowframebreaks'' is now harmless. It has no effect in current
-configuration unless there are actually 2 or more slides worth of
-material
-\item However, containsverbatim is not harmless. It will break use of beamer
-overlay features, or one-at-a-time revelation of enumerated lists.
+\item I usually use both \textquotedbl{}\code{allowframebreaks}\textquotedbl{}
+and \textquotedbl{}\code{containsverbatim}\textquotedbl{} on most
+slides.
+\item ``\code{allowframebreaks}'' is now harmless. If there is only enough
+content for one slide, the appearance of the one slide is not affected
+(this was not always true).
+\item However, \code{containsverbatim} is not harmless. It will break use
+of Beamer overlay features, or one-at-a-time revelation of enumerated
+lists.
 \end{itemize}
 \end{frame}
 
@@ -441,12 +463,12 @@ as a CRMDA guide document.
 \end{itemize}
 \framebreak
 \begin{itemize}
-\item The author can adjust these by editing the file ``\code{theme/guidePreambleSweavel.tex}'',
-or
-\item replacing the theme file with our alternative ``\code{theme/reportPreambleSweavel.tex}''.
-\item by adjusting the properties of the individual listings items. In the
-previous slide, we adjusted the listings options for a smaller font
-in the third item, or
+\item The author can adjust these by editing the preamble of this document.
+At one time, we kept the settings in a separate file, but now they
+are actually in the preamble.
+\item Rather than changing document-wide settings, it is also possible to
+adjust individual listings items. In the previous slide, we adjusted
+the listings options for a smaller font in the third item, or
 \item I (often) fiddle the line-numbering settings in that tex file to suit
 my taste.
 \end{itemize}
@@ -482,22 +504,48 @@ as FALSE for variety.
 \end{itemize}
 \end{frame}
 
-\begin{frame}[containsverbatim]
+\begin{frame}[containsverbatim, allowframebreaks]
 \frametitle{Styling of non-chunk code commentary}
 \begin{itemize}
-\item The listings environment can be used in ``containsverbatim'' chunks.
-The styling will, by default, be same as R input.
-\item If instead author desires style of Routput, the listings argument
-``style=Routput'' can be specified. 
+\item The listings environment requires us to use ``\code{containsverbatim}''
+chunks. 
+\item In the preamble, there are several styles for listings objects. 
+\begin{itemize}
+\item E.g., author who desires listing output in the style of our \code{Routput}
+can tell listings ``style=Routput''. 
+\end{itemize}
 \item Inline comments will declared with the code environment will have
 a gray box similar to the Rinput box for chunks.
-\begin{itemize}
-\item Examples, should have same appearance in PDF:
-\begin{itemize}
-\item LyX text menu\code{lm(y \textasciitilde{} x, data = dat)}. 
-\item Raw Latex \texttt{\code{lm(y ~ x, data = dat}}
 \end{itemize}
+\end{frame}
+
+\begin{frame}[containsverbatim, allowframebreaks]
+\frametitle{Careful proof-reading is required}
+\begin{itemize}
+\item Sometimes symbols are not correctly displayed!
+\item Observe the difference in output:
+\begin{itemize}
+\item code object created with LyX ``logical markup'' module:
+
+\code{lm(y \textasciitilde{} x, data = dat)}
+\item R code chunk filtered through listings class
+
+<<eval=F>>=
+lm(y ~ x, data = dat)
+@
+\item Raw LaTeX ``\textbackslash{}code'' environment
+
+\texttt{\code{lm(y ~ x, data = dat)}}
 \end{itemize}
+\item Different fonts in each case (bad).
+\item The tilde symbol is displayed differently in the first two and not
+at all in the final one.
+\item 1st example: LyX text code object notices ``\textasciitilde{}''
+and inserts ``\textbackslash{}textasciitilde\{\}'' on our behalf. 
+\item The second example use of the listings class. Our Rinput style as
+as symbol filter table. It converts keyboard tilde to ``\textasciitilde{}''
+to a math symbol, ``\$\textbackslash{}sim\$'', which implies $\sim$,
+in the output.
 \end{itemize}
 \end{frame}
 

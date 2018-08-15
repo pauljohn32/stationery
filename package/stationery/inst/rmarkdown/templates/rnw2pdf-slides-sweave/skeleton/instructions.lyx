@@ -1242,6 +1242,57 @@ begin{frame}[allowframebreaks]
 
 
 \backslash
+frametitle{"allowframebreaks" can be very convenient}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+While authors are developing content, and are not worried about the separation
+ of items among slides, the allowframebreaks option may be just what the
+ Doctor ordered.
+\end_layout
+
+\begin_layout Itemize
+The document will be automatically broken up into slides.
+ All of the slide titles will be the same, of course, but otherwise it is
+ a nice way to get some work done and not worry about the fine details.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{frame}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{frame}[allowframebreaks]
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
 frametitle{Slide with "allowframebreaks" can spill onto several slides}
 \end_layout
 
@@ -1252,11 +1303,18 @@ frametitle{Slide with "allowframebreaks" can spill onto several slides}
 
 \begin_layout Standard
 Some filler that causes the spill onto another slide.
- Note confusing equation labels
+ The equation numbers are requested for some, but not all of the equations.
+ The numbers become somewhat confusing when only some equations are numbered.
+\end_layout
+
+\begin_layout Standard
+Some authors will adjust the LyX keyboard so that all displayed equations
+ have numbers by default to avoid this problem.
 \end_layout
 
 \begin_layout Itemize
-onefile
+Item one.
+ Please gaze in wonder at the equation
 \end_layout
 
 \begin_deeper
@@ -1273,7 +1331,7 @@ onefile
 
 \end_deeper
 \begin_layout Itemize
-two
+The second equation is not numbered
 \end_layout
 
 \begin_deeper
@@ -1290,7 +1348,7 @@ two
 
 \end_deeper
 \begin_layout Itemize
-three
+But the author numbered the third equation, we are not sure why
 \end_layout
 
 \begin_deeper
@@ -1307,7 +1365,7 @@ three
 
 \end_deeper
 \begin_layout Itemize
-four 
+The fourth equation is
 \end_layout
 
 \begin_deeper
@@ -1324,15 +1382,15 @@ four
 
 \end_deeper
 \begin_layout Itemize
-five
+But equation five is numbered
 \end_layout
 
 \begin_deeper
 \begin_layout Standard
 \begin_inset Formula 
-\[
-5\times1
-\]
+\begin{equation}
+5\times1\label{eq:five}
+\end{equation}
 
 \end_inset
 
@@ -1341,15 +1399,15 @@ five
 
 \end_deeper
 \begin_layout Itemize
-six
+Equation six
 \end_layout
 
 \begin_deeper
 \begin_layout Standard
 \begin_inset Formula 
-\[
-6\times1
-\]
+\begin{equation}
+6\times1\label{eq:six}
+\end{equation}
 
 \end_inset
 
@@ -1358,7 +1416,7 @@ six
 
 \end_deeper
 \begin_layout Itemize
-seven
+Equation seven
 \end_layout
 
 \begin_deeper
@@ -1374,6 +1432,42 @@ seven
 \end_layout
 
 \end_deeper
+\begin_layout Standard
+One can ask lyx to automatically number displayed equations by changing
+ the shortcut key associated with C-S-m to have the same effect as the pull
+ down menu 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+Insert
+\end_layout
+
+\end_inset
+
+ -> 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+Math
+\end_layout
+
+\end_inset
+
+ -> 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+Numbered Formula
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
 \begin_layout Standard
 \begin_inset ERT
 status open
@@ -1414,25 +1508,65 @@ frametitle{Using "allowframebreaks" and "containsverbatim"}
 \end_layout
 
 \begin_layout Itemize
-I usually use both "allowframebreaks" and "containsverbatim" on most slides.
+I usually use both "
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+allowframebreaks
+\end_layout
+
+\end_inset
+
+" and "
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+containsverbatim
+\end_layout
+
+\end_inset
+
+" on most slides.
 \end_layout
 
 \begin_layout Itemize
 \begin_inset Quotes eld
 \end_inset
 
+
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
 allowframebreaks
+\end_layout
+
+\end_inset
+
+
 \begin_inset Quotes erd
 \end_inset
 
  is now harmless.
- It has no effect in current configuration unless there are actually 2 or
- more slides worth of material
+ If there is only enough content for one slide, the appearance of the one
+ slide is not affected (this was not always true).
 \end_layout
 
 \begin_layout Itemize
-However, containsverbatim is not harmless.
- It will break use of beamer overlay features, or one-at-a-time revelation
+However, 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+containsverbatim
+\end_layout
+
+\end_inset
+
+ is not harmless.
+ It will break use of Beamer overlay features, or one-at-a-time revelation
  of enumerated lists.
 \end_layout
 
@@ -1540,51 +1674,14 @@ framebreak
 \end_layout
 
 \begin_layout Itemize
-The author can adjust these by editing the file 
-\begin_inset Quotes eld
-\end_inset
-
-
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-theme/guidePreambleSweavel.tex
-\end_layout
-
-\end_inset
-
-
-\begin_inset Quotes erd
-\end_inset
-
-, or
+The author can adjust these by editing the preamble of this document.
+ At one time, we kept the settings in a separate file, but now they are
+ actually in the preamble.
 \end_layout
 
 \begin_layout Itemize
-replacing the theme file with our alternative 
-\begin_inset Quotes eld
-\end_inset
-
-
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-theme/reportPreambleSweavel.tex
-\end_layout
-
-\end_inset
-
-
-\begin_inset Quotes erd
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Itemize
-by adjusting the properties of the individual listings items.
+Rather than changing document-wide settings, it is also possible to adjust
+ individual listings items.
  In the previous slide, we adjusted the listings options for a smaller font
  in the third item, or
 \end_layout
@@ -1797,7 +1894,7 @@ status open
 
 
 \backslash
-begin{frame}[containsverbatim]
+begin{frame}[containsverbatim, allowframebreaks]
 \end_layout
 
 \begin_layout Plain Layout
@@ -1813,20 +1910,46 @@ frametitle{Styling of non-chunk code commentary}
 \end_layout
 
 \begin_layout Itemize
-The listings environment can be used in 
+The listings environment requires us to use 
 \begin_inset Quotes eld
 \end_inset
 
+
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
 containsverbatim
+\end_layout
+
+\end_inset
+
+
 \begin_inset Quotes erd
 \end_inset
 
  chunks.
- The styling will, by default, be same as R input.
+ 
 \end_layout
 
 \begin_layout Itemize
-If instead author desires style of Routput, the listings argument 
+In the preamble, there are several styles for listings objects.
+ 
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+E.g., author who desires listing output in the style of our 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+Routput
+\end_layout
+
+\end_inset
+
+ can tell listings 
 \begin_inset Quotes eld
 \end_inset
 
@@ -1834,23 +1957,78 @@ style=Routput
 \begin_inset Quotes erd
 \end_inset
 
- can be specified.
+.
  
 \end_layout
 
+\end_deeper
 \begin_layout Itemize
 Inline comments will declared with the code environment will have a gray
  box similar to the Rinput box for chunks.
 \end_layout
 
-\begin_deeper
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{frame}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{frame}[containsverbatim, allowframebreaks]
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+frametitle{Careful proof-reading is required}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Itemize
-Examples, should have same appearance in PDF:
+Sometimes symbols are not correctly displayed!
+\end_layout
+
+\begin_layout Itemize
+Observe the difference in output:
 \end_layout
 
 \begin_deeper
 \begin_layout Itemize
-LyX text menu
+code object created with LyX 
+\begin_inset Quotes eld
+\end_inset
+
+logical markup
+\begin_inset Quotes erd
+\end_inset
+
+ module:
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
 \begin_inset Flex Code
 status open
 
@@ -1860,14 +2038,58 @@ lm(y ~ x, data = dat)
 
 \end_inset
 
-.
- 
+
 \end_layout
 
+\end_deeper
 \begin_layout Itemize
-Raw Latex 
-\family typewriter
+R code chunk filtered through listings class
+\end_layout
 
+\begin_deeper
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<eval=F>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+lm(y ~ x, data = dat)
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Raw LaTeX 
+\begin_inset Quotes eld
+\end_inset
+
+
+\backslash
+code
+\begin_inset Quotes erd
+\end_inset
+
+ environment
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+
+\family typewriter
 \begin_inset ERT
 status open
 
@@ -1875,7 +2097,7 @@ status open
 
 
 \backslash
-code{lm(y ~ x, data = dat}
+code{lm(y ~ x, data = dat)}
 \end_layout
 
 \end_inset
@@ -1885,6 +2107,75 @@ code{lm(y ~ x, data = dat}
 
 \end_deeper
 \end_deeper
+\begin_layout Itemize
+Different fonts in each case (bad).
+\end_layout
+
+\begin_layout Itemize
+The tilde symbol is displayed differently in the first two and not at all
+ in the final one.
+\end_layout
+
+\begin_layout Itemize
+1st example: LyX text code object notices 
+\begin_inset Quotes eld
+\end_inset
+
+~
+\begin_inset Quotes erd
+\end_inset
+
+ and inserts 
+\begin_inset Quotes eld
+\end_inset
+
+
+\backslash
+textasciitilde{}
+\begin_inset Quotes erd
+\end_inset
+
+ on our behalf.
+ 
+\end_layout
+
+\begin_layout Itemize
+The second example use of the listings class.
+ Our Rinput style as as symbol filter table.
+ It converts keyboard tilde to 
+\begin_inset Quotes eld
+\end_inset
+
+~
+\begin_inset Quotes erd
+\end_inset
+
+ to a math symbol, 
+\begin_inset Quotes eld
+\end_inset
+
+$
+\backslash
+sim$
+\begin_inset Quotes erd
+\end_inset
+
+, which implies 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+$
+\backslash
+sim$
+\end_layout
+
+\end_inset
+
+, in the output.
+\end_layout
+
 \begin_layout Standard
 \begin_inset ERT
 status open
