@@ -17,7 +17,7 @@ addr:
     r1: "Web: http://crmda.ku.edu"
     r2: "Email: crmda@ku.edu" 
     r3: "Phone: 785-864-3353"
-logo: theme/logo.pdf  
+logo: theme/logo.pdf
 output: 
   pdf_document:
     keep_tex: false 
@@ -28,10 +28,12 @@ output:
     pandoc_args: [
       "--listings"
     ]
+bibliography: "theme/R.bib"
 table: true
 fontsize: 12pt
 header-includes:
 - \usepackage{xcolor}
+- \usepackage[authoryear]{natbib}
 ---
 
 ```{r setup, include=FALSE}
@@ -46,7 +48,7 @@ options(width = 70)
 library(stationery)
 ## If theme directory does not have required images or TeX files
 ## we need to retrieve them and put them in "theme" directory. 
-logos <- c(logoright = "logo.pdf")
+logos <- c("logo.pdf", "R.bib")
 files <- c("report-template.tex")
 getFiles(logos, pkg = "stationery")
 getFiles(files, pkg = "stationery")
@@ -56,9 +58,9 @@ getFiles(files, pkg = "stationery")
 
 ## Insert author information in the yaml header
 
-It is necessary for the author to edit the yaml header
-of this document to specify the title, author data, 
-address and the name of a logo file.
+It is necessary for the author to edit the yaml header of this
+document to specify the title, author data, address and the name of a
+logo file.
 
 # We use a template file
 
@@ -83,6 +85,8 @@ that is nearly identical
     $ ./rmd2pdf.sh --toc=FALSE --template='"theme/report-template.tex"' skeleton.Rmd
 	
 Note the single quotes protect the double quotes.
+
+The R [@Rcore]
 
 The template can, of course, be edited for your purposes. Tt fairly
 obvious how this can be customized. An important thing to remember is
@@ -261,3 +265,4 @@ if (!is.null(warnings())){
     capture.output(warnings(), file = zz)
 }
 ```
+# References
