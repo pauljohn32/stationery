@@ -171,6 +171,7 @@ $endif$
 \pagestyle{fancy}
 \thispagestyle{firststyle}
 
+\makeatletter
 %graphics and such inside floats are centered by default
 \renewenvironment{figure}[1][]{%
  \ifthenelse{\equal{#1}{}}{%
@@ -193,7 +194,7 @@ $endif$
 }{%
  \end@float
 }
-
+\makeatother
 
 %% Eliminate reliance on Sweavel or Sweave
 %% \usepackage{Sweavel}
