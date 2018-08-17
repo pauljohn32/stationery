@@ -9,8 +9,8 @@ advertise: >
    Please  visit [http://crmda.ku.edu/guides](http://crmda.ku.edu/guides) 
 keywords: guide, Rmarkdown
 abstract: >
-    This document is just a little reminder.  The vignettes have all
-       of the details.
+    This document is just a little reminder of some key things.  
+    The vignettes have all of the details.
 checked_by: "First Last"
 Note to Authors: please_dont_change_the_next 4 lines!
 date: "`r format(Sys.time(), '%b. %e %Y')`"
@@ -118,10 +118,10 @@ output:
 ```
 
 Notice that the theme folder is supposed to have the style sheet,
-images, etc. If those are not provided, a function like this
+images, etc. If those are not provided, a code chunk like this
 can be run to get them:
 
-```{r themecopy, include = FALSE}
+```{r themecopy, eval = FALSE}
 library(stationery)
 ## If theme directory does not have required images or TeX files
 ## we need to retrieve them and put them in "theme" directory. 
@@ -132,17 +132,39 @@ logos <- c(logoleft = "logoleft.png",
 getFiles(logos, pkg = "stationery")
 ```
 
-That will not erase files if they exist already. Note you can change
-the package where your logo files are stored. That's how we customize
-reports in our workflow.
+`getFiles` is a simple little function that does almost nothing.  It
+just saves one little step required to use `system.file` from R
+base. That will not erase files if they exist already. Note you can
+change the package where your logo files are stored. That's how we
+customize reports in our workflow, the logos with our institutional
+identifies are saved in a package called `crmda`.
 
 ## About the HTML file size problem.
+
+The vignette "HTML special features" has a complete explanation.
+
+The key advice is this. If you leave "theme: default" (or use any of
+the bootstrap themes), then your document will incorporate the
+bootstrap libraries and the saved file size will be (unacceptably)
+large. If you change to "theme: null" then bootstrap features will be
+lost, but some of the handy HTML features can be obtained without
+bootstrap.
+
+The HTML special feature that is especially likely to be helpful, and
+is not costly, is the color highlighted section. These are callouts,
+we have an implementation of them in our cascading style sheet. They
+will work even if the bootstrap theming is turned off..
+
+The other HTML special features that depend on the bootstrap library,
+are the tabbed subsections and the bootstrap-resizeable sections.  The
+resizable sections are especially designed to help readers on cell
+phones. Maybe these features are no so important in some HTML
+documents.
 
 If you specify `theme: null` the document output HTML file will be
 much smaller, but some features will no longer work correctly. The
 tabbed subsections will be sacrificed and the proportional spacing
 of the header may be somewhat "squished". 
-   
 
 # HTML special features
 
@@ -185,6 +207,12 @@ section of a higher level.
 
 ## Equations
 
+The usage of equations is discussed in the vignette "R markdown". 
+In HTML output, the display of equations requires an available MathJax
+server.  Our function "stationery::crmda_html_document" should be
+used as the output device because it protects the workability of
+MathJax. Otherwise, it does nothing (just saying...).
+
 Markdown accepts much LaTeX code. Especially well supported are
 equations, either "inline", such as $y_i = \beta_0 + \beta_1 x1_i +
 \varepsilon_i$, or "display" mode.
@@ -203,7 +231,23 @@ Or replace those demarcators with `\begin{equation}` and
 `$$` and `$$` to frame a displayed equation, don't use them.
 
 Equation numbering does not work as usual in HTML output, that's
-a problem discussed in "HTML_special_features".
+a problem discussed in "HTML_special_features". Immediately after
+this text, we will write a display equation that would create
+a numbered equation in an rmd2pdf document. The output will be an 
+equation with no number and the cross reference that follows will
+have an empty space in parentheses.
+
+\begin{equation}
+\hat{y}_i=\beta_0 + \beta_{1}X_i\label{eq:reg}
+\end{equation}
+
+Note a cross reference to that, such as "as we indicate in equation
+(\ref{eq:reg})" is a fail.
+
+This is an example of the reason why many of us suggest avoiding use
+of HTML output if there is anything important to be presented in a
+document. The proof-reading required to figure out which LaTeX
+features might work, and which do not, is exhausting.
 
 
 ## Chunks
@@ -223,6 +267,19 @@ There are many more examples of code chunks in the vignette "code_chunks".
 mean(x)
 ```
 
+# Citations
+
+The YAML header specifies the name of the bibliography file.  The
+HTML backend wants the full name of the bib file, "theme/R.bib" 
+whereas the documents that use PDF backend want simply "theme/R".
+We'll figure that out someday.
+
+The markdown citation method would use brackets, as in [@RCore] and
+[-@RCore]. 
+
+Please remember that LaTeX natbib notation is not supported in
+the `rmd2html` transition, as you should see here: \citep[RCore]. 
+LaTeX style cites will work in rmd2pdf type documents. 
 
 
 [//]: (All guides must have this as the final stanza)

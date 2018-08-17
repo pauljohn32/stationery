@@ -69,14 +69,21 @@ how to specify highlighted call out sections and tabbed sections.
 Many more details are in the vignette, "HTML_special_features"
 distributed with the package.
 
+
 # Equations and code chunks can be used too.
 
-The usage of equations is discussed in the vignette "R markdown". 
+Code chunks for HTML documents were the prototype motivation for the
+development of R markdown. Chunks will work well.
+
 The usage of R code chunks is discussed in the vignette "code chunks".
+Some examples are included in the instructions file, in the current
+directory.
+
+
 
 [//]: (All guides must have this as the final stanza)
 
-## R Session Info
+## R Replication Information
 ```{r sessionInfo, echo = FALSE}
 sessionInfo()
 ```
@@ -99,3 +106,5 @@ par(par.orig)
 Available under
 [Created Commons license 3.0 <img src="http://crmda.dept.ku.edu/images/cc-3.0.png" alt="CC BY"
 style="width: 75px;height: 20px;"/>](http://creativecommons.org/licenses/by/3.0/)
+
+# References

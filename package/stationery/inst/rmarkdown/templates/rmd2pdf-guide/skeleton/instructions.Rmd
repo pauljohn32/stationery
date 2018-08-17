@@ -31,9 +31,9 @@ addr:
 logoleft: theme/logoleft.pdf
 logoright: theme/logo-vert.pdf
 guidenum: 00
+keywords: "R markdown"
 bibliography: theme/R.bib
 fontsize: 11pt
-
 header-includes:
 - \usepackage{xcolor}
 ---
@@ -62,13 +62,15 @@ is done in LaTeX markup.
   
 # Nuts and Bolts
 
-## Minor header edits only
+## Fix the title and other document-specific information 
 
 The header has a place to insert a title, subtitle, email
 addresses. Do not change the `pdf_document` settings unless you want
 to get serious.
 
 ## To compile this document
+
+This is discussed in detail in the stationery vignette.
 
 To compile, either start R and use the function `rmd2pdf` or use the
 shell script `rmd2pdf.sh` that is in the same directory as the `Rmd`
@@ -110,7 +112,7 @@ header, and it is also not sufficient to use Rstudio's "knit" menu.
 One must specify the template argument with `rmd2pdf`.
 
 
-# Headers
+# Section Headers
 
 Insert section titles with `#`, `##`, as in markdown. Sections are
 numbered, by default, to prevent that insert a ` {-}` after, as
@@ -118,20 +120,19 @@ demonstrated next
 
 # LaTeX Syntax is allowed {-}
 
-\[
-\Sigma_{gt}=\Lambda_{gt}\Psi_{gt}\Lambda'_{gt}+\Theta_{gt}
-\]
-
 This is explained in the `stationery` package vignette `Rmarkdown`.
-
 Use `\[` and `\[` for unnumbered display equations:
 
 \[
 \Sigma_{gt}=\Lambda_{gt}\Psi_{gt}\Lambda'_{gt}+\Theta_{gt}
 \]
 
-Because the backend is PDF and LaTeX will compile the document,
-numbered equations and cross references will succeed. For a numbered
+
+\[
+\Sigma_{gt}=\Lambda_{gt}\Psi_{gt}\Lambda'_{gt}+\Theta_{gt}
+\]
+
+For a numbered
 display, use `\begin{equation}` and `\end{equation}`, and insert a
 label that can be referenced later:
 
@@ -169,7 +170,7 @@ We found out we needed `amssymb` in several projects.
 
 This document includes R[@RCore] code chunks.
 
-In guide documents, we do generally include input and output from code
+In guide documents, we *do* generally include input and output from code
 chunks. There is a vignette "code_chunks" distributed with this
 package to demonstrate. 
 
@@ -192,8 +193,8 @@ raw R output.
 summary(dat)
 ```
 
-Readers should notice the document template numbers the lines in both
-input and output chunks. This can be changed by altering the template.
+The document template controls the numbering of lines. This can be
+changed by altering the template.
 
 We can show ugly output if we really need to. But we'd rather include
 lovely graphs or nicely formatted \LaTeX tables.
