@@ -15,9 +15,9 @@ fontsize: 12pt
 output:
   pdf_document:
     citation_package: natbib
-    fig_caption: yes
+    fig_caption: true
     highlight: haddock
-    keep_tex: no
+    keep_tex: false
     latex_engine: pdflatex
     pandoc_args: --listings
     template: "theme/report-template.tex"

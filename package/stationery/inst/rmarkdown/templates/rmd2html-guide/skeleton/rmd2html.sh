@@ -8,12 +8,12 @@ pwd=`pwd`
 ## VERBOSE Set to 1 by -v in command line
 VERBOSE=0
 declare -A parms
-parms[toc]=TRUE
-parms[toc_depth]=2
-parms[purl]=TRUE
-parms[quiet]=TRUE 
-parms[keep_md]=FALSE
-parms[template]=\"theme/guide-template.html\"
+#parms[toc]=TRUE
+#parms[toc_depth]=2
+#parms[purl]=TRUE
+#parms[quiet]=TRUE 
+#parms[keep_md]=FALSE
+#parms[template]=\"theme/guide-template.html\"
 parms[output_dir]=\"$pwd\" 
 
 scriptname=`basename $0 .sh`

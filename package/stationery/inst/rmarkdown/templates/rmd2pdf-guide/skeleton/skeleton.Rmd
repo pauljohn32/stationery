@@ -25,6 +25,8 @@ logoleft: theme/logoleft.pdf
 logoright: theme/logo-vert.pdf
 output: 
   pdf_document:
+    toc: true
+    toc_depth: 1
     citation_package: natbib
     fig_caption: yes
     latex_engine: pdflatex
