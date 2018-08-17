@@ -25,6 +25,7 @@ $endif$
 \newcommand{\PreserveBackslash}[1]{\let\temp=\\#1\let\\=\temp}
 \let\PBS=\PreserveBackslash
 \usepackage{setspace}
+\usepackage{calc}
 %% end paste
 $if(linestretch)$
 \setstretch{$linestretch$}
@@ -331,48 +332,46 @@ $endfor$
 
 \begin{document}
 \setlength{\tabcolsep}{1pt}
-\arrayrulecolor{kublue81186}
-\begin{tabular}
-  {@{}%
-  |>{\centering}p{1.25in}>{\raggedright}p{4in}>{\raggedleft}p{1.25in}|%
-  }%
-  \hline
-  &&\tabularnewline
-  \begin{minipage}[c]{1.25in}%
-  \begin{center}
-    $if(logoleft)$\includegraphics[width=0.9in]{$logoleft$}$endif$
-    \par
-    \bigskip
-    $if(guidenum)${\small{}\textbf{Guide No}: $guidenum$}\\$endif$
-  \end{center}%
+\noindent\fcolorbox{kublue81186}{white}{
+  \begin{minipage}[t][1\totalheight][c]{1\linewidth-2\fboxsep-2\fboxrule}%
+    \begin{minipage}[c]{.15\linewidth}%
+      \bigskip
+      \begin{center}
+        $if(logoleft)$\includegraphics[width=0.80\linewidth]{$logoleft$}$endif$
+        \par
+        \bigskip
+        $if(guidenum)${\small{}\textbf{Guide No: $guidenum$}}\\$endif$
+      \end{center}%
+      \medskip
+    \end{minipage} %
+\begin{minipage}[c][1\totalheight][b]{.65\linewidth}%
   \medskip
-\end{minipage} & %
-\begin{minipage}[c][1\totalheight][b]{4in}%
-  \bigskip
   \begin{center}
      \begin{minipage}[t]{1\columnwidth}%
       \begin{center}
-        \bigskip
+        \medskip
         \textbf{\larger{}$title$$if(subtitle)$: $subtitle$$endif$}
       \end{center}
-      \color{kublue81186}\rule[1ex]{1\linewidth}{1pt}%
+      \color{kublue81186}\rule[1ex]{1\linewidth}{0.5pt}%
     \end{minipage}
     \par\end{center}{\Huge \par}
 \begin{minipage}[t]{1\columnwidth}%
 \begin{center}
-  $for(author)$\textbf{$author.name$}$if(author.description)$, $author.description$$endif$$if(author.affiliation)$, $author.affiliation$$endif$$if(author.email)$ <$author.email$>$endif$\\
-  \smallskip
-$endfor$
+  $for(author)$\textbf{$author.name$}$if(author.description)$,
+  $author.description$$endif$$if(author.affiliation)$,
+  $author.affiliation$$endif$$if(author.email)$
+  <$author.email$>$endif$\\
+  $endfor$\medskip
 \par\end{center}%
 \end{minipage}
 %\smallskip{}%
 \begin{flushleft}
-  $if(keywords)$\textbf{Keywords}: $keywords$.\\$endif$
+  $if(keywords)$\textbf{keywords}: $keywords$.\\$endif$
   $if(guideurl)$See $guideurl$ for updates.$endif$
   \par\end{flushleft}%
 \medskip
-\end{minipage} & %
-\begin{minipage}[c]{1.25in}%
+\end{minipage} %
+\begin{minipage}[c]{.18\linewidth}%
 \begin{center}
 $if(logoright)$\includegraphics[width=1.1in]{$logoright$}$endif$
    \par
@@ -380,9 +379,9 @@ $if(logoright)$\includegraphics[width=1.1in]{$logoright$}$endif$
    \monddyyy\today
 \par\end{center}
 \medskip
-\end{minipage} \tabularnewline
-\hline 
-\end{tabular}
+\end{minipage}
+\end{minipage}
+}
 
 $if(abstract)$
 \begin{abstract}
