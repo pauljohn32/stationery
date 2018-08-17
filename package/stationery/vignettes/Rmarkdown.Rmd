@@ -16,8 +16,7 @@ output:
     ]
     template: "theme/report-template.tex"
 fontsize: 12pt
-bibliography: "theme/R.bib"
-biblio-style: "apalike"
+bibliography: "theme/R"
 link-citation: true
 vignette: >
     %\VignetteIndexEntry{R Markdown Basics}
@@ -25,12 +24,9 @@ vignette: >
     %\VignetteEncoding{UTF-8}
 header-includes:
 -  \usepackage{xcolor}
--  \usepackage{amsmath}
--  \usepackage{amssymb}
 -  \usepackage{fancybox}
 -  \usepackage{calc}
 -  \usepackage{subfig}
--  \usepackage[natbibapa]{apacite}
 addr:
     l1: 1425 Jayhawk Blvd
     l2: Watson Library, Suite 470
@@ -1002,6 +998,3 @@ Available under
 [Created Commons license 3.0 <img src="http://crmda.dept.ku.edu/images/cc-3.0.png" alt="CC BY" style="width: 75px;height: 20px;"/>](http://creativecommons.org/licenses/by/3.0/)
 
 
-\bibliographystyle{apacitex}  
-\addcontentsline{toc}{section}{\refname}  
-\bibliography{theme/R.bib}
