@@ -140,8 +140,10 @@ label that can be referenced later:
 \Sigma_{gt}=\Lambda_{gt}\Psi_{gt}\Lambda'_{gt}+\Theta_{gt}\label{eq:sem}
 \end{equation}
 
-To demonstrate a cross-reference, that is equation (\ref{eq:sem}). If
-we put in another equation, you will see it is automatically numbered:
+To demonstrate a cross-reference, that is equation
+(\ref{eq:sem}). Note this will only work with "rmd2pdf" documents, not
+when HTML is the output target. If we put in another equation, you
+will see it is automatically numbered:
 
 \begin{equation}
 y_i=\beta_0 + \beta_{1}X_i\label{eq:reg}
@@ -246,10 +248,27 @@ insert hard brackets `[`, an `@` sign, the bibtex tag, and a closer
 possible to refer to a group of projects [@hsiao_analysis_2014;
 @fitzmaurice_applied_2011; @mccullagh_nelder_1983].
 
-The style of the bibliography will not match what we generally
-want. It is close to what we want. The default is based on the Chicago
-author-year format.
+Because this document is going to be compiled to a PDF back end via
+latex, it is also allowed to use LaTeX style natbib citations, which
+are considerably more flexible.  Concerning R
+\citep{venablesripley2000}, the result is the same for the basic
+citation.
 
+A citation that has three authors [@diggle_analysis_2013], using
+the markdown style, and a citation that has three authors, using
+the LaTeX natbib markup \citep{hastie_elements_2009}.
+
+One of the reasons why the APA citations are desirable, and also a
+pain, is that the APA has very picky requirements about how the
+citations appear in the document. Note the in-text parenthesized
+citations use the ampersand, where humans might use the word "and".
+On the other hand, if only the date is parenthesized, the
+"\textbackslash{}citet" results in \citet{hastie_elements_2009}.
+But if we want to write names, we can get that with
+"\textbackslash{}citeyearpar", as in Hastie, Tibshirani, and 
+Friedman \citeyearpar{hastie_elements_2009}.
+
+The bibliographic format is using the apacite package for LaTeX.
 
 # Session Info
 

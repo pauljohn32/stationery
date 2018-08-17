@@ -61,10 +61,20 @@ getFiles(logos, pkg = "stationery")
 
 \begin{abstract}
 \noindent
-This is an abstract. Please include a terse, yet descriptive statement here of less than 200 words. It should avoid colloquialisms and polysyllabic profundities.
+This is an abstract. Please include a terse, yet descriptive 
+statement here of less than 200 words. It should avoid 
+colloquialisms and polysyllabic profundities.
 \end{abstract}
 
 # Header Level 1 with a number
+
+At the last minute, we changed the template to use APA6 style
+citations and it is important to see if that works on your system. 
+
+*Lets test citations*. This citation uses the markdown method
+[@RCore]. It inserts parentheses, name and date. Can use natbib
+format citations as well, please see the instructions file.
+
 
 # Header Level 1 without number {-}
 
@@ -75,7 +85,6 @@ compiler from inserting them.
 
 Fill in your name, title, email, tags.  Please don't change the
 pdf_document settings unless you know what you are doing.
-
 
 
 
