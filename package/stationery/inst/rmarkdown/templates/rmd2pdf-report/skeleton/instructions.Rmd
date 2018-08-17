@@ -33,7 +33,6 @@ table: true
 fontsize: 12pt
 header-includes:
 - \usepackage{xcolor}
-- \usepackage[authoryear]{natbib}
 ---
 
 ```{r setup, include=FALSE}
@@ -86,13 +85,12 @@ that is nearly identical
 	
 Note the single quotes protect the double quotes.
 
-The R [@Rcore]
-
-The template can, of course, be edited for your purposes. Tt fairly
-obvious how this can be customized. An important thing to remember is
-that a template file treats dollar signs `$` as special symbols, so if
-one intends to insert a literal dollar sign in the template, one
-enters two dollar signs (`$$`).
+The template can, of course, be edited for your purposes. The
+formatting for the header is tricky, but in most of the other parts,
+it is fairly obvious how this can be customized. An important thing to
+remember is that a template file treats dollar signs `$` as special
+symbols, so if one intends to insert a literal dollar sign in the
+template, one enters two dollar signs (`$$`).
 
 If this document is edited in **Rstudio**, the "knit" menu sometimes does
 not work correctly. We notice that Rstudio will sometimes alter the
@@ -190,25 +188,47 @@ a \LaTeX mark-up table or a figure may be placed into the document.
 The process for doing this depends on the document type. As explained
 in the `crmda` vignette `code_chunks`, the appearance of code
 chunks--whether they are revealed in the document at all--is
-controlled by many options are avaiable for code chunks.
+controlled by many options.
 
-One approach might be to use one document to create graphs
-or tables, which are then to be saved in a folder (such as our
-tmpout folder, which is used in this document). This chunk code
-will create the output file "tmpout/p-hist-1.pdf"
+One approach might be to use one document to create graphs or tables,
+which are then to be saved in a folder (such as our tmpout folder,
+which is used in this document). This chunk code will create the
+output file "tmpout/p-hist-1.pdf"
 
-```{r hist, include=F}
+```{r hist, include=F, fig.cap = "One caption that is not used for anything because the image is not included in a float"}
+set.seed(234234)
 x <- rnorm(1000)
 hist(x, main = "A Histogram", xlab = "Random Normal Data, N = 1000")
 ```
 
 \begin{lstlisting}
-`r ''````{r hist, include=F}
+`r ''````{r hist, include=F, caption = "One Histogram"}
 x <- rnorm(1000)
-hist(x, main = "A Histogram", xlab = "Random Normal Data, N = 1000")
+hist(x, main = "Random Normal Data", xlab = "N(0,1) (1000 observations)")
 `r ''````
 \end{lstlisting}
 
+The graphic file, "tmpout/p-hist-1.pdf", is a picture, it does not
+have the code with it to make it "float" in the document. Observe
+that it is just "paste in" at the current location:
+
+\includegraphics[width=4in]{tmpout/p-hist-1}
+
+On the other hand, if we want a floating figure to be produced
+automatically, we can change the code slightly:
+
+```{r hist20, fig.cap="\\label{fig:hist20}One Histogram that Floats Automatically", fig.width=4}
+x <- rnorm(1000)
+hist(x, main = "", xlab = "Random Normal Data, N = 1000")
+```
+
+Note we forced a label into the caption itself with \LaTeX\ code.  We
+can use a cross reference to identify that. We'd write as in Figure
+\ref{fig:hist20}, we get a fabulous result. 
+
+It shouldn't be necessary to wedge a label in with the caption as we
+did, but the "automatic" ways is not working today. If it works
+for you, please tell me how.
 
 There are several R packages intended to create "ready to publish"
 \LaTeX tables. One of the oldest and most venerable of these is
@@ -251,6 +271,41 @@ print(xt, file = "tmpout/p-ex-2.tex", floating = TRUE, comment = FALSE,
       include.rownames = FALSE, caption.placement = "top")
 ```
 
+
+# Bibliographical citations. {-}
+
+This document is produced with R [@RCore]. Here's a citation that
+excludes some author names [-@diggle_analysis_2013, p. 37]. Note that
+to get the full parenthesized statement with names and dates, we
+insert hard brackets `[`, an `@` sign, the bibtex tag, and a closer
+`]`. If we don't want their names, we insert a `-` sign. It is also
+possible to refer to a group of projects [@hsiao_analysis_2014;
+@fitzmaurice_applied_2011; @mccullagh_nelder_1983].
+
+Because this document is going to be compiled to a PDF back end via
+latex, it is also allowed to use LaTeX style natbib citations, which
+are considerably more flexible.  Concerning R
+\citep{venablesripley2000}, the result is the same for the basic
+citation.
+
+A citation that has three authors [@diggle_analysis_2013], using
+the markdown style, and a citation that has three authors, using
+the LaTeX natbib markup \citep{hastie_elements_2009}.
+
+One of the reasons why the APA citations are desirable, and also a
+pain, is that the APA has very picky requirements about how the
+citations appear in the document. Note the in-text parenthesized
+citations use the ampersand, where humans might use the word "and".
+On the other hand, if only the date is parenthesized, the
+"\textbackslash{}citet" results in \citet{hastie_elements_2009}.
+But if we want to write names, we can get that with
+"\textbackslash{}citeyearpar", as in Hastie, Tibshirani, and 
+Friedman \citeyearpar{hastie_elements_2009}.
+
+The bibliographic format is using the apacite package for LaTeX.
+
+
+
 # Session Info
 
 Reports do not include the R session replication information, generally 
@@ -265,4 +320,5 @@ if (!is.null(warnings())){
     capture.output(warnings(), file = zz)
 }
 ```
+
 # References
