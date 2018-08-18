@@ -26,6 +26,10 @@ footskip=1.5\baselineskip,
 \input{theme/guidePreambleHeader.tex}
 \input{theme/preambleFooter.tex}
 \input{theme/guidePreambleKnitr.tex}
+
+% Delete this if you do not want References to
+% be a numbered section within document
+\usepackage[numbib,notlof,notlot,nottoc]{tocbibind}
 \end_preamble
 \use_default_options false
 \begin_modules
@@ -576,11 +580,15 @@ Compile the PDF document
 
 \begin_layout Standard
 The skeleton file is provided in 2 formats, LyX and Rnw.
+ The stationery vignette has an overview of reasons why one might author
+ with LyX, or with another program (with the Rnw file).
+ It also explains the compilation process.
  
 \end_layout
 
 \begin_layout Standard
-In either case, please understand that compiling is a two step process.
+Whether one writes the LyX file or the Rnw file, it is necessary to understand
+ that compiling is a two step process.
 \end_layout
 
 \begin_layout Enumerate
@@ -589,12 +597,10 @@ knitting: Run R to do the calculations in the R code chunks and write out
 \end_layout
 
 \begin_layout Enumerate
-compiling: Run a LaTeX program, such as pdflatex or xelatex to convert the
- LaTeX file to pdf.
- It is usually necessary to run the compiler two or more times, along with
- a separate bibliography program.
- If it is available, we suggest an aggregator named texi2pdf, which will
- handle this effort.
+compiling: Run a LaTeX program, such as pdflatex or xelatex or such.
+ It is also necessary for a bibliography builder program to make a pass
+ through the data.
+ The aggregator program texi2pdf will this (if you have it).
 \end_layout
 
 \begin_layout Subsection*
@@ -607,13 +613,24 @@ There are 4 methods, we hope one will suit your workflow.
 
 \begin_layout Enumerate
 Use the LyX editor.
- The file can be compiled to PDF in LyX, just like any other LyX file.
- LyX handles conversion from LyX to Rnw to tex to PDF.
- This has the same effect as using LyX from the command line.
- The following will create the PDF file using pdflatex as the final comiler:
+ A LyX module called 
+\begin_inset Quotes eld
+\end_inset
+
+sweave
+\begin_inset Quotes erd
+\end_inset
+
+ can be activated, so that compiling to PDF with the pdflatex program runs
+ the chunks and builds a PDF.
+ 
 \end_layout
 
 \begin_deeper
+\begin_layout Standard
+This has the same effect as using LyX from the command line:
+\end_layout
+
 \begin_layout Standard
 \begin_inset listings
 inline false
@@ -629,16 +646,9 @@ $ lyx -e pdf2 skeleton.lyx
 
 \end_layout
 
-\begin_layout Standard
-Because lyx uses a separate working directory for the compilation work,
- the project directory stays clean.
- None of the intermediate LaTeX files (*.log, *.log, *.bbl) will appear.
-\end_layout
-
 \end_deeper
 \begin_layout Enumerate
-Open an R session and make sure the working directory is the same as the
- project writeup.
+Open an R session, run
 \end_layout
 
 \begin_deeper
@@ -649,7 +659,12 @@ status open
 
 \begin_layout Plain Layout
 
-rnw2pdf("skeleton.lyx")
+> library(stationery)
+\end_layout
+
+\begin_layout Plain Layout
+
+> rnw2pdf("skeleton.lyx") # or .Rnw
 \end_layout
 
 \end_inset
@@ -669,8 +684,8 @@ rnw2pdf.sh
 
 \end_inset
 
- is provided in the same folder.
- It can be run in the shell as
+ is provided with the skeleton.
+ Run:
 \end_layout
 
 \begin_deeper
@@ -687,12 +702,6 @@ $ ./rnw2pdf.sh skeleton.lyx
 \end_inset
 
 
-\end_layout
-
-\begin_layout Standard
-In the discussion in the next sub section, we outline usage of additional
- arguments with rnw2pdf for the compilation of Rnw files.
- All of those arguments are equally applicable in this context.
 \end_layout
 
 \end_deeper
@@ -737,8 +746,7 @@ Rnw (knitr)
 
 \end_inset
 
-.
- That will create a file named 
+, which creates 
 \begin_inset Quotes eld
 \end_inset
 
@@ -747,10 +755,14 @@ skeleton.Rnw
 \end_inset
 
 .
- This is the equivalent of the command line statement
+ 
 \end_layout
 
 \begin_deeper
+\begin_layout Standard
+This is the equivalent of the command line statement
+\end_layout
+
 \begin_layout Standard
 \begin_inset listings
 inline false
@@ -770,11 +782,6 @@ $ lyx -e knitr skeleton.lyx
 After that Rnw file is created, proceed as described in the next subsection.
 \end_layout
 
-\begin_layout Standard
-This two-step process is valuable for debugging.
- It makes it easier to spot trouble by focusing on the separate transitions.
-\end_layout
-
 \end_deeper
 \begin_layout Subsection*
 Edit the Rnw file
@@ -783,25 +790,6 @@ Edit the Rnw file
 \begin_layout Standard
 The Rnw file we provide is produced by LyX, it is an intermediate step in
  the document production sequence.
- A two step compilation procedure is necessary.
- First, one must convert the 
-\begin_inset Quotes eld
-\end_inset
-
-Rnw
-\begin_inset Quotes erd
-\end_inset
-
- file to 
-\begin_inset Quotes eld
-\end_inset
-
-pdf
-\begin_inset Quotes erd
-\end_inset
-
- (with knit), and then the knitted tex file is compiled into pdf by pdflatex
- (or one of the other LaTeX compilers).
  
 \end_layout
 
@@ -838,7 +826,12 @@ status open
 
 \begin_layout Plain Layout
 
-rnw2pdf("skeleton.Rnw")
+> library(stationery)
+\end_layout
+
+\begin_layout Plain Layout
+
+> rnw2pdf("skeleton.Rnw")
 \end_layout
 
 \end_inset
@@ -847,8 +840,18 @@ rnw2pdf("skeleton.Rnw")
 \end_layout
 
 \begin_layout Standard
-Additional arguments can be used, mainly to control the verbosity of the
- output and the creation of subsidiary files.
+Additional arguments can be used.
+ Read help for 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+rnw2pdf
+\end_layout
+
+\end_inset
+
+.
  Our function, by default, will create and R file summary of the command
  chunks.
  This file is referred to as a 
@@ -883,8 +886,8 @@ rnw2pdf.sh
 
 \end_inset
 
- is provided in the same folder.
- It can be run in the shell as
+ is provided with the skeleton.
+ Run
 \end_layout
 
 \begin_deeper
@@ -895,7 +898,7 @@ status open
 
 \begin_layout Plain Layout
 
-$ ./rnw2pdf.sh skeleton.Rnw
+$ ./rnw2pdf.sh --engine='"knitr"' skeleton.Rnw
 \end_layout
 
 \end_inset
@@ -904,8 +907,8 @@ $ ./rnw2pdf.sh skeleton.Rnw
 \end_layout
 
 \begin_layout Standard
-The command like script answers to all of the arguments followed by the
- R function 
+The command line script answers to all of the arguments allowed by the R
+ function 
 \begin_inset Flex Code
 status open
 
@@ -927,8 +930,8 @@ status open
 
 \begin_layout Plain Layout
 
-rnw2pdf("skeleton.lyx", purl = FALSE, clean = FALSE, verbose = TRUE, keep_tex
- = TRUE)
+rnw2pdf("skeleton.lyx", engine = "knitr", purl = FALSE, clean = FALSE, verbose
+ = TRUE, keep_tex = TRUE)
 \end_layout
 
 \end_inset
@@ -948,7 +951,8 @@ status open
 
 \begin_layout Plain Layout
 
-$ ./rnw2pdf --purl=FALSE --clean=FALSE --keep_tex=TRUE --verbose=TRUE skeleton.lyx
+$ ./rnw2pdf --engine='"knitr"' --purl=FALSE --clean=FALSE --keep_tex=TRUE
+ --verbose=TRUE skeleton.lyx
 \end_layout
 
 \end_inset
@@ -958,63 +962,22 @@ $ ./rnw2pdf --purl=FALSE --clean=FALSE --keep_tex=TRUE --verbose=TRUE skeleton.l
 
 \begin_layout Standard
 The only difference in usage arises when a quoted string must be passed
- through.
- Suppose the files are in a subdirectory named 
+ through, such as 
 \begin_inset Quotes eld
 \end_inset
 
-project
+knitr
 \begin_inset Quotes erd
 \end_inset
 
-.
- Inside the R code, the quoted string to specify the directory where the
- file resides (the working directory) would be like so:
-\end_layout
-
-\begin_layout Standard
-\begin_inset listings
-inline false
-status open
-
-\begin_layout Plain Layout
-
-rnw2pdf("skeleton.lyx", wd = "project")
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-the shell command would be
-\end_layout
-
-\begin_layout Standard
-\begin_inset listings
-inline false
-status open
-
-\begin_layout Plain Layout
-
-$ ./rnw2pdf --wd='"project"' skeleton.lyx
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Note the single quotes that are protecting the double quotes.
+, which must be protected in the command line by single quotes.
 \end_layout
 
 \end_deeper
 \begin_layout Enumerate
-Our shell script is not the only way to use command line tools to get this
- done.
- One can run shell commands such as:
+This is the old fashioned (therefore most virtuous and least likely to be
+ used) way.
+ Step 1:
 \end_layout
 
 \begin_deeper
@@ -1044,7 +1007,8 @@ skeleton.tex
 
 \end_inset
 
-, which we compile with
+.
+ Step 2:
 \end_layout
 
 \begin_layout Standard
@@ -1064,8 +1028,8 @@ $ texi2pdf skeleton.tex
 
 \begin_layout Standard
 The major difference between running this and the script we provide is that
- our script will handle LyX files and it will, by default, will create a
- purled copy of the R code.
+ our script will handle LyX files and it will, by default, create a purled
+ copy of the R code.
  
 \end_layout
 
@@ -1086,26 +1050,30 @@ key "RCore"
 
 \end_inset
 
- approach to combining code, output within the document is called Sweave.
- The knitr approach is an alternative package.
- knitr is helpful especially because it can be used with R markdown to produce
- HTML web pages.
- 
+ used the word 
+\begin_inset Quotes eld
+\end_inset
+
+Sweave
+\begin_inset Quotes erd
+\end_inset
+
+ to refer to the integration of R input & output within a document.
+ The term 
+\begin_inset Quotes eld
+\end_inset
+
+knit
+\begin_inset Quotes erd
+\end_inset
+
+ has the same meaning in the knitr package.
 \end_layout
 
 \begin_layout Standard
 Styling of knitr code chunks is different than Sweave.
  It appears we lose line-wrap entirely.
- I can't figure how to make Sweavel 
-\begin_inset Quotes eld
-\end_inset
-
-listings
-\begin_inset Quotes erd
-\end_inset
-
- environments take over the knitr presentation.
- This is what knitr forces on us for the R input chunk
+ This is what we get:
 \end_layout
 
 \begin_layout Standard
@@ -1138,12 +1106,12 @@ initWriteup("rnw2pdf-guide-knit")
 \end_layout
 
 \begin_layout Standard
-This is what we would rather have
+This is what we would rather have, what we can get with Sweave:
 \end_layout
 
 \begin_layout Standard
 \begin_inset listings
-lstparams "style=Rinput"
+lstparams "language=R,style=Rinput"
 inline false
 status open
 
@@ -1163,9 +1131,11 @@ initWriteup("rnw2pdf-guide-knit")
 \end_layout
 
 \begin_layout Standard
-We have not yet learned how to control the coloring of knitr code chunks,
- in other words.
- That is one reason to prefer the sweave-based templates we offer.
+In the Sweave documents, I (eventually) came to understand how to customize
+ the LaTeX listings environment for input and output from R.
+ The knitr package is more difficult to adjust.
+ I have not yet learned how to control the coloring of knitr code chunks,
+ so I prefer Sweave.
 \end_layout
 
 \begin_layout Subsection
@@ -1253,7 +1223,12 @@ library(rockchalk)
 \begin_layout Plain Layout
 
 or <- outreg(list("My Poisson"= m1), varLabels = c("x" = "A Normal Predictor"),
- tight = FALSE)
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+  tight = FALSE, print.results = FALSE)
 \end_layout
 
 \begin_layout Plain Layout
@@ -1301,8 +1276,8 @@ status open
 \end_layout
 
 \begin_layout Standard
-It is possible, however, to input the same chunk into a table, as we have
- done in Table 
+It is possible, however, to input the same chunk into a LaTeX floating table,
+ as we have done in Table 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "tab:A-Poisson-Regression"
@@ -1310,7 +1285,9 @@ reference "tab:A-Poisson-Regression"
 \end_inset
 
 .
- That is the typically-preferred format for presentation of tables in guides.
+ That is the typically-preferred format for presentation of tables, except
+ when there is some reason to have them forced into a document at a particular
+ point.
 \end_layout
 
 \begin_layout Standard
@@ -1358,10 +1335,6 @@ input{tmpout/t-pois15.tex}
 \end_inset
 
 
-\end_layout
-
-\begin_layout Section
-References
 \end_layout
 
 \begin_layout Standard

@@ -56,15 +56,14 @@
 \cs_new_protected:Nn \guide_hdr:
  {
    \centering
-   \arrayrulecolor{kublue81186}
+   \noindent\fcolorbox{kublue81186}{white}{
   \begin{tabular}
    {
-    |c
+    @{}c
     >{\centering}m{ \dim_eval:n { \textwidth - 2.5in - 6\tabcolsep - 2\arrayrulewidth } }
-    c|
+    c@{}
    }
-  \arrayrulecolor{kublue81186}\hline
-  &&\tabularnewline[-\dim_eval:n { -\normalbaselineskip + 3ex }]
+   &&\tabularnewline[-\dim_eval:n { -\normalbaselineskip + 3ex }]
   \begin{tabular}{@{}>{\centering}p{1.25in}@{}}
   \includegraphics[width=.75in]{\l_guide_leftlogo_tl}
   \end{tabular}
@@ -78,7 +77,6 @@
   \\
   \textcolor{kublue81186}{\rule[0.5ex]{1\linewidth}{0.7pt}}\\
   \guide_print_authors:
-  %\vspace{\bigskipamount}
   &
   \begin{tabular}{@{}>{\centering}p{1.25in}@{}}
   \includegraphics[width=1.25in]{\l_guide_rightlogo_tl}
@@ -94,12 +92,12 @@
    \small\bfseries\monddyyyy\today \tabularnewline
    \tl_if_empty:NF \l_guide_url_tl
    {
-   \multicolumn{3}{|c|}{
+   \multicolumn{3}{c}{
     See ~ \url{\l_guide_url_tl} ~ for ~ updates.}
      }
   \tabularnewline
-  \hline 
   \end{tabular}
+  }
 }
 
 \cs_new_protected:Nn \guide_add_author:nn
