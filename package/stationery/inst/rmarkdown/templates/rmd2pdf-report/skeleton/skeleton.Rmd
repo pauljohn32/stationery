@@ -49,9 +49,9 @@ library(stationery)
 ## If theme directory does not have required images or TeX files
 ## we need to retrieve them and put them in "theme" directory. 
 logos <- c("logo.pdf", "R.bib")
-files <- c("report-template.tex")
 getFiles(logos, pkg = "stationery")
-getFiles(files, pkg = "stationery")
+themefiles <- c("report-template.tex")
+getFiles(themefiles, pkg = "stationery")
 ```
 
 \begin{abstract}

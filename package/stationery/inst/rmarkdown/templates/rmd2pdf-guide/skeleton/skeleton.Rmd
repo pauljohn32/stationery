@@ -53,10 +53,12 @@ options(width = 70)
 
 ```{r themecopy, include = FALSE}
 library(stationery)
-## If theme directory does not have required images or TeX files
-## we need to retrieve them and put them in "theme" directory. 
-logos <- c(logoleft = "logoleft.pdf", logoright = "logo-vert.pdf")
+## If theme directory does not have required images, retrieve them.
+logos <- c("logoleft.pdf", "logo-vert.pdf", "R.bib")
 getFiles(logos, pkg = "stationery")
+## Theme folder should already have theme files, but in case it does not:
+themefiles <- c("guide-template.tex")
+getFiles(themefiles, pkg = "stationery")
 ```
 
 \begin{abstract}

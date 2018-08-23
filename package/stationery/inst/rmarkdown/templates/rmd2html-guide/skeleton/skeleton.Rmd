@@ -45,11 +45,11 @@ options(width = 70)
 library(stationery)
 ## If theme directory does not have required images or TeX files
 ## we need to retrieve them and put them in "theme" directory. 
-logos <- c(logoleft = "logoleft.png", 
-           logoright = "logo-vert.png")
+logos <- c("logoleft.png", "logo-vert.png", "R.bib")
 getFiles(logos, pkg = "stationery")
-files <- c("kutils.css", "guide-template.html")
-getFiles(files, pkg = "stationery")
+## These theme files should be available already, but if not
+themefiles <- c("kutils.css", "guide-template.html")
+getFiles(themefiles, pkg = "stationery")
 ```
 
 # Level 1 heading
