@@ -2,8 +2,8 @@
 Package: stationery 
 Type: Package
 Title: Working Examples for Reproducible Research Documents 
-Version: 0.98.4
-Date: 2018-08-17
+Version: 0.98.5.1
+Date: 2018-08-23
 Authors@R: c(person("Paul", "Johnson", role = c("aut", "cre"), email = "pauljohn@ku.edu"),
              person("Brent", "Kaplan", role = c("ctb"), email = "bkaplan4@ku.edu"),
              person("Meghan", "Sullivan", role = c("ctb"), email = "meg.sullivan@ku.edu"),
@@ -12,10 +12,10 @@ Authors@R: c(person("Paul", "Johnson", role = c("aut", "cre"), email = "pauljohn
 			 person("Chong", "Xing", role = "ctb", email = "cxing@ku.edu"))
 Maintainer: Paul Johnson <pauljohn@ku.edu>
 Description: Templates, guides, and scripts for
-    writing documents in LaTeX and R markdown to produce
+    writing documents in 'LaTeX' and 'R markdown' to produce
     guides, slides, and reports. Special care is taken to
     illustrate use of templates and customization opportunities.
-    Challenges and opportunities of HTML output from R markdown
+    Challenges and opportunities of 'HTML' output from 'R markdown'
     receive special attention. Includes several vignettes
     to assist new users of literate programming.
 License: CC BY-SA 4.0

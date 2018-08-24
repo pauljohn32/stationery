@@ -374,11 +374,6 @@ options(SweaveHooks=list(fig=function() par(mar=pjmar, ps=10)))
 
 \begin_layout Plain Layout
 
-pdf.options(onefile=FALSE, family="Times", pointsize=10)
-\end_layout
-
-\begin_layout Plain Layout
-
 @
 \end_layout
 

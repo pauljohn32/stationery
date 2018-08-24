@@ -41,16 +41,26 @@
 ##' @author Paul Johnson <pauljohn@@ku.edu>
 ##' @export
 ##' @examples
-##' \donttest{
-##' ## R Windows test system does not have pdflatex, cannot test
-##' ## put some file name in
 ##' tdir <- tempdir()
-##' dirout <- initWriteup("rmd2html-guide", dir = tdir)
+##' doctype <- "rmd2html-guide"
+##' dirout <- initWriteup(doctype, dir = file.path(tdir, doctype))
 ##' list.files(dirout)
-##' rmd2html("skeleton.Rmd", wd = dirout)
-##' list.files(dirout)
-##' if(interactive()) browseURL(file.path(dirout, "skeleton.html"))
+##' \donttest{
+##' result <- try(rmd2html("skeleton.Rmd", wd = dirout))
+##' if(inherits(result, "try-error")){
+##'     MESSG <- paste("Compiling the markdown file failed, perhaps",
+##'                   "your version of pandoc is not found")
+##'     print(MESSG)
+##' } else {
+##'     ## Check the result file:
+##'     MESSG <- paste("Check the directory", dirout, "for results.")
+##'     print(MESSG)
+##'     list.files(dirout)
+##'     if(interactive() && file.exists(file.path(dirout, "skeleton.html"))) {
+##'         browseURL(file.path(dirout, "skeleton.html"))
+##'     }
 ##' }
+##' unlink(dirout)
 rmd2html <- function(fn = NULL, wd = NULL, ..., verbose = FALSE,
                      purl = TRUE, tangle = purl, themedir = "theme",
                      package = "stationery") {
@@ -126,7 +136,12 @@ rmd2html <- function(fn = NULL, wd = NULL, ..., verbose = FALSE,
 ##' The \code{rmarkdown::html_document} fails to use MathJax if a custom HTML
 ##' template is supplied. This is described here
 ##' \url{https://github.com/rstudio/rmarkdown/issues/727}.  The workaround
-##' is to provide this wrapper
+##' is to provide this wrapper.
+##'
+##' This function is needed only so as to "fool" pandoc in order to
+##' make an HTML document compatible with MathJax. See the example
+##' files created by \code{initWriteup("rmd2html-guide")} for a usage
+##' example.
 ##' @param template Name of template file.
 ##' @param ... Any arguments passed along to html_document in
 ##'     rmarkdown
@@ -134,6 +149,14 @@ rmd2html <- function(fn = NULL, wd = NULL, ..., verbose = FALSE,
 ##' @importFrom utils modifyList
 ##' @export
 ##' @author Paul Johnson
+##' @examples
+##' tdir <- tempdir()
+##' doctype <- "rmd2html-guide"
+##' dirout <- initWriteup(doctype, dir = file.path(tdir, doctype))
+##' list.files(dirout)
+##' MESSG <- paste("Inspect the YAML header output section of 'skeleton.Rmd'.",
+##'                "It makes use of 'crmda_html_document'.")
+##' cat(MESSG)
 crmda_html_document <- function(template = "theme/guide-template.html", ...) {
     base_format <- rmarkdown::html_document(...)
     template_arg <- which(base_format$pandoc$args == "--template") + 1L
@@ -180,20 +203,29 @@ crmda_html_document <- function(template = "theme/guide-template.html", ...) {
 ##' @return A vector of output file names
 ##' @author Paul Johnson <pauljohn@@ku.edu>
 ##' @export
-##' @examples
-##' \donttest{
-##' wd.orig <- getwd()
-##' dir.tmp <- tempdir()
-##' setwd(dir.tmp)
+##' @examples 
+##' tdir <- tempdir()
+##' setwd(tdir)
 ##' fmt <- "rmd2pdf-guide"
-##' dir.new <- initWriteup(fmt)
-##' setwd(dir.new)
-##' of1 <- rmd2pdf("skeleton.Rmd", output_dir = getwd())
-##' if(interactive()) browseURL(of1[1])
-##' of2 <- rmd2pdf("skeleton.Rmd", toc = FALSE, output_dir = getwd())
-##' if(interactive()) browseURL(of2[1])
-##' setwd(wd.orig)
+##' dirout <- initWriteup(fmt, dir = file.path(tdir, fmt))
+##' print(dirout)
+##' list.files(dirout)
+##' of1 <- try(rmd2pdf("skeleton.Rmd", wd = dirout))
+##' if(inherits(of1, "try-error")){
+##'     MESSG <- paste("Compiling the markdown file failed, perhaps",
+##'                   "you should run with parameters verbose=TRUE",
+##'                   "and keep_tex=TRUE")
+##'     print(MESSG)
+##' } else {
+##'     ## Check the result file:
+##'     MESSG <- paste("Check the directory", dirout, "for results.")
+##'     print(MESSG)
+##'     list.files(dirout)
+##'     if(interactive() && file.exists(file.path(dirout, "skeleton.pdf"))) {
+##'         browseURL(of1)
+##'     }
 ##' }
+##' unlink(dirout)
 rmd2pdf <- function(fn = NULL, wd = NULL, ..., verbose = FALSE,
                     purl = TRUE, tangle = purl, themedir = "theme", 
                     package = "stationery"){
@@ -299,18 +331,29 @@ rmd2pdf <- function(fn = NULL, wd = NULL, ..., verbose = FALSE,
 ##' @importFrom utils Stangle
 ##' @importFrom tools texi2pdf
 ##' @examples
-##' \donttest{
-##' wd.orig <- getwd()
-##' dir.tmp <- tempdir()
-##' setwd(dir.tmp)
+##' tdir <- tempdir()
+##' setwd(tdir)
 ##' fmt <- "rnw2pdf-guide-sweave"
-##' dir.new <- initWriteup(fmt)
-##' setwd(dir.new)
-##' of1 <- rnw2pdf("skeleton.Rnw", engine = "Sweave")
-##' if(interactive()) browseURL(of1)
-##' list.files()
-##' setwd(wd.orig)
+##' dirout <- initWriteup(fmt, dir = file.path(tdir, fmt))
+##' print(dirout)
+##' list.files(dirout)
+##' of1 <- try(rnw2pdf("skeleton.Rnw", engine = "Sweave", wd = dirout))
+##' if(inherits(of1, "try-error")){
+##'     MESSG <- paste("Compiling the markdown file failed, perhaps",
+##'                    "there is an R or LaTeX error.", 
+##'                    "Run again with parameters verbose=TRUE",
+##'                    "and clean=FALSE")
+##'     print(MESSG)
+##' } else {
+##'     ## Check the result file:
+##'     MESSG <- paste("Check the directory", dirout, "for results.")
+##'     print(MESSG)
+##'     list.files(dirout)
+##'     if(interactive() && file.exists(of1)) {
+##'         browseURL(of1)
+##'     }
 ##' }
+##' unlink(dirout)
 rnw2pdf <- function(fn = NULL, wd = NULL, ..., engine = "knitr", purl = TRUE,
                     tangle = purl, clean = TRUE, quiet = TRUE, verbose = !quiet,
                     envir = parent.frame(), encoding = getOption("encoding"))
@@ -460,7 +503,7 @@ rnw2pdf <- function(fn = NULL, wd = NULL, ..., engine = "knitr", purl = TRUE,
     for(i in fn){
         res[[i]] <- compileme(i)
     }
-    
+    res <- file.path(wd, res)
     if (!is.null(wd)){
         setwd(wd.orig)
     }
