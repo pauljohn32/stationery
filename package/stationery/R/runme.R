@@ -60,6 +60,7 @@
 ##'         browseURL(file.path(dirout, "skeleton.html"))
 ##'     }
 ##' }
+##' }
 ##' unlink(dirout)
 rmd2html <- function(fn = NULL, wd = NULL, ..., verbose = FALSE,
                      purl = TRUE, tangle = purl, themedir = "theme",
@@ -160,7 +161,8 @@ rmd2html <- function(fn = NULL, wd = NULL, ..., verbose = FALSE,
 crmda_html_document <- function(template = "theme/guide-template.html", ...) {
     base_format <- rmarkdown::html_document(...)
     template_arg <- which(base_format$pandoc$args == "--template") + 1L
-    base_format$pandoc$args[template_arg] <- template
+    if (!is.null(template))
+        base_format$pandoc$args[template_arg] <- template
     base_format
 }
 
@@ -205,11 +207,11 @@ crmda_html_document <- function(template = "theme/guide-template.html", ...) {
 ##' @export
 ##' @examples 
 ##' tdir <- tempdir()
-##' setwd(tdir)
 ##' fmt <- "rmd2pdf-guide"
 ##' dirout <- initWriteup(fmt, dir = file.path(tdir, fmt))
 ##' print(dirout)
 ##' list.files(dirout)
+##' \donttest{
 ##' of1 <- try(rmd2pdf("skeleton.Rmd", wd = dirout))
 ##' if(inherits(of1, "try-error")){
 ##'     MESSG <- paste("Compiling the markdown file failed, perhaps",
@@ -224,6 +226,7 @@ crmda_html_document <- function(template = "theme/guide-template.html", ...) {
 ##'     if(interactive() && file.exists(file.path(dirout, "skeleton.pdf"))) {
 ##'         browseURL(of1)
 ##'     }
+##' }
 ##' }
 ##' unlink(dirout)
 rmd2pdf <- function(fn = NULL, wd = NULL, ..., verbose = FALSE,
@@ -332,11 +335,11 @@ rmd2pdf <- function(fn = NULL, wd = NULL, ..., verbose = FALSE,
 ##' @importFrom tools texi2pdf
 ##' @examples
 ##' tdir <- tempdir()
-##' setwd(tdir)
 ##' fmt <- "rnw2pdf-guide-sweave"
 ##' dirout <- initWriteup(fmt, dir = file.path(tdir, fmt))
 ##' print(dirout)
 ##' list.files(dirout)
+##' \donttest{
 ##' of1 <- try(rnw2pdf("skeleton.Rnw", engine = "Sweave", wd = dirout))
 ##' if(inherits(of1, "try-error")){
 ##'     MESSG <- paste("Compiling the markdown file failed, perhaps",
@@ -352,6 +355,7 @@ rmd2pdf <- function(fn = NULL, wd = NULL, ..., verbose = FALSE,
 ##'     if(interactive() && file.exists(of1)) {
 ##'         browseURL(of1)
 ##'     }
+##' }
 ##' }
 ##' unlink(dirout)
 rnw2pdf <- function(fn = NULL, wd = NULL, ..., engine = "knitr", purl = TRUE,

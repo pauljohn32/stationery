@@ -29,7 +29,7 @@ R --vanilla -f roxygenstationery.R
 ## R CMD build --no-resave-data --compact-vignettes="both" ${PACKAGE}.gitex 
 
 ## /usr/lib/R/bin/R --no-site-file --no-environ --no-save --no-restore --quiet  \
-##                 CMD build 'stationery.gitex'  --no-resave-data --no-manual \
+##                 CMD build 'stationery.gitex'  --no-resave-data --no-manual --run-donttest \
 ##                 --compact-vignettes="both" --no-build-vignettes
 
 /usr/lib/R/bin/R --no-site-file --no-environ --no-save --no-restore --quiet  \
@@ -39,7 +39,7 @@ R --vanilla -f roxygenstationery.R
 read -p "Run check: OK? (y or n)" result
 
 if [ $result = "y" ];  then
-R CMD check --as-cran ${PACKAGE}_${VERSION}.tar.gz
+R CMD check --as-cran --run-donttest ${PACKAGE}_${VERSION}.tar.gz
 fi
 
 read -p "Install: OK? (y or n)" result
