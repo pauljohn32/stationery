@@ -337,7 +337,7 @@ logos <- c(logoleft = "logoleft.pdf",
 
 \begin_layout Plain Layout
 
-           "preambleFooter.tex")
+           "addressFooter.tex")
 \end_layout
 
 \begin_layout Plain Layout

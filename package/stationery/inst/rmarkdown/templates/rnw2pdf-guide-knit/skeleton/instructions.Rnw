@@ -100,7 +100,7 @@ library(stationery)
 ## we need to retrieve them and put them in "theme" directory. 
 logos <- c(logoleft = "logoleft.pdf", 
            logoright = "logo-vert.pdf",
-           "preambleFooter.tex")
+           "addressFooter.tex")
 getFiles(logos, pkg = "stationery")
 @
 \begin{abstract}

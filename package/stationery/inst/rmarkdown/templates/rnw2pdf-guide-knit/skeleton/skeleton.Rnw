@@ -22,6 +22,9 @@
 \special{papersize=\the\paperwidth,\the\paperheight}
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
+\usepackage[natbibapa]{apacite}
+
 \@ifundefined{date}{}{\date{}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
 \usepackage[includehead, includefoot,
@@ -90,7 +93,7 @@ library(stationery)
 ## Retrieve theme files 
 logos <- c(logoleft = "logoleft.pdf", 
            logoright = "logo-vert.pdf", 
-           "preambleFooter.tex")
+           "addressFooter.tex")
 getFiles(logos, pkg = "stationery")
 @
 
@@ -121,8 +124,12 @@ down menus or the document won't compile. Edit preamble for that.
 
 \section{Check our instructions manuals}
 \begin{enumerate}
-\item Brief instruction sheet in same folder as this skeleton: ``rnw2pdf-guide-knitr''
-\item The vignettes in the crmda package. 
+\item Brief instruction sheet in same folder as this skeleton: ``instructions''
+\item The vignettes in the crmda package
+\begin{enumerate}
+\item stationery 
+\item code chunks
+\end{enumerate}
 \end{enumerate}
 
 \section{Write Sections \& Subsections}
@@ -132,7 +139,8 @@ what they want.
 
 \section{R Code Chunks Work}
 
-Listing objects differ in output from R code chunks-
+Listing objects differ in output from R\citep{RCore} code chunks.
+Here is listing output.
 
 \inputencoding{latin9}\begin{lstlisting}
 $ ./rnw2pdf --engine='"knitr"' skeleton.lyx
@@ -167,4 +175,8 @@ if(!is.null(warnings())){
 options(opts.orig)
 par(par.orig)
 @
+
+\bibliographystyle{apacitex}
+\bibliography{theme/R}
+
 \end{document}
