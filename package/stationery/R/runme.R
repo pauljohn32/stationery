@@ -339,7 +339,6 @@ rmd2pdf <- function(fn = NULL, wd = NULL, ..., verbose = FALSE,
 ##' dirout <- initWriteup(fmt, dir = file.path(tdir, fmt))
 ##' print(dirout)
 ##' list.files(dirout)
-##' \donttest{
 ##' of1 <- try(rnw2pdf("skeleton.Rnw", engine = "Sweave", wd = dirout))
 ##' if(inherits(of1, "try-error")){
 ##'     MESSG <- paste("Compiling the markdown file failed, perhaps",
@@ -355,7 +354,6 @@ rmd2pdf <- function(fn = NULL, wd = NULL, ..., verbose = FALSE,
 ##'     if(interactive() && file.exists(of1)) {
 ##'         browseURL(of1)
 ##'     }
-##' }
 ##' }
 ##' unlink(dirout)
 rnw2pdf <- function(fn = NULL, wd = NULL, ..., engine = "knitr", purl = TRUE,
@@ -481,17 +479,12 @@ rnw2pdf <- function(fn = NULL, wd = NULL, ..., engine = "knitr", purl = TRUE,
                 fnbase <- gsub("\\.Rnw$", "", x, ignore.case = TRUE)
                 fntex <- gsub("\\.Rnw$", ".tex", x, ignore.case = TRUE)
                 ## 20180731: Try built-in texi2pdf again, instead of home-made methld
-                ## if (!isWindoze){
-                tools::texi2pdf(fntex, texi2dvi = "texi2pdf", clean = clean, quiet = quiet)
-                ## } else {
-                ## cmd1 <- paste0("pdflatex -interaction=batchmode \"", fntex, "\" ", if(!verbose) sysnull)
-                ## out1 <- sysrun(cmd1)
-                ## cmd2 <- paste0("bibtex \"", fnbase, "\" ", if(!verbose) sysnull)
-                ## out2 <- sysrun(cmd2)
-                ## out3 <- sysrun(cmd1)
-                ## out4 <- sysrun(cmd1)
-                ##}                       
-                ## if(clean) unlink(fntex)
+                if (Sys.which("texi2pdf") != ""){
+                    tools::texi2pdf(fntex, texi2dvi = "texi2pdf",
+                                    clean = clean, quiet = quiet)
+                } else {
+                    tools::texi2pdf(fntex, clean = clean, quiet = quiet)
+                }
                 fnpdf <- gsub("\\.Rnw$", ".pdf", x, ignore.case = TRUE)
             }
         }
