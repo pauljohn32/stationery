@@ -15,8 +15,6 @@
 ##' @param purl Default TRUE, synonym for tangle. Set either one, or
 ##'     set both same, result is same.
 ##' @param tangle Default TRUE, synonym for purl
-##' @param themedir Name of directory where theme resources are saved.
-##' @param package Defaults as "stationery" to find files in this package.
 ##' @param ... Arguments that will be passed to \code{rmarkdown::render} and
 ##'     \code{rmarkdown::html_document}. We usually have customizations
 ##'     via parameters \code{css} and \code{template},
@@ -41,11 +39,12 @@
 ##' @author Paul Johnson <pauljohn@@ku.edu>
 ##' @export
 ##' @examples
+##' \donttest{
 ##' tdir <- tempdir()
 ##' doctype <- "rmd2html-guide"
 ##' dirout <- initWriteup(doctype, dir = file.path(tdir, doctype))
 ##' list.files(dirout)
-##' \donttest{
+##' 
 ##' result <- try(rmd2html("skeleton.Rmd", wd = dirout))
 ##' if(inherits(result, "try-error")){
 ##'     MESSG <- paste("Compiling the markdown file failed, perhaps",
@@ -60,23 +59,18 @@
 ##'         browseURL(file.path(dirout, "skeleton.html"))
 ##'     }
 ##' }
-##' }
 ##' unlink(dirout)
+##' }
 rmd2html <- function(fn = NULL, wd = NULL, ..., verbose = FALSE,
-                     purl = TRUE, tangle = purl, themedir = "theme",
-                     package = "stationery") {
+                     purl = TRUE, tangle = purl) {
     if (!missing(tangle) && is.logical(tangle)) purl <- tangle
     
     if (!is.null(wd)){
         wd.orig <- getwd()
         setwd(wd)
+        on.exit(setwd(wd.orig))
     }
     dots <- list(...)
-    if (!is.null(dots$template)){
-        if(!file.exists(dots$template)){
-            getFiles(basename(dots$template), dn = "theme", pkg = package)
-        }
-    }
 
     if (length(fn) > 1){
         cl <- match.call()
@@ -122,10 +116,6 @@ rmd2html <- function(fn = NULL, wd = NULL, ..., verbose = FALSE,
     if(purl) knitr::purl(fn)
     if(verbose) {print(paste("dots_for_render"));  lapply(dots_for_render, print)}
     res <- do.call(rmarkdown::render, render_argz)
-    
-    if (!is.null(wd)){
-        setwd(wd.orig)
-    }
     res
 }
 
@@ -183,8 +173,6 @@ crmda_html_document <- function(template = "theme/guide-template.html", ...) {
 ##'     commentary and pandoc command. Can be informative!
 ##' @param purl Default TRUE
 ##' @param tangle Default TRUE, synonym for purl
-##' @param themedir Name of directory where theme resources are saved.
-##' @param package Defaults as "stationery" to find files in this package.
 ##' @param ... Arguments that will be passed to \code{rmarkdown::render} and
 ##'     \code{rmarkdown::pdf_document}. Our defaults set a LaTeX template, toc =
 ##'     TRUE, and the pandoc_args includes use of the listings class.
@@ -230,8 +218,7 @@ crmda_html_document <- function(template = "theme/guide-template.html", ...) {
 ##' }
 ##' unlink(dirout)
 rmd2pdf <- function(fn = NULL, wd = NULL, ..., verbose = FALSE,
-                    purl = TRUE, tangle = purl, themedir = "theme", 
-                    package = "stationery"){
+                    purl = TRUE, tangle = purl){
     if(!missing(tangle) && is.logical(tangle)) purl <- tangle
     
     if (!is.null(wd)){
@@ -241,12 +228,6 @@ rmd2pdf <- function(fn = NULL, wd = NULL, ..., verbose = FALSE,
         
     dots <- list(...)
     
-    if (!is.null(dots$template)){
-        if(!file.exists(dots$template)){
-            getFiles(basename(dots$template), dn = "theme", pkg = package)
-        }
-    }
-
     if (length(fn) > 1){
         cl <- match.call()
         res <- c()
@@ -334,6 +315,7 @@ rmd2pdf <- function(fn = NULL, wd = NULL, ..., verbose = FALSE,
 ##' @importFrom utils Stangle
 ##' @importFrom tools texi2pdf
 ##' @examples
+##' \donttest{
 ##' tdir <- tempdir()
 ##' fmt <- "rnw2pdf-guide-sweave"
 ##' dirout <- initWriteup(fmt, dir = file.path(tdir, fmt))
@@ -356,6 +338,7 @@ rmd2pdf <- function(fn = NULL, wd = NULL, ..., verbose = FALSE,
 ##'     }
 ##' }
 ##' unlink(dirout)
+##' }
 rnw2pdf <- function(fn = NULL, wd = NULL, ..., engine = "knitr", purl = TRUE,
                     tangle = purl, clean = TRUE, quiet = TRUE, verbose = !quiet,
                     envir = parent.frame(), encoding = getOption("encoding"))
@@ -368,6 +351,7 @@ rnw2pdf <- function(fn = NULL, wd = NULL, ..., engine = "knitr", purl = TRUE,
     if (!is.null(wd)) {
         wd.orig <- getwd()
         setwd(wd)
+        on.exit(setwd(wd.orig))
     }
 
     dots <- list(...)
@@ -479,12 +463,7 @@ rnw2pdf <- function(fn = NULL, wd = NULL, ..., engine = "knitr", purl = TRUE,
                 fnbase <- gsub("\\.Rnw$", "", x, ignore.case = TRUE)
                 fntex <- gsub("\\.Rnw$", ".tex", x, ignore.case = TRUE)
                 ## 20180731: Try built-in texi2pdf again, instead of home-made methld
-                if (Sys.which("texi2pdf") != ""){
-                    tools::texi2pdf(fntex, texi2dvi = "texi2pdf",
-                                    clean = clean, quiet = quiet)
-                } else {
-                    tools::texi2pdf(fntex, clean = clean, quiet = quiet)
-                }
+                tools::texi2pdf(fntex, clean = clean, quiet = quiet)
                 fnpdf <- gsub("\\.Rnw$", ".pdf", x, ignore.case = TRUE)
             }
         }
@@ -501,9 +480,6 @@ rnw2pdf <- function(fn = NULL, wd = NULL, ..., engine = "knitr", purl = TRUE,
         res[[i]] <- compileme(i)
     }
     res <- file.path(wd, res)
-    if (!is.null(wd)){
-        setwd(wd.orig)
-    }
     res
 }
 
