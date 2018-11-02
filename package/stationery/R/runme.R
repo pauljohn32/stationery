@@ -476,7 +476,6 @@ rnw2pdf <- function(fn = NULL, wd = NULL, ..., engine = "knitr", purl = TRUE,
         }
     }
     res <- character(length = length(fn))
-    browser()
     for (i in seq_along(fn)) {
         newfn <- compileme(fn[i])
         res[i] <- file.path(wd.orig, newfn)
