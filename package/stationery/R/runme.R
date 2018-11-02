@@ -161,14 +161,13 @@ crmda_html_document <- function(template = "theme/guide-template.html", ...) {
 
 ##' Convert Rmd to PDF
 ##'
-##' It makes sure that the style sheet we want to use is applied to the data.
+##' Convert an Rmd file to PDF by Sweaveing or knitting and then compiling. 
 ##'
 ##' Running this will be the same as running the rmd2pdf.sh script
 ##' within the directory.
-##' @param fn One or more filenames ending in "*.Rmd".
-##' @param wd A working directory name of the Rmd file. If not
-##'     specified, then the current working directory from R will be
-##'     used.
+##' @param fn One or more filenames ending in "*.Rmd". 
+##' @param wd A working directory in which the Rmd file exists. Leave
+##'     as NULL if file is in current working directory,
 ##' @param verbose The opposite of render(quiet = TRUE). Shows compile
 ##'     commentary and pandoc command. Can be informative!
 ##' @param purl Default TRUE
@@ -352,6 +351,8 @@ rnw2pdf <- function(fn = NULL, wd = NULL, ..., engine = "knitr", purl = TRUE,
         wd.orig <- getwd()
         setwd(wd)
         on.exit(setwd(wd.orig))
+    } else {
+        wd.orig <- getwd()
     }
 
     dots <- list(...)
@@ -474,12 +475,11 @@ rnw2pdf <- function(fn = NULL, wd = NULL, ..., engine = "knitr", purl = TRUE,
             return("Failed")
         }
     }
-
-    res <- list()
-    for(i in fn){
-        res[[i]] <- compileme(i)
+    res <- character(length = length(fn))
+    browser()
+    for (i in seq_along(fn)) {
+        newfn <- compileme(fn[i])
+        res[i] <- file.path(wd.orig, newfn)
     }
-    res <- file.path(wd, res)
     res
 }
-
