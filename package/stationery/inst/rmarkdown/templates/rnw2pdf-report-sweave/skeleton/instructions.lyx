@@ -332,17 +332,25 @@ status open
 
 \begin_layout Plain Layout
 
-% Please leave this code:
+% Please leave this code
 \end_layout
 
 \begin_layout Plain Layout
 
-<<tmpout, echo=FALSE, include=FALSE, results=hide>>=
+<<ignoremeRsetup, echo=FALSE, include=FALSE, results=hide>>=
 \end_layout
 
 \begin_layout Plain Layout
 
-tdir <- "tmpout"
+tdir <- 
+\begin_inset Quotes eld
+\end_inset
+
+tmpout
+\begin_inset Quotes erd
+\end_inset
+
+
 \end_layout
 
 \begin_layout Plain Layout
@@ -357,7 +365,47 @@ library(stationery)
 
 \begin_layout Plain Layout
 
+opts.orig <- options()
+\end_layout
+
+\begin_layout Plain Layout
+
+options(width=80, prompt=" ", continue="  ")
+\end_layout
+
+\begin_layout Plain Layout
+
+options(useFancyQuotes = FALSE) 
+\end_layout
+
+\begin_layout Plain Layout
+
+set.seed(12345)
+\end_layout
+
+\begin_layout Plain Layout
+
+par.orig <- par(no.readonly=TRUE)
+\end_layout
+
+\begin_layout Plain Layout
+
+options(SweaveHooks=list(fig=function() par(ps=10)))
+\end_layout
+
+\begin_layout Plain Layout
+
+pdf.options(onefile=FALSE,family="Times",pointsize=10)
+\end_layout
+
+\begin_layout Plain Layout
+
 @
+\end_layout
+
+\begin_layout Plain Layout
+
+%LaTeX in document options
 \end_layout
 
 \begin_layout Plain Layout
@@ -375,7 +423,7 @@ topsep}{0em}}}
 
 
 \backslash
-SweaveOpts{prefix.string=tmpout/t, split=TRUE, ae=FALSE, height=5, width=6}
+SweaveOpts{prefix.string=tmpout/t, split=TRUE, ae=FALSE, height=4, width=6}
 \end_layout
 
 \end_inset
@@ -394,11 +442,7 @@ status open
 
 \begin_layout Plain Layout
 
-<<texcopy, include=FALSE,echo=FALSE>>=
-\end_layout
-
-\begin_layout Plain Layout
-
+<<ignoremetexcopy, include=FALSE,echo=FALSE>>=
 \end_layout
 
 \begin_layout Plain Layout
@@ -488,115 +532,6 @@ theme/logo.pdf
 \begin_layout Plain Layout
 
 }
-\end_layout
-
-\begin_layout Plain Layout
-
-@
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-<<texcopy, include=FALSE, echo=FALSE, results=hide>>=
-\end_layout
-
-\begin_layout Plain Layout
-
-library(stationery)
-\end_layout
-
-\begin_layout Plain Layout
-
-## If theme directory does not have required logos, retrieve.
- 
-\end_layout
-
-\begin_layout Plain Layout
-
-logos <- c(logoright = "logo.pdf")
-\end_layout
-
-\begin_layout Plain Layout
-
-getFiles(logos, pkg = "stationery")
-\end_layout
-
-\begin_layout Plain Layout
-
-@
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-% Please leave this chunk
-\end_layout
-
-\begin_layout Plain Layout
-
-<<Roptions, echo=F, include=FALSE,results=hide>>=
-\end_layout
-
-\begin_layout Plain Layout
-
-opts.orig <- options()
-\end_layout
-
-\begin_layout Plain Layout
-
-options(width=65, prompt=" ", continue="  ")
-\end_layout
-
-\begin_layout Plain Layout
-
-options(useFancyQuotes = FALSE) 
-\end_layout
-
-\begin_layout Plain Layout
-
-set.seed(12345)
-\end_layout
-
-\begin_layout Plain Layout
-
-par.orig <- par(no.readonly=TRUE) 
-\end_layout
-
-\begin_layout Plain Layout
-
-pjmar <- c(5.1, 5.1, 1.5, 2.1) 
-\end_layout
-
-\begin_layout Plain Layout
-
-options(SweaveHooks=list(fig=function() par(mar=pjmar, ps=10)))
-\end_layout
-
-\begin_layout Plain Layout
-
-pdf.options(onefile=FALSE, family="Times", pointsize=10)
-\end_layout
-
-\begin_layout Plain Layout
-
-if(!dir.exists("tmpout"))dir.create("tmpout", recursive = TRUE)
 \end_layout
 
 \begin_layout Plain Layout

@@ -111,18 +111,25 @@ footskip=1.5\baselineskip,
 %}
 %\guideftr
 
-% Please leave this code:
-<<tmpout, echo=FALSE, include=FALSE, results=hide>>=
+% Please leave this code
+<<ignoremeRsetup, echo=FALSE, include=FALSE, results=hide>>=
 tdir <- "tmpout"
 if(!dir.exists(tdir)) dir.create(tdir, showWarnings=FALSE)
 library(stationery)
+opts.orig <- options()
+options(width=80, prompt=" ", continue="  ")
+options(useFancyQuotes = FALSE) 
+set.seed(12345)
+par.orig <- par(no.readonly=TRUE)
+options(SweaveHooks=list(fig=function() par(ps=10)))
+pdf.options(onefile=FALSE,family="Times",pointsize=10)
 @
+%LaTeX in document options
 \fvset{listparameters={\setlength{\topsep}{0em}}}
-\SweaveOpts{prefix.string=tmpout/t, split=TRUE, ae=FALSE, height=5, width=6}
+\SweaveOpts{prefix.string=tmpout/t, split=TRUE, ae=FALSE, height=4, width=6}
 
 % This concerns images in your header!
-<<texcopy, include=FALSE,echo=FALSE>>=
-
+<<ignoremetexcopy, include=FALSE,echo=FALSE>>=
 ## Put your desired "logo.pdf" in the theme folder. If
 ## you don't, you can either use getFiles() to retrieve
 ## one for you, or let blankPDF() create a blank image
@@ -134,26 +141,6 @@ getFiles("logo.pdf", pkg = "stationery", overwrite = FALSE)
 if(!file.exists("theme/logo.pdf")){
   blankPDF(file = "theme/logo.pdf", height=1, width=3.5, messg = "")
 }
-@
-
-<<texcopy, include=FALSE, echo=FALSE, results=hide>>=
-library(stationery)
-## If theme directory does not have required logos, retrieve. 
-logos <- c(logoright = "logo.pdf")
-getFiles(logos, pkg = "stationery")
-@
-
-% Please leave this chunk
-<<Roptions, echo=F, include=FALSE,results=hide>>=
-opts.orig <- options()
-options(width=65, prompt=" ", continue="  ")
-options(useFancyQuotes = FALSE) 
-set.seed(12345)
-par.orig <- par(no.readonly=TRUE) 
-pjmar <- c(5.1, 5.1, 1.5, 2.1) 
-options(SweaveHooks=list(fig=function() par(mar=pjmar, ps=10)))
-pdf.options(onefile=FALSE, family="Times", pointsize=10)
-if(!dir.exists("tmpout"))dir.create("tmpout", recursive = TRUE)
 @
 \begin{abstract}
 \noindent This shows how we use R \citep{RCore} to make report documents

@@ -267,7 +267,7 @@ status open
 
 \begin_layout Plain Layout
 
-<<tmpout, echo=FALSE, include=FALSE, results=hide>>=
+<<ignoremeRoptions, echo=FALSE, include=FALSE, results=hide>>=
 \end_layout
 
 \begin_layout Plain Layout
@@ -283,48 +283,6 @@ if(!dir.exists(tdir)) dir.create(tdir, showWarnings=FALSE)
 \begin_layout Plain Layout
 
 library(stationery)
-\end_layout
-
-\begin_layout Plain Layout
-
-@
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-fvset{listparameters={
-\backslash
-setlength{
-\backslash
-topsep}{0em}}}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-SweaveOpts{prefix.string=tmpout/t, split=TRUE, ae=FALSE, height=4, width=6}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-% Please leave this chunk
-\end_layout
-
-\begin_layout Plain Layout
-
-<<Roptions, echo=F, include=F, results=hide>>=
 \end_layout
 
 \begin_layout Plain Layout
@@ -377,6 +335,24 @@ pdf.options(onefile=FALSE, family="Times", pointsize=10)
 @
 \end_layout
 
+\begin_layout Plain Layout
+
+
+\backslash
+fvset{listparameters={
+\backslash
+setlength{
+\backslash
+topsep}{0em}}}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+SweaveOpts{prefix.string=tmpout/t, split=TRUE, ae=FALSE, height=4, width=6}
+\end_layout
+
 \end_inset
 
 
@@ -407,7 +383,8 @@ logo.pdf
 
 \begin_layout Plain Layout
 
-## Or This will retrieve a logo.pdf file if you want
+## Or This will retrieve a logo.pdf file if you want.
+ Note overwrite parameter
 \end_layout
 
 \begin_layout Plain Layout
