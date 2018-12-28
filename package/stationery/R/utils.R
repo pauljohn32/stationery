@@ -83,21 +83,21 @@ NULL
 ##' @param width inches
 ##' @param messg Default is a reminder statement, but set "" if you don't want it.
 ##' @return NULL is returned if file was created. Otherwise error is reported.
-##' importFrom grDevices dev.off
-##' importFrom grDevices pdf
-##' importFrom graphics par
-##' importFrom graphics plot
-##' importFrom graphics text
+##' @importFrom grDevices dev.off
+##' @importFrom grDevices pdf
+##' @importFrom graphics par
+##' @importFrom graphics plot
+##' @importFrom graphics text
 ##' @export
 ##' @author Paul Johnson
 ##' @examples
 ##' tdir <- tempdir()
-##' dir.create(file.path(tdir, "blanks"))
+##' dir.create(file.path(tdir, "blanks"), recursive = TRUE)
 ##' fn1 <- file.path(tdir, "blanks", "blank1.pdf")
-##' blankPDF(file = fn1, messg = "Do you want a message?"))
+##' blankPDF(file = fn1, messg = "Do you want a message?")
 ##' ## Please inspect
 ##' if(interactive()) browseURL(fn1)
-##' fn2 <- file.path(tdir, "blanks", blank2.pdf")
+##' fn2 <- file.path(tdir, "blanks", "blank2.pdf")
 ##' blankPDF(file = fn2, height = 2, width = 3, messg = "")
 ##' if(interactive()) browseURL(fn2)
 ##' ## delete test directory
