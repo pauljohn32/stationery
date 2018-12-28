@@ -22,7 +22,7 @@ footskip=1.5\baselineskip,
 
 \usepackage{dcolumn}
 \usepackage{booktabs}
-
+\usepackage{siunitx}
 
 \input{theme/reportPreambleHeader.tex}
 \input{theme/preambleFooter.tex}
@@ -251,6 +251,27 @@ reportsetup{%
 reporthdr
 \end_layout
 
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+% For the address footer, either input an addressFooter file like so:
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+input{addressFooter.tex}
+\end_layout
+
+\begin_layout Plain Layout
+
+% See instructions file for alternatives
+\end_layout
+
 \end_inset
 
 
@@ -359,95 +380,6 @@ SweaveOpts{prefix.string=tmpout/t, split=TRUE, ae=FALSE, height=4, width=6}
 \end_layout
 
 \begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-<<texcopy, include=FALSE,echo=FALSE>>=
-\end_layout
-
-\begin_layout Plain Layout
-
-## You can manually copy your desired 
-\begin_inset Quotes eld
-\end_inset
-
-logo.pdf
-\begin_inset Quotes erd
-\end_inset
-
- into the theme folder.
- 
-\end_layout
-
-\begin_layout Plain Layout
-
-## Or This will retrieve a logo.pdf file if you want.
- Note overwrite parameter
-\end_layout
-
-\begin_layout Plain Layout
-
-getFiles(
-\begin_inset Quotes eld
-\end_inset
-
-logo.pdf
-\begin_inset Quotes erd
-\end_inset
-
-, pkg = "stationery", overwrite = FALSE)
-\end_layout
-
-\begin_layout Plain Layout
-
-## If you do not have a file after that, 
-\end_layout
-
-\begin_layout Plain Layout
-
-## the following will manufacture a blank image for a placeholder
-\end_layout
-
-\begin_layout Plain Layout
-
-if(!file.exists(
-\begin_inset Quotes eld
-\end_inset
-
-theme/logo.pdf
-\begin_inset Quotes erd
-\end_inset
-
-)){
-\end_layout
-
-\begin_layout Plain Layout
-
-  blankPDF(file = "theme/logo.pdf", height=1, width=3.5, messg = 
-\begin_inset Quotes eld
-\end_inset
-
-
-\begin_inset Quotes erd
-\end_inset
-
-)
-\end_layout
-
-\begin_layout Plain Layout
-
-}
-\end_layout
-
-\begin_layout Plain Layout
-
-@
-\end_layout
-
-\end_inset
-
 
 \end_layout
 
