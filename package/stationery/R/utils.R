@@ -72,3 +72,23 @@ getFiles <- function(fn, pkg = "stationery",
     if(any(!result))stop("getFiles failed")
     TRUE
 }
+
+
+##' create white background empty PDF
+##'
+##' Sometimes you need a placeholder. If you do, this is it!
+##' @param file A file name for output
+##' @param height inches
+##' @param width inches
+##' @param messg Default is a reminder statement, but set "" if you don't want it.
+##' @return NULL is returned if file was created. Otherwise error is reported.
+##' @author Paul Johnson
+blankPDF <- function(file, height=1, width=3.5, messg = "Your Logo Could Be Here"){
+    pdf(file = file, height=height, width=width, paper="special", pointsize=16)
+    par(mar=c(0,0,0,0)) 
+    plot(1:2, 1:2, type="n", xlab="", ylab="", axes=FALSE)
+    text(1.5, 1.5, "Your Logo Could Be Here", col = "gray80")
+    dev.off()
+    if(file.exists(file)) return(NULL) else stop("blankPDF file error")
+}
+
