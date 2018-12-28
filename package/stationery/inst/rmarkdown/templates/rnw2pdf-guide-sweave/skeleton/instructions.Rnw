@@ -104,7 +104,8 @@ footskip=1.5\baselineskip,
 
 % Please leave this code
 <<ignoremeRsetup, echo=FALSE, include=FALSE, results=hide>>=
-if(!dir.exists("tmpout")) dir.create("tmpout", showWarnings=FALSE)
+tdir <- "tmpout"
+if(!dir.exists(tdir)) dir.create(tdir, showWarnings=FALSE)
 library(stationery)
 opts.orig <- options()
 options(width=80, prompt=" ", continue="  ")

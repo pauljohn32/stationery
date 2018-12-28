@@ -308,7 +308,20 @@ status open
 
 \begin_layout Plain Layout
 
-if(!dir.exists("tmpout")) dir.create("tmpout", showWarnings=FALSE)
+tdir <- 
+\begin_inset Quotes eld
+\end_inset
+
+tmpout
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+if(!dir.exists(tdir)) dir.create(tdir, showWarnings=FALSE)
 \end_layout
 
 \begin_layout Plain Layout
@@ -544,7 +557,7 @@ status open
 
 \begin_layout Plain Layout
 
-%See the instructions file for details.
+%See the instructions file for details and examples.
  One can alter R input and 
 \end_layout
 
