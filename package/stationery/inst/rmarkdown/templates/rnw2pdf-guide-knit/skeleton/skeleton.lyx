@@ -1,5 +1,5 @@
-#LyX 2.2 created this file. For more info see http://www.lyx.org/
-\lyxformat 508
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
 \begin_document
 \begin_header
 \save_transient_properties true
@@ -45,6 +45,8 @@ natbibapa
 \font_osf false
 \font_sf_scale 100 100
 \font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
 \graphics default
 \default_output_format default
 \output_sync 0
@@ -83,6 +85,7 @@ natbibapa
 \suppress_date true
 \justification true
 \use_refstyle 0
+\use_minted 0
 \index Index
 \shortcut idx
 \color #008000
@@ -95,7 +98,10 @@ natbibapa
 \tocdepth 3
 \paragraph_separation skip
 \defskip medskip
-\quotes_language english
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
 \papercolumns 1
 \papersides 1
 \paperpagestyle default
@@ -257,48 +263,25 @@ guidesetup{%
 guidehdr
 \end_layout
 
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
 \begin_layout Plain Layout
 
-<<knitropts, echo=FALSE>>=
 \end_layout
 
 \begin_layout Plain Layout
 
-## Chunk output 
+% For the address footer, we have an address file:
 \end_layout
 
 \begin_layout Plain Layout
 
-library(knitr)
+
+\backslash
+input{addressFooter.tex}
 \end_layout
 
 \begin_layout Plain Layout
 
-if(!dir.exists("tmpout")) dir.create("tmpout", showWarnings=FALSE)
-\end_layout
-
-\begin_layout Plain Layout
-
-opts_chunk$set(fig.path="tmpout/t-", split=TRUE, 
-\end_layout
-
-\begin_layout Plain Layout
-
-               ae=FALSE, fig.height=3, fig.width=5, comment=NA)
-\end_layout
-
-\begin_layout Plain Layout
-
-@
+% See instructions file for alternative address methodsOptions
 \end_layout
 
 \end_inset
@@ -312,7 +295,30 @@ status open
 
 \begin_layout Plain Layout
 
-<<texcopy, include=FALSE>>=
+% Please leave this code
+\end_layout
+
+\begin_layout Plain Layout
+
+<<ignoremeRsetup, echo=FALSE, include=FALSE>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+tdir <- 
+\begin_inset Quotes eld
+\end_inset
+
+tmpout
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+if(!dir.exists(tdir)) dir.create(tdir, showWarnings=FALSE)
 \end_layout
 
 \begin_layout Plain Layout
@@ -322,61 +328,12 @@ library(stationery)
 
 \begin_layout Plain Layout
 
-## Retrieve theme files 
-\end_layout
-
-\begin_layout Plain Layout
-
-logos <- c(logoleft = "logoleft.pdf", 
-\end_layout
-
-\begin_layout Plain Layout
-
-           logoright = "logo-vert.pdf", 
-\end_layout
-
-\begin_layout Plain Layout
-
-           "addressFooter.tex")
-\end_layout
-
-\begin_layout Plain Layout
-
-getFiles(logos, pkg = "stationery")
-\end_layout
-
-\begin_layout Plain Layout
-
-@
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-<<Roptions, echo=FALSE>>=
-\end_layout
-
-\begin_layout Plain Layout
-
 opts.orig <- options()
 \end_layout
 
 \begin_layout Plain Layout
 
-par.orig <- par(no.readonly=TRUE)
-\end_layout
-
-\begin_layout Plain Layout
-
-options(width=75, prompt=" ", continue="  ")
+options(width=80, prompt=" ", continue="  ")
 \end_layout
 
 \begin_layout Plain Layout
@@ -391,7 +348,197 @@ set.seed(12345)
 
 \begin_layout Plain Layout
 
+par.orig <- par(no.readonly=TRUE)
+\end_layout
+
+\begin_layout Plain Layout
+
 pdf.options(onefile=FALSE,family="Times",pointsize=10)
+\end_layout
+
+\begin_layout Plain Layout
+
+## Chunk output, knit replaces Sweave 
+\end_layout
+
+\begin_layout Plain Layout
+
+library(knitr)
+\end_layout
+
+\begin_layout Plain Layout
+
+opts_chunk$set(fig.path="tmpout/t-", split=TRUE, 
+\end_layout
+
+\begin_layout Plain Layout
+
+               ae=FALSE, fig.height=4, fig.width=6, comment=NA)
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+fvset{listparameters={
+\backslash
+setlength{
+\backslash
+topsep}{0em}}}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+% We need 2 image files for logos, top left (logoleft) and right
+\end_layout
+
+\begin_layout Plain Layout
+
+% (logo-vert).
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+% You can manually copy your desired image files
+\end_layout
+
+\begin_layout Plain Layout
+
+% 
+\begin_inset Quotes eld
+\end_inset
+
+logoleft.pdf
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+logo-vert.pdf
+\begin_inset Quotes erd
+\end_inset
+
+ into the theme folder.
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+% Or run this to retrieve or create them:
+\end_layout
+
+\begin_layout Plain Layout
+
+<<texcopy, include=FALSE, echo=FALSE>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+## The logos we need are
+\end_layout
+
+\begin_layout Plain Layout
+
+logos <- c("logoleft.pdf", "logo-vert.pdf")
+\end_layout
+
+\begin_layout Plain Layout
+
+## This will retrieve logo files from a designated package:
+\end_layout
+
+\begin_layout Plain Layout
+
+getFiles(logos, pkg = "stationery", overwrite = FALSE)
+\end_layout
+
+\begin_layout Plain Layout
+
+## If you do not have a file after that, 
+\end_layout
+
+\begin_layout Plain Layout
+
+## the following will manufacture a blank images for placeholders
+\end_layout
+
+\begin_layout Plain Layout
+
+if(!file.exists(
+\begin_inset Quotes eld
+\end_inset
+
+theme/logoleft.pdf
+\begin_inset Quotes erd
+\end_inset
+
+)){
+\end_layout
+
+\begin_layout Plain Layout
+
+  blankPDF(file = "theme/logoleft.pdf", height=1.2, width=1.2, messg = 
+\begin_inset Quotes eld
+\end_inset
+
+
+\begin_inset Quotes erd
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+if(!file.exists(
+\begin_inset Quotes eld
+\end_inset
+
+theme/logo-vert.pdf
+\begin_inset Quotes erd
+\end_inset
+
+)){
+\end_layout
+
+\begin_layout Plain Layout
+
+  blankPDF(file = "theme/logo-vert.pdf", height=2, width=1.5, messg = 
+\begin_inset Quotes eld
+\end_inset
+
+
+\begin_inset Quotes erd
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Plain Layout
+
+}
 \end_layout
 
 \begin_layout Plain Layout
@@ -489,6 +636,7 @@ Listing objects differ in output from R
 \begin_inset CommandInset citation
 LatexCommand citep
 key "RCore"
+literal "true"
 
 \end_inset
 
@@ -657,7 +805,8 @@ par(par.orig)
 \begin_layout Standard
 \begin_inset CommandInset bibtex
 LatexCommand bibtex
-bibfiles "theme/R"
+btprint "btPrintCited"
+bibfiles "R"
 options "apacitex"
 
 \end_inset
