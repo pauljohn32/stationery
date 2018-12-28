@@ -107,7 +107,7 @@ blankPDF <- function(file, height=1, width=3.5, messg = "Your Logo Could Be Here
     pdf(file = file, height=height, width=width, paper="special", pointsize=16)
     par(mar=c(0,0,0,0)) 
     plot(1:2, 1:2, type="n", xlab="", ylab="", axes=FALSE)
-    text(1.5, 1.5, "Your Logo Could Be Here", col = "gray80")
+    text(1.5, 1.5, messg, col = "gray80")
     dev.off()
     if(file.exists(file)) return(NULL) else stop("blankPDF file error")
 }
