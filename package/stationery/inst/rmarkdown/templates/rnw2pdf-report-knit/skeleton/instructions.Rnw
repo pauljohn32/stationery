@@ -1,6 +1,6 @@
-%% LyX 2.2.3 created this file.  For more info, see http://www.lyx.org/.
+%% LyX 2.3.1 created this file.  For more info, see http://www.lyx.org/.
 %% Do not edit unless you really know what you are doing.
-\documentclass[11pt,letterpaper,american,english]{scrartcl}
+\documentclass[11pt,letterpaper,english]{scrartcl}
 \usepackage{lmodern}
 \renewcommand{\sfdefault}{lmss}
 \renewcommand{\ttdefault}{lmtt}
@@ -15,7 +15,6 @@
  bookmarks=true,bookmarksnumbered=false,bookmarksopen=false,
  breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false]
  {hyperref}
-\usepackage{breakurl}
 
 \makeatletter
 
@@ -49,7 +48,7 @@ footskip=1.5\baselineskip,
 
 \usepackage{dcolumn}
 \usepackage{booktabs}
-
+\usepackage{siunitx} %for semTable
 %% PJ 20161110
 %% I want to use listings in the document and I want nice/same as knitr.
 %% Does knitr provide all of these settings for other listing uses outside
@@ -64,8 +63,6 @@ footskip=1.5\baselineskip,
 \makeatother
 
 \usepackage{listings}
-\addto\captionsamerican{\renewcommand{\lstlistingname}{\inputencoding{latin9}Listing}}
-\addto\captionsenglish{\renewcommand{\lstlistingname}{\inputencoding{latin9}Listing}}
 \renewcommand{\lstlistingname}{\inputencoding{latin9}Listing}
 
 \begin{document}
@@ -89,7 +86,29 @@ footskip=1.5\baselineskip,
 }
 \reporthdr
 
-<<Roptions, echo=FALSE>>=
+% For the address footer, either input an addressFooter file like so:
+\input{addressFooter.tex}
+% Options
+% 1. If you don't want an address footer, comment out previous
+% 2. If you want to type in your address, replace that with this
+% (after removing percent signs):
+%\urlstyle{tt}
+%\footersetup{
+%  leftside={
+%    lone={Address line 1}, 
+%    ltwo={Address line 2}, 
+%    lthree={City State Zipcode}},
+%  rightside={
+%    rone={Web: \url{https://crmda.ku.edu}},
+%    rtwo={Email: \href{mailto:you@where.edu}{\url{you@where.edu}}},
+%    rthree={Phone: 123-345-5678}}
+%}
+%\guideftr
+
+<<ignoremeRoptions, echo=FALSE>>=
+tdir <- "tmpout"
+if(!dir.exists(tdir)) dir.create(tdir, showWarnings=FALSE)
+library(stationery)
 opts.orig <- options()
 options(device = pdf)
 options(width=60, prompt=" ", continue="  ")
@@ -97,23 +116,22 @@ options(useFancyQuotes = FALSE)
 set.seed(12345)
 pdf.options(onefile=FALSE, family="Times", pointsize=10)
 if(!dir.exists("tmpout"))dir.create("tmpout", recursive = TRUE)
-@
-
-<<knitr10, include=FALSE, echo=FALSE>>=
+## Code chunk settings
 library(knitr)
 opts_chunk$set(fig.path='tmpout/t-', split=FALSE, ae=FALSE, comment=NA,
                fig.height=5, fig.width=6)
 @
 
-\selectlanguage{american}%
-<<texcopy, include=FALSE>>=
-library(stationery)
-## If theme directory does not have required images or TeX files
-## we need to retrieve them and put them in "theme" directory. 
-logos <- c(logoright = "logo.pdf", "addressFooter.tex")
-getFiles(logos, pkg = "stationery")
+<<texcopy, include=FALSE,echo=FALSE>>=
+## You can manually copy your desired "logo.pdf" into the theme folder. 
+## Or This will retrieve a logo.pdf file if you want. Note overwrite parameter
+getFiles("logo.pdf", pkg = "stationery", overwrite = FALSE)
+## If you do not have a file after that, 
+## the following will manufacture a blank image for a placeholder
+if(!file.exists("theme/logo.pdf")){
+  blankPDF(file = "theme/logo.pdf", height=1, width=3.5, messg = "")
+}
 @
-\selectlanguage{english}%
 \begin{abstract}
 \noindent This shows how we use R \cite{RCore} to make report documents
 using the CRMDA style. This is a LaTeX ``noweb'' report generated
@@ -227,7 +245,8 @@ as the project writeup.
 \inputencoding{latin9}\begin{lstlisting}
 rnw2pdf("skeleton.lyx")
 \end{lstlisting}
-\inputencoding{utf8}\item The shell script \code{rnw2pdf.sh} is provided in the same folder.
+\inputencoding{utf8}
+\item The shell script \code{rnw2pdf.sh} is provided in the same folder.
 It can be run in the shell as
 
 \inputencoding{latin9}\begin{lstlisting}
@@ -387,11 +406,9 @@ packages designed to generate the same sort of LaTeX markup.
 <<outreg1, echo=F, results='asis'>>=
 library(rockchalk)
 vl <- c("x" = "Excellent Predictor")
-or <- outreg(list("First Model" = m1), varLabels = vl, tight = FALSE)
-cat(or)
+or <- outreg(list("First Model" = m1), varLabels = vl, tight = FALSE, centering = "siunitx")
 @
 \end{table}
-
 In the kutils package, we made a function \code{semTable()} that
 presents structural equation models. The result in Table \ref{tab:A-Confirmatory-Factor}
 is an example. 
@@ -418,7 +435,6 @@ cat(cfa1, file="tmpout/t-cfa3.tex")
 
 \input{tmpout/t-cfa3.tex}
 \end{table}
-
 In the perfect world, the tables that come from software would be
 perfectly presentable. This is the idea of the fully reproducible
 research document. At the current time, that is unrealistic. Authors

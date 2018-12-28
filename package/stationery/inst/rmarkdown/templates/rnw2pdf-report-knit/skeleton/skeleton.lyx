@@ -1,5 +1,5 @@
-#LyX 2.2 created this file. For more info see http://www.lyx.org/
-\lyxformat 508
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
 \begin_document
 \begin_header
 \save_transient_properties true
@@ -43,6 +43,8 @@ knitr
 \font_osf false
 \font_sf_scale 100 100
 \font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
 \graphics default
 \default_output_format default
 \output_sync 0
@@ -81,6 +83,7 @@ knitr
 \suppress_date true
 \justification true
 \use_refstyle 0
+\use_minted 0
 \branch R
 \selected 0
 \filename_suffix 0
@@ -98,7 +101,10 @@ knitr
 \tocdepth 3
 \paragraph_separation skip
 \defskip medskip
-\quotes_language english
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
 \papercolumns 1
 \papersides 1
 \paperpagestyle default
@@ -240,43 +246,25 @@ reportsetup{%
 reporthdr
 \end_layout
 
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
 \begin_layout Plain Layout
 
-<<knitr10, include=FALSE, echo=FALSE>>=
 \end_layout
 
 \begin_layout Plain Layout
 
-library(knitr)
+% For the address footer, either input an addressFooter file like so:
 \end_layout
 
 \begin_layout Plain Layout
 
-if(!dir.exists("tmpout"))dir.create("tmpout", recursive = TRUE)
+
+\backslash
+input{addressFooter.tex}
 \end_layout
 
 \begin_layout Plain Layout
 
-opts_chunk$set(fig.path='tmpout/t-', split=TRUE, ae=FALSE, comment=NA,
-\end_layout
-
-\begin_layout Plain Layout
-
-               fig.height=5, fig.width=6)
-\end_layout
-
-\begin_layout Plain Layout
-
-@
+% See instructions file for alternatives
 \end_layout
 
 \end_inset
@@ -290,7 +278,22 @@ status open
 
 \begin_layout Plain Layout
 
-<<texcopy, include=FALSE, echo=FALSE>>=
+% Please leave this code
+\end_layout
+
+\begin_layout Plain Layout
+
+<<ignoremeRoptions, echo=FALSE, include=FALSE>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+tdir <- "tmpout"
+\end_layout
+
+\begin_layout Plain Layout
+
+if(!dir.exists(tdir)) dir.create(tdir, showWarnings=FALSE)
 \end_layout
 
 \begin_layout Plain Layout
@@ -300,41 +303,22 @@ library(stationery)
 
 \begin_layout Plain Layout
 
-## If theme directory does not have required logo files, retrieve them.
+library(knitr)
 \end_layout
 
 \begin_layout Plain Layout
 
-logos <- c(logoright = "logo.pdf", 
+## Chunk settings
 \end_layout
 
 \begin_layout Plain Layout
 
-              address = "addressFooter.tex")
+opts_chunk$set(fig.path='tmpout/t-', split=TRUE, ae=FALSE, comment=NA,
 \end_layout
 
 \begin_layout Plain Layout
 
-getFiles(logos, pkg = "stationery")
-\end_layout
-
-\begin_layout Plain Layout
-
-@
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-<<Roptions, echo=FALSE, include=FALSE>>=
+               fig.height=4, fig.width=6)
 \end_layout
 
 \begin_layout Plain Layout
@@ -370,6 +354,99 @@ set.seed(12345)
 \begin_layout Plain Layout
 
 pdf.options(onefile=FALSE, family="Times", pointsize=10)
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<texcopy, include=FALSE,echo=FALSE>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+## You can manually copy your desired 
+\begin_inset Quotes eld
+\end_inset
+
+logo.pdf
+\begin_inset Quotes erd
+\end_inset
+
+ into the theme folder.
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+## Or This will retrieve a logo.pdf file if you want.
+ Note overwrite parameter
+\end_layout
+
+\begin_layout Plain Layout
+
+getFiles(
+\begin_inset Quotes eld
+\end_inset
+
+logo.pdf
+\begin_inset Quotes erd
+\end_inset
+
+, pkg = "stationery", overwrite = FALSE)
+\end_layout
+
+\begin_layout Plain Layout
+
+## If you do not have a file after that, 
+\end_layout
+
+\begin_layout Plain Layout
+
+## the following will manufacture a blank image for a placeholder
+\end_layout
+
+\begin_layout Plain Layout
+
+if(!file.exists(
+\begin_inset Quotes eld
+\end_inset
+
+theme/logo.pdf
+\begin_inset Quotes erd
+\end_inset
+
+)){
+\end_layout
+
+\begin_layout Plain Layout
+
+  blankPDF(file = "theme/logo.pdf", height=1, width=3.5, messg = 
+\begin_inset Quotes eld
+\end_inset
+
+
+\begin_inset Quotes erd
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Plain Layout
+
+}
 \end_layout
 
 \begin_layout Plain Layout
