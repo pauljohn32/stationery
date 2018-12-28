@@ -1,4 +1,4 @@
-%% LyX 2.2.3 created this file.  For more info, see http://www.lyx.org/.
+%% LyX 2.3.1 created this file.  For more info, see http://www.lyx.org/.
 %% Do not edit unless you really know what you are doing.
 \documentclass[11pt,letterpaper,english]{scrartcl}
 \usepackage{lmodern}
@@ -14,7 +14,6 @@
  bookmarks=true,bookmarksnumbered=false,bookmarksopen=false,
  breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false]
  {hyperref}
-\usepackage{breakurl}
 
 \makeatletter
 
@@ -27,15 +26,15 @@
   if(exists(".orig.enc")) options(encoding = .orig.enc)
 @
 \newenvironment{lyxcode}
-{\par\begin{list}{}{
-\setlength{\rightmargin}{\leftmargin}
-\setlength{\listparindent}{0pt}% needed for AMS classes
-\raggedright
-\setlength{\itemsep}{0pt}
-\setlength{\parsep}{0pt}
-\normalfont\ttfamily}%
- \item[]}
-{\end{list}}
+	{\par\begin{list}{}{
+		\setlength{\rightmargin}{\leftmargin}
+		\setlength{\listparindent}{0pt}% needed for AMS classes
+		\raggedright
+		\setlength{\itemsep}{0pt}
+		\setlength{\parsep}{0pt}
+		\normalfont\ttfamily}%
+	 \item[]}
+	{\end{list}}
 \providecommand*{\code}[1]{\texttt{#1}}
 
 \@ifundefined{date}{}{\date{}}
@@ -70,6 +69,8 @@ footskip=1.5\baselineskip,
 \usepackage{fancyvrb}
 \fvset{listparameters={\setlength{\topsep}{0em}}}
 
+\usepackage{siunitx}
+
 \makeatother
 
 \usepackage{listings}
@@ -86,34 +87,44 @@ footskip=1.5\baselineskip,
     firstname=Paul~E., 
     affiliation=Director{,}~CRMDA,
     email=pauljohn@ku.edu},
-  author={
-    lastname=Coauthor,
-    firstname=Imaginar~E.,
-    affiliation=CRMDA,
-    email=imaginary@ku.edu},
-  author={
-    lastname=Coauthor,
-    firstname=Another~Imaginary,
-    affiliation=CRMDA,
-    email=imaginary@ku.edu},
   title={Guide for authoring reports with Sweave code chunks},
   rightlogo={theme/logo.pdf},
 }
 \reporthdr
 
-% tmpout directory must exist first
+% For the address footer, we have an address file:
+\input{addressFooter.tex}
+% See instructions file for alternative address methodsOptions
+
+% Please leave this code:
 <<tmpout, echo=FALSE, include=FALSE, results=hide>>=
 tdir <- "tmpout"
 if(!dir.exists(tdir)) dir.create(tdir, showWarnings=FALSE)
+library(stationery)
 @
-% Please leave this code: In document Latex options:
 \fvset{listparameters={\setlength{\topsep}{0em}}}
-\SweaveOpts{prefix.string=tmpout/t, split=FALSE, ae=FALSE, height=5, width=6}
+\SweaveOpts{prefix.string=tmpout/t, split=TRUE, ae=FALSE, height=5, width=6}
+
+% This concerns images in your header!
+<<texcopy, include=FALSE,echo=FALSE>>=
+
+## Put your desired "logo.pdf" in the theme folder. If
+## you don't, you can either use getFiles() to retrieve
+## one for you, or let blankPDF() create a blank image
+## for you.  Its your choice.
+## This will retrieve a logo.pdf file if you want
+getFiles("logo.pdf", pkg = "stationery", overwrite = FALSE)
+## If you do not have a file after that, 
+## the following will manufacture a blank image for a placeholder
+if(!file.exists("theme/logo.pdf")){
+  blankPDF(file = "theme/logo.pdf", height=1, width=3.5, messg = "")
+}
+@
 
 <<texcopy, include=FALSE, echo=FALSE, results=hide>>=
 library(stationery)
 ## If theme directory does not have required logos, retrieve. 
-logos <- c(logoright = "logo.pdf", "addressFooter.tex")
+logos <- c(logoright = "logo.pdf")
 getFiles(logos, pkg = "stationery")
 @
 
@@ -220,12 +231,14 @@ margins or settings for hyperlinks with pull down menus.
 > library(stationery)
 > rnw2pdf("skeleton.lyx", engine = "Sweave")
 \end{lstlisting}
-\inputencoding{utf8}\item Use the shell script \code{rnw2pdf.sh}: 
+\inputencoding{utf8}
+\item Use the shell script \code{rnw2pdf.sh}: 
 
 \inputencoding{latin9}\begin{lstlisting}
 $ ./rnw2pdf.sh --engine='"Sweave"' skeleton.lyx
 \end{lstlisting}
-\inputencoding{utf8}\item In case you want to track the steps of compiling one by one, open
+\inputencoding{utf8}
+\item In case you want to track the steps of compiling one by one, open
 the file in LyX. Use the pull down menu \code{File} $\rightarrow$
 \code{Export} $\rightarrow$ \code{Sweave}. That will create a file
 named ``\code{skeleton.Rnw}''. This is the equivalent of the command
@@ -286,7 +299,7 @@ the shell command would be
 $ ./rnw2pdf -engine='"Sweave"' --purl=FALSE --clean=FALSE --keep_tex=TRUE --verbose=TRUE skeleton.Rnw
 \end{lstlisting}
 \inputencoding{utf8}
-Note the trick to include a parameter \code{\textquotedbl{}Sweave\textquotedbl{}}
+Note the trick to include a parameter \code{\textquotedbl Sweave\textquotedbl}
 that is a quoted string. The single quotes that are protecting the
 double quotes in the command line.
 \item Manual command line interactions using R and shell functions. 
@@ -300,7 +313,8 @@ That will create \code{skeleton.tex}, which we compile with
 \inputencoding{latin9}\begin{lstlisting}
 $ texi2pdf skeleton.tex
 \end{lstlisting}
-\inputencoding{utf8}\end{enumerate}
+\inputencoding{utf8}
+\end{enumerate}
 
 \section{Code Chunk Check}
 
@@ -333,7 +347,7 @@ code chunks, their output, and graphics will be saved into separate
 files in an intermediate output folder. In the top of the .Rnw file,
 there will be a LaTeX macro:
 \begin{lyxcode}
-\textbackslash{}SweaveOpts\{prefix.string=tmpout/t,~split=TRUE,~ae=FALSE,~height=5,~width=6\}
+\textbackslash SweaveOpts\{prefix.string=tmpout/t,~split=TRUE,~ae=FALSE,~height=5,~width=6\}
 \end{lyxcode}
 In our case, the pieces are saved into a folder named ``\code{tmpout}''.
 These chunk files will be created while the document is being compiled.
@@ -412,17 +426,20 @@ finds the file named ``\code{t-chunkfig.pdf}''.
 If the code makes a LaTeX table that is presentable as is, then we
 can include that in the document at the suitable point. 
 
-\subsection*{Tables that are close, but not ready}
+\subsection*{Tables that are almost ready, but not perfect}
 
-The key issue is that the table output from an R function is not perfectly
-ready for inclusion in a report. The row and column names might need
-beautification. That is why, realistically, it is generally easier
-to write those tables into tex files and revise them by hand, and
-then use LaTeX ``\code{\textbackslash{}input\{\}}'' to include
-them in the document where appropriate.
+The table output from an R function almost always needs some corrections.
+To become perfectly ready for inclusion in a report, we may need to
+correct column titles or variable names. That is why, realistically,
+it is generally easier to write those tables into tex files and revise
+them by hand, and then use LaTeX ``\code{\textbackslash input\{\}}''
+to include them in the document where appropriate.
 
 We'd manually copy it to another folder (to protect it from being
-over-written) and manually revise it. 
+over-written) and manually revise it.
+
+Nevertheless, in the following section, we display tables that require
+no hand editing.
 
 \subsection*{Assume Floating Tables and Figures are Used}
 
@@ -456,7 +473,7 @@ tab1 <- rockchalk::summarize(dat)
 @
 
 <<tab1, echo=F, results=tex>>=
-tab1.x <- xtable::xtable(tab1$numericsfmt, caption = "Floating Table with Summary Statistics", label = "tab:summ")
+tab1.x <- xtable::xtable(attr(tab1, "numeric.formatted"), caption = "Floating Table with Summary Statistics", label = "tab:summ")
 print(tab1.x, caption.placement = "top")
 @
 
@@ -485,7 +502,8 @@ vignettes for packages on CRAN).
 library(rockchalk)
 m1 <- lm(y ~ x, data = dat)
 vl <- c("x" = "Excellent Predictor")
-or <- outreg(list("First Model" = m1), varLabels = vl, tight = FALSE)
+or <- outreg(list("First Model" = m1), varLabels = vl, 
+             tight = FALSE, centering = "siunitx")
 cat(or, file = "tmpout/t-outregtest.tex")
 @
 
@@ -497,7 +515,6 @@ embedding it in a floating object, Table \ref{tab:A-Regression}.
 
 \input{tmpout/t-outregtest.tex}
 \end{table}
-
 There are many other regression-table-making functions available today. 
 
 \subsection*{Structural equation models}
@@ -518,6 +535,7 @@ textual =~ x4 + x5 + x6
 speed   =~ x7 + x8 + x9'
 output1 <- cfa(HS.model, data = HolzingerSwineford1939, std.lv = TRUE)
 cfa1 <- semTable(output1, fits = "rmsea", paramSets = c("loadings", "latentvariances"), type = "latex", print.results=FALSE)
+cat(cfa1, file = "tmpout/t-cfa1.tex")
 @
 
 \begin{table}
@@ -525,7 +543,6 @@ cfa1 <- semTable(output1, fits = "rmsea", paramSets = c("loadings", "latentvaria
 
 \input{tmpout/t-cfa1.tex}
 \end{table}
-
 A warning is in order. Some R packages will export a table in using
 the \code{longtable} package. We noticed that longtable objects cannot
 be included in LaTeX floating tables. Instead, a longtable provides
@@ -539,7 +556,6 @@ folder are:
 
 <<tmpprint, echo=F>>=
 list.files(tdir)
-unlink("rnw2pdf-report-sweave", recursive = TRUE)
 @
 
 We see here one of the reasons why we suggest that all chunks should
@@ -556,12 +572,11 @@ unlink("rnw2pdf-report-sweave", recursive = TRUE)
 
 \section{Replication Information}
 
-Leave the code chunks below. But the visible words and section name
-should be removed. Session Information is usually not written into
-a report, but an output file is created by the following pieces.
+Leave the code chunks below. Session Information is usually not written
+into a report, but an output file is created by the following pieces.
 
 <<session, include=F>>=
-zz <- "report-instructions.Rout"
+zz <- "instructions.Rout"
 capture.output(sessionInfo(), file = zz, append = FALSE)
 if (!is.null(warnings())){
     capture.output(warnings(), file = zz, append = TRUE)
@@ -577,6 +592,6 @@ par(par.orig)
 @
 
 \bibliographystyle{apalike2}
-\bibliography{theme/R}
+\bibliography{R}
 
 \end{document}

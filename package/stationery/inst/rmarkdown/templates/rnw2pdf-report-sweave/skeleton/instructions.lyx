@@ -1,5 +1,5 @@
-#LyX 2.2 created this file. For more info see http://www.lyx.org/
-\lyxformat 508
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
 \begin_document
 \begin_header
 \save_transient_properties true
@@ -35,6 +35,8 @@ footskip=1.5\baselineskip,
 
 \usepackage{fancyvrb}
 \fvset{listparameters={\setlength{\topsep}{0em}}}
+
+\usepackage{siunitx}
 \end_preamble
 \use_default_options false
 \begin_modules
@@ -56,6 +58,8 @@ sweave
 \font_osf false
 \font_sf_scale 100 100
 \font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
 \graphics default
 \default_output_format default
 \output_sync 0
@@ -94,6 +98,7 @@ sweave
 \suppress_date true
 \justification true
 \use_refstyle 0
+\use_minted 0
 \branch R
 \selected 0
 \filename_suffix 0
@@ -111,7 +116,10 @@ sweave
 \tocdepth 3
 \paragraph_separation skip
 \defskip medskip
-\quotes_language english
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
 \papercolumns 1
 \papersides 1
 \paperpagestyle default
@@ -183,56 +191,6 @@ reportsetup{%
 
 \begin_layout Plain Layout
 
-  author={
-\end_layout
-
-\begin_layout Plain Layout
-
-    lastname=Coauthor,
-\end_layout
-
-\begin_layout Plain Layout
-
-    firstname=Imaginar~E.,
-\end_layout
-
-\begin_layout Plain Layout
-
-    affiliation=CRMDA,
-\end_layout
-
-\begin_layout Plain Layout
-
-    email=imaginary@ku.edu},
-\end_layout
-
-\begin_layout Plain Layout
-
-  author={
-\end_layout
-
-\begin_layout Plain Layout
-
-    lastname=Coauthor,
-\end_layout
-
-\begin_layout Plain Layout
-
-    firstname=Another~Imaginary,
-\end_layout
-
-\begin_layout Plain Layout
-
-    affiliation=CRMDA,
-\end_layout
-
-\begin_layout Plain Layout
-
-    email=imaginary@ku.edu},
-\end_layout
-
-\begin_layout Plain Layout
-
   title={Guide for authoring reports with Sweave code chunks},
 \end_layout
 
@@ -253,6 +211,27 @@ reportsetup{%
 reporthdr
 \end_layout
 
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+% For the address footer, we have an address file:
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+input{addressFooter.tex}
+\end_layout
+
+\begin_layout Plain Layout
+
+% See instructions file for alternative address methodsOptions
+\end_layout
+
 \end_inset
 
 
@@ -264,7 +243,7 @@ status open
 
 \begin_layout Plain Layout
 
-% tmpout directory must exist first
+% Please leave this code:
 \end_layout
 
 \begin_layout Plain Layout
@@ -284,12 +263,12 @@ if(!dir.exists(tdir)) dir.create(tdir, showWarnings=FALSE)
 
 \begin_layout Plain Layout
 
-@
+library(stationery)
 \end_layout
 
 \begin_layout Plain Layout
 
-% Please leave this code: In document Latex options:
+@
 \end_layout
 
 \begin_layout Plain Layout
@@ -307,7 +286,124 @@ topsep}{0em}}}
 
 
 \backslash
-SweaveOpts{prefix.string=tmpout/t, split=FALSE, ae=FALSE, height=5, width=6}
+SweaveOpts{prefix.string=tmpout/t, split=TRUE, ae=FALSE, height=5, width=6}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+% This concerns images in your header!
+\end_layout
+
+\begin_layout Plain Layout
+
+<<texcopy, include=FALSE,echo=FALSE>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+## Put your desired 
+\begin_inset Quotes eld
+\end_inset
+
+logo.pdf
+\begin_inset Quotes erd
+\end_inset
+
+ in the theme folder.
+ If
+\end_layout
+
+\begin_layout Plain Layout
+
+## you don't, you can either use getFiles() to retrieve
+\end_layout
+
+\begin_layout Plain Layout
+
+## one for you, or let blankPDF() create a blank image
+\end_layout
+
+\begin_layout Plain Layout
+
+## for you.
+  Its your choice.
+\end_layout
+
+\begin_layout Plain Layout
+
+## This will retrieve a logo.pdf file if you want
+\end_layout
+
+\begin_layout Plain Layout
+
+getFiles(
+\begin_inset Quotes eld
+\end_inset
+
+logo.pdf
+\begin_inset Quotes erd
+\end_inset
+
+, pkg = "stationery", overwrite = FALSE)
+\end_layout
+
+\begin_layout Plain Layout
+
+## If you do not have a file after that, 
+\end_layout
+
+\begin_layout Plain Layout
+
+## the following will manufacture a blank image for a placeholder
+\end_layout
+
+\begin_layout Plain Layout
+
+if(!file.exists(
+\begin_inset Quotes eld
+\end_inset
+
+theme/logo.pdf
+\begin_inset Quotes erd
+\end_inset
+
+)){
+\end_layout
+
+\begin_layout Plain Layout
+
+  blankPDF(file = "theme/logo.pdf", height=1, width=3.5, messg = 
+\begin_inset Quotes eld
+\end_inset
+
+
+\begin_inset Quotes erd
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+@
 \end_layout
 
 \end_inset
@@ -337,7 +433,7 @@ library(stationery)
 
 \begin_layout Plain Layout
 
-logos <- c(logoright = "logo.pdf", "addressFooter.tex")
+logos <- c(logoright = "logo.pdf")
 \end_layout
 
 \begin_layout Plain Layout
@@ -430,6 +526,7 @@ This shows how we use R
 \begin_inset CommandInset citation
 LatexCommand citep
 key "RCore"
+literal "true"
 
 \end_inset
 
@@ -463,6 +560,7 @@ noweb
 \begin_inset CommandInset citation
 LatexCommand citet
 key "RCore"
+literal "true"
 
 \end_inset
 
@@ -1723,13 +1821,13 @@ If the code makes a LaTeX table that is presentable as is, then we can include
 \end_layout
 
 \begin_layout Subsection*
-Tables that are close, but not ready
+Tables that are almost ready, but not perfect
 \end_layout
 
 \begin_layout Standard
-The key issue is that the table output from an R function is not perfectly
- ready for inclusion in a report.
- The row and column names might need beautification.
+The table output from an R function almost always needs some corrections.
+ To become perfectly ready for inclusion in a report, we may need to correct
+ column titles or variable names.
  That is why, realistically, it is generally easier to write those tables
  into tex files and revise them by hand, and then use LaTeX 
 \begin_inset Quotes eld
@@ -1757,7 +1855,11 @@ input{}
 \begin_layout Standard
 We'd manually copy it to another folder (to protect it from being over-written)
  and manually revise it.
- 
+\end_layout
+
+\begin_layout Standard
+Nevertheless, in the following section, we display tables that require no
+ hand editing.
 \end_layout
 
 \begin_layout Subsection*
@@ -1900,8 +2002,15 @@ status open
 
 \begin_layout Plain Layout
 
-tab1.x <- xtable::xtable(tab1$numericsfmt, caption = "Floating Table with
- Summary Statistics", label = "tab:summ")
+tab1.x <- xtable::xtable(attr(tab1, 
+\begin_inset Quotes eld
+\end_inset
+
+numeric.formatted
+\begin_inset Quotes erd
+\end_inset
+
+), caption = "Floating Table with Summary Statistics", label = "tab:summ")
 \end_layout
 
 \begin_layout Plain Layout
@@ -2079,7 +2188,20 @@ vl <- c("x" = "Excellent Predictor")
 
 \begin_layout Plain Layout
 
-or <- outreg(list("First Model" = m1), varLabels = vl, tight = FALSE)
+or <- outreg(list("First Model" = m1), varLabels = vl, 
+\end_layout
+
+\begin_layout Plain Layout
+
+             tight = FALSE, centering = 
+\begin_inset Quotes eld
+\end_inset
+
+siunitx
+\begin_inset Quotes erd
+\end_inset
+
+)
 \end_layout
 
 \begin_layout Plain Layout
@@ -2276,6 +2398,19 @@ nces"), type = "latex", print.results=FALSE)
 
 \begin_layout Plain Layout
 
+cat(cfa1, file = 
+\begin_inset Quotes eld
+\end_inset
+
+tmpout/t-cfa1.tex
+\begin_inset Quotes erd
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Plain Layout
+
 @
 \end_layout
 
@@ -2383,11 +2518,6 @@ list.files(tdir)
 
 \begin_layout Plain Layout
 
-unlink("rnw2pdf-report-sweave", recursive = TRUE)
-\end_layout
-
-\begin_layout Plain Layout
-
 @
 \end_layout
 
@@ -2457,7 +2587,6 @@ Replication Information
 
 \begin_layout Standard
 Leave the code chunks below.
- But the visible words and section name should be removed.
  Session Information is usually not written into a report, but an output
  file is created by the following pieces.
 \end_layout
@@ -2473,7 +2602,7 @@ status open
 
 \begin_layout Plain Layout
 
-zz <- "report-instructions.Rout"
+zz <- "instructions.Rout"
 \end_layout
 
 \begin_layout Plain Layout
@@ -2555,7 +2684,8 @@ par(par.orig)
 \begin_layout Standard
 \begin_inset CommandInset bibtex
 LatexCommand bibtex
-bibfiles "theme/R"
+btprint "btPrintCited"
+bibfiles "R"
 options "apalike2"
 
 \end_inset
