@@ -251,116 +251,6 @@ reportsetup{%
 reporthdr
 \end_layout
 
-\begin_layout Plain Layout
-
-\end_layout
-
-\begin_layout Plain Layout
-
-% For the address footer, either input an addressFooter file like so:
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-input{addressFooter.tex}
-\end_layout
-
-\begin_layout Plain Layout
-
-% Options
-\end_layout
-
-\begin_layout Plain Layout
-
-% 1.
- If you don't want an address footer, comment out previous
-\end_layout
-
-\begin_layout Plain Layout
-
-% 2.
- If you want to type in your address, replace that with this
-\end_layout
-
-\begin_layout Plain Layout
-
-% (after removing percent signs):
-\end_layout
-
-\begin_layout Plain Layout
-
-%
-\backslash
-urlstyle{tt}
-\end_layout
-
-\begin_layout Plain Layout
-
-%
-\backslash
-footersetup{
-\end_layout
-
-\begin_layout Plain Layout
-
-%  leftside={
-\end_layout
-
-\begin_layout Plain Layout
-
-%    lone={Address line 1}, 
-\end_layout
-
-\begin_layout Plain Layout
-
-%    ltwo={Address line 2}, 
-\end_layout
-
-\begin_layout Plain Layout
-
-%    lthree={City State Zipcode}},
-\end_layout
-
-\begin_layout Plain Layout
-
-%  rightside={
-\end_layout
-
-\begin_layout Plain Layout
-
-%    rone={Web: 
-\backslash
-url{https://crmda.ku.edu}},
-\end_layout
-
-\begin_layout Plain Layout
-
-%    rtwo={Email: 
-\backslash
-href{mailto:you@where.edu}{
-\backslash
-url{you@where.edu}}},
-\end_layout
-
-\begin_layout Plain Layout
-
-%    rthree={Phone: 123-345-5678}}
-\end_layout
-
-\begin_layout Plain Layout
-
-%}
-\end_layout
-
-\begin_layout Plain Layout
-
-%
-\backslash
-guideftr
-\end_layout
-
 \end_inset
 
 
@@ -392,6 +282,11 @@ if(!dir.exists(tdir)) dir.create(tdir, showWarnings=FALSE)
 
 \begin_layout Plain Layout
 
+library(stationery)
+\end_layout
+
+\begin_layout Plain Layout
+
 @
 \end_layout
 
@@ -410,7 +305,7 @@ topsep}{0em}}}
 
 
 \backslash
-SweaveOpts{prefix.string=tmpout/t, split=TRUE, ae=FALSE, height=5, width=6}
+SweaveOpts{prefix.string=tmpout/t, split=TRUE, ae=FALSE, height=4, width=6}
 \end_layout
 
 \end_inset
@@ -498,12 +393,7 @@ status open
 
 \begin_layout Plain Layout
 
-library(stationery)
-\end_layout
-
-\begin_layout Plain Layout
-
-## Put your desired 
+## You can manually copy your desired 
 \begin_inset Quotes eld
 \end_inset
 
@@ -511,23 +401,26 @@ logo.pdf
 \begin_inset Quotes erd
 \end_inset
 
- in the theme folder.
+ into the theme folder.
  
 \end_layout
 
 \begin_layout Plain Layout
 
-logos <- c(logoright = "logo.pdf")
+## Or This will retrieve a logo.pdf file if you want
 \end_layout
 
 \begin_layout Plain Layout
 
-## This will retrieve a logo.pdf file if you want
-\end_layout
+getFiles(
+\begin_inset Quotes eld
+\end_inset
 
-\begin_layout Plain Layout
+logo.pdf
+\begin_inset Quotes erd
+\end_inset
 
-getFiles(logos, pkg = "stationery", overwrite = FALSE)
+, pkg = "stationery", overwrite = FALSE)
 \end_layout
 
 \begin_layout Plain Layout

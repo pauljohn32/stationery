@@ -92,9 +92,24 @@ footskip=1.5\baselineskip,
 }
 \reporthdr
 
-% For the address footer, we have an address file:
+% For the address footer, either input an addressFooter file like so:
 \input{addressFooter.tex}
-% See instructions file for alternative address methodsOptions
+% Options
+% 1. If you don't want an address footer, comment out previous
+% 2. If you want to type in your address, replace that with this
+% (after removing percent signs):
+%\urlstyle{tt}
+%\footersetup{
+%  leftside={
+%    lone={Address line 1}, 
+%    ltwo={Address line 2}, 
+%    lthree={City State Zipcode}},
+%  rightside={
+%    rone={Web: \url{https://crmda.ku.edu}},
+%    rtwo={Email: \href{mailto:you@where.edu}{\url{you@where.edu}}},
+%    rthree={Phone: 123-345-5678}}
+%}
+%\guideftr
 
 % Please leave this code:
 <<tmpout, echo=FALSE, include=FALSE, results=hide>>=
