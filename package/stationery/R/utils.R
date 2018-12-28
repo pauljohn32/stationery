@@ -73,7 +73,7 @@ getFiles <- function(fn, pkg = "stationery",
     if(any(!result))stop("getFiles failed")
     TRUE
 }
-
+NULL
 
 ##' create white background empty PDF
 ##'
@@ -83,7 +83,26 @@ getFiles <- function(fn, pkg = "stationery",
 ##' @param width inches
 ##' @param messg Default is a reminder statement, but set "" if you don't want it.
 ##' @return NULL is returned if file was created. Otherwise error is reported.
+##' importFrom grDevices dev.off
+##' importFrom grDevices pdf
+##' importFrom graphics par
+##' importFrom graphics plot
+##' importFrom graphics text
+##' @export
 ##' @author Paul Johnson
+##' @examples
+##' tdir <- tempdir()
+##' dir.create(file.path(tdir, "blanks"))
+##' fn1 <- file.path(tdir, "blanks", "blank1.pdf")
+##' blankPDF(file = fn1, messg = "Do you want a message?"))
+##' ## Please inspect
+##' if(interactive()) browseURL(fn1)
+##' fn2 <- file.path(tdir, "blanks", blank2.pdf")
+##' blankPDF(file = fn2, height = 2, width = 3, messg = "")
+##' if(interactive()) browseURL(fn2)
+##' ## delete test directory
+##' unlink(file.path(tdir, "blanks"), recursive = TRUE)
+##' 
 blankPDF <- function(file, height=1, width=3.5, messg = "Your Logo Could Be Here"){
     pdf(file = file, height=height, width=width, paper="special", pointsize=16)
     par(mar=c(0,0,0,0)) 
