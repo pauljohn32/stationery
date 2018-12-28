@@ -1,5 +1,5 @@
-#LyX 2.2 created this file. For more info see http://www.lyx.org/
-\lyxformat 508
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
 \begin_document
 \begin_header
 \save_transient_properties true
@@ -48,6 +48,8 @@ sweave
 \font_osf false
 \font_sf_scale 100 100
 \font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
 \graphics default
 \default_output_format default
 \output_sync 0
@@ -86,6 +88,7 @@ sweave
 \suppress_date true
 \justification true
 \use_refstyle 0
+\use_minted 0
 \branch R
 \selected 0
 \filename_suffix 0
@@ -103,7 +106,10 @@ sweave
 \tocdepth 3
 \paragraph_separation skip
 \defskip medskip
-\quotes_language english
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
 \papercolumns 1
 \papersides 1
 \paperpagestyle default
@@ -215,7 +221,7 @@ reportsetup{%
 
 \begin_layout Plain Layout
 
-    affiliation=Some other Institute, 
+    affiliation=CRMDA, 
 \end_layout
 
 \begin_layout Plain Layout
@@ -243,6 +249,82 @@ reportsetup{%
 
 \backslash
 reporthdr
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+urlstyle{tt}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+footersetup{
+\end_layout
+
+\begin_layout Plain Layout
+
+  leftside={
+\end_layout
+
+\begin_layout Plain Layout
+
+    lone={Address line 1}, 
+\end_layout
+
+\begin_layout Plain Layout
+
+    ltwo={Address line 2}, 
+\end_layout
+
+\begin_layout Plain Layout
+
+    lthree={City State Zipcode}},
+\end_layout
+
+\begin_layout Plain Layout
+
+  rightside={
+\end_layout
+
+\begin_layout Plain Layout
+
+    rone={Web: 
+\backslash
+url{https://crmda.ku.edu}},
+\end_layout
+
+\begin_layout Plain Layout
+
+    rtwo={Email: 
+\backslash
+href{mailto:you@where.edu}{
+\backslash
+url{you@where.edu}}},
+\end_layout
+
+\begin_layout Plain Layout
+
+    rthree={Phone: 123-345-5678}}
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+guideftr
 \end_layout
 
 \end_inset
@@ -333,7 +415,7 @@ options(device = pdf)
 
 \begin_layout Plain Layout
 
-options(width=160, prompt=" ", continue="  ")
+options(width=80, prompt=" ", continue="  ")
 \end_layout
 
 \begin_layout Plain Layout
@@ -398,7 +480,7 @@ library(stationery)
 
 \begin_layout Plain Layout
 
-logos <- c(logoright = "logo.pdf", address = "addressFooter.tex")
+logos <- c(logoright = "logo.pdf")
 \end_layout
 
 \begin_layout Plain Layout
@@ -433,6 +515,7 @@ How to write reports with R
 \begin_inset CommandInset citation
 LatexCommand citep
 key "RCore"
+literal "true"
 
 \end_inset
 
