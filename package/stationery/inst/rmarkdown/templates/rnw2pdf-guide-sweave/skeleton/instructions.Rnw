@@ -1,4 +1,4 @@
-%% LyX 2.2.3 created this file.  For more info, see http://www.lyx.org/.
+%% LyX 2.3.1 created this file.  For more info, see http://www.lyx.org/.
 %% Do not edit unless you really know what you are doing.
 \documentclass[11pt,letterpaper,english]{article}
 \usepackage{lmodern}
@@ -14,7 +14,6 @@
  bookmarks=true,bookmarksnumbered=false,bookmarksopen=false,
  breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false]
  {hyperref}
-\usepackage{breakurl}
 
 \makeatletter
 
@@ -84,28 +83,73 @@ footskip=1.5\baselineskip,
 }
 \guidehdr
 
-<<Roptions, echo=FALSE, include=FALSE, results=hide>>=
+% For the address footer, either input an addressFooter file like so:
+\input{addressFooter.tex}
+% Options
+% 1. If you don't want an address footer, comment out previous
+% 2. If you want to type in your address, replace that with this
+% (after removing percent signs):
+%\urlstyle{tt}
+%\footersetup{
+%  leftside={
+%    lone={Address line 1}, 
+%    ltwo={Address line 2}, 
+%    lthree={City State Zipcode}},
+%  rightside={
+%    rone={Web: \url{https://crmda.ku.edu}},
+%    rtwo={Email: \href{mailto:you@where.edu}{\url{you@where.edu}}},
+%    rthree={Phone: 123-345-5678}}
+%}
+%\guideftr
+
+% Please leave this code
+<<ignoremeRsetup, echo=FALSE, include=FALSE, results=hide>>=
+if(!dir.exists("tmpout")) dir.create("tmpout", showWarnings=FALSE)
+library(stationery)
 opts.orig <- options()
-options(width=100, prompt=" ", continue="  ")
+options(width=80, prompt=" ", continue="  ")
 options(useFancyQuotes = FALSE) 
 set.seed(12345)
+par.orig <- par(no.readonly=TRUE)
 options(SweaveHooks=list(fig=function() par(ps=10)))
 pdf.options(onefile=FALSE,family="Times",pointsize=10)
-if(!dir.exists("tmpout")) dir.create("tmpout", showWarnings=FALSE)
 @
-
 % In document Latex options:
 \fvset{listparameters={\setlength{\topsep}{0em}}}
-\SweaveOpts{prefix.string=tmpout/t, split=FALSE, ae=FALSE, height=3, width=5}
+\SweaveOpts{prefix.string=tmpout/t, split=TRUE, ae=FALSE, height=4, width=6}
 
-<<texcopy, include=FALSE, echo=FALSE, results=hide>>=
-library(stationery)
-## If theme directory does not have required images or TeX files
-## we need to retrieve them and put them in "theme" directory. 
-logos <- c(logoleft = "logoleft.pdf", 
-            logoright = "logo-vert.pdf")
-getFiles(logos, pkg = "stationery")
+% We need 2 image files for logos, top left (logoleft) and right
+% (logo-vert). 
+% You can manually copy your desired image files
+% "logoleft.pdf" and "logo-vert.pdf" into the theme folder. 
+% Or run this to retrieve or create them:
+<<ignoremetexcopy, include=FALSE, echo=FALSE, results=hide>>=
+## The logos we need are
+logos <- c("logoleft.pdf", "logo-vert.pdf")
+## This will retrieve logo files from a designated package:
+getFiles(logos, pkg = "stationery", overwrite = FALSE)
+## If you do not have a file after that, 
+## the following will manufacture a blank images for placeholders
+if(!file.exists("theme/logoleft.pdf")){
+  blankPDF(file = "theme/logoleft.pdf", height=1.2, width=1.2, messg = "")
+}
+if(!file.exists("theme/logo-vert.pdf")){
+  blankPDF(file = "theme/logo-vert.pdf", height=2, width=1.5, messg = "")
+}
 @
+
+%The listings class used here allows within-document style
+%changes. R input boxes are governed by 
+%"Rsize", "Rbackground" and "Rcolor", while R output boxes depend on
+%"Routsize", "Routbackground", and "Routcolor". Colors
+%can be specified in many ways, as shown here
+%\def\Rsize{\huge\ttfamily}
+%\def\Routsize{\huge}
+%\def\Rbackground{\color[gray]{0.90}}
+%\def\Routbackground{\color[gray]{0.40}}
+%\def\Rcolor{\color[gray]{0.60}
+%\def\Routcolor{\color[rgb]{0.9, 0.1, 0.1}]}
+%\def\Rcommentcolor{\color{green}}
 \begin{abstract}
 \noindent This shows how we use R \citep{RCore} to make guide documents
 using the CRMDA style. This is a LaTeX ``noweb'' guide document
@@ -220,13 +264,15 @@ as the project writeup.
 \inputencoding{latin9}\begin{lstlisting}
 rnw2pdf("skeleton.lyx", engine = "Sweave")
 \end{lstlisting}
-\inputencoding{utf8}\item The shell script \code{rnw2pdf.sh} is provided in the same folder.
+\inputencoding{utf8}
+\item The shell script \code{rnw2pdf.sh} is provided in the same folder.
 It can be run in the shell as
 
 \inputencoding{latin9}\begin{lstlisting}
 $ ./rnw2pdf.sh --engine='"Sweave"' skeleton.lyx
 \end{lstlisting}
-\inputencoding{utf8}\item In case you want to track the steps of compiling one by one, open
+\inputencoding{utf8}
+\item In case you want to track the steps of compiling one by one, open
 the file in LyX. Use the pull down menu \code{File} $\rightarrow$
 \code{Export} $\rightarrow$ \code{Sweave}. That will create a file
 named ``skeleton.Rnw''. This is the equivalent of the command line
@@ -338,7 +384,7 @@ has full details. This is a brief highlight.
 
 The document preamble includes settings for the LaTeX package listings,
 which is used to display code input and output. Inline references
-to \code{code} can be marked for highlighting (by LaTeX macro ``\textbackslash{}code'')
+to \code{code} can be marked for highlighting (by LaTeX macro ``\textbackslash code'')
 that will mimic the color styling of the code displays.
 
 One advantage of using our Sweave-based LaTeX documents is the listings
@@ -354,10 +400,10 @@ the indicated space, it may be necessary to fiddle with the font size,
 for example. Here are the highlights: 
 \begin{enumerate}
 \item The font size and colors of R input chunks are controlled by LaTeX
-settings \textquotedbl{}Rsize\textquotedbl{}, \textquotedbl{}Rbackground\textquotedbl{}
-and \textquotedbl{}Rcolor\textquotedbl{}. Output displays depend on
-\textquotedbl{}Routsize\textquotedbl{}, \textquotedbl{}Routbackground\textquotedbl{},
-and \textquotedbl{}Routcolor\textquotedbl{}. 
+settings \textquotedbl Rsize\textquotedbl , \textquotedbl Rbackground\textquotedbl{}
+and \textquotedbl Rcolor\textquotedbl . Output displays depend on
+\textquotedbl Routsize\textquotedbl , \textquotedbl Routbackground\textquotedbl ,
+and \textquotedbl Routcolor\textquotedbl . 
 \item The font can be adjusted by declarations like this
 
 \inputencoding{latin9}\begin{lstlisting}
@@ -377,7 +423,8 @@ chunk to adjust just that one chunk.
 \def\Routcolor{\color[rgb]{0.9, 0.1, 0.1}]}
 \def\Rcommentcolor{\color{green}}
 \end{lstlisting}
-\inputencoding{utf8}\end{enumerate}
+\inputencoding{utf8}
+\end{enumerate}
 To demonstrate this customization, compare these two chunks. The first
 uses the defaults:
 
@@ -463,7 +510,6 @@ we demonstrate how that can be included in a numbered floating table.
 
 \input{tmpout/t-pois11.tex}
 \end{table}
-
 The reader has not yet had a chance to see the code chunk that calculated
 the regression. The code chunk that ran the regression was marked
 ``include=F, results=hide''. To show that code, there are (at least)
@@ -481,7 +527,7 @@ Because this note is included as an R vignette, and the R packaging
 policy prohibits the use of split=T in vignettes, this approach cannot
 be used in this document. 
 \item An standard approach using Sweave itself, without split, is to create
-another chunk and then display it inside double ``<\textcompwordmark{}<>\textcompwordmark{}>''
+another chunk and then display it inside double ``<\textcompwordmark <>\textcompwordmark >''
 brackets. Here we turn off evaluation (set eval=F) to prevent R from
 re-running the code chunk:
 
@@ -504,7 +550,8 @@ dataFrame <- data.frame(x1 = rnorm(100, m = 13, s = 23), x2 = rnorm(100, m = 13,
 \section{References}
 
 \bibliographystyle{apalike2}
-\bibliography{theme/R}
+\bibliography{R}
+
 
 \section{Session Info\label{sec:Session-Info}}
 
