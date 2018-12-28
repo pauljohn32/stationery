@@ -380,6 +380,115 @@ SweaveOpts{prefix.string=tmpout/t, split=TRUE, ae=FALSE, height=4, width=6}
 \end_layout
 
 \begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+% This concerns images in your header!
+\end_layout
+
+\begin_layout Plain Layout
+
+<<ignoremetexcopy, include=FALSE,echo=FALSE>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+## Put your desired 
+\begin_inset Quotes eld
+\end_inset
+
+logo.pdf
+\begin_inset Quotes erd
+\end_inset
+
+ in the theme folder.
+ If
+\end_layout
+
+\begin_layout Plain Layout
+
+## you don't, you can either use getFiles() to retrieve
+\end_layout
+
+\begin_layout Plain Layout
+
+## one for you, or let blankPDF() create a blank image
+\end_layout
+
+\begin_layout Plain Layout
+
+## for you.
+  Its your choice.
+\end_layout
+
+\begin_layout Plain Layout
+
+## This will retrieve a logo.pdf file if you want
+\end_layout
+
+\begin_layout Plain Layout
+
+getFiles(
+\begin_inset Quotes eld
+\end_inset
+
+logo.pdf
+\begin_inset Quotes erd
+\end_inset
+
+, pkg = "stationery", overwrite = FALSE)
+\end_layout
+
+\begin_layout Plain Layout
+
+## If you do not have a file after that, 
+\end_layout
+
+\begin_layout Plain Layout
+
+## the following will manufacture a blank image for a placeholder
+\end_layout
+
+\begin_layout Plain Layout
+
+if(!file.exists(
+\begin_inset Quotes eld
+\end_inset
+
+theme/logo.pdf
+\begin_inset Quotes erd
+\end_inset
+
+)){
+\end_layout
+
+\begin_layout Plain Layout
+
+  blankPDF(file = "theme/logo.pdf", height=1, width=3.5, messg = 
+\begin_inset Quotes eld
+\end_inset
+
+
+\begin_inset Quotes erd
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
 
 \end_layout
 
