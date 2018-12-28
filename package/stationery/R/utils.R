@@ -44,6 +44,7 @@
 ##' getFiles("logo.pdf", pkg = "stationery", overwrite = TRUE, outputdir = file.path(tdir, "theme"),
 ##'          backup = TRUE)
 ##' list.files(file.path(tdir, "theme"))
+##' unlink(tdir, recursive = TRUE)
 getFiles <- function(fn, pkg = "stationery",
                      overwrite = FALSE, backup = overwrite,
                      pkgdir = "theme", outputdir = "theme")
