@@ -949,7 +949,7 @@ frametitle{References}
 \align left
 \begin_inset CommandInset bibtex
 LatexCommand bibtex
-bibfiles "theme/R"
+bibfiles "R"
 options "apalike2"
 
 \end_inset
