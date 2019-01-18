@@ -74,6 +74,8 @@ Fill in your name, title, email, tags.
 Please do use sections and subsections wish brief titles
 that are well crafted to guide the reader's eye.
 
+Citation with [@Rcore]
+
 One equation to test
 
 \[
