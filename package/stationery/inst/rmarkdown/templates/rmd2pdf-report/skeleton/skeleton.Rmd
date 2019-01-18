@@ -22,6 +22,7 @@ output:
     pandoc_args: --listings
     template: "theme/report-template.tex"
 logo: theme/logo.pdf
+bibliography: R.bib
 header-includes:
 - \usepackage{xcolor}
 addr:

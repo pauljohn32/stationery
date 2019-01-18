@@ -28,7 +28,7 @@ output:
     pandoc_args: [
       "--listings"
     ]
-bibliography: "theme/R.bib"
+bibliography: "R.bib"
 table: true
 fontsize: 12pt
 header-includes:
@@ -301,8 +301,6 @@ On the other hand, if only the date is parenthesized, the
 But if we want to write names, we can get that with
 "\textbackslash{}citeyearpar", as in Hastie, Tibshirani, and 
 Friedman \citeyearpar{hastie_elements_2009}.
-
-The bibliographic format is using the apacite package for LaTeX.
 
 
 
