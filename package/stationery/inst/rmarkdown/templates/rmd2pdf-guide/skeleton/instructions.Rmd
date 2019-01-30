@@ -3,24 +3,22 @@ title: "Guide for writing with Rmd to create PDF Guides"
 subtitle: "All the News that is Fit to Print"
 guideurl: http://crmda.ku.edu/guides
 author:
-- name: Paul Johnson 
+- name: Paul Johnson
   affiliation: CRMDA
   description: Director
   email: pauljohn@ku.edu
-- name:  Brent Kaplan 
+- name:  Brent Kaplan
   affiliation: CRMDA
   description: GRA
   email: bkaplan4@ku.edu
-output: 
+output:
   pdf_document:
     citation_package: natbib
     keep_tex: true
     fig_caption: true
     latex_engine: pdflatex
     template:  "theme/guide-template.tex"
-    pandoc_args: [
-      "--listings"
-    ]
+    pandoc_args: ["--listings"]
 addr:
     l1: 1425 Jayhawk Blvd
     l2: Watson Library, Suite 470
@@ -48,7 +46,7 @@ options(width = 70)
 
 ```{r themecopy, include = FALSE}
 library(stationery)
-## If theme directory does not have required images, retrieve them. 
+## If theme directory does not have required images, retrieve them.
 logos <- c("logoleft.pdf", "logo-vert.pdf", "R.bib")
 getFiles(logos, pkg = "stationery")
 ## Theme folder should already have theme files, but in case it does not:
@@ -56,15 +54,15 @@ themefiles <- c("guide-template.tex")
 getFiles(themefiles, pkg = "stationery")
 ```
 
-\begin{abstract} 
+\begin{abstract}
 Guide documents are educational in nature. They show
 more code and raw output than report documents would.  This abstract
-is done in LaTeX markup. 
+is done in LaTeX markup.
 \end{abstract}
-  
+
 # Nuts and Bolts
 
-## Fix the title and other document-specific information 
+## Fix the title and other document-specific information
 
 The header has a place to insert a title, subtitle, email
 addresses. Do not change the `pdf_document` settings unless you want
@@ -78,7 +76,7 @@ To compile, either start R and use the function `rmd2pdf` or use the
 shell script `rmd2pdf.sh` that is in the same directory as the `Rmd`
 file. The function `rmd2pdf` (same as the script) will receive
 arguments that override the settings within the document header. For
-example, one could replace the template by specifying 
+example, one could replace the template by specifying
 
 ```
 rmd2pdf("instructions.Rmd", template = "theme/myothertemplate.tex")
@@ -168,7 +166,7 @@ header-includes:
 -  \usepackage{fancybox}
 ```
 
-We found out we needed `amssymb` in several projects. 
+We found out we needed `amssymb` in several projects.
 
 # `R` code chunks {-}
 
@@ -176,7 +174,7 @@ This document includes R[@RCore] code chunks.
 
 In guide documents, we *do* generally include input and output from code
 chunks. There is a vignette "code_chunks" distributed with this
-package to demonstrate. 
+package to demonstrate.
 
 Please **DO** name each chunk. This improves your ability to
 troubleshoot the compiling and tangling processes.
@@ -236,7 +234,7 @@ print(xt, comment=FALSE, include.rownames=FALSE, floating=TRUE,
 For whatever reason, the custom is that captoins (titles) of tables are placed
 **on top** while titles for figures are placed on the bottom.
 
-As explained in the `stationery` vignette `code_chunks`, many 
+As explained in the `stationery` vignette `code_chunks`, many
 options are avaiable for code chunks.
 
 
@@ -267,7 +265,7 @@ citations use the ampersand, where humans might use the word "and".
 On the other hand, if only the date is parenthesized, the
 "\textbackslash{}citet" results in \citet{hastie_elements_2009}.
 But if we want to write names, we can get that with
-"\textbackslash{}citeyearpar", as in Hastie, Tibshirani, and 
+"\textbackslash{}citeyearpar", as in Hastie, Tibshirani, and
 Friedman \citeyearpar{hastie_elements_2009}.
 
 The bibliographic format is using the apacite package for LaTeX.
