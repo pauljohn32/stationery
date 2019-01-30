@@ -23,7 +23,7 @@ addr:
     r3: "Phone: 123-345-5678"
 logoleft: theme/logoleft.pdf
 logoright: theme/logo-vert.pdf
-output: 
+output:
   pdf_document:
     toc: true
     toc_depth: 1
@@ -31,9 +31,7 @@ output:
     fig_caption: yes
     latex_engine: pdflatex
     highlight: haddock
-    pandoc_args: [
-        --listings
-    ]
+    pandoc_args: [--listings]
     template:  theme/guide-template.tex
 fontsize: 11pt
 bibliography: theme/R.bib
@@ -63,15 +61,15 @@ getFiles(themefiles, pkg = "stationery")
 
 \begin{abstract}
 \noindent
-This is an abstract. Please include a terse, yet descriptive 
-statement here of less than 200 words. It should avoid 
+This is an abstract. Please include a terse, yet descriptive
+statement here of less than 200 words. It should avoid
 colloquialisms and polysyllabic profundities.
 \end{abstract}
 
 # Header Level 1 with a number
 
 At the last minute, we changed the template to use APA6 style
-citations and it is important to see if that works on your system. 
+citations and it is important to see if that works on your system.
 
 *Lets test citations*. This citation uses the markdown method
 [@RCore]. It inserts parentheses, name and date. Can use natbib
@@ -80,7 +78,7 @@ format citations as well, please see the instructions file.
 
 # Header Level 1 without number {-}
 
-If you DO NOT want section numbers, insert {-} to prevent the 
+If you DO NOT want section numbers, insert {-} to prevent the
 compiler from inserting them.
 
 ## Make minimal changes to the top part. {-}
