@@ -269,7 +269,12 @@ guidehdr
 
 \begin_layout Plain Layout
 
-% For the address footer, we have an address file:
+\end_layout
+
+\begin_layout Plain Layout
+
+% 1.
+ If you have an address file, use it here:
 \end_layout
 
 \begin_layout Plain Layout
@@ -281,7 +286,106 @@ input{addressFooter.tex}
 
 \begin_layout Plain Layout
 
-% See instructions file for alternative address methodsOptions
+% 2.
+ If you don't have an address file, remove % signs and fill in your information
+\end_layout
+
+\begin_layout Plain Layout
+
+% This stanza must end with 
+\begin_inset Quotes eld
+\end_inset
+
+
+\backslash
+guideftr
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+% (after removing percent signs):
+\end_layout
+
+\begin_layout Plain Layout
+
+%
+\backslash
+urlstyle{tt}
+\end_layout
+
+\begin_layout Plain Layout
+
+%
+\backslash
+footersetup{
+\end_layout
+
+\begin_layout Plain Layout
+
+%  leftside={
+\end_layout
+
+\begin_layout Plain Layout
+
+%    lone={Address line 1}, 
+\end_layout
+
+\begin_layout Plain Layout
+
+%    ltwo={Address line 2}, 
+\end_layout
+
+\begin_layout Plain Layout
+
+%    lthree={City State Zipcode}},
+\end_layout
+
+\begin_layout Plain Layout
+
+%  rightside={
+\end_layout
+
+\begin_layout Plain Layout
+
+%    rone={Web: 
+\backslash
+url{https://crmda.ku.edu}},
+\end_layout
+
+\begin_layout Plain Layout
+
+%    rtwo={Email: 
+\backslash
+href{mailto:you@where.edu}{
+\backslash
+url{you@where.edu}}},
+\end_layout
+
+\begin_layout Plain Layout
+
+%    rthree={Phone: 123-345-5678}}
+\end_layout
+
+\begin_layout Plain Layout
+
+%}
+\end_layout
+
+\begin_layout Plain Layout
+
+%
+\backslash
+guideftr
+\end_layout
+
+\begin_layout Plain Layout
+
+% 3.
+ If you don't want an address footer, just delete this subsection.
 \end_layout
 
 \end_inset

@@ -257,19 +257,119 @@ reporthdr
 
 \begin_layout Plain Layout
 
-% For the address footer, either input an addressFooter file like so:
+% 1.
+ If you have an address file, use it here:
 \end_layout
 
 \begin_layout Plain Layout
 
-
+% 
 \backslash
 input{addressFooter.tex}
 \end_layout
 
 \begin_layout Plain Layout
 
-% See instructions file for alternatives
+% 2.
+ If you don't have an address file, remove % signs and fill in your information
+\end_layout
+
+\begin_layout Plain Layout
+
+% This stanza must end with 
+\begin_inset Quotes eld
+\end_inset
+
+
+\backslash
+guideftr
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+% (after removing percent signs):
+\end_layout
+
+\begin_layout Plain Layout
+
+%
+\backslash
+urlstyle{tt}
+\end_layout
+
+\begin_layout Plain Layout
+
+%
+\backslash
+footersetup{
+\end_layout
+
+\begin_layout Plain Layout
+
+%  leftside={
+\end_layout
+
+\begin_layout Plain Layout
+
+%    lone={Address line 1}, 
+\end_layout
+
+\begin_layout Plain Layout
+
+%    ltwo={Address line 2}, 
+\end_layout
+
+\begin_layout Plain Layout
+
+%    lthree={City State Zipcode}},
+\end_layout
+
+\begin_layout Plain Layout
+
+%  rightside={
+\end_layout
+
+\begin_layout Plain Layout
+
+%    rone={Web: 
+\backslash
+url{https://crmda.ku.edu}},
+\end_layout
+
+\begin_layout Plain Layout
+
+%    rtwo={Email: 
+\backslash
+href{mailto:you@where.edu}{
+\backslash
+url{you@where.edu}}},
+\end_layout
+
+\begin_layout Plain Layout
+
+%    rthree={Phone: 123-345-5678}}
+\end_layout
+
+\begin_layout Plain Layout
+
+%}
+\end_layout
+
+\begin_layout Plain Layout
+
+%
+\backslash
+guideftr
+\end_layout
+
+\begin_layout Plain Layout
+
+% 3.
+ If you don't want an address footer, just delete this subsection.
 \end_layout
 
 \end_inset
@@ -390,6 +490,12 @@ status open
 
 \begin_layout Plain Layout
 
+% Can delete this chunk after first usage because theme logo files will
+ be available
+\end_layout
+
+\begin_layout Plain Layout
+
 <<ignoremetexcopy, include=FALSE,echo=FALSE>>=
 \end_layout
 
@@ -505,7 +611,7 @@ Introduction
 \end_layout
 
 \begin_layout Standard
-How to write reports with R 
+This is a document template for LaTeX files integrated with R 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "RCore"
@@ -527,114 +633,69 @@ Sweave
 \end_layout
 
 \begin_layout Standard
-Please see the guide documents which are distributed with the stationery
- package.
- The guide 
-\begin_inset Quotes eld
-\end_inset
-
-code chunks
-\begin_inset Quotes erd
-\end_inset
-
- provides an overview of Sweave and knitr.
-\end_layout
-
-\begin_layout Section*
-Section with no number
+This skeleton document was created by these commands in R:
 \end_layout
 
 \begin_layout Standard
-Whether a section or subsection is numbered in LaTeX output is determined
- by environment used.
- The markup 
-\begin_inset Flex Code
+\begin_inset ERT
 status open
 
 \begin_layout Plain Layout
 
-\backslash
-section{}
+<<eval=F, echo=T>>=
 \end_layout
-
-\end_inset
-
- asks for a numbered section, while the insertion of an asterix 
-\begin_inset Flex Code
-status open
 
 \begin_layout Plain Layout
 
-\backslash
-section*{}
+library(stationery)
 \end_layout
-
-\end_inset
-
- prevents numbering.
- 
-\end_layout
-
-\begin_layout Subsection*
-Make minimal changes to the top part
-\end_layout
-
-\begin_layout Standard
-Make small changes, test whether the document compiles.
-\end_layout
-
-\begin_layout Standard
-Start by putting your title & name in the top block.
-\end_layout
-
-\begin_layout Subsection*
-LyX warning
-\end_layout
-
-\begin_layout Standard
-Reminder: Don't change document margins with LyX menus.
- You need to edit the preamble for that.
-\end_layout
-
-\begin_layout Section
-\begin_inset Flex Code
-status open
 
 \begin_layout Plain Layout
-R
+
+initWriteup("rnw2pdf-report-sweave")
 \end_layout
 
-\end_inset
-
- Code Chunks
-\end_layout
-
-\begin_layout Standard
-Code chunks begin with 
-\begin_inset Quotes eld
-\end_inset
-
-<<>>=
-\begin_inset Quotes erd
-\end_inset
-
- and end with a last line 
-\begin_inset Quotes eld
-\end_inset
+\begin_layout Plain Layout
 
 @
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+See the vignettes provided with the stationery package.
+ See the 
+\begin_inset Quotes eld
+\end_inset
+
+
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+instructions
+\end_layout
+
+\end_inset
+
+
 \begin_inset Quotes erd
+\end_inset
+
+ file that was created by 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+initWriteup
+\end_layout
+
 \end_inset
 
 .
- 
-\end_layout
-
-\begin_layout Standard
-When inserting code chunks in LyX, I type them in LaTeX code boxes, because
- that keeps them visually separate.
- The LyX team has created a code chunk environment (see the pull down menu)
- but I have not benefitted from it.
 \end_layout
 
 \begin_layout Standard
@@ -704,7 +765,7 @@ options "apalike2"
 
 \begin_layout Subsection*
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Subsection*
 Session Info
