@@ -1,5 +1,5 @@
-#LyX 2.2 created this file. For more info see http://www.lyx.org/
-\lyxformat 508
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
 \begin_document
 \begin_header
 \save_transient_properties true
@@ -26,7 +26,7 @@ footskip=1.5\baselineskip,
 \usepackage{multicol}
 \usepackage{dcolumn}
 \usepackage{booktabs}
-
+\usepackage{siunitx}
 
 \input{theme/reportPreambleHeader.tex}
 \input{theme/preambleFooter.tex}
@@ -56,6 +56,8 @@ sweave
 \font_osf false
 \font_sf_scale 100 100
 \font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
 \graphics default
 \default_output_format default
 \output_sync 0
@@ -94,6 +96,7 @@ sweave
 \suppress_date true
 \justification true
 \use_refstyle 0
+\use_minted 0
 \branch R
 \selected 0
 \filename_suffix 0
@@ -111,7 +114,10 @@ sweave
 \tocdepth 3
 \paragraph_separation skip
 \defskip medskip
-\quotes_language english
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
 \papercolumns 1
 \papersides 1
 \paperpagestyle default
@@ -430,6 +436,7 @@ This shows how we use R
 \begin_inset CommandInset citation
 LatexCommand citep
 key "RCore"
+literal "true"
 
 \end_inset
 
@@ -463,6 +470,7 @@ noweb
 \begin_inset CommandInset citation
 LatexCommand citet
 key "RCore"
+literal "true"
 
 \end_inset
 
@@ -640,49 +648,7 @@ initWriteup()
 \end_inset
 
  function is called.
-\end_layout
-
-\begin_layout Standard
-The theme folder will also need files for the organizational logos or address
- information (
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-addressFooter.tex
-\end_layout
-
-\end_inset
-
-).
- These are not copied into the folder automatically.
- There is an R code chunk above called 
-\begin_inset Quotes eld
-\end_inset
-
-texcopy
-\begin_inset Quotes erd
-\end_inset
-
-.
- It will copy configuration files from a package into the theme folder.
- The vignette 
-\begin_inset Quotes eld
-\end_inset
-
-stationery
-\begin_inset Quotes erd
-\end_inset
-
- describes the approach and how it can be customized.
-\end_layout
-
-\begin_layout Standard
-That means authors are free to edit them to fit their needs.
-\end_layout
-
-\begin_layout Standard
-If the author makes an error in editing a theme file, the original version
+ If the author makes an error in editing a theme file, the original version
  of the theme is available in the package's install folder.
  The files are in the top level folder named 
 \begin_inset Quotes eld
@@ -703,6 +669,25 @@ theme
 \end_inset
 
 .
+\end_layout
+
+\begin_layout Standard
+We have example address information in (
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+addressFooter.tex
+\end_layout
+
+\end_inset
+
+).
+ This file was in the theme folder in the past, but users had trouble finding
+ it.
+ So now it is in the same document as the document itself.
+ For the same reason, the bibliography file is in the same directory.
+ 
 \end_layout
 
 \begin_layout Section
@@ -1900,8 +1885,13 @@ status open
 
 \begin_layout Plain Layout
 
-tab1.x <- xtable::xtable(tab1$numericsfmt, caption = "Floating Table with
- Summary Statistics", label = "tab:summ")
+library(xtable)
+\end_layout
+
+\begin_layout Plain Layout
+
+tab1.x <- xtable(tab1$numerics, caption = "Floating Table with Summary Statistics
+", label = "tab:summ")
 \end_layout
 
 \begin_layout Plain Layout

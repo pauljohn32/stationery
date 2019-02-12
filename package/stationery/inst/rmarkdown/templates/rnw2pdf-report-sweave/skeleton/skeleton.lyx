@@ -511,15 +511,7 @@ Introduction
 \end_layout
 
 \begin_layout Standard
-How to write reports with R 
-\begin_inset CommandInset citation
-LatexCommand citep
-key "RCore"
-literal "true"
-
-\end_inset
-
- using the 
+This is a document template for using the 
 \begin_inset Flex Code
 status open
 
@@ -529,13 +521,79 @@ Sweave
 
 \end_inset
 
- code chunk engine.
+ code chunk engine with R 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "RCore"
+literal "true"
+
+\end_inset
+
+ to produce a report document.
+ This includes a working example of the bibliographic process used with
+ LaTeX documents.
+ This skeleton was likely created by running this in R:
 \end_layout
 
 \begin_layout Standard
-Please see the guide documents which are distributed with the stationery
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<eval=F>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+library(stationery)
+\end_layout
+
+\begin_layout Plain Layout
+
+initWriteup(
+\begin_inset Quotes eld
+\end_inset
+
+rnw2pdf-report-sweave
+\begin_inset Quotes erd
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+There should be a brief 
+\begin_inset Quotes eld
+\end_inset
+
+instructions
+\begin_inset Quotes erd
+\end_inset
+
+ document in the same folder where you found this document.
+ Please also see the vignette documents which are distributed with the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+stationery
+\end_layout
+
+\end_inset
+
  package.
- The guide 
+ The vignette document 
 \begin_inset Quotes eld
 \end_inset
 
@@ -544,62 +602,6 @@ code chunks
 \end_inset
 
  provides an overview of Sweave and knitr.
-\end_layout
-
-\begin_layout Section*
-Section with no number
-\end_layout
-
-\begin_layout Standard
-Whether a section or subsection is numbered in LaTeX output is determined
- by environment used.
- The markup 
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-
-\backslash
-section{}
-\end_layout
-
-\end_inset
-
- asks for a numbered section, while the insertion of an asterix 
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-
-\backslash
-section*{}
-\end_layout
-
-\end_inset
-
- prevents numbering.
- 
-\end_layout
-
-\begin_layout Subsection*
-Make minimal changes to the top part
-\end_layout
-
-\begin_layout Standard
-Make small changes, test whether the document compiles.
-\end_layout
-
-\begin_layout Standard
-Start by putting your title & name in the top block.
-\end_layout
-
-\begin_layout Subsection*
-LyX warning
-\end_layout
-
-\begin_layout Standard
-Reminder: Don't change document margins with LyX menus.
- You need to edit the preamble for that.
 \end_layout
 
 \begin_layout Section
@@ -640,7 +642,7 @@ Code chunks begin with
 When inserting code chunks in LyX, I type them in LaTeX code boxes, because
  that keeps them visually separate.
  The LyX team has created a code chunk environment (see the pull down menu)
- but I have not benefitted from it.
+ but I have not benefited from it.
 \end_layout
 
 \begin_layout Standard
