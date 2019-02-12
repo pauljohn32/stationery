@@ -1,4 +1,4 @@
-%% LyX 2.2.3 created this file.  For more info, see http://www.lyx.org/.
+%% LyX 2.3.1 created this file.  For more info, see http://www.lyx.org/.
 %% Do not edit unless you really know what you are doing.
 \documentclass[11pt,letterpaper,english]{extarticle}
 \usepackage{lmodern}
@@ -14,7 +14,6 @@
  bookmarks=true,bookmarksnumbered=false,bookmarksopen=false,
  breaklinks=true,pdfborder={0 0 0},pdfborderstyle={},backref=false,colorlinks=true]
  {hyperref}
-\usepackage{breakurl}
 
 \makeatletter
 
@@ -209,19 +208,22 @@ This has the same effect as using LyX from the command line:
 \inputencoding{latin9}\begin{lstlisting}
 $ lyx -e pdf2 skeleton.lyx
 \end{lstlisting}
-\inputencoding{utf8}\item Open an R session, run
+\inputencoding{utf8}
+\item Open an R session, run
 
 \inputencoding{latin9}\begin{lstlisting}
 > library(stationery)
 > rnw2pdf("skeleton.lyx") # or .Rnw
 \end{lstlisting}
-\inputencoding{utf8}\item The shell script \code{rnw2pdf.sh} is provided with the skeleton.
+\inputencoding{utf8}
+\item The shell script \code{rnw2pdf.sh} is provided with the skeleton.
 Run:
 
 \inputencoding{latin9}\begin{lstlisting}
 $ ./rnw2pdf.sh skeleton.lyx
 \end{lstlisting}
-\inputencoding{utf8}\item In case you want to track the steps of compiling one by one, open
+\inputencoding{utf8}
+\item In case you want to track the steps of compiling one by one, open
 the file in LyX. Use the pull down menu \code{File} $\rightarrow$
 \code{Export} $\rightarrow$ \code{Rnw (knitr)}, which creates ``skeleton.Rnw''. 
 
@@ -371,9 +373,9 @@ particular point.
 
 \input{tmpout/t-pois15.tex}
 \end{table}
-
 \bibliographystyle{apacitex}
 \bibliography{theme/R}
+
 
 \section{Replication Information\label{sec:Session-Info}}
 

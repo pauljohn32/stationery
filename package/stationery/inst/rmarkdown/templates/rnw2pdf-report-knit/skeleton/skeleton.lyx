@@ -1,5 +1,5 @@
-#LyX 2.2 created this file. For more info see http://www.lyx.org/
-\lyxformat 508
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
 \begin_document
 \begin_header
 \save_transient_properties true
@@ -43,6 +43,8 @@ knitr
 \font_osf false
 \font_sf_scale 100 100
 \font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
 \graphics default
 \default_output_format default
 \output_sync 0
@@ -81,6 +83,7 @@ knitr
 \suppress_date true
 \justification true
 \use_refstyle 0
+\use_minted 0
 \branch R
 \selected 0
 \filename_suffix 0
@@ -98,7 +101,10 @@ knitr
 \tocdepth 3
 \paragraph_separation skip
 \defskip medskip
-\quotes_language english
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
 \papercolumns 1
 \papersides 1
 \paperpagestyle default
@@ -395,34 +401,36 @@ Introduction
 \end_layout
 
 \begin_layout Standard
-Please see the guide document that is included in the same folder as this
- skeleton.
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+library(stationery)
 \end_layout
 
-\begin_layout Subsection*
-Make minimal changes to the top part
+\begin_layout Plain Layout
+
+initWriteup("rnw2pdf-report-knit")
 \end_layout
 
-\begin_layout Standard
-Do put your title & name in the top block.
-\end_layout
+\end_inset
 
-\begin_layout Standard
-Don't change the 4 code chunks above or the last chunk below.
-\end_layout
 
-\begin_layout Standard
-Write your content in here.
-\end_layout
-
-\begin_layout Standard
-Don't change document margins with LyX menus.
- You need to edit the preamble for that.
 \end_layout
 
 \begin_layout Standard
-We have separate instructions for the crmda package in vignettes if you
- want more detailed information about what to do.
+There is an 
+\begin_inset Quotes eld
+\end_inset
+
+instructions
+\begin_inset Quotes erd
+\end_inset
+
+ file in the same directory as this file, and there are also vignettes in
+ the stationery package.
 \end_layout
 
 \begin_layout Section

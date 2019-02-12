@@ -1,5 +1,5 @@
-#LyX 2.2 created this file. For more info see http://www.lyx.org/
-\lyxformat 508
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
 \begin_document
 \begin_header
 \save_transient_properties true
@@ -27,6 +27,7 @@ footskip=1.5\baselineskip,
 
 \usepackage{dcolumn}
 \usepackage{booktabs}
+\usepackage{siunitx}
 
 %% PJ 20161110
 %% I want to use listings in the document and I want nice/same as knitr.
@@ -59,6 +60,8 @@ knitr
 \font_osf false
 \font_sf_scale 100 100
 \font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
 \graphics default
 \default_output_format default
 \output_sync 1
@@ -97,6 +100,7 @@ knitr
 \suppress_date true
 \justification true
 \use_refstyle 0
+\use_minted 0
 \branch R
 \selected 0
 \filename_suffix 0
@@ -114,7 +118,10 @@ knitr
 \tocdepth 3
 \paragraph_separation skip
 \defskip medskip
-\quotes_language english
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
 \papercolumns 1
 \papersides 1
 \paperpagestyle default
@@ -377,6 +384,7 @@ This shows how we use R
 \begin_inset CommandInset citation
 LatexCommand citep
 key "RCore"
+literal "true"
 
 \end_inset
 
@@ -1278,11 +1286,6 @@ vl <- c("x" = "Excellent Predictor")
 \begin_layout Plain Layout
 
 or <- outreg(list("First Model" = m1), varLabels = vl, tight = FALSE)
-\end_layout
-
-\begin_layout Plain Layout
-
-cat(or)
 \end_layout
 
 \begin_layout Plain Layout

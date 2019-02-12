@@ -1,4 +1,4 @@
-%% LyX 2.2.3 created this file.  For more info, see http://www.lyx.org/.
+%% LyX 2.3.1 created this file.  For more info, see http://www.lyx.org/.
 %% Do not edit unless you really know what you are doing.
 \documentclass[11pt,letterpaper,english]{extarticle}
 \usepackage{lmodern}
@@ -14,7 +14,6 @@
  bookmarks=true,bookmarksnumbered=false,bookmarksopen=false,
  breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false]
  {hyperref}
-\usepackage{breakurl}
 
 \makeatletter
 
@@ -144,7 +143,7 @@ Please don't delete the last section \ref{sec:Session-Info} of this
 template. It is important. It is safe to delete anything between this
 section and that one, however. Be aware, however, that at least one
 item in the bibliography must be cited, or there will be a LaTeX compiler
-error, ``I found no \textbackslash{}citation commands-{}-{}-while
+error, ``I found no \textbackslash citation commands-{}-{}-while
 reading file skeleton.aux''. To avoid that, we are citing the R software
 itself \citet{RCore}.
 
@@ -165,6 +164,7 @@ mean(x)
 
 \bibliographystyle{apalike2}
 \phantomsection\addcontentsline{toc}{section}{\refname}\bibliography{theme/R}
+
 
 \section*{Replication Information\label{sec:Session-Info}}
 

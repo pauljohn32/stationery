@@ -1,4 +1,4 @@
-%% LyX 2.2.3 created this file.  For more info, see http://www.lyx.org/.
+%% LyX 2.3.1 created this file.  For more info, see http://www.lyx.org/.
 %% Do not edit unless you really know what you are doing.
 \documentclass[11pt,letterpaper,english]{extarticle}
 \usepackage{lmodern}
@@ -14,7 +14,6 @@
  bookmarks=true,bookmarksnumbered=false,bookmarksopen=false,
  breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false]
  {hyperref}
-\usepackage{breakurl}
 
 \makeatletter
 
@@ -73,12 +72,25 @@ footskip=1.5\baselineskip,
   author={
     lastname=Author, 
     firstname=Third, 
-    affiliation=Some other Institute, 
+    affiliation=CRMDA, 
     email=third@ku.edu}, 
   title={A Title for Skeleton Template: rnw2pdf-report-sweave},
   rightlogo={theme/logo.pdf},
 }
 \reporthdr
+
+\urlstyle{tt}
+\footersetup{
+  leftside={
+    lone={Address line 1}, 
+    ltwo={Address line 2}, 
+    lthree={City State Zipcode}},
+  rightside={
+    rone={Web: \url{https://crmda.ku.edu}},
+    rtwo={Email: \href{mailto:you@where.edu}{\url{you@where.edu}}},
+    rthree={Phone: 123-345-5678}}
+}
+\guideftr
 
 % tmpout directory must exist first
 <<tmpout, echo=FALSE, include=FALSE, results=hide>>=
@@ -93,7 +105,7 @@ if(!dir.exists(tdir)) dir.create(tdir, showWarnings=FALSE)
 <<Roptions, echo=F, include=F, results=hide>>=
 opts.orig <- options()
 options(device = pdf)
-options(width=160, prompt=" ", continue="  ")
+options(width=80, prompt=" ", continue="  ")
 options(useFancyQuotes = FALSE) 
 set.seed(12345)
 par.orig <- par(no.readonly=TRUE) 
@@ -105,7 +117,7 @@ pdf.options(onefile=FALSE, family="Times", pointsize=10)
 <<texcopy, include=FALSE,echo=FALSE>>=
 library(stationery)
 ## If theme directory does not have required logos, retrieve them. 
-logos <- c(logoright = "logo.pdf", address = "addressFooter.tex")
+logos <- c(logoright = "logo.pdf")
 getFiles(logos, pkg = "stationery")
 @
 \begin{abstract}
@@ -116,45 +128,35 @@ and polysyllabic profundities.
 
 \section{Introduction}
 
-How to write reports with R \citep{RCore} using the \code{Sweave}
-code chunk engine.
+This is a document template for using the \code{Sweave} code chunk
+engine with R \citep{RCore} to produce a report document. This includes
+a working example of the bibliographic process used with LaTeX documents.
+This skeleton was likely created by running this in R:
 
-Please see the guide documents which are distributed with the stationery
-package. The guide ``code chunks'' provides an overview of Sweave
-and knitr.
+<<eval=F>>=
+library(stationery)
+initWriteup("rnw2pdf-report-sweave")
+@
 
-\section*{Section with no number}
-
-Whether a section or subsection is numbered in LaTeX output is determined
-by environment used. The markup \code{\textbackslash{}section\{\}}
-asks for a numbered section, while the insertion of an asterix \code{\textbackslash{}section{*}\{\}}
-prevents numbering. 
-
-\subsection*{Make minimal changes to the top part}
-
-Make small changes, test whether the document compiles.
-
-Start by putting your title \& name in the top block.
-
-\subsection*{LyX warning}
-
-Reminder: Don't change document margins with LyX menus. You need to
-edit the preamble for that.
+There should be a brief ``instructions'' document in the same folder
+where you found this document. Please also see the vignette documents
+which are distributed with the \code{stationery} package. The vignette
+document ``code chunks'' provides an overview of Sweave and knitr.
 
 \section{\protect\code{R} Code Chunks}
 
-Code chunks begin with ``<\textcompwordmark{}<>\textcompwordmark{}>=''
+Code chunks begin with ``<\textcompwordmark <>\textcompwordmark >=''
 and end with a last line ``@''. 
 
 When inserting code chunks in LyX, I type them in LaTeX code boxes,
 because that keeps them visually separate. The LyX team has created
-a code chunk environment (see the pull down menu) but I have not benefitted
+a code chunk environment (see the pull down menu) but I have not benefited
 from it.
 
 Our report documents ALMOST NEVER show ``raw'' R code to readers.
 Write chunks that generate results, figures or legal LaTeX output,
 but do not display them. Then results are included with LaTeX macros
-like \code{\textbackslash{}include} or \code{\textbackslash{}includegraphics}.
+like \code{\textbackslash include} or \code{\textbackslash includegraphics}.
 
 This document uses the Sweave parameter split=TRUE to separate the
 code chunks in files saved in tmpout. There is discussion of splitting
@@ -162,6 +164,7 @@ in the ``code chunks'' vignette distributed with this package.
 
 \bibliographystyle{apalike2}
 \bibliography{theme/R}
+
 
 \subsection*{}
 

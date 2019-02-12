@@ -1,4 +1,4 @@
-%% LyX 2.2.3 created this file.  For more info, see http://www.lyx.org/.
+%% LyX 2.3.1 created this file.  For more info, see http://www.lyx.org/.
 %% Do not edit unless you really know what you are doing.
 \documentclass[10pt,english,aspectratio=1609]{beamer}
 \usepackage{lmodern}
@@ -13,6 +13,17 @@
 
 \makeatletter
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
+% this default might be overridden by plain title style
+\newcommand\makebeamertitle{\frame{\maketitle}}%
+% (ERT) argument for the TOC
+\AtBeginDocument{%
+  \let\origtableofcontents=\tableofcontents
+  \def\tableofcontents{\@ifnextchar[{\origtableofcontents}{\gobbletableofcontents}}
+  \def\gobbletableofcontents#1{\origtableofcontents}
+}
+<<echo=F>>=
+  if(exists(".orig.enc")) options(encoding = .orig.enc)
+@
 \usepackage[natbibapa]{apacite}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
@@ -208,13 +219,9 @@ logos <- c(logo = "logo.pdf",
             logomini = "logomini.pdf")
 getFiles(logos, pkg = "stationery")
 @
-
 \title[beamer]{Skeleton rmd2pdf-slides-sweave}
-
 \author{Your Name Here\inst{1}}
-
 \institute[NUWUA]{\inst{1}Name of Unit Where You Are }
-
 \date{2018}
 
 \makebeamertitle
@@ -236,7 +243,8 @@ getFiles(logos, pkg = "stationery")
 
 %following is LyX shortcut \vb for bold upright math for matrices
 
-\global\long\def\vb#1{\bm{\mathrm{#1}}}
+\global\long\def\vb#1{\bm{\mathrm{#1}}}%
+
 
 \section{Instructions}
 

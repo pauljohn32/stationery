@@ -1,4 +1,4 @@
-%% LyX 2.2.3 created this file.  For more info, see http://www.lyx.org/.
+%% LyX 2.3.1 created this file.  For more info, see http://www.lyx.org/.
 %% Do not edit unless you really know what you are doing.
 \documentclass[11pt,letterpaper,english]{scrartcl}
 \usepackage{lmodern}
@@ -14,7 +14,6 @@
  bookmarks=true,bookmarksnumbered=false,bookmarksopen=false,
  breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false]
  {hyperref}
-\usepackage{breakurl}
 
 \makeatletter
 
@@ -27,15 +26,15 @@
   if(exists(".orig.enc")) options(encoding = .orig.enc)
 @
 \newenvironment{lyxcode}
-{\par\begin{list}{}{
-\setlength{\rightmargin}{\leftmargin}
-\setlength{\listparindent}{0pt}% needed for AMS classes
-\raggedright
-\setlength{\itemsep}{0pt}
-\setlength{\parsep}{0pt}
-\normalfont\ttfamily}%
- \item[]}
-{\end{list}}
+	{\par\begin{list}{}{
+		\setlength{\rightmargin}{\leftmargin}
+		\setlength{\listparindent}{0pt}% needed for AMS classes
+		\raggedright
+		\setlength{\itemsep}{0pt}
+		\setlength{\parsep}{0pt}
+		\normalfont\ttfamily}%
+	 \item[]}
+	{\end{list}}
 \providecommand*{\code}[1]{\texttt{#1}}
 
 \@ifundefined{date}{}{\date{}}
@@ -60,7 +59,7 @@ footskip=1.5\baselineskip,
 \usepackage{multicol}
 \usepackage{dcolumn}
 \usepackage{booktabs}
-
+\usepackage{siunitx}
 
 \input{theme/reportPreambleHeader.tex}
 \input{theme/preambleFooter.tex}
@@ -180,20 +179,14 @@ stationery project, the various document types have different requirements,
 and some share ``boilerplate'' code that we include in several document
 types. In stationery version 0.91, we decided to copy the boilerplate
 files into the theme folder when the \code{initWriteup()} function
-is called.
+is called. If the author makes an error in editing a theme file, the
+original version of the theme is available in the package's install
+folder. The files are in the top level folder named ``\code{theme}''.
 
-The theme folder will also need files for the organizational logos
-or address information (\code{addressFooter.tex}). These are not
-copied into the folder automatically. There is an R code chunk above
-called ``texcopy''. It will copy configuration files from a package
-into the theme folder. The vignette ``stationery'' describes the
-approach and how it can be customized.
-
-That means authors are free to edit them to fit their needs.
-
-If the author makes an error in editing a theme file, the original
-version of the theme is available in the package's install folder.
-The files are in the top level folder named ``\code{theme}''.
+We have example address information in (\code{addressFooter.tex}).
+This file was in the theme folder in the past, but users had trouble
+finding it. So now it is in the same document as the document itself.
+For the same reason, the bibliography file is in the same directory. 
 
 \section{LyX}
 
@@ -220,12 +213,14 @@ margins or settings for hyperlinks with pull down menus.
 > library(stationery)
 > rnw2pdf("skeleton.lyx", engine = "Sweave")
 \end{lstlisting}
-\inputencoding{utf8}\item Use the shell script \code{rnw2pdf.sh}: 
+\inputencoding{utf8}
+\item Use the shell script \code{rnw2pdf.sh}: 
 
 \inputencoding{latin9}\begin{lstlisting}
 $ ./rnw2pdf.sh --engine='"Sweave"' skeleton.lyx
 \end{lstlisting}
-\inputencoding{utf8}\item In case you want to track the steps of compiling one by one, open
+\inputencoding{utf8}
+\item In case you want to track the steps of compiling one by one, open
 the file in LyX. Use the pull down menu \code{File} $\rightarrow$
 \code{Export} $\rightarrow$ \code{Sweave}. That will create a file
 named ``\code{skeleton.Rnw}''. This is the equivalent of the command
@@ -286,7 +281,7 @@ the shell command would be
 $ ./rnw2pdf -engine='"Sweave"' --purl=FALSE --clean=FALSE --keep_tex=TRUE --verbose=TRUE skeleton.Rnw
 \end{lstlisting}
 \inputencoding{utf8}
-Note the trick to include a parameter \code{\textquotedbl{}Sweave\textquotedbl{}}
+Note the trick to include a parameter \code{\textquotedbl Sweave\textquotedbl}
 that is a quoted string. The single quotes that are protecting the
 double quotes in the command line.
 \item Manual command line interactions using R and shell functions. 
@@ -300,7 +295,8 @@ That will create \code{skeleton.tex}, which we compile with
 \inputencoding{latin9}\begin{lstlisting}
 $ texi2pdf skeleton.tex
 \end{lstlisting}
-\inputencoding{utf8}\end{enumerate}
+\inputencoding{utf8}
+\end{enumerate}
 
 \section{Code Chunk Check}
 
@@ -333,7 +329,7 @@ code chunks, their output, and graphics will be saved into separate
 files in an intermediate output folder. In the top of the .Rnw file,
 there will be a LaTeX macro:
 \begin{lyxcode}
-\textbackslash{}SweaveOpts\{prefix.string=tmpout/t,~split=TRUE,~ae=FALSE,~height=5,~width=6\}
+\textbackslash SweaveOpts\{prefix.string=tmpout/t,~split=TRUE,~ae=FALSE,~height=5,~width=6\}
 \end{lyxcode}
 In our case, the pieces are saved into a folder named ``\code{tmpout}''.
 These chunk files will be created while the document is being compiled.
@@ -418,8 +414,8 @@ The key issue is that the table output from an R function is not perfectly
 ready for inclusion in a report. The row and column names might need
 beautification. That is why, realistically, it is generally easier
 to write those tables into tex files and revise them by hand, and
-then use LaTeX ``\code{\textbackslash{}input\{\}}'' to include
-them in the document where appropriate.
+then use LaTeX ``\code{\textbackslash input\{\}}'' to include them
+in the document where appropriate.
 
 We'd manually copy it to another folder (to protect it from being
 over-written) and manually revise it. 
@@ -456,7 +452,8 @@ tab1 <- rockchalk::summarize(dat)
 @
 
 <<tab1, echo=F, results=tex>>=
-tab1.x <- xtable::xtable(tab1$numericsfmt, caption = "Floating Table with Summary Statistics", label = "tab:summ")
+library(xtable)
+tab1.x <- xtable(tab1$numerics, caption = "Floating Table with Summary Statistics", label = "tab:summ")
 print(tab1.x, caption.placement = "top")
 @
 
@@ -497,7 +494,6 @@ embedding it in a floating object, Table \ref{tab:A-Regression}.
 
 \input{tmpout/t-outregtest.tex}
 \end{table}
-
 There are many other regression-table-making functions available today. 
 
 \subsection*{Structural equation models}
@@ -525,7 +521,6 @@ cfa1 <- semTable(output1, fits = "rmsea", paramSets = c("loadings", "latentvaria
 
 \input{tmpout/t-cfa1.tex}
 \end{table}
-
 A warning is in order. Some R packages will export a table in using
 the \code{longtable} package. We noticed that longtable objects cannot
 be included in LaTeX floating tables. Instead, a longtable provides

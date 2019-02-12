@@ -1,4 +1,4 @@
-%% LyX 2.2.3 created this file.  For more info, see http://www.lyx.org/.
+%% LyX 2.3.1 created this file.  For more info, see http://www.lyx.org/.
 %% Do not edit unless you really know what you are doing.
 \documentclass[11pt,letterpaper,american,english]{scrartcl}
 \usepackage{lmodern}
@@ -15,7 +15,6 @@
  bookmarks=true,bookmarksnumbered=false,bookmarksopen=false,
  breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false]
  {hyperref}
-\usepackage{breakurl}
 
 \makeatletter
 
@@ -49,6 +48,7 @@ footskip=1.5\baselineskip,
 
 \usepackage{dcolumn}
 \usepackage{booktabs}
+\usepackage{siunitx}
 
 %% PJ 20161110
 %% I want to use listings in the document and I want nice/same as knitr.
@@ -227,7 +227,8 @@ as the project writeup.
 \inputencoding{latin9}\begin{lstlisting}
 rnw2pdf("skeleton.lyx")
 \end{lstlisting}
-\inputencoding{utf8}\item The shell script \code{rnw2pdf.sh} is provided in the same folder.
+\inputencoding{utf8}
+\item The shell script \code{rnw2pdf.sh} is provided in the same folder.
 It can be run in the shell as
 
 \inputencoding{latin9}\begin{lstlisting}
@@ -388,10 +389,8 @@ packages designed to generate the same sort of LaTeX markup.
 library(rockchalk)
 vl <- c("x" = "Excellent Predictor")
 or <- outreg(list("First Model" = m1), varLabels = vl, tight = FALSE)
-cat(or)
 @
 \end{table}
-
 In the kutils package, we made a function \code{semTable()} that
 presents structural equation models. The result in Table \ref{tab:A-Confirmatory-Factor}
 is an example. 
@@ -418,7 +417,6 @@ cat(cfa1, file="tmpout/t-cfa3.tex")
 
 \input{tmpout/t-cfa3.tex}
 \end{table}
-
 In the perfect world, the tables that come from software would be
 perfectly presentable. This is the idea of the fully reproducible
 research document. At the current time, that is unrealistic. Authors

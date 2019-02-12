@@ -1,4 +1,4 @@
-%% LyX 2.2.3 created this file.  For more info, see http://www.lyx.org/.
+%% LyX 2.3.1 created this file.  For more info, see http://www.lyx.org/.
 %% Do not edit unless you really know what you are doing.
 \documentclass[10pt,english,aspectratio=1609]{beamer}
 \usepackage{lmodern}
@@ -13,6 +13,17 @@
 
 \makeatletter
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
+% this default might be overridden by plain title style
+\newcommand\makebeamertitle{\frame{\maketitle}}%
+% (ERT) argument for the TOC
+\AtBeginDocument{%
+  \let\origtableofcontents=\tableofcontents
+  \def\tableofcontents{\@ifnextchar[{\origtableofcontents}{\gobbletableofcontents}}
+  \def\gobbletableofcontents#1{\origtableofcontents}
+}
+<<echo=F>>=
+  if(exists(".orig.enc")) options(encoding = .orig.enc)
+@
 \usepackage[natbibapa]{apacite}
 \providecommand*{\code}[1]{\texttt{#1}}
 
@@ -226,13 +237,9 @@ logos <- c(logo = "logo.pdf",
             logomini = "logomini.png")
 getFiles(logos, pkg = "stationery")
 @
-
 \title[beamer]{Instructions for rmd2pdf-slides-sweave}
-
 \author{Paul Johnson\inst{1}}
-
 \institute[K.U.]{\inst{1}Center for Research Methods and Data Analysis }
-
 \date{2018}
 
 \makebeamertitle
@@ -252,7 +259,8 @@ getFiles(logos, pkg = "stationery")
 
 \end{frame}
 
-\global\long\def\vb#1{\bm{\mathrm{#1}}}
+\global\long\def\vb#1{\bm{\mathrm{#1}}}%
+
 
 \section{Launch with stationery}
 
@@ -309,7 +317,8 @@ types for the outer edges and inner content–we knew what to do: \textbf{CUSTOM
 \useinnertheme{rounded}
 \setbeamertemplate{blocks}[default]
 \end{lstlisting}
-\inputencoding{utf8}\end{exampleblock}
+\inputencoding{utf8}
+\end{exampleblock}
 \item The outer theme is a conservative use of screen real estate (narrow
 top boxes)
 \item The inner theme gives the jazzy 3-D bullets
@@ -343,7 +352,8 @@ in one of 3 ways:
 \inputencoding{latin9}\begin{lstlisting}
 \begin{frame}
 \end{lstlisting}
-\inputencoding{utf8}\item Allow for long output to spill onto successive slides:
+\inputencoding{utf8}
+\item Allow for long output to spill onto successive slides:
 
 \inputencoding{latin9}\begin{lstlisting}
 \begin{frame}[allowframebreaks]
@@ -392,36 +402,43 @@ have numbers by default to avoid this problem.
 \begin{equation}
 1\times1\label{eq:one}
 \end{equation}
+
 \item The second equation is not numbered
 
 \[
 2\times1
 \]
+
 \item But the author numbered the third equation, we are not sure why
 
 \begin{equation}
 3\times1\label{eq:three}
 \end{equation}
+
 \item The fourth equation is
 
 \[
 4\times1
 \]
+
 \item But equation five is numbered
 
 \begin{equation}
 5\times1\label{eq:five}
 \end{equation}
+
 \item Equation six
 
 \begin{equation}
 6\times1\label{eq:six}
 \end{equation}
+
 \item Equation seven
 
 \[
 7\times1
 \]
+
 \end{itemize}
 One can ask lyx to automatically number displayed equations by changing
 the shortcut key associated with C-S-m to have the same effect as
@@ -432,8 +449,8 @@ the pull down menu \code{Insert} -> \code{Math} -> \code{Numbered Formula}.
 \begin{frame}[allowframebreaks,containsverbatim]
 \frametitle{Using "allowframebreaks" and "containsverbatim"}
 \begin{itemize}
-\item I usually use both \textquotedbl{}\code{allowframebreaks}\textquotedbl{}
-and \textquotedbl{}\code{containsverbatim}\textquotedbl{} on most
+\item I usually use both \textquotedbl\code{allowframebreaks}\textquotedbl{}
+and \textquotedbl\code{containsverbatim}\textquotedbl{} on most
 slides.
 \item ``\code{allowframebreaks}'' is now harmless. If there is only enough
 content for one slide, the appearance of the one slide is not affected
@@ -500,7 +517,8 @@ as FALSE for variety.
  mean(x)
  @
 \end{lstlisting}
-\inputencoding{utf8}\end{itemize}
+\inputencoding{utf8}
+\end{itemize}
 \end{itemize}
 \end{frame}
 
@@ -533,18 +551,18 @@ a gray box similar to the Rinput box for chunks.
 <<eval=F>>=
 lm(y ~ x, data = dat)
 @
-\item Raw LaTeX ``\textbackslash{}code'' environment
+\item Raw LaTeX ``\textbackslash code'' environment
 
 \texttt{\code{lm(y ~ x, data = dat)}}
 \end{itemize}
 \item Different fonts in each case (bad).
 \item The tilde symbol is displayed differently in the first two and not
 at all in the final one.
-\item 1st example: LyX text code object notices ``\textasciitilde{}''
-and inserts ``\textbackslash{}textasciitilde\{\}'' on our behalf. 
+\item 1st example: LyX text code object notices ``\textasciitilde ''
+and inserts ``\textbackslash textasciitilde\{\}'' on our behalf. 
 \item The second example use of the listings class. Our Rinput style as
-as symbol filter table. It converts keyboard tilde to ``\textasciitilde{}''
-to a math symbol, ``\$\textbackslash{}sim\$'', which implies $\sim$,
+as symbol filter table. It converts keyboard tilde to ``\textasciitilde ''
+to a math symbol, ``\$\textbackslash sim\$'', which implies $\sim$,
 in the output.
 \end{itemize}
 \end{frame}
