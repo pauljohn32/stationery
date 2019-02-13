@@ -44,6 +44,9 @@ footskip=1.5\baselineskip,
 
 \makeatother
 
+\usepackage{listings}
+\renewcommand{\lstlistingname}{\inputencoding{latin9}Listing}
+
 \begin{document}
 %% Fill in values of the arguments here, 
 %% If blanks are needed, must insert value " ~ "
@@ -110,22 +113,13 @@ and polysyllabic profundities.
 
 \section{Introduction}
 
-Please see the guide document that is included in the same folder
-as this skeleton.
-
-\subsection*{Make minimal changes to the top part}
-
-Do put your title \& name in the top block.
-
-Don't change the 4 code chunks above or the last chunk below.
-
-Write your content in here.
-
-Don't change document margins with LyX menus. You need to edit the
-preamble for that.
-
-We have separate instructions for the crmda package in vignettes if
-you want more detailed information about what to do.
+\inputencoding{latin9}\begin{lstlisting}
+library(stationery)
+initWriteup("rnw2pdf-report-knit")
+\end{lstlisting}
+\inputencoding{utf8}
+There is an ``instructions'' file in the same directory as this
+file, and there are also vignettes in the stationery package.
 
 \section{\protect\code{R} Code Chunks}
 

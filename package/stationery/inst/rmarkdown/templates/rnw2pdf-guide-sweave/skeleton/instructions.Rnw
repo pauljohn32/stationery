@@ -554,6 +554,7 @@ dataFrame <- data.frame(x1 = rnorm(100, m = 13, s = 23), x2 = rnorm(100, m = 13,
 \bibliography{R}
 
 
+
 \section{Session Info\label{sec:Session-Info}}
 
 <<session, echo=F>>=
