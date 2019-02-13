@@ -51,7 +51,7 @@ options(width = 70)
 library(stationery)
 ## If theme directory does not have required images or TeX files
 ## we need to retrieve them and put them in "theme" directory. 
-logos <- c("logo.pdf"")
+logos <- c("logo.pdf")
 try(getFiles(logos, pkg = "stationery", overwrite = FALSE))
 ## These theme files should be available already, but if not
 themefiles <-c("report-template.tex")
