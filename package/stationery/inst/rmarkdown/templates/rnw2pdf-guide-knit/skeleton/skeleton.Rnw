@@ -79,9 +79,25 @@ footskip=1.5\baselineskip,
 }
 \guidehdr
 
-% For the address footer, we have an address file:
+
+% 1. If you have an address file, use it here:
 \input{addressFooter.tex}
-% See instructions file for alternative address methodsOptions
+% 2. If you don't have an address file, remove % signs and fill in your information
+% This stanza must end with "\guideftr"
+% (after removing percent signs):
+%\urlstyle{tt}
+%\footersetup{
+%  leftside={
+%    lone={Address line 1}, 
+%    ltwo={Address line 2}, 
+%    lthree={City State Zipcode}},
+%  rightside={
+%    rone={Web: \url{https://crmda.ku.edu}},
+%    rtwo={Email: \href{mailto:you@where.edu}{\url{you@where.edu}}},
+%    rthree={Phone: 123-345-5678}}
+%}
+%\guideftr
+% 3. If you don't want an address footer, just delete this subsection.
 
 % Please leave this code
 <<ignoremeRsetup, echo=FALSE, include=FALSE>>=

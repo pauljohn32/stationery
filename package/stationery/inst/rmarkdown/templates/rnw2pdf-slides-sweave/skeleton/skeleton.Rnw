@@ -285,7 +285,7 @@ mean(x)
 \frametitle{References}
 
 \bibliographystyle{apalike2}
-\bibliography{theme/R}
+\bibliography{R}
 
 \end{frame}
 

@@ -445,7 +445,9 @@ rightside .code:n = {
 This is an ``article'' formatted version of the slides, which are
 available in the same folder. The content is exactly the same. The
 only difference is that the result is reformatted and, possibly, more
-convenient for inspection by users.% Please leave this code
+convenient for inspection by users.
+\end{abstract}
+% Please leave this code
 <<ignoremeRsetup, echo=FALSE, include=FALSE, results=hide>>=
 ##tdir <- "tmpout"
 ##if(!dir.exists(tdir)) dir.create(tdir, showWarnings=FALSE)
@@ -461,7 +463,9 @@ convenient for inspection by users.% Please leave this code
 ## pdf.options(onefile=FALSE,family="Times",pointsize=10)
 @
 \fvset{listparameters={\setlength{\topsep}{0em}}}
-\SweaveOpts{prefix.string=tmpout/t, split=TRUE, ae=FALSE, height=4, width=6}% This concerns images. The guide format on which this is 
+\SweaveOpts{prefix.string=tmpout/t, split=TRUE, ae=FALSE, height=4, width=6}
+
+% This concerns images. The guide format on which this is 
 % based needs "logoleft.pdf" and "logo-vert.pdf"
 % You can manually copy your desired image files
 % "logoleft.pdf" and "logo-vert.pdf" into the theme folder. 
@@ -481,6 +485,6 @@ if(!file.exists("theme/logo-vert.pdf")){
   blankPDF(file = "theme/logo-vert.pdf", height=2, width=1.5, messg = "")
 }
 @
-\end{abstract}
+
 \input{instructions.tex}
 \end{document}
