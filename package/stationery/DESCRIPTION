@@ -1,14 +1,15 @@
 Package: stationery 
 Type: Package
 Title: Working Examples for Reproducible Research Documents 
-Version: 0.98.5.7
-Date: 2018-12-27
+Version: 0.98.5.8
+Date: 2019-02-13
 Authors@R: c(person("Paul", "Johnson", role = c("aut", "cre"), email = "pauljohn@ku.edu"),
              person("Brent", "Kaplan", role = c("ctb"), email = "bkaplan4@ku.edu"),
              person("Meghan", "Sullivan", role = c("ctb"), email = "meg.sullivan@ku.edu"),
              person("Charles", "Redmon", role = "ctb", email = "redmon@ku.edu"),
              person("Zack", "Roman", role = "ctb", email = "zroman@ku.edu"),
-			 person("Chong", "Xing", role = "ctb", email = "cxing@ku.edu"))
+			 person("Chong", "Xing", role = "ctb", email = "cxing@ku.edu"),
+             person("Longcan 'Emma'", "Huang", role = "ctb", email = "longcan@ku.edu"))
 Maintainer: Paul Johnson <pauljohn@ku.edu>
 Description: Templates, guides, and scripts for
     writing documents in 'LaTeX' and 'R markdown' to produce
