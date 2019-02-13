@@ -29,9 +29,10 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
 \usepackage{dcolumn}
 \usepackage{booktabs}
+\usepackage{siunitx}
 \usepackage{longtable}
 \usepackage{graphicx}
-\newcommand\makebeamertitle{\frame{\maketitle}}%
+
 \renewcommand{\doiprefix}{doi:\kern-1pt}
 \setlength{\bibsep}{10pt}
 
@@ -250,8 +251,14 @@ getFiles(logos, pkg = "stationery")
 
 \begin{frame}
 \frametitle{This is a template, not instructions}
+
+<<ignoremeR20, eval=F>>=
+library(stationery)
+initWriteup("rnw2pdf-slides-sweave")
+@
 \begin{itemize}
-\item See the vignette ``instructions'' for HOWTO information.
+\item See the ``instructions'' file for some details on what to do.
+\item See also the vignettes distributed with stationery.
 \item We need one cite to compile this, so here's a good one. All of this
 is brought to us by R \citep{RCore}
 \end{itemize}
@@ -275,7 +282,7 @@ mean(x)
 \frametitle{References}
 
 \bibliographystyle{apalike2}
-\bibliography{theme/R}
+\bibliography{R}
 
 \end{frame}
 

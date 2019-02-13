@@ -36,7 +36,7 @@
 \usepackage{booktabs}
 \usepackage{longtable}
 \usepackage{graphicx}
-\newcommand\makebeamertitle{\frame{\maketitle}}%
+\usepackage{siunitx}
 
 % use 'handout' to produce handouts
 %\documentclass[handout]{beamer}
@@ -609,7 +609,7 @@ style these days.
 \frametitle{References}
 
 \bibliographystyle{apalike2}
-\bibliography{theme/R}
+\bibliography{R}
 
 \end{frame}
 
