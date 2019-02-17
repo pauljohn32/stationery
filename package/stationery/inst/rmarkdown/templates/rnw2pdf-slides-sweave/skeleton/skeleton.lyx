@@ -688,7 +688,7 @@ logos <- c("logo.pdf", "logomini.pdf")
 
 \begin_layout Plain Layout
 
-getFiles(logos, pkg = "stationery", overwrite = FALSE)
+try(getFiles(logos, pkg = "stationery", overwrite = FALSE))
 \end_layout
 
 \begin_layout Plain Layout
@@ -707,7 +707,7 @@ if(!file.exists(
 \begin_inset Quotes eld
 \end_inset
 
-theme/logoleft.pdf
+theme/logo.pdf
 \begin_inset Quotes erd
 \end_inset
 

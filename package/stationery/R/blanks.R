@@ -72,7 +72,7 @@ blankPDF <- function(file, height=1, width=3.5, messg = "Your Logo Could Be Here
 ##' 
 blankPNG <- function(file, height=250, width=250, messg = "Your Logo Could Be Here",
                      pointsize=12, col="gray50"){
-    png(file = file, height=height, width=width, pointsize=pointsize)
+    png(filename=file, height=height, width=width, pointsize=pointsize)
     par(mar=c(0,0,0,0)) 
     plot(1:2, 1:2, type="n", xlab="", ylab="", axes=FALSE)
     text(1.5, 1.5, messg, col = col)

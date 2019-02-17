@@ -19,7 +19,7 @@ output:
     highlight: haddock
     keep_tex: false
     latex_engine: pdflatex
-    pandoc_args: --listings
+    pandoc_args: [--listings]
     template: "theme/report-template.tex"
     includes:
       in_header: "theme/guidePreambleKnitr.tex"

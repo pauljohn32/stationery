@@ -223,8 +223,8 @@ rmd2pdf <- function(fn = NULL, wd = NULL, ..., verbose = FALSE,
     if (!is.null(wd)){
         wd.orig <- getwd()
         setwd(wd)
-    }
-        
+        on.exit(setwd(wd.orig))
+    }    
     dots <- list(...)
     
     if (length(fn) > 1){
@@ -269,9 +269,6 @@ rmd2pdf <- function(fn = NULL, wd = NULL, ..., verbose = FALSE,
     if(verbose) {print(paste("dots_for_render"));  lapply(dots_for_render, print)}
     res <- do.call(rmarkdown::render, render_argz)
     
-    if (!is.null(wd)){
-        setwd(wd.orig)
-    }
     res
 }
 
@@ -347,12 +344,11 @@ rnw2pdf <- function(fn = NULL, wd = NULL, ..., engine = "knitr", purl = TRUE,
         MESSG <- "rnw2pdf: tangle and purl have the same effect. Just set 1 of them"
         stop(MESSG)
     }
+    
+    wd.orig <- getwd()
     if (!is.null(wd)) {
-        wd.orig <- getwd()
         setwd(wd)
         on.exit(setwd(wd.orig))
-    } else {
-        wd.orig <- getwd()
     }
 
     dots <- list(...)
@@ -463,7 +459,7 @@ rnw2pdf <- function(fn = NULL, wd = NULL, ..., engine = "knitr", purl = TRUE,
                 }
                 fnbase <- gsub("\\.Rnw$", "", x, ignore.case = TRUE)
                 fntex <- gsub("\\.Rnw$", ".tex", x, ignore.case = TRUE)
-                ## 20180731: Try built-in texi2pdf again, instead of home-made methld
+                ## 20180731: Try built-in texi2pdf again, instead of home-made method
                 tools::texi2pdf(fntex, clean = clean, quiet = quiet)
                 fnpdf <- gsub("\\.Rnw$", ".pdf", x, ignore.case = TRUE)
             }

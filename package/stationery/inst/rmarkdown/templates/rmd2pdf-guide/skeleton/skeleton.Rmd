@@ -27,12 +27,13 @@ output:
   pdf_document:
     toc: true
     toc_depth: 1
+    number_sections: true
     citation_package: natbib
-    fig_caption: yes
+    fig_caption: true
     latex_engine: pdflatex
     highlight: haddock
     pandoc_args: [--listings]
-    template:  theme/guide-template.tex
+    template:  "theme/guide-template.tex"
 fontsize: 11pt
 bibliography: R.bib
 header-includes:

@@ -30,6 +30,9 @@ footskip=1.5\baselineskip,
 % Delete this if you do not want References to
 % be a numbered section within document
 \usepackage[numbib,notlof,notlot,nottoc]{tocbibind}
+
+\definecolor{shadecolor}{rgb}{0.61, 0.61, 0.61}
+\definecolor{fg}{rgb}{0, 0, 0}
 \end_preamble
 \use_default_options false
 \begin_modules
@@ -623,13 +626,9 @@ Create a template (skeleton) document by opening R and running
 \end_layout
 
 \begin_layout Standard
-\begin_inset ERT
+\begin_inset listings
+inline false
 status open
-
-\begin_layout Plain Layout
-
-<<eval=F>>=
-\end_layout
 
 \begin_layout Plain Layout
 
@@ -639,11 +638,6 @@ library(stationery)
 \begin_layout Plain Layout
 
 initWriteup("rnw2pdf-guide-knit")
-\end_layout
-
-\begin_layout Plain Layout
-
-@
 \end_layout
 
 \end_inset
@@ -667,13 +661,9 @@ rnw2pdf-guide-knit
 \end_layout
 
 \begin_layout Standard
-\begin_inset ERT
+\begin_inset listings
+inline false
 status open
-
-\begin_layout Plain Layout
-
-<<eval=F>>=
-\end_layout
 
 \begin_layout Plain Layout
 
@@ -691,11 +681,6 @@ initWriteup("rnw2pdf-guide-knit", dir =
 \end_inset
 
 )
-\end_layout
-
-\begin_layout Plain Layout
-
-@
 \end_layout
 
 \end_inset

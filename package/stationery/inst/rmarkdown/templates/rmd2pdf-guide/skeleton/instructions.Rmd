@@ -13,12 +13,15 @@ author:
   email: bkaplan4@ku.edu
 output:
   pdf_document:
+    toc: true
+    toc_depth: 1  
     citation_package: natbib
-    keep_tex: true
+    keep_tex: false
     fig_caption: true
     latex_engine: pdflatex
     template:  "theme/guide-template.tex"
     pandoc_args: [--listings]
+    number_sections: true
 addr:
     l1: 1425 Jayhawk Blvd
     l2: Watson Library, Suite 470

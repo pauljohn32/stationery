@@ -173,7 +173,7 @@ what they want.
 Listing objects differ in output from R\citep{RCore} code chunks.
 Here is listing output.
 
-\inputencoding{latin9}\begin{lstlisting}
+\inputencoding{latin9}\begin{lstlisting}[style=Rinput]
 $ ./rnw2pdf --engine='"knitr"' skeleton.lyx
 \end{lstlisting}
 \inputencoding{utf8}
@@ -182,10 +182,30 @@ of input or output cells. What you see is what they insist on, at
 least until we figure how to change it.
 
 <<norm10>>=
+set.seed(1234)
 x <- rnorm(100)
 head(x)
 mean(x)
 @
+
+That's the knitr output.
+
+I wish instead the input and output would display in separately decorated
+areas with the style I prefer, 
+
+\inputencoding{latin9}\begin{lstlisting}[style=Rinput]
+set.seed(1234)
+x <- rnorm(100)
+head(x)
+mean(x)
+\end{lstlisting}
+\inputencoding{utf8}
+\inputencoding{latin9}\begin{lstlisting}[style=Routput]
+mean(x)
+[1] -0.1567617
+\end{lstlisting}
+\inputencoding{utf8}
+but knitr makes this difficult at the moment.
 
 \section{Session Info\label{sec:Session-Info}}
 

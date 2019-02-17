@@ -750,6 +750,7 @@ literal "true"
 
 \begin_layout Standard
 \begin_inset listings
+lstparams "style=Rinput"
 inline false
 status open
 
@@ -781,6 +782,11 @@ status open
 
 \begin_layout Plain Layout
 
+set.seed(1234)
+\end_layout
+
+\begin_layout Plain Layout
+
 x <- rnorm(100)
 \end_layout
 
@@ -802,6 +808,71 @@ mean(x)
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+That's the knitr output.
+\end_layout
+
+\begin_layout Standard
+I wish instead the input and output would display in separately decorated
+ areas with the style I prefer, 
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "style=Rinput"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+set.seed(1234)
+\end_layout
+
+\begin_layout Plain Layout
+
+x <- rnorm(100)
+\end_layout
+
+\begin_layout Plain Layout
+
+head(x)
+\end_layout
+
+\begin_layout Plain Layout
+
+mean(x)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "style=Routput"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+mean(x)
+\end_layout
+
+\begin_layout Plain Layout
+
+[1] -0.1567617
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+but knitr makes this difficult at the moment.
 \end_layout
 
 \begin_layout Section
