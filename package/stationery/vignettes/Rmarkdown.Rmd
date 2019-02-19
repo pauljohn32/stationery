@@ -11,9 +11,7 @@ output:
     latex_engine: pdflatex
     highlight: haddock
     citation_package: natbib
-    pandoc_args: [
-        --listings
-    ]
+    pandoc_args: [--listings]
     template: "theme/report-template.tex"
 fontsize: 12pt
 bibliography: "theme/R"
