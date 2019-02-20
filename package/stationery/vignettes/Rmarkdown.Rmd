@@ -11,7 +11,7 @@ output:
     latex_engine: pdflatex
     highlight: haddock
     citation_package: natbib
-    pandoc_args: [ --listings ]
+    pandoc_args: --listings 
     template: "theme/report-template.tex"
 fontsize: 12pt
 bibliography: "theme/R"
@@ -151,52 +151,49 @@ originally meant *Yet Another Markup Language*, now stands for *YAML
 Ain't Markup Language*; see [The Official YAML Web
 Site](http://yaml.org)).
 
+
 The header for the document you are reading now in PDF is:
-
-\begin{lstlisting}
-`r ''`
---- 
-title: "R Markdown Basics"
-author:
-- affiliation: CRMDA
-  description: Director
-  email: pauljohn@ku.edu
-  name: Paul Johnson
-output:
-  pdf_document:
-    fig_caption: true
-    keep_tex: true 
-    latex_engine: pdflatex
-    highlight: haddock
-    citation_package: natbib
-    pandoc_args: [ --listings ]
-    template: "theme/report-template.tex"
-fontsize: 12pt
-vignette: >
-    %\VignetteIndexEntry{stationery}
-    %\VignetteEngine{knitr::rmarkdown}
-    %\VignetteEncoding{UTF-8}
-header-includes:
-- |
-  ```{=latex}
-  \usepackage{xcolor}
-  \usepackage{fancybox}
-  \usepackage{calc}
-  \usepackage{subfig}
-  ``` 
-addr:
-    l1: 1425 Jayhawk Blvd
-    l2: Watson Library, Suite 470
-    l3: Lawrence, KS 66045-7594
-    r1: "Phone: 785-864-3353"
-    r2: "Web: http://crmda.ku.edu"
-    r3: "Email: crmda@ku.edu"
-logo: theme/logo.pdf
-keywords: guides, report, pandoc, R markdown, sweave, knitr
----
-`r ''`
-\end{lstlisting}
-
+   
+    --- 
+    title: "R Markdown Basics"
+    author:
+    - affiliation: CRMDA
+      description: Director
+      email: pauljohn@ku.edu
+      name: Paul Johnson
+    output:
+      pdf_document:
+        fig_caption: true
+        keep_tex: true 
+        latex_engine: pdflatex
+        highlight: haddock
+        citation_package: natbib
+        pandoc_args: [ --listings ]
+        template: "theme/report-template.tex"
+    fontsize: 12pt
+    vignette: >
+        %\VignetteIndexEntry{stationery}
+        %\VignetteEngine{knitr::rmarkdown}
+        %\VignetteEncoding{UTF-8}
+    header-includes:
+    - |
+      ```{=latex}
+      \usepackage{xcolor}
+      \usepackage{fancybox}
+      \usepackage{calc}
+      \usepackage{subfig}
+      ``` 
+    addr:
+        l1: 1425 Jayhawk Blvd
+        l2: Watson Library, Suite 470
+        l3: Lawrence, KS 66045-7594
+        r1: "Phone: 785-864-3353"
+        r2: "Web: http://crmda.ku.edu"
+        r3: "Email: crmda@ku.edu"
+    logo: theme/logo.pdf
+    keywords: guides, report, pandoc, R markdown, sweave, knitr
+    ---
+   
 ## Observations about YAML
 
 ### Parameter and values (`key:value` pairs) are separated by `:`.
