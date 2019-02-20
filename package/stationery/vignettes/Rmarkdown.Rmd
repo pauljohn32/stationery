@@ -11,7 +11,7 @@ output:
     latex_engine: pdflatex
     highlight: haddock
     citation_package: natbib
-    pandoc_args: [--listings]
+    pandoc_args: [ --listings ]
     template: "theme/report-template.tex"
 fontsize: 12pt
 bibliography: "theme/R"
@@ -154,7 +154,7 @@ Site](http://yaml.org)).
 The header for the document you are reading now in PDF is:
 
 \begin{lstlisting}
-`r ''```
+`r ''`
 --- 
 title: "R Markdown Basics"
 author:
@@ -169,9 +169,7 @@ output:
     latex_engine: pdflatex
     highlight: haddock
     citation_package: natbib
-    pandoc_args: [
-        --listings
-    ]
+    pandoc_args: [ --listings ]
     template: "theme/report-template.tex"
 fontsize: 12pt
 vignette: >
@@ -196,6 +194,7 @@ addr:
 logo: theme/logo.pdf
 keywords: guides, report, pandoc, R markdown, sweave, knitr
 ---
+`r ''`
 \end{lstlisting}
 
 ## Observations about YAML
@@ -208,14 +207,15 @@ keywords: guides, report, pandoc, R markdown, sweave, knitr
    `false`, or `null`. If a value (say, a document title) includes a
    colon, quotation marks should be used.
    
-### Finding the keys keys
+### Finding the correct keys
 
 Authors will need to acquire experience about valid keys for their
-intended output format. The `key: value` pairs in the header are
+intended output format.  The `key: value` pairs in the header are
 meaningful if the document processing software takes them into
-account. Otherwise, they are just decorations that on which authors
-waste their time. To test that idea, authors might insert this in the
-header of the current document
+account. The correct keys are specified in the document template, so
+they vary from one document template to another. Otherwise, they are
+just decorations that on which authors waste their time. To test that
+idea, authors might insert this in the header of the current document
      
     christmaslist: "pandora account", "gold watch"
    
@@ -223,8 +223,9 @@ and recompile. There are no errors or warnings about unrecognized key
 values.
 
 Flush-left `key` values are either top-level parameters (`title`,
-`date`, `fontsize`) or initiators of metadata blocks.    The `header-includes` section is relevant only to
-the \LaTeX\ stage of document preparation. 
+`date`, `fontsize`) or initiators of metadata blocks. 
+The `header-includes` section is relevant only to the 
+\LaTeX\ stage of document preparation. 
 
 The structure of the `author` and `addr` blocks is unique to the
 template that governs this document (the template is specified in the
