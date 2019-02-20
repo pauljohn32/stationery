@@ -27,12 +27,15 @@ output:
 fontsize: 11pt
 bibliography: theme/R.bib
 header-includes:
--  \usepackage{xcolor}
--  \usepackage{amsmath}
--  \usepackage{amssymb}
--  \usepackage{fancybox}
--  \usepackage{calc}
--  \usepackage{subfig}
+- | 
+  ```{=latex}
+  \usepackage{xcolor}
+  \usepackage{amsmath}
+  \usepackage{amssymb}
+  \usepackage{fancybox}
+  \usepackage{calc}
+  \usepackage{subfig}
+  ```
 vignette: >
     %\VignetteIndexEntry{"Code Chunks: Comparing Sweave and Knitr"}
     %\VignetteEngine{knitr::rmarkdown}

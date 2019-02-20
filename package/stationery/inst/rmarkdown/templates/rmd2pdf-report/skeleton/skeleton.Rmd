@@ -26,7 +26,10 @@ output:
 logo: theme/logo.pdf
 bibliography: R.bib
 header-includes:
-- \usepackage{xcolor}
+- |
+  ```{=latex}
+  \usepackage{xcolor}
+  ```
 addr:
   l1: address row 1
   l2: address row 2

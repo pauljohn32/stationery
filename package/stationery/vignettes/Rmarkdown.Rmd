@@ -21,10 +21,13 @@ vignette: >
     %\VignetteEngine{knitr::rmarkdown}
     %\VignetteEncoding{UTF-8}
 header-includes:
--  \usepackage{xcolor}
--  \usepackage{fancybox}
--  \usepackage{calc}
--  \usepackage{subfig}
+- |
+  ```{=latex}
+  \usepackage{xcolor}
+  \usepackage{fancybox}
+  \usepackage{calc}
+  \usepackage{subfig}
+  ```
 addr:
     l1: 1425 Jayhawk Blvd
     l2: Watson Library, Suite 470
@@ -150,7 +153,8 @@ Site](http://yaml.org)).
 
 The header for the document you are reading now in PDF is:
 
-```
+\begin{lstlisting}
+`r ''```
 --- 
 title: "R Markdown Basics"
 author:
@@ -175,12 +179,13 @@ vignette: >
     %\VignetteEngine{knitr::rmarkdown}
     %\VignetteEncoding{UTF-8}
 header-includes:
--  \usepackage{xcolor}
--  \usepackage{amsmath}
--  \usepackage{amssymb}
--  \usepackage{fancybox}
--  \usepackage{calc}
--  \usepackage{subfig}
+- |
+  ```{=latex}
+  \usepackage{xcolor}
+  \usepackage{fancybox}
+  \usepackage{calc}
+  \usepackage{subfig}
+  ``` 
 addr:
     l1: 1425 Jayhawk Blvd
     l2: Watson Library, Suite 470
@@ -190,9 +195,8 @@ addr:
     r3: "Email: crmda@ku.edu"
 logo: theme/logo.pdf
 keywords: guides, report, pandoc, R markdown, sweave, knitr
-
 ---
-```
+\end{lstlisting}
 
 ## Observations about YAML
 
