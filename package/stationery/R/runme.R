@@ -403,7 +403,7 @@ rnw2pdf <- function(fn = NULL, wd = NULL, ..., engine = "knitr", purl = TRUE,
     compileme <- function(x) {
         if (length(grep("\\.lyx$", tolower(x)))){
             ## Let lyx compile to pdf
-            cmd <- paste("lyx -e pdf2 ", x, if(!verbose) sysnull)
+            cmd <- paste("lyx -f all -e pdf2 ", x, if(!verbose) sysnull)
             if (isWindoze) shell(cmd) else system(cmd)
             fnpdf <- gsub("\\.lyx$", ".pdf", x, ignore.case = TRUE)
             if(tangle){
@@ -411,7 +411,7 @@ rnw2pdf <- function(fn = NULL, wd = NULL, ..., engine = "knitr", purl = TRUE,
                 unlink(gsub("\\..*$", ".R", x))
                 ## lyx can directly export r code from knitr engine file 
                 if (tolower(engine) == "knitr"){
-                    cmd <- paste("lyx -e r ", x, if(!verbose) sysnull)
+                    cmd <- paste("lyx -f all -e r ", x, if(!verbose) sysnull)
                     if (isWindoze) shell(cmd) else system(cmd)
                 } else {
                     ## will fail if split=TRUE, so must make copy of file, change to split=FALSE
@@ -427,7 +427,7 @@ rnw2pdf <- function(fn = NULL, wd = NULL, ..., engine = "knitr", purl = TRUE,
                     rnwfile[grep("prompt", rnwfile)] <- gsub("prompt\\s*=.*\"", "prompt=\"> \"",
                                                              rnwfile[grep("prompt", rnwfile)])
                     writeLines(rnwfile, con = fnbackup)
-                    cmd <- paste("lyx -e r", fnbackup, if(!verbose) sysnull)
+                    cmd <- paste("lyx -f all -e r", fnbackup, if(!verbose) sysnull)
                     if (isWindoze) shell(cmd) else system(cmd)
                     gg <- file.copy(gsub("\\..*$", ".R", fnbackup),
                                     gsub(bak, "", gsub("\\..*$", ".R", fnbackup)),
@@ -439,10 +439,10 @@ rnw2pdf <- function(fn = NULL, wd = NULL, ..., engine = "knitr", purl = TRUE,
             }
             if(verbose){
                 if (tolower(engine) == "knitr"){
-                    cmd <- paste("lyx -e knitr ", x, if(!verbose) sysnull)
+                    cmd <- paste("lyx -f all -e knitr ", x, if(!verbose) sysnull)
                     if (isWindoze) shell(cmd) else system(cmd)
                 } else {
-                    cmd <- paste("lyx -e sweave ", x, if(!verbose) sysnull)
+                    cmd <- paste("lyx -f all  -e sweave ", x, if(!verbose) sysnull)
                     if (isWindoze) shell(cmd) else system(cmd)
                 }
             }
