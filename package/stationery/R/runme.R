@@ -374,7 +374,8 @@ rnw2pdf <- function(fn = NULL, wd = NULL, ..., engine = "knitr", purl = TRUE,
     ## @return Text with name of R file that was created
     ## @author Paul Johnson <pauljohn@@ku.edu>
     tangleSplit <- function(x){
-        bak <- "-tanglebackupstring"
+        rptdate <- format(Sys.time(), "%Y%m%d%H%M")
+        bak <- paste0("-uniquebackupstring", rptdate)
         fnbackup <- gsub("(.*)(\\..*$)", paste0("\\1", bak, "\\2"), x)
         file.copy(x, fnbackup, overwrite = TRUE)
         rnwfile <- readLines(fnbackup)
@@ -405,6 +406,14 @@ rnw2pdf <- function(fn = NULL, wd = NULL, ..., engine = "knitr", purl = TRUE,
             ## Let lyx compile to pdf
             cmd <- paste("lyx -f all -e pdf2 ", x, if(!verbose) sysnull)
             if (isWindoze) shell(cmd) else system(cmd)
+
+            if(tolower(engine) == "knitr"){
+                cmd <- paste("lyx -f all -e knitr ", x, if(!verbose) sysnull)
+                if (isWindoze) shell(cmd) else system(cmd)
+            } else {
+                cmd <- paste("lyx -f all  -e sweave ", x, if(!verbose) sysnull)
+                if (isWindoze) shell(cmd) else system(cmd)
+            }
             fnpdf <- gsub("\\.lyx$", ".pdf", x, ignore.case = TRUE)
             if(tangle){
                 ## Remove previous R file, avoid confusion
@@ -416,7 +425,8 @@ rnw2pdf <- function(fn = NULL, wd = NULL, ..., engine = "knitr", purl = TRUE,
                 } else {
                     ## will fail if split=TRUE, so must make copy of file, change to split=FALSE
                     ## Need to turn split to FALSE in order to Tangle the lyx file.
-                    bak <- "-uniquebackupstring"
+                    rptdate <- format(Sys.time(), "%Y%m%d%H%M")
+                    bak <- paste0("-uniquebackupstring", rptdate)
                     fnbackup <- gsub("(.*)(\\..*$)", paste0("\\1", bak, "\\2"), x)
                     file.copy(x, fnbackup, overwrite = TRUE)
                     rnwfile <- readLines(fnbackup)
@@ -432,18 +442,11 @@ rnw2pdf <- function(fn = NULL, wd = NULL, ..., engine = "knitr", purl = TRUE,
                     gg <- file.copy(gsub("\\..*$", ".R", fnbackup),
                                     gsub(bak, "", gsub("\\..*$", ".R", fnbackup)),
                                     overwrite=TRUE)
+                    ## Delete the unique name versions
                     if (file.exists(gsub("\\..*$", ".R", x))){
-                        unlink(paste0("*", bak, "*"))
+                        if(file.exists(fnbackup)) unlink(fnbackup)
+                        unlink(gsub("\\..*$", ".R", fnbackup))
                     }
-                }
-            }
-            if(verbose){
-                if (tolower(engine) == "knitr"){
-                    cmd <- paste("lyx -f all -e knitr ", x, if(!verbose) sysnull)
-                    if (isWindoze) shell(cmd) else system(cmd)
-                } else {
-                    cmd <- paste("lyx -f all  -e sweave ", x, if(!verbose) sysnull)
-                    if (isWindoze) shell(cmd) else system(cmd)
                 }
             }
         } else if (length(grep("\\.rnw$", tolower(x)))) {
