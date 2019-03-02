@@ -10,11 +10,6 @@
 ##' @param wd A working directory name of the Rmd file. If not
 ##'     specified, then the current working directory from R will be
 ##'     used.
-##' @param verbose The opposite of render(quiet = TRUE). Shows compile
-##'     commentary and pandoc command. Can be informative!
-##' @param purl Default TRUE, synonym for tangle. Set either one, or
-##'     set both same, result is same.
-##' @param tangle Default TRUE, synonym for purl
 ##' @param ... Arguments that will be passed to \code{rmarkdown::render} and
 ##'     \code{rmarkdown::html_document}. We usually have customizations
 ##'     via parameters \code{css} and \code{template},
@@ -31,6 +26,14 @@
 ##'     "output_options", "intermediates_dir", "knit_root_dir",
 ##'     "runtime", "clean", "params", "knit_meta", "envir",
 ##'     "run_pandoc", "quiet", "encoding")}.
+##' @param verbose The opposite of render(quiet = TRUE). Shows compile
+##'     commentary and pandoc command. Can be informative!
+##' @param purl Default TRUE, synonym for tangle. Set either one, or
+##'     set both same, result is same.
+##' @param tangle Default TRUE, synonym for purl
+##' @param backup Default TRUE. Will create backup copies of pdf, R, Rnw
+##'     files before replacing them. Uses \code{kutils::file.backup}
+
 ##' @importFrom rmarkdown render
 ##' @importFrom rmarkdown html_document
 ##' @importFrom utils modifyList
@@ -62,7 +65,7 @@
 ##' unlink(dirout)
 ##' }
 rmd2html <- function(fn = NULL, wd = NULL, ..., verbose = FALSE,
-                     purl = TRUE, tangle = purl) {
+                     purl = TRUE, tangle = purl, backup = TRUE) {
     if (!missing(tangle) && is.logical(tangle)) purl <- tangle
     
     if (!is.null(wd)){
