@@ -89,7 +89,7 @@ rmd2html <- function(fn = NULL, wd = NULL, ..., verbose = FALSE,
     Rfn <- gsub("(.*\\.).*$", "\\1R", fn, ignore.case = TRUE)
     htmlfn <- gsub("(.*\\.).*$", "\\1html", fn, ignore.case = TRUE)
 
-    if(backup) kutils::file.backup(htmlfn, verbose = FALSE)
+    if(backup) kutils::file.backup(htmlfn, verbose = FALSE, keep.old=TRUE)
     
     formals_render <- c("output_file", "output_dir", "output_options",
                         "intermediates_dir", "knit_root_dir",
@@ -111,7 +111,7 @@ rmd2html <- function(fn = NULL, wd = NULL, ..., verbose = FALSE,
                             envir = globalenv())
     render_argz <- utils::modifyList(render_args, dots_for_render, keep.null = TRUE)
     if(purl){
-        if(backup) kutils::file.backup(Rfn, verbose = FALSE)
+        if(backup) kutils::file.backup(Rfn, verbose = FALSE, keep.old=TRUE)
         knitr::purl(fn)
     }
     if(verbose) {print(paste("dots_for_render"));  lapply(dots_for_render, print)}
@@ -236,9 +236,9 @@ rmd2pdf <- function(fn = NULL, wd = NULL, ..., verbose = FALSE,
     pdffn <- gsub("(.*\\.).*$", "\\1pdf", fn, ignore.case = TRUE)
 
     if(backup){
-        kutils::file.backup(pdffn, verbose = FALSE)
-        kutils::file.backup(Rnwfn, verbose = FALSE)
-        kutils::file.backup(Rfn, verbose = FALSE)
+        kutils::file.backup(pdffn, verbose = FALSE, keep.old=TRUE)
+        kutils::file.backup(Rnwfn, verbose = FALSE, keep.old=TRUE)
+        kutils::file.backup(Rfn, verbose = FALSE, keep.old=TRUE)
     }    
     if (length(fn) > 1){
         cl <- match.call()
@@ -426,7 +426,7 @@ rnw2pdf <- function(fn = NULL, wd = NULL, ..., engine = "knitr", purl = TRUE,
         fnR <- gsub(bakstrng, "", fnbackupR)
         MESSG <- paste("tangleSplit(", x, "failed creation of R tangle file")
         if(file.exists(fnbackupR)){
-            if (backup) kutils::file.backup(fnR)
+            if (backup) kutils::file.backup(fnR, keep.old=TRUE)
             fnRrename <- file.copy(fnbackupR, fnR, overwrite = TRUE)
             if (!fnRrename) warning(MESSG)
             unlink(paste0("*", bakstrng, "*"))
@@ -444,9 +444,9 @@ rnw2pdf <- function(fn = NULL, wd = NULL, ..., engine = "knitr", purl = TRUE,
         pdffn <- gsub("(.*\\.).*$", "\\1pdf", fn, ignore.case = TRUE)
 
         if(backup){
-            kutils::file.backup(pdffn, verbose = FALSE)
-            kutils::file.backup(Rnwfn, verbose = FALSE)
-            kutils::file.backup(Rfn, verbose = FALSE)
+            kutils::file.backup(pdffn, verbose = FALSE, keep.old=TRUE)
+            kutils::file.backup(Rnwfn, verbose = FALSE, keep.old=TRUE)
+            kutils::file.backup(Rfn, verbose = FALSE, keep.old=TRUE)
         }
         
         if (length(grep("\\.lyx$", tolower(x)))){
@@ -460,7 +460,7 @@ rnw2pdf <- function(fn = NULL, wd = NULL, ..., engine = "knitr", purl = TRUE,
                 
             if(tangle){
                 ## Remove previous R file, avoid confusion
-                kutils::file.backup(Rfn)
+                kutils::file.backup(Rfn, keep.old=TRUE)
                 unlink(Rfn)
                 ## lyx can directly export r code from knitr engine file 
                 if (engine == "knitr"){
@@ -474,7 +474,7 @@ rnw2pdf <- function(fn = NULL, wd = NULL, ..., engine = "knitr", purl = TRUE,
         } else if (length(grep("\\.rnw$", tolower(x)))) {
             if (engine == "knitr"){
                 if(tangle){
-                    kutils::file.backup(Rfn)
+                    kutils::file.backup(Rfn, keep.old=TRUE)
                     knitr::knit(x, quiet = !verbose, tangle = tangle, envir = envir,
                                 encoding = encoding)
                 }
