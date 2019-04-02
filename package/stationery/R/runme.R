@@ -112,7 +112,7 @@ rmd2html <- function(fn = NULL, wd = NULL, ..., verbose = FALSE,
     render_argz <- utils::modifyList(render_args, dots_for_render, keep.null = TRUE)
     if(purl){
         if(backup) kutils::file.backup(Rfn, verbose = FALSE, keep.old=TRUE)
-        knitr::purl(fn)
+        knitr::purl(fn, quiet = !verbose)
     }
     if(verbose) {print(paste("dots_for_render"));  lapply(dots_for_render, print)}
     res <- do.call(rmarkdown::render, render_argz)
@@ -420,7 +420,7 @@ rnw2pdf <- function(fn = NULL, wd = NULL, ..., engine = "knitr", purl = TRUE,
                                                  rnwfile[grep("prompt", rnwfile)])
         writeLines(rnwfile, con = fnbackup)
         
-        utils::Stangle(fnbackup)
+        utils::Stangle(fnbackup, quiet=quiet)
 
         fnbackupR <- gsub("\\.Rnw", ".R", fnbackup)
         fnR <- gsub(bakstrng, "", fnbackupR)
