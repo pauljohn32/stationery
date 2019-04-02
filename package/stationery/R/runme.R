@@ -460,7 +460,7 @@ rnw2pdf <- function(fn = NULL, wd = NULL, ..., engine = "knitr", purl = TRUE,
                 
             if(tangle){
                 ## Remove previous R file, avoid confusion
-                kutils::file.backup(Rfn, keep.old=TRUE)
+                if(backup) kutils::file.backup(Rfn, keep.old=TRUE)
                 unlink(Rfn)
                 ## lyx can directly export r code from knitr engine file 
                 if (engine == "knitr"){
