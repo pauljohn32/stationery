@@ -11,7 +11,7 @@ files <- c()
 base_command <- "rnw2pdf"
 
 # default arguments here -- e.g. "--engine=Sweave"
-arguments <- c("--engine=knit")
+arguments <- c("--engine=knitr")
 
 # A simple function for level-based debug messages
 debug_level = 0
