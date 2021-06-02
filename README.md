@@ -1,21 +1,20 @@
-To clone this, run
+Paul Johnson
 
-git clone git@gitlab.crmda.ku.edu:software/crmda.git
+2021-06-01
 
-This package is for use of CRMDA employees and affiliates. It is 
-not distributed on CRAN, but rather only on the server we call
-KRAN. 
+This was moved from our private GitLab server to Github.
 
-To install, we suggest creating a script:
+The stationery package is on CRAN now, it is the general
+stationery. The tools in that package create template
+documents.  The documents have "placeholders" where you can insert 
+your own organizational address and stationery header image.
 
-    CRAN <- "http://rweb.crmda.ku.edu/cran"
-    KRAN <- "http://rweb.crmda.ku.edu/kran"
- 
-    options(repos = c(KRAN, CRAN))
-    update.packages(ask = FALSE, checkBuilt = TRUE)
-
-    install.packages("crmda")
+The stationery package also includes some excellent
+vignettes that will smarten you up!
 
 
-We will create functions in there to initialize new reports 
-of various types.
+You can put your customizations in an R package.  My
+set of customizations for our organization is in the
+folder called "crmda".
+
+pj
