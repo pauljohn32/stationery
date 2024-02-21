@@ -1,8 +1,8 @@
 Package: stationery 
 Type: Package
 Title: Working Examples for Reproducible Research Documents 
-Version: 0.98.19
-Date: 2019-09-27
+Version: 1.1
+Date: 2024-02-20
 Authors@R: c(person("Paul", "Johnson", role = c("aut", "cre"), email = "pauljohn@ku.edu"),
              person("Brent", "Kaplan", role = c("ctb"), email = "bkaplan4@ku.edu"),
              person("Meghan", "Sullivan", role = c("ctb"), email = "meg.sullivan@ku.edu"),
@@ -20,10 +20,11 @@ Description: Templates, guides, and scripts for
     receive special attention. Includes several vignettes
     to assist new users of literate programming.
 License: CC BY-SA 4.0
+Encoding: UTF-8
 Imports:
     kutils, rmarkdown, knitr
 Suggests:
     rockchalk, xtable, lavaan, utils, psych, pander
 LazyData: TRUE
-RoxygenNote: 6.1.1
+RoxygenNote: 7.3.1
 VignetteBuilder: knitr, utils

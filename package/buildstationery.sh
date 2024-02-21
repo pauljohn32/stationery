@@ -28,13 +28,14 @@ R --vanilla -f roxygenstationery.R
 ## R CMD build --resave-data --no-build-vignettes ${PACKAGE}.gitex 
 ## R CMD build --no-resave-data --compact-vignettes="both" ${PACKAGE}.gitex 
 
-## /usr/lib/R/bin/R --no-site-file --no-environ --no-save --no-restore --quiet  \
-##                 CMD build 'stationery.gitex'  --no-resave-data --no-manual --run-donttest \
-##                 --compact-vignettes="both" --no-build-vignettes
 
 /usr/lib/R/bin/R --no-site-file --no-environ --no-save --no-restore --quiet  \
-                 CMD build 'stationery.gitex'  --no-resave-data --no-manual \
+                  CMD build 'stationery.gitex'  --no-resave-data --no-manual \
                  --compact-vignettes="both"
+
+# /tmp/R/lib/R/bin/R --no-site-file --no-environ --no-save --no-restore --quiet  \
+#                  CMD build 'stationery.gitex'  --no-resave-data --no-manual \
+#                 --compact-vignettes="both"
 
 read -p "Run check: OK? (y or n)" result
 
